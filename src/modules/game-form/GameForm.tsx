@@ -8,7 +8,11 @@ export default function GameForm() {
         <Box>Атака</Box>
       </Grid>
       <Grid size={9}>
-        <CustomLabel label="Имя персонажа">
+        <CustomLabel
+          label={{
+            text: "Имя персонажа",
+          }}
+        >
           <TextField fullWidth variant="outlined" size="small" />
         </CustomLabel>
       </Grid>

@@ -4,14 +4,19 @@ import { Box } from "@mui/system";
 import type { ReactNode } from "react";
 
 interface Props {
-  label?: string;
+  label: {
+    text?: string;
+    size?: TypographyVariant;
+    color?: "primary" | "secondary";
+  };
+
   labelSize?: TypographyVariant;
   children: ReactNode;
 }
 
 export default function CustomLabel(props: Props) {
   const theme = useTheme();
-  const { label = "", labelSize = "h6", children } = props;
+  const { label, children } = props;
   return (
     <Box
       sx={{
@@ -22,12 +27,13 @@ export default function CustomLabel(props: Props) {
       <Box
         sx={{
           p: "0.1em",
-          color: theme.palette.label.text.primary,
-          backgroundColor: theme.palette.label.background.primary,
+          color: theme.palette.label.text[label.color ?? "primary"],
+          backgroundColor:
+            theme.palette.label.background[label.color ?? "primary"],
         }}
       >
-        <Typography sx={{ textAlign: "center" }} variant={labelSize}>
-          {label}
+        <Typography sx={{ textAlign: "center" }} variant={label.size ?? "h6"}>
+          {label.text}
         </Typography>
       </Box>
       <Box>{children}</Box>
