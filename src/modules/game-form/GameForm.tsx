@@ -1,16 +1,15 @@
-import { Box, Grid } from "@mui/material";
+import { useFormCustom } from "./hooks/use-form-values.hook.ts";
 
-import BaseInfo from "./sections/base-info/BaseInfo.tsx";
-import { type ControllerRenderProps, useForm } from "react-hook-form";
-import type { FormValues } from "./types/form-values.type.ts";
-import { FORM_DEFAULT_VALUES } from "./consts/form-default-values.const.ts";
-import type { ChangeEvent } from "react";
 import { api } from "../../api/api.ts";
 
+import { Box, Grid } from "@mui/material";
+import BaseInfo from "./sections/base-info/BaseInfo.tsx";
+import { type ControllerRenderProps } from "react-hook-form";
+import type { FormValues } from "./types/form-values.type.ts";
+import { type ChangeEvent } from "react";
+
 export default function GameForm() {
-  const formHook = useForm<FormValues>({
-    defaultValues: FORM_DEFAULT_VALUES,
-  });
+  const formHook = useFormCustom();
 
   const onChange = async (
     field: ControllerRenderProps<FormValues>,
