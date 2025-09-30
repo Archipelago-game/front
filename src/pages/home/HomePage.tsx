@@ -1,7 +1,5 @@
+import Home from "../../modules/Home.tsx";
+
 export default function HomePage() {
-  return (
-    <div>
-      <div>HomePage</div>
-    </div>
-  );
+  return <Home />;
 }
