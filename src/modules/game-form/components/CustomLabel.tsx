@@ -4,39 +4,42 @@ import { Box } from "@mui/system";
 import type { ReactNode } from "react";
 
 interface Props {
-  label: {
+  label?: {
     text?: string;
     size?: TypographyVariant;
     color?: "primary" | "secondary";
   };
-
-  labelSize?: TypographyVariant;
+  orientation?: "column" | "row";
   children: ReactNode;
 }
 
 export default function CustomLabel(props: Props) {
   const theme = useTheme();
-  const { label, children } = props;
+  const { label, orientation, children } = props;
   return (
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
+        flex: 1,
+        flexDirection: orientation ?? "column",
       }}
     >
       <Box
         sx={{
-          p: "0.1em",
-          color: theme.palette.label.text[label.color ?? "primary"],
+          display: "flex",
+          alignItems: "center",
+          paddingInline: "0.5em",
+          minHeight: "32px",
+          color: theme.palette.label.text[label?.color ?? "primary"],
           backgroundColor:
-            theme.palette.label.background[label.color ?? "primary"],
+            theme.palette.label.background[label?.color ?? "primary"],
         }}
       >
-        <Typography sx={{ textAlign: "center" }} variant={label.size ?? "h6"}>
-          {label.text}
+        <Typography sx={{ textAlign: "center" }} variant={label?.size ?? "h6"}>
+          {label?.text}
         </Typography>
       </Box>
-      <Box>{children}</Box>
+      <Box sx={{ flex: 1 }}>{children}</Box>
     </Box>
   );
 }
