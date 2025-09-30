@@ -1,7 +1,5 @@
+import GameForm from "../../modules/game-form/GameForm.tsx";
+
 export default function GameFormPage() {
-  return (
-    <div>
-      <div>GameFormPage</div>
-    </div>
-  );
+  return <GameForm />;
 }
