@@ -1,7 +1,13 @@
 import { Box, Grid, TextField } from "@mui/material";
 import CustomLabel from "../../components/CustomLabel.tsx";
+import { Controller } from "react-hook-form";
 
-export default function BaseInfo() {
+import type { BaseFormSectionPropsType } from "../../types/base-form-section-props.type.ts";
+
+export default function BaseInfo({
+  formHook,
+  onChange,
+}: BaseFormSectionPropsType) {
   return (
     <Grid container spacing={2}>
       <Grid size={4}>
@@ -10,7 +16,19 @@ export default function BaseInfo() {
             text: "Имя персонажа",
           }}
         >
-          <TextField fullWidth variant="outlined" size="small" />
+          <Controller
+            name="name"
+            control={formHook.control}
+            render={({ field }) => (
+              <TextField
+                fullWidth
+                variant="outlined"
+                size="small"
+                {...field}
+                onChange={(e) => onChange(field, e)}
+              />
+            )}
+          />
         </CustomLabel>
       </Grid>
       <Grid size={8}>
@@ -29,11 +47,19 @@ export default function BaseInfo() {
               }}
               orientation="row"
             >
-              <TextField
-                fullWidth
-                variant="outlined"
-                size="small"
-                type="number"
+              <Controller
+                name="age"
+                control={formHook.control}
+                render={({ field }) => (
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    type="number"
+                    {...field}
+                    onChange={(e) => onChange(field, e)}
+                  />
+                )}
               />
             </CustomLabel>
             <CustomLabel
@@ -43,7 +69,19 @@ export default function BaseInfo() {
               }}
               orientation="row"
             >
-              <TextField fullWidth variant="outlined" size="small" />
+              <Controller
+                name="homeland"
+                control={formHook.control}
+                render={({ field }) => (
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    {...field}
+                    onChange={(e) => onChange(field, e)}
+                  />
+                )}
+              />
             </CustomLabel>
             <Box
               sx={{
@@ -57,7 +95,19 @@ export default function BaseInfo() {
                 }}
                 orientation="row"
               >
-                <TextField fullWidth variant="outlined" size="small" />
+                <Controller
+                  name="languages"
+                  control={formHook.control}
+                  render={({ field }) => (
+                    <TextField
+                      fullWidth
+                      variant="outlined"
+                      size="small"
+                      {...field}
+                      onChange={(e) => onChange(field, e)}
+                    />
+                  )}
+                />
               </CustomLabel>
             </Box>
           </Box>
