@@ -1,7 +1,9 @@
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -10,7 +12,7 @@ export default function Home() {
       }}
     >
       <Button>Персонажи</Button>
-      <Button>Форма персонажа</Button>
+      <Button onClick={() => navigate("/game-form")}>Форма персонажа</Button>
     </Box>
   );
 }
