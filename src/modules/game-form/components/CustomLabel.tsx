@@ -22,8 +22,8 @@ export default function CustomLabel(props: Props) {
       <Box
         sx={{
           p: "0.1em",
-          color: theme.palette.label.text.main,
-          backgroundColor: theme.palette.label.background.main,
+          color: theme.palette.label.text.primary,
+          backgroundColor: theme.palette.label.background.primary,
         }}
       >
         <Typography sx={{ textAlign: "center" }} variant={labelSize}>

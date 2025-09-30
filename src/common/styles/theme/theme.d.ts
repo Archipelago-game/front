@@ -4,9 +4,8 @@ import "@mui/material/styles/createPalette";
 
 declare module "@mui/material/styles/createPalette" {
   interface PaletteColor {
-    main: string;
-    light?: string;
-    dark?: string;
+    primary: string;
+    secondary: string;
   }
 }
 
@@ -14,14 +13,12 @@ declare module "@mui/material/styles" {
   interface Palette {
     label: {
       text: {
-        main: string;
-        light: string;
-        dark: string;
+        primary: string;
+        secondary: string;
       };
       background: {
-        main: string;
-        light: string;
-        dark: string;
+        primary: string;
+        secondary: string;
       };
     };
   }
@@ -29,14 +26,12 @@ declare module "@mui/material/styles" {
   interface PaletteOptions {
     label: {
       text: {
-        main: string;
-        light: string;
-        dark: string;
+        primary: string;
+        secondary: string;
       };
       background: {
-        main: string;
-        light: string;
-        dark: string;
+        primary: string;
+        secondary: string;
       };
     };
   }
