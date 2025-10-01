@@ -1,11 +1,11 @@
 import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
-import type { FormValues } from "./form-values.type.ts";
+import type { FormType } from "./form-values.type.ts";
 import type { ChangeEvent } from "react";
 
 export interface DefaultFormSectionProps {
-  formHook: UseFormReturn<FormValues>;
+  formHook: UseFormReturn<FormType>;
   onChange: (
-    field: ControllerRenderProps<FormValues>,
+    field: ControllerRenderProps<FormType>,
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => Promise<void> | void;
 }

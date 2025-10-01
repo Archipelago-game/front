@@ -1,6 +1,6 @@
-import type { FormValues } from "../types/form-values.type.ts";
+import type { FormType } from "../types/form-values.type.ts";
 
-export const FORM_DEFAULT_VALUES: FormValues = {
+export const FORM_DEFAULT_VALUES: FormType = {
   name: "",
   age: 0,
   homeland: "",

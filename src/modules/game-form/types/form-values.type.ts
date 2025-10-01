@@ -1,9 +1,13 @@
-export interface CheckBoxList {
+export interface FormArrayFields<T> {
   amount: number;
-  list: {
-    checked: boolean;
-  }[];
+  list: T[];
 }
+
+export type CheckBoxList = FormArrayFields<{
+  checked: boolean;
+}>;
+
+export type AttackMethods = FormArrayFields<AttackMethod>;
 
 export interface AttackMethod {
   name: string;
@@ -12,14 +16,10 @@ export interface AttackMethod {
   size: number;
   damage: number;
   loads: CheckBoxList;
+  properties: string;
 }
 
-export interface AttackMethods {
-  amount: number;
-  list: AttackMethod[];
-}
-
-export interface FormValues {
+export interface FormType {
   name: string;
   age: number;
   homeland: string;

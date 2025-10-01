@@ -1,5 +1,5 @@
 import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-values.const.ts";
-import type { FormValues } from "../modules/game-form/types/form-values.type.ts";
+import type { FormType } from "../modules/game-form/types/form-values.type.ts";
 
 const STORAGE_KEY = "ARCHIPELAGO";
 
@@ -12,6 +12,6 @@ export function getLocalStorage() {
   return FORM_DEFAULT_VALUES;
 }
 
-export function setLocalStorage(data: FormValues) {
+export function setLocalStorage(data: FormType) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }

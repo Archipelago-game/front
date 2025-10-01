@@ -5,7 +5,7 @@ import { api } from "../../api/api.ts";
 import { Box, Grid } from "@mui/material";
 import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 import { type ControllerRenderProps } from "react-hook-form";
-import type { FormValues } from "./types/form-values.type.ts";
+import type { FormType } from "./types/form-values.type.ts";
 import { type ChangeEvent } from "react";
 import Luck from "./ui/sections/luck/Luck.tsx";
 import Experience from "./ui/sections/experience/Experience.tsx";
@@ -15,7 +15,7 @@ export default function GameForm() {
   const { methods: formHook, values } = useFormCustom();
 
   const onChange = async (
-    field: ControllerRenderProps<FormValues>,
+    field: ControllerRenderProps<FormType>,
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     field.onChange(e);

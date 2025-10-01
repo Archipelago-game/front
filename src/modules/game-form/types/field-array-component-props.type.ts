@@ -1,8 +1,7 @@
 import type { DefaultFormSectionProps } from "./default-form-section-props.type.ts";
-import type { CheckBoxListKeys } from "./checkbox-list-key.type.ts";
-import type { FormValues } from "./form-values.type.ts";
+import type { FieldArrayKeys } from "./field-array-key.type.ts";
 
 export interface FieldArrayComponentProps extends DefaultFormSectionProps {
-  name: CheckBoxListKeys<FormValues>;
+  name: FieldArrayKeys;
   amount: number;
 }
