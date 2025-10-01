@@ -1,30 +1,16 @@
-import { Controller, useFieldArray } from "react-hook-form";
-import type { FormValues } from "../../types/form-values.type.ts";
-import type { CheckBoxListKeys } from "../../types/checkbox-list-key.type.ts";
-import { Checkbox, type CheckboxProps } from "@mui/material";
-import type { DefaultFormSectionProps } from "../../types/default-form-section.props.ts";
-import { useEffect } from "react";
+import { Controller } from "react-hook-form";
 
-interface Props extends DefaultFormSectionProps {
-  name: CheckBoxListKeys<FormValues>;
-  amount: number;
+import { Checkbox, type CheckboxProps } from "@mui/material";
+import type { FieldArrayComponentProps } from "../../types/field-array-component-props.type.ts";
+import { useSyncFieldArray } from "../../hooks/use-sync-field-array.hook.ts";
+
+interface Props extends FieldArrayComponentProps {
   size?: CheckboxProps["size"];
 }
 
 export default function CheckboxList(props: Props) {
-  const { name, amount, formHook, onChange } = props;
-  const { fields, append } = useFieldArray({
-    name: `${name}.list`,
-    control: formHook.control,
-  });
-
-  useEffect(() => {
-    if (amount > fields.length) {
-      for (let i = fields.length; i < amount; i++) {
-        append({ checked: false });
-      }
-    }
-  }, [amount, fields, append]);
+  const { formHook, onChange } = props;
+  const fields = useSyncFieldArray(props);
 
   return (
     <>

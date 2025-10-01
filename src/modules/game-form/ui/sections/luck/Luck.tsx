@@ -1,4 +1,4 @@
-import type { DefaultFormSectionProps } from "../../../types/default-form-section.props.ts";
+import type { DefaultFormSectionProps } from "../../../types/default-form-section-props.type.ts";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import CheckboxList from "../../components/CheckboxList.tsx";
 import type { FormValues } from "../../../types/form-values.type.ts";

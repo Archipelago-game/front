@@ -8,7 +8,7 @@ import { type ControllerRenderProps } from "react-hook-form";
 import type { FormValues } from "./types/form-values.type.ts";
 import { type ChangeEvent } from "react";
 import Luck from "./ui/sections/luck/Luck.tsx";
-import Experience from "./ui/sections/Experience.tsx";
+import Experience from "./ui/sections/experience/Experience.tsx";
 import Attack from "./ui/sections/attack/Attack.tsx";
 
 export default function GameForm() {

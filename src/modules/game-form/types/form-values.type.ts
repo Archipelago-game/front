@@ -14,6 +14,11 @@ export interface AttackMethod {
   loads: CheckBoxList;
 }
 
+export interface AttackMethods {
+  amount: number;
+  list: AttackMethod[];
+}
+
 export interface FormValues {
   name: string;
   age: number;
@@ -29,9 +34,6 @@ export interface FormValues {
       physical: number;
       mental: number;
     };
-    methods: {
-      amount: number;
-      list: AttackMethod[];
-    };
+    methods: AttackMethods;
   };
 }
