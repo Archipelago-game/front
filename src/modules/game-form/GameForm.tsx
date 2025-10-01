@@ -3,13 +3,15 @@ import { useFormCustom } from "./hooks/use-form-values.hook.ts";
 import { api } from "../../api/api.ts";
 
 import { Box, Grid } from "@mui/material";
-import BaseInfo from "./sections/base-info/BaseInfo.tsx";
+import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 import { type ControllerRenderProps } from "react-hook-form";
 import type { FormValues } from "./types/form-values.type.ts";
 import { type ChangeEvent } from "react";
+import Luck from "./ui/sections/Luck/Luck.tsx";
+import Experience from "./ui/sections/Experience.tsx";
 
 export default function GameForm() {
-  const formHook = useFormCustom();
+  const { methods: formHook, values } = useFormCustom();
 
   const onChange = async (
     field: ControllerRenderProps<FormValues>,
@@ -25,7 +27,22 @@ export default function GameForm() {
         <Box>Атака</Box>
       </Grid>
       <Grid size={9}>
-        <BaseInfo formHook={formHook} onChange={onChange} />
+        <Grid container spacing={2}>
+          <Grid size={12}>
+            <BaseInfo formHook={formHook} onChange={onChange} />
+          </Grid>
+          <Grid size={12}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Luck values={values} formHook={formHook} onChange={onChange} />
+              <Experience formHook={formHook} onChange={onChange} />
+            </Box>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
