@@ -7,8 +7,9 @@ import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 import { type ControllerRenderProps } from "react-hook-form";
 import type { FormValues } from "./types/form-values.type.ts";
 import { type ChangeEvent } from "react";
-import Luck from "./ui/sections/Luck/Luck.tsx";
+import Luck from "./ui/sections/luck/Luck.tsx";
 import Experience from "./ui/sections/Experience.tsx";
+import Attack from "./ui/sections/attack/Attack.tsx";
 
 export default function GameForm() {
   const { methods: formHook, values } = useFormCustom();
@@ -24,7 +25,7 @@ export default function GameForm() {
   return (
     <Grid container spacing={5}>
       <Grid size={3}>
-        <Box>Атака</Box>
+        <Attack formHook={formHook} onChange={onChange} />
       </Grid>
       <Grid size={9}>
         <Grid container spacing={2}>

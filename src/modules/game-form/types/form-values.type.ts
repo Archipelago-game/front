@@ -5,6 +5,15 @@ export interface CheckBoxList {
   }[];
 }
 
+export interface AttackMethod {
+  name: string;
+  distance: number;
+  half: number;
+  size: number;
+  damage: number;
+  loads: CheckBoxList;
+}
+
 export interface FormValues {
   name: string;
   age: number;
@@ -14,5 +23,15 @@ export interface FormValues {
   experience: {
     total: number;
     used: number;
+  };
+  attack: {
+    damageBonus: {
+      physical: number;
+      mental: number;
+    };
+    methods: {
+      amount: number;
+      list: AttackMethod[];
+    };
   };
 }
