@@ -8,6 +8,7 @@ import { type ControllerRenderProps } from "react-hook-form";
 import type { FormValues } from "./types/form-values.type.ts";
 import { type ChangeEvent } from "react";
 import Luck from "./ui/sections/Luck/Luck.tsx";
+import Experience from "./ui/sections/Experience.tsx";
 
 export default function GameForm() {
   const { methods: formHook, values } = useFormCustom();
@@ -38,7 +39,7 @@ export default function GameForm() {
               }}
             >
               <Luck values={values} formHook={formHook} onChange={onChange} />
-              <Luck values={values} formHook={formHook} onChange={onChange} />
+              <Experience formHook={formHook} onChange={onChange} />
             </Box>
           </Grid>
         </Grid>

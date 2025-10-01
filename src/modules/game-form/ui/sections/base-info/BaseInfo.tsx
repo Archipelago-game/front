@@ -37,7 +37,7 @@ export default function BaseInfo({
             sx={{
               display: "flex",
               flexWrap: "wrap",
-              rowGap: "0.2em",
+              gap: "0.2em",
             }}
           >
             <CustomLabel
