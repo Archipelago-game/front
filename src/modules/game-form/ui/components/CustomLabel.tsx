@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { type SxProps, Typography } from "@mui/material";
 import { useTheme, type TypographyVariant } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import type { ReactNode } from "react";
@@ -11,17 +11,19 @@ interface Props {
   };
   orientation?: "column" | "row";
   children: ReactNode;
+  sx?: SxProps;
 }
 
 export default function CustomLabel(props: Props) {
   const theme = useTheme();
-  const { label, orientation, children } = props;
+  const { label, orientation, children, sx } = props;
   return (
     <Box
       sx={{
         display: "flex",
-        flex: 1,
+        flex: "1 1 0",
         flexDirection: orientation ?? "column",
+        ...sx,
       }}
     >
       <Box

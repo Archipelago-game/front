@@ -26,10 +26,22 @@ export default function GameForm() {
         <Box>Атака</Box>
       </Grid>
       <Grid size={9}>
-        <BaseInfo formHook={formHook} onChange={onChange} />
-      </Grid>
-      <Grid size={6}>
-        <Luck values={values} formHook={formHook} onChange={onChange} />
+        <Grid container spacing={2}>
+          <Grid size={12}>
+            <BaseInfo formHook={formHook} onChange={onChange} />
+          </Grid>
+          <Grid size={12}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Luck values={values} formHook={formHook} onChange={onChange} />
+              <Luck values={values} formHook={formHook} onChange={onChange} />
+            </Box>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );

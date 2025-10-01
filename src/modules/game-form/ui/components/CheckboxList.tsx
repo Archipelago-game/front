@@ -1,13 +1,14 @@
 import { Controller, useFieldArray } from "react-hook-form";
 import type { FormValues } from "../../types/form-values.type.ts";
 import type { CheckBoxListKeys } from "../../types/checkbox-list-key.type.ts";
-import { Checkbox } from "@mui/material";
+import { Checkbox, type CheckboxProps } from "@mui/material";
 import type { DefaultFormSectionProps } from "../../types/default-form-section.props.ts";
 import { useEffect } from "react";
 
 interface Props extends DefaultFormSectionProps {
   name: CheckBoxListKeys<FormValues>;
   amount: number;
+  size?: CheckboxProps["size"];
 }
 
 export default function CheckboxList(props: Props) {
@@ -34,6 +35,8 @@ export default function CheckboxList(props: Props) {
           control={formHook.control}
           render={({ field }) => (
             <Checkbox
+              size={props.size ?? "small"}
+              sx={{ padding: 0 }}
               {...field}
               checked={field.value}
               onChange={(e) => onChange(field, e)}
