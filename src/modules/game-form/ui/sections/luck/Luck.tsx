@@ -1,7 +1,7 @@
 import type { DefaultFormSectionProps } from "../../../types/default-form-section-props.type.ts";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import CheckboxList from "../../components/CheckboxList.tsx";
-import type { FormType } from "../../../types/form-values.type.ts";
+import type { FormType } from "../../../types/form.type.ts";
 import { Box } from "@mui/material";
 
 interface Props extends DefaultFormSectionProps {
@@ -19,6 +19,7 @@ export default function Luck({ formHook, onChange, values }: Props) {
             name="luck"
             amount={values.luck.amount}
             size="large"
+            defaultValue={{ checked: false }}
           />
         </Box>
       </CustomLabel>

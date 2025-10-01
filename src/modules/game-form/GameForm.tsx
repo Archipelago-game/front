@@ -5,7 +5,7 @@ import { api } from "../../api/api.ts";
 import { Box, Grid } from "@mui/material";
 import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 import { type ControllerRenderProps } from "react-hook-form";
-import type { FormType } from "./types/form-values.type.ts";
+import type { FormType } from "./types/form.type.ts";
 import { type ChangeEvent } from "react";
 import Luck from "./ui/sections/luck/Luck.tsx";
 import Experience from "./ui/sections/experience/Experience.tsx";
@@ -25,7 +25,7 @@ export default function GameForm() {
   return (
     <Grid container spacing={5}>
       <Grid size={4}>
-        <Attack formHook={formHook} onChange={onChange} />
+        <Attack values={values} formHook={formHook} onChange={onChange} />
       </Grid>
       <Grid size={8}>
         <Grid container spacing={2}>

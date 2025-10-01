@@ -7,8 +7,6 @@ export type CheckBoxList = FormArrayFields<{
   checked: boolean;
 }>;
 
-export type AttackMethods = FormArrayFields<AttackMethod>;
-
 export interface AttackMethod {
   name: string;
   distance: number;
@@ -18,6 +16,8 @@ export interface AttackMethod {
   loads: CheckBoxList;
   properties: string;
 }
+
+export type AttackMethods = FormArrayFields<AttackMethod>;
 
 export interface FormType {
   name: string;

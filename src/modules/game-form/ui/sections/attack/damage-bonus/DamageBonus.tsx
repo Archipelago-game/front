@@ -52,7 +52,7 @@ export default function DamageBonus({
           orientation="row"
         >
           <Controller
-            name="attack.damageBonus.physical"
+            name="attack.damageBonus.mental"
             control={formHook.control}
             render={({ field }) => (
               <TextField

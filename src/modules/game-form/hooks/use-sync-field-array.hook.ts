@@ -3,7 +3,7 @@ import { useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
 
 export function useSyncFieldArray(props: FieldArrayComponentProps) {
-  const { name, amount, formHook } = props;
+  const { name, amount, formHook, defaultValue } = props;
   const { fields, append } = useFieldArray({
     name: `${name}.list`,
     control: formHook.control,
@@ -12,7 +12,7 @@ export function useSyncFieldArray(props: FieldArrayComponentProps) {
   useEffect(() => {
     if (amount > fields.length) {
       for (let i = fields.length; i < amount; i++) {
-        append({ checked: false });
+        append(defaultValue);
       }
     }
   }, [amount, fields, append]);

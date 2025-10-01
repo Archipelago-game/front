@@ -1,5 +1,5 @@
 import type { ControllerRenderProps, UseFormReturn } from "react-hook-form";
-import type { FormType } from "./form-values.type.ts";
+import type { FormType } from "./form.type.ts";
 import type { ChangeEvent } from "react";
 
 export interface DefaultFormSectionProps {
