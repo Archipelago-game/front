@@ -18,11 +18,16 @@ export default function Attack({
       >
         Атака
       </Typography>
-      <CustomLabel>
+      <CustomLabel
+        label={{
+          text: "Бонусы к урону",
+          size: "h6",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
-            flexWrap: "wrap",
+            // flexWrap: "wrap",
             gap: "0.2em",
           }}
         >
@@ -34,7 +39,7 @@ export default function Attack({
             orientation="row"
           >
             <Controller
-              name="age"
+              name="attack.damageBonus.physical"
               control={formHook.control}
               render={({ field }) => (
                 <TextField
@@ -56,13 +61,14 @@ export default function Attack({
             orientation="row"
           >
             <Controller
-              name="homeland"
+              name="attack.damageBonus.physical"
               control={formHook.control}
               render={({ field }) => (
                 <TextField
                   fullWidth
                   variant="outlined"
                   size="small"
+                  type="number"
                   {...field}
                   onChange={(e) => onChange(field, e)}
                 />
