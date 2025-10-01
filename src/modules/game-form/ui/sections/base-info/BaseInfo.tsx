@@ -2,7 +2,7 @@ import { Box, Grid, TextField } from "@mui/material";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import { Controller } from "react-hook-form";
 
-import type { DefaultFormSectionProps } from "../../../types/default-form-section.props.ts";
+import type { DefaultFormSectionProps } from "../../../types/default-form-section-props.type.ts";
 
 export default function BaseInfo({
   formHook,
