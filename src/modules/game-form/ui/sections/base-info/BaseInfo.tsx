@@ -2,12 +2,12 @@ import { Box, Grid, TextField } from "@mui/material";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import { Controller } from "react-hook-form";
 
-import type { BaseFormSectionPropsType } from "../../types/base-form-section-props.type.ts";
+import type { DefaultFormSectionProps } from "../../../types/default-form-section.props.ts";
 
 export default function BaseInfo({
   formHook,
   onChange,
-}: BaseFormSectionPropsType) {
+}: DefaultFormSectionProps) {
   return (
     <Grid container spacing={2}>
       <Grid size={4}>

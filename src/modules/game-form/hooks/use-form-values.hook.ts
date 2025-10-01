@@ -24,5 +24,5 @@ export function useFormCustom() {
     methods.reset(state);
   }, [state, methods]);
 
-  return methods;
+  return { methods, values: state };
 }
