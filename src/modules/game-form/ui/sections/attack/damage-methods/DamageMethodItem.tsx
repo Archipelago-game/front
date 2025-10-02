@@ -2,11 +2,11 @@ import CustomLabel from "../../../components/CustomLabel.tsx";
 import { Box, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
-import type { DefaultFormSectionProps } from "../../../../types/default-form-section-props.type.ts";
+import type { DefaultFormComponentProps } from "../../../../types/default-form-section-props.type.ts";
 import type { AttackMethod, FormType } from "../../../../types/form.type.ts";
 import Loads from "./Loads.tsx";
 
-interface Props extends DefaultFormSectionProps {
+interface Props extends DefaultFormComponentProps {
   index: number;
   values: FormType;
 }

@@ -1,4 +1,4 @@
-import type { DefaultFormSectionProps } from "../../../../types/default-form-section-props.type.ts";
+import type { DefaultFormComponentProps } from "../../../../types/default-form-section-props.type.ts";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 import { Box } from "@mui/system";
 import { Controller } from "react-hook-form";
@@ -7,7 +7,7 @@ import { TextField } from "@mui/material";
 export default function DamageBonus({
   formHook,
   onChange,
-}: DefaultFormSectionProps) {
+}: DefaultFormComponentProps) {
   return (
     <CustomLabel
       label={{

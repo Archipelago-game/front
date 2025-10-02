@@ -10,6 +10,7 @@ import { type ChangeEvent } from "react";
 import Luck from "./ui/sections/luck/Luck.tsx";
 import Experience from "./ui/sections/experience/Experience.tsx";
 import Attack from "./ui/sections/attack/Attack.tsx";
+import Defence from "./ui/sections/defence/Defence.tsx";
 
 export default function GameForm() {
   const { methods: formHook, values } = useFormCustom();
@@ -26,6 +27,7 @@ export default function GameForm() {
     <Grid container spacing={5}>
       <Grid size={4}>
         <Attack values={values} formHook={formHook} onChange={onChange} />
+        <Defence formHook={formHook} onChange={onChange} />
       </Grid>
       <Grid size={8}>
         <Grid container spacing={2}>
