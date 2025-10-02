@@ -19,6 +19,37 @@ export interface AttackMethod {
 
 export type AttackMethods = FormArrayFields<AttackMethod>;
 
+interface Attack {
+  damageBonus: {
+    physical: number;
+    mental: number;
+  };
+  methods: AttackMethods;
+}
+
+interface Defence {
+  brave: number;
+  physical: {
+    health: CheckBoxList;
+    wounds: CheckBoxList;
+  };
+  mental: {
+    resolve: CheckBoxList;
+    injuries: CheckBoxList;
+  };
+  armor: {
+    property: string;
+    slots: {
+      head: number;
+      body: number;
+      leftHand: number;
+      rightHand: number;
+      leftLeg: number;
+      rightLeg: number;
+    };
+  };
+}
+
 export interface FormType {
   name: string;
   age: number;
@@ -29,11 +60,6 @@ export interface FormType {
     total: number;
     used: number;
   };
-  attack: {
-    damageBonus: {
-      physical: number;
-      mental: number;
-    };
-    methods: AttackMethods;
-  };
+  attack: Attack;
+  defence: Defence;
 }
