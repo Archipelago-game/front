@@ -93,7 +93,7 @@ export default function DamageMethodItem(props: Props) {
           amount={5}
           formHook={formHook}
           onChange={onChange}
-          defaultValue={{ checked: false }}
+          defaultValue={{ checked: true }}
         />
       </Box>
     </Box>

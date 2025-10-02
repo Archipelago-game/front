@@ -22,6 +22,7 @@ export default function DamageMethods(props: Props) {
     >
       {fields.map((_, i) => (
         <DamageMethodItem
+          key={i}
           index={i}
           formHook={props.formHook}
           onChange={props.onChange}
