@@ -1,5 +1,6 @@
 import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
 import { Box, Typography } from "@mui/material";
+import Brave from "./Brave.tsx";
 
 export default function Defence({
   formHook,
@@ -15,7 +16,9 @@ export default function Defence({
       >
         Защита
       </Typography>
-      <Box>TESt</Box>
+      <Box>
+        <Brave formHook={formHook} onChange={onChange} />
+      </Box>
     </>
   );
 }
