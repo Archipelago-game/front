@@ -18,7 +18,13 @@ export default function Defence({
       >
         Защита
       </Typography>
-      <Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 1,
+        }}
+      >
         <Brave formHook={formHook} onChange={onChange} />
         <Armor formHook={formHook} onChange={onChange} />
         <ArmorProperty formHook={formHook} onChange={onChange} />
