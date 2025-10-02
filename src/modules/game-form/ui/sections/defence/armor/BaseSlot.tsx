@@ -25,7 +25,7 @@ export default function BaseSlot(props: Props) {
           color: "secondary",
           text: secondaryText,
         }}
-        propName={propName}
+        fieldName={propName}
         onChange={onChange}
         formHook={formHook}
       />
