@@ -3,7 +3,7 @@ import { useTheme, type TypographyVariant } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import type { ReactNode } from "react";
 
-interface Props {
+export interface CustomLabelProps {
   label?: {
     text?: string;
     size?: TypographyVariant;
@@ -14,7 +14,7 @@ interface Props {
   sx?: SxProps;
 }
 
-export default function CustomLabel(props: Props) {
+export default function CustomLabel(props: CustomLabelProps) {
   const theme = useTheme();
   const { label, orientation, children, sx } = props;
   return (

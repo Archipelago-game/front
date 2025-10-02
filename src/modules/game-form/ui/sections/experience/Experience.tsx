@@ -1,4 +1,4 @@
-import type { DefaultFormSectionProps } from "../../../types/default-form-section-props.type.ts";
+import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import { Controller } from "react-hook-form";
 import { Box, TextField } from "@mui/material";
@@ -6,7 +6,7 @@ import { Box, TextField } from "@mui/material";
 export default function Experience({
   formHook,
   onChange,
-}: DefaultFormSectionProps) {
+}: DefaultFormComponentProps) {
   return (
     <>
       <CustomLabel label={{ text: "Опыт" }} sx={{ flex: "1 0 1" }}>

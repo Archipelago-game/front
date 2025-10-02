@@ -36,4 +36,38 @@ export const FORM_DEFAULT_VALUES: FormType = {
       ],
     },
   },
+  defence: {
+    brave: 0,
+    physical: {
+      health: {
+        amount: 20,
+        list: [{ checked: false }],
+      },
+      wounds: {
+        amount: 5,
+        list: [{ checked: false }],
+      },
+    },
+    mental: {
+      resolve: {
+        amount: 20,
+        list: [{ checked: false }],
+      },
+      injuries: {
+        amount: 5,
+        list: [{ checked: false }],
+      },
+    },
+    armor: {
+      property: "",
+      slots: {
+        head: 0,
+        body: 0,
+        leftHand: 0,
+        rightHand: 0,
+        leftLeg: 0,
+        rightLeg: 0,
+      },
+    },
+  },
 };

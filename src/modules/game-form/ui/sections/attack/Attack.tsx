@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-import type { DefaultFormSectionProps } from "../../../types/default-form-section-props.type.ts";
+import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
 
 import DamageBonus from "./damage-bonus/DamageBonus.tsx";
 import DamageMethods from "./damage-methods/DamageMethods.tsx";
@@ -19,7 +19,7 @@ const defaultValues = {
   properties: "",
 };
 
-interface Props extends DefaultFormSectionProps {
+interface Props extends DefaultFormComponentProps {
   values: FormType;
 }
 
