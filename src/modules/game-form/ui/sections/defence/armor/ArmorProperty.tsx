@@ -13,7 +13,7 @@ export default function ArmorProperty({
       fieldType="text"
       formHook={formHook}
       onChange={onChange}
-      propName="defence.armor.property"
+      fieldName="defence.armor.property"
     />
   );
 }
