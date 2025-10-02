@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 
 export function useSyncFieldArray(props: FieldArrayComponentProps) {
   const { name, amount, formHook, defaultValue } = props;
+
   const { fields, append } = useFieldArray({
     name: `${name}.list`,
     control: formHook.control,
@@ -12,20 +13,22 @@ export function useSyncFieldArray(props: FieldArrayComponentProps) {
   const initialized = useRef(false);
 
   useEffect(() => {
-    if (initialized.current && amount > fields.length) {
-      for (let i = fields.length; i < amount; i++) {
-        append(defaultValue);
+    if (!initialized.current) {
+      initialized.current = true;
+      if (fields.length === 0 && amount > 0) {
+        for (let i = 0; i < amount; i++) {
+          append(defaultValue ?? { checked: false });
+        }
       }
+      return;
     }
 
-    initialized.current = true;
-
-    if (fields.length === 0 && amount > 0) {
-      for (let i = 0; i < amount; i++) {
+    if (amount > fields.length) {
+      for (let i = fields.length; i < amount; i++) {
         append(defaultValue ?? { checked: false });
       }
     }
-  }, [amount, fields]);
+  }, [amount, defaultValue]);
 
   return fields;
 }
