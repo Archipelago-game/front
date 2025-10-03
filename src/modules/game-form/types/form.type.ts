@@ -139,15 +139,15 @@ interface Intelligence {
 interface Stats {
   dexterity: Dexterity;
 
-  intelligence: Intelligence;
-
-  strength: Strength;
-
   coordination: Coordination;
 
   insight: Insight;
 
+  intelligence: Intelligence;
+
   willpower: WillPower;
+
+  strength: Strength;
 }
 
 export interface FormType {
@@ -162,4 +162,5 @@ export interface FormType {
   };
   attack: Attack;
   defence: Defence;
+  stats: Stats;
 }
