@@ -60,47 +60,47 @@ interface BaseSkillGroup {
 interface Dexterity {
   value: number;
   traditional: BaseSkillGroup & {
-    melee: boolean;
-    archery: boolean;
-    martialArts: boolean;
+    melee: number;
+    archery: number;
+    martialArts: number;
   };
   mobility: BaseSkillGroup & {
-    acrobatics: boolean;
-    stealth: boolean;
+    acrobatics: number;
+    stealth: number;
   };
 }
 
 interface Insight {
   value: number;
   social: BaseSkillGroup & {
-    persuasion: boolean;
-    manipulation: boolean;
+    persuasion: number;
+    manipulation: number;
   };
   presence: BaseSkillGroup & {
-    leadership: boolean;
-    animalHandling: boolean;
+    leadership: number;
+    animalHandling: number;
   };
   perception: BaseSkillGroup & {
-    awareness: boolean;
-    insight: boolean;
-    thievery: boolean;
+    awareness: number;
+    insight: number;
+    thievery: number;
   };
 }
 
 interface Coordination {
   value: number;
   firearms: BaseSkillGroup & {
-    pistols: boolean;
-    arquebuses: boolean;
-    fieldsQueen: boolean;
+    pistols: number;
+    arquebuses: number;
+    fieldsQueen: number;
   };
   seafaring: BaseSkillGroup & {
-    helmsman: boolean;
-    boatswain: boolean;
+    helmsman: number;
+    boatswain: number;
   };
   defense: BaseSkillGroup & {
-    parry: boolean;
-    cover: boolean;
+    parry: number;
+    cover: number;
   };
 }
 
@@ -125,7 +125,7 @@ interface Intelligence {
   value: number;
   craft: BaseSkillGroup & {
     name: string;
-    focus: boolean;
+    focus: number;
   };
 
   knowledge: BaseSkillGroup & {

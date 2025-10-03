@@ -1,8 +1,8 @@
 import { Controller } from "react-hook-form";
 
 import { Checkbox, type CheckboxProps } from "@mui/material";
-import type { FieldArrayComponentProps } from "../../types/field-array-component-props.type.ts";
-import { useSyncFieldArray } from "../../hooks/use-sync-field-array.hook.ts";
+import type { FieldArrayComponentProps } from "../../../types/field-array-component-props.type.ts";
+import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
 
 interface Props extends FieldArrayComponentProps {
   size?: CheckboxProps["size"];

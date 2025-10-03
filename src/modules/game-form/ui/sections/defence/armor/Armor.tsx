@@ -1,4 +1,3 @@
-import type { DefaultFormComponentProps } from "../../../../types/default-form-section-props.type.ts";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 import { Box } from "@mui/material";
 import Head from "./Head.tsx";
@@ -14,10 +13,7 @@ const handStyles = {
   alignItems: "center",
 };
 
-export default function Armor({
-  formHook,
-  onChange,
-}: DefaultFormComponentProps) {
+export default function Armor() {
   return (
     <CustomLabel
       label={{
@@ -40,14 +36,14 @@ export default function Armor({
             gridRow: 1,
           }}
         >
-          <Head formHook={formHook} onChange={onChange} />
+          <Head />
         </Box>
 
         <Box sx={handStyles}>
-          <RightHand formHook={formHook} onChange={onChange} />
+          <RightHand />
         </Box>
         <Box sx={handStyles}>
-          <LeftHand formHook={formHook} onChange={onChange} />
+          <LeftHand />
         </Box>
         <Box
           sx={{
@@ -55,7 +51,7 @@ export default function Armor({
             gridRow: 2,
           }}
         >
-          <Body formHook={formHook} onChange={onChange} />
+          <Body />
         </Box>
         <Box
           sx={{
@@ -64,7 +60,7 @@ export default function Armor({
             transform: "translateX(50%)",
           }}
         >
-          <RightLeg formHook={formHook} onChange={onChange} />
+          <RightLeg />
         </Box>
         <Box
           sx={{
@@ -73,7 +69,7 @@ export default function Armor({
             transform: "translateX(-50%)",
           }}
         >
-          <LeftLeg formHook={formHook} onChange={onChange} />
+          <LeftLeg />
         </Box>
       </Box>
     </CustomLabel>

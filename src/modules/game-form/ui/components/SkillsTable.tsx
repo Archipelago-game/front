@@ -9,6 +9,9 @@ import {
 } from "@mui/material";
 import type { FormNestedKeys } from "../../types/form-nested-keys.type.ts";
 
+import TextFieldController from "./TextFieldController.tsx";
+import { theme } from "../../../../common/styles/theme/custom-theme.ts";
+
 interface SkillItem {
   name: string;
   fieldName: FormNestedKeys;
@@ -61,31 +64,71 @@ export default function SkillsTable() {
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell sx={{ width: "100%" }}>Навык</TableCell>
-            <TableCell>Экс</TableCell>
-            <TableCell>Фок</TableCell>
-            <TableCell>О.З.</TableCell>
+          <TableRow
+            sx={{
+              backgroundColor: theme.palette.label.background.secondary,
+            }}
+          >
+            <TableCell
+              sx={{
+                width: "100%",
+                color: theme.palette.label.text.secondary,
+              }}
+            >
+              Навык
+            </TableCell>
+            <TableCell
+              sx={{
+                color: theme.palette.label.text.secondary,
+              }}
+            >
+              Экс
+            </TableCell>
+            <TableCell
+              sx={{
+                color: theme.palette.label.text.secondary,
+              }}
+            >
+              Фок
+            </TableCell>
+            <TableCell
+              sx={{
+                color: theme.palette.label.text.secondary,
+              }}
+            >
+              О.З.
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {skillGroups.map((group) => (
             <>
               <TableRow key={group.name}>
-                <TableCell sx={{ width: "100%" }}>{group.name}</TableCell>
-                <TableCell rowSpan={group.skills.length + 1} align="center">
-                  {group.experienceFieldName}
-                </TableCell>
-                <TableCell />
-                <TableCell rowSpan={group.skills.length + 1} align="center">
-                  {group.OZFieldName}
+                <TableCell sx={{ width: "100%" }} colSpan={4}>
+                  <strong>{group.name}</strong>
                 </TableCell>
               </TableRow>
 
-              {group.skills.map((skill) => (
+              {group.skills.map((skill, index) => (
                 <TableRow key={skill.name}>
                   <TableCell>{skill.name}</TableCell>
-                  <TableCell>{skill.fieldName}</TableCell>
+                  {index === 0 && (
+                    <TableCell rowSpan={group.skills.length} align="center">
+                      <TextFieldController
+                        fieldName={group.experienceFieldName}
+                      />
+                    </TableCell>
+                  )}
+
+                  <TableCell>
+                    <TextFieldController fieldName={skill.fieldName} />
+                  </TableCell>
+
+                  {index === 0 && (
+                    <TableCell rowSpan={group.skills.length} align="center">
+                      <TextFieldController fieldName={group.OZFieldName} />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </>
