@@ -2,6 +2,7 @@ import { type SxProps, Typography } from "@mui/material";
 import { useTheme, type TypographyVariant } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import type { ReactNode } from "react";
+import { defaultLabelTextStyles } from "./styles/label.styles.ts";
 
 export interface CustomLabelProps {
   label?: {
@@ -20,8 +21,8 @@ export default function CustomLabel(props: CustomLabelProps) {
   return (
     <Box
       sx={{
-        display: "flex",
         flex: "1 1 0",
+        display: "flex",
         flexDirection: orientation ?? "column",
         ...sx,
       }}
@@ -29,12 +30,7 @@ export default function CustomLabel(props: CustomLabelProps) {
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
-          paddingInline: "0.5em",
-          minHeight: "32px",
-          color: theme.palette.label.text[label?.color ?? "primary"],
-          backgroundColor:
-            theme.palette.label.background[label?.color ?? "primary"],
+          ...defaultLabelTextStyles(theme, label?.color),
         }}
       >
         <Typography sx={{ textAlign: "center" }} variant={label?.size ?? "h6"}>

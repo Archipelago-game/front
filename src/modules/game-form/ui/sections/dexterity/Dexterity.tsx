@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import DexterityTitle from "./DexterityTitle.tsx";
 
 export default function Dexterity() {
   return (
@@ -12,7 +13,9 @@ export default function Dexterity() {
         Атрибуты и Навыки
       </Typography>
       <Box>
-        <div>Dexterity</div>
+        <div>
+          <DexterityTitle />
+        </div>
       </Box>
     </>
   );
