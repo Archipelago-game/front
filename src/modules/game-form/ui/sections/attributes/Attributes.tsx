@@ -2,6 +2,8 @@ import { Box, Typography } from "@mui/material";
 import Dexterity from "./dexterity/Dexterity.tsx";
 import Coordination from "./coordination/Coordination.tsx";
 import Insight from "./insight/Insight.tsx";
+import WillPower from "./willPower/WillPower.tsx";
+import Strength from "./strength/Strength.tsx";
 
 export default function Attributes() {
   return (
@@ -19,6 +21,8 @@ export default function Attributes() {
         <Dexterity />
         <Coordination />
         <Insight />
+        <WillPower />
+        <Strength />
       </Box>
     </>
   );
