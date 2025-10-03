@@ -1,3 +1,5 @@
+import Dexterity from "../ui/sections/attributes/dexterity/Dexterity.tsx";
+
 export interface FormArrayFields<T> {
   amount: number;
   list: T[];
@@ -50,6 +52,104 @@ interface Defence {
   };
 }
 
+interface BaseSkillGroup {
+  expertise: number;
+  OZ: number;
+}
+
+interface Dexterity {
+  value: number;
+  traditional: BaseSkillGroup & {
+    melee: number;
+    archery: number;
+    martialArts: number;
+  };
+  mobility: BaseSkillGroup & {
+    acrobatics: number;
+    stealth: number;
+  };
+}
+
+interface Insight {
+  value: number;
+  social: BaseSkillGroup & {
+    persuasion: number;
+    manipulation: number;
+  };
+  presence: BaseSkillGroup & {
+    leadership: number;
+    animalHandling: number;
+  };
+  perception: BaseSkillGroup & {
+    awareness: number;
+    insight: number;
+    thievery: number;
+  };
+}
+
+interface Coordination {
+  value: number;
+  firearms: BaseSkillGroup & {
+    pistols: number;
+    arquebuses: number;
+    fieldsQueen: number;
+  };
+  seafaring: BaseSkillGroup & {
+    helmsman: number;
+    boatswain: number;
+  };
+  defense: BaseSkillGroup & {
+    parry: number;
+    cover: number;
+  };
+}
+
+interface WillPower {
+  value: number;
+  discipline: BaseSkillGroup & {
+    order: number;
+    navigation: number;
+    faith: number;
+  };
+}
+
+interface Strength {
+  value: number;
+  endurance: BaseSkillGroup & {
+    athletics: number;
+    resistance: number;
+  };
+}
+
+interface Intelligence {
+  value: number;
+  craft: BaseSkillGroup & {
+    name: string;
+    focus: number;
+  };
+
+  knowledge: BaseSkillGroup & {
+    civilization: number;
+    medicine: number;
+    strategy: number;
+    nature: number;
+  };
+}
+
+interface Stats {
+  dexterity: Dexterity;
+
+  coordination: Coordination;
+
+  insight: Insight;
+
+  intelligence: Intelligence;
+
+  willpower: WillPower;
+
+  strength: Strength;
+}
+
 export interface FormType {
   name: string;
   age: number;
@@ -62,4 +162,5 @@ export interface FormType {
   };
   attack: Attack;
   defence: Defence;
+  stats: Stats;
 }

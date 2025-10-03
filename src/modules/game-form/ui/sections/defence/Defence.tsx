@@ -26,8 +26,8 @@ export default function Defence({
         }}
       >
         <Brave formHook={formHook} onChange={onChange} />
-        <Armor formHook={formHook} onChange={onChange} />
-        <ArmorProperty formHook={formHook} onChange={onChange} />
+        <Armor />
+        <ArmorProperty />
       </Box>
     </>
   );

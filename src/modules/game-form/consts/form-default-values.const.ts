@@ -70,4 +70,102 @@ export const FORM_DEFAULT_VALUES: FormType = {
       },
     },
   },
+  stats: {
+    dexterity: {
+      value: 0,
+      traditional: {
+        experience: 0,
+        OZ: 0,
+        melee: false,
+        archery: false,
+        martialArts: false,
+      },
+      mobility: {
+        experience: 0,
+        OZ: 0,
+        acrobatics: false,
+        stealth: false,
+      },
+    },
+    coordination: {
+      value: 0,
+      firearms: {
+        experience: 0,
+        OZ: 0,
+        pistols: false,
+        arquebuses: false,
+        fieldsQueen: false,
+      },
+      seafaring: {
+        experience: 0,
+        OZ: 0,
+        helmsman: false,
+        boatswain: false,
+      },
+      defense: {
+        experience: 0,
+        OZ: 0,
+        parry: false,
+        cover: false,
+      },
+    },
+    insight: {
+      value: 0,
+      social: {
+        experience: 0,
+        OZ: 0,
+        persuasion: false,
+        manipulation: false,
+      },
+      presence: {
+        experience: 0,
+        OZ: 0,
+        leadership: false,
+        animalHandling: false,
+      },
+      perception: {
+        experience: 0,
+        OZ: 0,
+        awareness: false,
+        insight: false,
+        thievery: false,
+      },
+    },
+    intelligence: {
+      value: 0,
+      craft: {
+        experience: 0,
+        OZ: 0,
+        name: "",
+        focus: false,
+      },
+      knowledge: {
+        experience: 0,
+        OZ: 0,
+        civilization: 0,
+        medicine: 0,
+        strategy: 0,
+        nature: 0,
+      },
+    },
+    willpower: {
+      value: 0,
+      discipline: {
+        experience: 0,
+        OZ: 0,
+        order: 0,
+        navigation: 0,
+        faith: 0,
+      },
+    },
+    strength: {
+      value: 0,
+      endurance: {
+        experience: 0,
+        OZ: 0,
+        athletics: 0,
+        resistance: 0,
+      },
+    },
+  },
 };

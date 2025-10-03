@@ -13,4 +13,13 @@ export const theme = createTheme({
       },
     },
   },
+  components: {
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          padding: "4px 8px",
+        },
+      },
+    },
+  },
 });
