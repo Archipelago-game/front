@@ -7,59 +7,28 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import type { FormNestedKeys } from "../../types/form-nested-keys.type.ts";
+import type { FormNestedKeys } from "../../../types/form-nested-keys.type.ts";
 
-import TextFieldController from "./TextFieldController.tsx";
-import { theme } from "../../../../common/styles/theme/custom-theme.ts";
+import TextFieldController from "../../components/TextFieldController.tsx";
+import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
 
-interface SkillItem {
+export interface SkillItem {
   name: string;
   fieldName: FormNestedKeys;
 }
 
-interface SkillGroup {
+export interface SkillGroup {
   name: string;
-  experienceFieldName: FormNestedKeys;
+  expertiseFieldName: FormNestedKeys;
   OZFieldName: FormNestedKeys;
   skills: SkillItem[];
 }
 
-const traditional: SkillItem[] = [
-  { name: "Ближний бой", fieldName: "stats.dexterity.traditional.melee" },
-  { name: "Лук", fieldName: "stats.dexterity.traditional.archery" },
-  {
-    name: "Боевый искусства",
-    fieldName: "stats.dexterity.traditional.martialArts",
-  },
-];
+interface Props {
+  skillGroups: SkillGroup[];
+}
 
-const mobility: SkillItem[] = [
-  {
-    name: "Акробатика",
-    fieldName: "stats.dexterity.mobility.acrobatics",
-  },
-  {
-    name: "Скрытность",
-    fieldName: "stats.dexterity.mobility.stealth",
-  },
-];
-
-const skillGroups: SkillGroup[] = [
-  {
-    name: "Традиционные",
-    experienceFieldName: "stats.dexterity.traditional.experience",
-    OZFieldName: "stats.dexterity.traditional.OZ",
-    skills: traditional,
-  },
-  {
-    name: "Подвижность",
-    experienceFieldName: "stats.dexterity.mobility.experience",
-    OZFieldName: "stats.dexterity.mobility.OZ",
-    skills: mobility,
-  },
-];
-
-export default function SkillsTable() {
+export default function SkillsTable({ skillGroups }: Props) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -115,7 +84,7 @@ export default function SkillsTable() {
                   {index === 0 && (
                     <TableCell rowSpan={group.skills.length} align="center">
                       <TextFieldController
-                        fieldName={group.experienceFieldName}
+                        fieldName={group.expertiseFieldName}
                       />
                     </TableCell>
                   )}

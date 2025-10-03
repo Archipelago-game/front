@@ -1,15 +1,15 @@
 import { Box, Typography } from "@mui/material";
-import { defaultLabelTextStyles } from "./styles/label.styles.ts";
-import { theme } from "../../../../common/styles/theme/custom-theme.ts";
+import { defaultLabelTextStyles } from "../../components/styles/label.styles.ts";
+import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
 import TextFieldController, {
   type DefaultFieldControllerProps,
-} from "./TextFieldController.tsx";
+} from "../../components/TextFieldController.tsx";
 
 interface Props extends DefaultFieldControllerProps {
   title: string;
 }
 
-export default function StatTitle({ fieldName, title }: Props) {
+export default function AttributeTitle({ fieldName, title }: Props) {
   return (
     <Box
       sx={{

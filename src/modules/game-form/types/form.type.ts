@@ -1,4 +1,4 @@
-import Dexterity from "../ui/sections/dexterity/Dexterity.tsx";
+import Dexterity from "../ui/sections/attributes/dexterity/Dexterity.tsx";
 
 export interface FormArrayFields<T> {
   amount: number;
@@ -53,7 +53,7 @@ interface Defence {
 }
 
 interface BaseSkillGroup {
-  experience: number;
+  expertise: number;
   OZ: number;
 }
 

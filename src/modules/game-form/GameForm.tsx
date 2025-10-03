@@ -6,7 +6,8 @@ import Experience from "./ui/sections/experience/Experience.tsx";
 import Attack from "./ui/sections/attack/Attack.tsx";
 import Defence from "./ui/sections/defence/Defence.tsx";
 import { useFormContext } from "./providers/use-context-form.hook.ts";
-import Dexterity from "./ui/sections/dexterity/Dexterity.tsx";
+
+import Attributes from "./ui/sections/attributes/Attributes.tsx";
 
 export default function GameForm() {
   const formContext = useFormContext();
@@ -40,7 +41,7 @@ export default function GameForm() {
           </Grid>
 
           <Grid size={12}>
-            <Dexterity />
+            <Attributes />
           </Grid>
         </Grid>
       </Grid>

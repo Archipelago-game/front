@@ -1,8 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import DexterityTitle from "./DexterityTitle.tsx";
-import SkillsTable from "../../components/SkillsTable.tsx";
+import Dexterity from "./dexterity/Dexterity.tsx";
 
-export default function Dexterity() {
+export default function Attributes() {
   return (
     <>
       <Typography
@@ -13,9 +12,9 @@ export default function Dexterity() {
       >
         Атрибуты и Навыки
       </Typography>
-      <Box>
-        <DexterityTitle />
-        <SkillsTable />
+
+      <Box display="flex" gap={2}>
+        <Dexterity />
       </Box>
     </>
   );
