@@ -1,18 +1,16 @@
-import type { DefaultFormComponentProps } from "../../../../types/default-form-section-props.type.ts";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 
 import BaseField from "../../../components/BaseField.tsx";
 
-import type { FormNestedKeys } from "../../../../types/form-nested-keys.type.ts";
+import type { DefaultFieldControllerProps } from "../../../components/TextFieldController.tsx";
 
-interface Props extends DefaultFormComponentProps {
+interface Props extends DefaultFieldControllerProps {
   primaryText: string;
   secondaryText: string;
-  propName: FormNestedKeys;
 }
 
 export default function BaseSlot(props: Props) {
-  const { primaryText, secondaryText, propName, onChange, formHook } = props;
+  const { primaryText, secondaryText, fieldName } = props;
   return (
     <CustomLabel
       label={{
@@ -25,9 +23,7 @@ export default function BaseSlot(props: Props) {
           color: "secondary",
           text: secondaryText,
         }}
-        fieldName={propName}
-        onChange={onChange}
-        formHook={formHook}
+        fieldName={fieldName}
       />
     </CustomLabel>
   );

@@ -1,15 +1,9 @@
-import type { DefaultFormComponentProps } from "../../../../types/default-form-section-props.type.ts";
 import BaseSlot from "./BaseSlot.tsx";
 
-export default function Head({
-  formHook,
-  onChange,
-}: DefaultFormComponentProps) {
+export default function Head() {
   return (
     <BaseSlot
-      propName="defence.armor.slots.head"
-      formHook={formHook}
-      onChange={onChange}
+      fieldName="defence.armor.slots.head"
       primaryText="Голова"
       secondaryText="1-2"
     />
