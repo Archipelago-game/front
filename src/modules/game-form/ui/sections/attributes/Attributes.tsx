@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import Dexterity from "./dexterity/Dexterity.tsx";
+import Coordination from "./coordination/Coordination.tsx";
 
 export default function Attributes() {
   return (
@@ -15,6 +16,7 @@ export default function Attributes() {
 
       <Box display="flex" gap={2}>
         <Dexterity />
+        <Coordination />
       </Box>
     </>
   );

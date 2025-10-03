@@ -1,14 +1,14 @@
-import { Box } from "@mui/material";
 import DexterityTitle from "./DexterityTitle.tsx";
 import DexteritySkillsTable from "./DexteritySkillsTable.tsx";
+import Attribute from "../Attribute.tsx";
 
 export default function Dexterity() {
   return (
     <>
-      <Box>
+      <Attribute>
         <DexterityTitle />
         <DexteritySkillsTable />
-      </Box>
+      </Attribute>
     </>
   );
 }
