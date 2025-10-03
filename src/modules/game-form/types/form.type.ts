@@ -52,19 +52,19 @@ interface Defence {
   };
 }
 
-interface BaseSkill {
+interface BaseSkillGroup {
   experience: number;
   OZ: number;
 }
 
 interface Dexterity {
   value: number;
-  traditional: BaseSkill & {
+  traditional: BaseSkillGroup & {
     melee: boolean;
     archery: boolean;
     martialArts: boolean;
   };
-  mobility: BaseSkill & {
+  mobility: BaseSkillGroup & {
     acrobatics: boolean;
     stealth: boolean;
   };
@@ -72,15 +72,15 @@ interface Dexterity {
 
 interface Insight {
   value: number;
-  social: BaseSkill & {
+  social: BaseSkillGroup & {
     persuasion: boolean;
     manipulation: boolean;
   };
-  presence: BaseSkill & {
+  presence: BaseSkillGroup & {
     leadership: boolean;
     animalHandling: boolean;
   };
-  perception: BaseSkill & {
+  perception: BaseSkillGroup & {
     awareness: boolean;
     insight: boolean;
     thievery: boolean;
@@ -89,16 +89,16 @@ interface Insight {
 
 interface Coordination {
   value: number;
-  firearms: BaseSkill & {
+  firearms: BaseSkillGroup & {
     pistols: boolean;
     arquebuses: boolean;
     fieldsQueen: boolean;
   };
-  seafaring: BaseSkill & {
+  seafaring: BaseSkillGroup & {
     helmsman: boolean;
     boatswain: boolean;
   };
-  defense: BaseSkill & {
+  defense: BaseSkillGroup & {
     parry: boolean;
     cover: boolean;
   };
@@ -106,7 +106,7 @@ interface Coordination {
 
 interface WillPower {
   value: number;
-  discipline: BaseSkill & {
+  discipline: BaseSkillGroup & {
     order: number;
     navigation: number;
     faith: number;
@@ -115,7 +115,7 @@ interface WillPower {
 
 interface Strength {
   value: number;
-  endurance: BaseSkill & {
+  endurance: BaseSkillGroup & {
     athletics: number;
     resistance: number;
   };
@@ -123,12 +123,12 @@ interface Strength {
 
 interface Intelligence {
   value: number;
-  craft: BaseSkill & {
+  craft: BaseSkillGroup & {
     name: string;
     focus: boolean;
   };
 
-  knowledge: BaseSkill & {
+  knowledge: BaseSkillGroup & {
     civilization: number;
     medicine: number;
     strategy: number;
