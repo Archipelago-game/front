@@ -3,14 +3,14 @@ import { useCustomFormContext } from "../../../../providers/use-custom-context-f
 import { buildSkillGroups } from "../skill-table/build-skill-groups.util.ts";
 import SkillsTable from "../skill-table/SkillsTable.tsx";
 
-export default function IntelligenceSkillTableAuto() {
+export default function StrengthSkillTableAuto() {
   const { values } = useCustomFormContext();
 
   if (!values) return null;
 
-  const intelligence = values.stats.intelligence;
+  const strength = values.stats.strength;
 
-  const groups = buildSkillGroups(intelligence);
+  const groups = buildSkillGroups(strength);
 
   return <SkillsTable skillGroups={groups} />;
 }

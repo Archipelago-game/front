@@ -10,7 +10,7 @@ export default function IntelligenceTitle() {
 
   return (
     <AttributeTitle
-      title={"values.stats.intelligence.name"}
+      title={values.stats.intelligence.name}
       fieldName="stats.intelligence.value"
     />
   );

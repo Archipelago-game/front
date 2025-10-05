@@ -1,5 +1,5 @@
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
-import SkillsTable from "../SkillsTable.tsx";
+import SkillsTable from "../skill-table/SkillsTable.tsx";
 
 export default function IntelligenceSkillTable() {
   const { values } = useCustomFormContext();

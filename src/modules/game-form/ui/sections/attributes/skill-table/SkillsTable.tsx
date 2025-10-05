@@ -7,11 +7,11 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import type { FormNestedKeys } from "../../../types/form-nested-keys.type.ts";
+import type { FormNestedKeys } from "../../../../types/form-nested-keys.type.ts";
 
-import TextFieldController from "../../components/TextFieldController.tsx";
-import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
-import type { BaseSkill } from "../../../types/form/attributes.type.ts";
+import TextFieldController from "../../../components/TextFieldController.tsx";
+import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
+import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 
 export interface SkillItem extends BaseSkill {
   fieldName: FormNestedKeys;

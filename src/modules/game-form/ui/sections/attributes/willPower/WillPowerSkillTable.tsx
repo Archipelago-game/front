@@ -1,7 +1,7 @@
 import SkillsTable, {
   type SkillGroup,
   type SkillItem,
-} from "../SkillsTable.tsx";
+} from "../skill-table/SkillsTable.tsx";
 
 const discipline: SkillItem[] = [
   { name: "Порядок", fieldName: "stats.willpower.discipline.order" },

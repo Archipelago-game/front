@@ -1,16 +1,15 @@
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
-
 import { buildSkillGroups } from "../skill-table/build-skill-groups.util.ts";
 import SkillsTable from "../skill-table/SkillsTable.tsx";
 
-export default function IntelligenceSkillTableAuto() {
+export default function DexteritySkillTableAuto() {
   const { values } = useCustomFormContext();
 
   if (!values) return null;
 
-  const intelligence = values.stats.intelligence;
+  const dexterity = values.stats.dexterity;
 
-  const groups = buildSkillGroups(intelligence);
+  const groups = buildSkillGroups(dexterity);
 
   return <SkillsTable skillGroups={groups} />;
 }

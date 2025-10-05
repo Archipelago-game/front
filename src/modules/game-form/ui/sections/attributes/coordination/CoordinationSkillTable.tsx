@@ -1,7 +1,7 @@
 import SkillsTable, {
   type SkillGroup,
   type SkillItem,
-} from "../SkillsTable.tsx";
+} from "../skill-table/SkillsTable.tsx";
 
 const firearms: SkillItem[] = [
   { name: "Пистолеты", fieldName: "stats.coordination.firearms.pistols" },
