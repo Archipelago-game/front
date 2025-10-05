@@ -50,6 +50,7 @@ export default function SkillsTable({ skillGroups }: Props) {
               sx={{
                 color: theme.palette.label.text.secondary,
               }}
+              align={"center"}
             >
               Экс
             </TableCell>
@@ -57,6 +58,7 @@ export default function SkillsTable({ skillGroups }: Props) {
               sx={{
                 color: theme.palette.label.text.secondary,
               }}
+              align={"center"}
             >
               Фок
             </TableCell>
@@ -64,6 +66,7 @@ export default function SkillsTable({ skillGroups }: Props) {
               sx={{
                 color: theme.palette.label.text.secondary,
               }}
+              align={"center"}
             >
               О.З.
             </TableCell>
