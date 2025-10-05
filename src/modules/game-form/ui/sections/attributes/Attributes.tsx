@@ -4,6 +4,7 @@ import Coordination from "./coordination/Coordination.tsx";
 import Insight from "./insight/Insight.tsx";
 import WillPower from "./willPower/WillPower.tsx";
 import Strength from "./strength/Strength.tsx";
+import Intelligence from "./intelligence/Intelligence.tsx";
 
 export default function Attributes() {
   return (
@@ -22,6 +23,7 @@ export default function Attributes() {
         <Coordination />
         <Insight />
         <WillPower />
+        <Intelligence />
         <Strength />
       </Box>
     </>

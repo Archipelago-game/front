@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { FormContext } from "./use-context-form.hook.ts";
+import { CustomFormContext } from "./use-custom-context-form.hook.ts";
 
 import type { FormType } from "../types/form/form.type.ts";
 import { FORM_DEFAULT_VALUES } from "../consts/form-default-values.const.ts";
@@ -17,7 +17,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function FormContextProvider({ children }: Props) {
+export function CustomFormContextProvider({ children }: Props) {
   const [formValues, setFormValues] = useState<FormType>(FORM_DEFAULT_VALUES);
 
   const methods = useForm<FormType>({
@@ -57,5 +57,9 @@ export function FormContextProvider({ children }: Props) {
     methods.reset(formValues);
   }, [formValues, methods]);
 
-  return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
+  return (
+    <CustomFormContext.Provider value={value}>
+      {children}
+    </CustomFormContext.Provider>
+  );
 }

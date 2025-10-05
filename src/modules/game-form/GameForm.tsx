@@ -5,13 +5,13 @@ import Luck from "./ui/sections/luck/Luck.tsx";
 import Experience from "./ui/sections/experience/Experience.tsx";
 import Attack from "./ui/sections/attack/Attack.tsx";
 import Defence from "./ui/sections/defence/Defence.tsx";
-import { useFormContext } from "./providers/use-context-form.hook.ts";
+import { useCustomFormContext } from "./providers/use-custom-context-form.hook.ts";
 
 import Attributes from "./ui/sections/attributes/Attributes.tsx";
 
 export default function GameForm() {
-  const formContext = useFormContext();
-  const { methods, onChange, values } = useFormContext();
+  const formContext = useCustomFormContext();
+  const { methods, onChange, values } = useCustomFormContext();
 
   if (!formContext || !values) {
     return null;
