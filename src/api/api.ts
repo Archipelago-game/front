@@ -1,4 +1,4 @@
-import type { FormType } from "../modules/game-form/types/form.type.ts";
+import type { FormType } from "../modules/game-form/types/form/form.type.ts";
 import { getLocalStorage, setLocalStorage } from "./local-storage.ts";
 
 export const api = {

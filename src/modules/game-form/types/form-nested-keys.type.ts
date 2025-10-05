@@ -1,4 +1,4 @@
-import type { FormArrayFields, FormType } from "./form.type.ts";
+import type { FormArrayFields, FormType } from "./form/form.type.ts";
 import type { DecrementDepth } from "./field-array-key.type.ts";
 
 type NestedKeys<T, Depth extends number = 5> = [Depth] extends [0]

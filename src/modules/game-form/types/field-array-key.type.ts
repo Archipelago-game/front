@@ -1,4 +1,4 @@
-import type { FormArrayFields, FormType } from "./form.type.ts";
+import type { FormArrayFields, FormType } from "./form/form.type.ts";
 
 export type DecrementDepth<D extends number> = D extends 5
   ? 4
