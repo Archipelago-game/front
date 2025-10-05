@@ -8,7 +8,7 @@ import {
 } from "react";
 import { FormContext } from "./use-context-form.hook.ts";
 
-import type { FormType } from "../types/form.type.ts";
+import type { FormType } from "../types/form/form.type.ts";
 import { FORM_DEFAULT_VALUES } from "../consts/form-default-values.const.ts";
 import { type ControllerRenderProps, useForm } from "react-hook-form";
 import { api } from "../../../api/api.ts";

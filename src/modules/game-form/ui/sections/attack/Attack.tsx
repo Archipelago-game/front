@@ -4,7 +4,7 @@ import type { DefaultFormComponentProps } from "../../../types/default-form-sect
 
 import DamageBonus from "./damage-bonus/DamageBonus.tsx";
 import DamageMethods from "./damage-methods/DamageMethods.tsx";
-import type { FormType } from "../../../types/form.type.ts";
+import type { FormType } from "../../../types/form/form.type.ts";
 
 const defaultValues = {
   name: "",

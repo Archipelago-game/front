@@ -2,7 +2,7 @@ import type { FieldArrayComponentProps } from "../../../../types/field-array-com
 import { useSyncFieldArray } from "../../../../hooks/use-sync-field-array.hook.ts";
 
 import DamageMethodItem from "./DamageMethodItem.tsx";
-import type { FormType } from "../../../../types/form.type.ts";
+import type { FormType } from "../../../../types/form/form.type.ts";
 import { Box } from "@mui/material";
 
 interface Props extends FieldArrayComponentProps {
