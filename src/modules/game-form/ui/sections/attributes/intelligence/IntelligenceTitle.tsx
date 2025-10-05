@@ -8,5 +8,10 @@ export default function IntelligenceTitle() {
     return null;
   }
 
-  return <AttributeTitle title={values.stats.intelligence} fieldName={} />;
+  return (
+    <AttributeTitle
+      title={values.stats.intelligence.name}
+      fieldName="stats.intelligence.value"
+    />
+  );
 }

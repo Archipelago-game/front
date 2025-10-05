@@ -4,11 +4,13 @@ export interface BaseSkill {
   focus: number;
 }
 
+export type SkillsType<T extends string> = Record<T, BaseSkill>;
+
 export interface BaseSkillGroup<T extends string> {
   name: string;
   expertise: number;
   OZ: number;
-  skills: Record<T, BaseSkill>;
+  skills: SkillsType<T>;
 }
 
 export interface BaseAttribute {
