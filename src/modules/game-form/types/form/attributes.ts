@@ -1,86 +1,92 @@
-interface BaseSkill {
+export interface BaseSkill {
   id: string;
   name: string;
   focus: number;
 }
 
-interface BaseSkillGroup<T extends string> {
+export interface BaseSkillGroup<T extends string> {
   name: string;
   expertise: number;
   OZ: number;
   skills: Record<T, BaseSkill>;
 }
 
-// ---------- Dexterity ----------
-type TraditionalSkillId = "melee" | "archery" | "martialArts";
-type MobilitySkillId = "acrobatics" | "stealth";
-
-export interface Dexterity {
+export interface BaseAttribute {
   value: number;
+  name: string;
+}
+
+// --- Dexterity ---
+
+export type TraditionalSkillId = "melee" | "archery" | "martialArts";
+export type MobilitySkillId = "acrobatics" | "stealth";
+
+export interface Dexterity extends BaseAttribute {
   traditional: BaseSkillGroup<TraditionalSkillId>;
   mobility: BaseSkillGroup<MobilitySkillId>;
 }
 
-// ---------- Insight ----------
-type SocialSkillId = "persuasion" | "manipulation";
-type PresenceSkillId = "leadership" | "animalHandling";
-type PerceptionSkillId = "awareness" | "insight" | "thievery";
+// --- Insight ---
 
-export interface Insight {
-  value: number;
+export type SocialSkillId = "persuasion" | "manipulation";
+export type PresenceSkillId = "leadership" | "animalHandling";
+export type PerceptionSkillId = "awareness" | "insight" | "thievery";
+
+export interface Insight extends BaseAttribute {
   social: BaseSkillGroup<SocialSkillId>;
   presence: BaseSkillGroup<PresenceSkillId>;
   perception: BaseSkillGroup<PerceptionSkillId>;
 }
 
-// ---------- Coordination ----------
-type FirearmsSkillId = "pistols" | "arquebuses" | "fieldsQueen";
-type SeafaringSkillId = "helmsman" | "boatswain";
-type DefenseSkillId = "parry" | "cover";
+// --- Coordination ---
 
-export interface Coordination {
-  value: number;
+export type FirearmsSkillId = "pistols" | "arquebuses" | "fieldsQueen";
+export type SeafaringSkillId = "helmsman" | "boatswain";
+export type DefenseSkillId = "parry" | "cover";
+
+export interface Coordination extends BaseAttribute {
   firearms: BaseSkillGroup<FirearmsSkillId>;
   seafaring: BaseSkillGroup<SeafaringSkillId>;
   defense: BaseSkillGroup<DefenseSkillId>;
 }
 
-// ---------- WillPower ----------
-type DisciplineSkillId = "order" | "navigation" | "faith";
+// --- WillPower ---
 
-export interface WillPower {
-  value: number;
+export type DisciplineSkillId = "order" | "navigation" | "faith";
+
+export interface WillPower extends BaseAttribute {
   discipline: BaseSkillGroup<DisciplineSkillId>;
 }
 
-// ---------- Strength ----------
-type EnduranceSkillId = "athletics" | "resistance";
+// --- Strength ---
 
-export interface Strength {
-  value: number;
+export type EnduranceSkillId = "athletics" | "resistance";
+
+export interface Strength extends BaseAttribute {
   endurance: BaseSkillGroup<EnduranceSkillId>;
 }
 
-// ---------- Intelligence ----------
-type CraftSkillId = "craft1" | "craft2";
-type KnowledgeSkillId = "civilization" | "medicine" | "strategy" | "nature";
+// --- Intelligence ---
 
-export interface Intelligence {
-  value: number;
+export type CraftSkillId = "craft1" | "craft2";
+export type KnowledgeSkillId =
+  | "civilization"
+  | "medicine"
+  | "strategy"
+  | "nature";
+
+export interface Intelligence extends BaseAttribute {
   craft: BaseSkillGroup<CraftSkillId>;
   knowledge: BaseSkillGroup<KnowledgeSkillId>;
 }
 
+// --- Общие характеристики ---
+
 export interface Stats {
   dexterity: Dexterity;
-
-  coordination: Coordination;
-
   insight: Insight;
-
-  intelligence: Intelligence;
-
+  coordination: Coordination;
   willpower: WillPower;
-
   strength: Strength;
+  intelligence: Intelligence;
 }
