@@ -19,12 +19,12 @@ export default function Attributes() {
       </Typography>
 
       <Box display="flex" gap={2}>
-        <Dexterity />
-        <Coordination />
-        <Insight />
-        <WillPower />
+        {/*<Dexterity />*/}
+        {/*<Coordination />*/}
+        {/*<Insight />*/}
+        {/*<WillPower />*/}
+        {/*<Strength />*/}
         <Intelligence />
-        <Strength />
       </Box>
     </>
   );

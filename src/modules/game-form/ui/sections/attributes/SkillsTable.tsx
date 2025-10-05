@@ -11,7 +11,7 @@ import type { FormNestedKeys } from "../../../types/form-nested-keys.type.ts";
 
 import TextFieldController from "../../components/TextFieldController.tsx";
 import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
-import type { BaseSkill } from "../../../types/form/attributes.ts";
+import type { BaseSkill } from "../../../types/form/attributes.type.ts";
 
 export interface SkillItem extends BaseSkill {
   fieldName: FormNestedKeys;
@@ -27,7 +27,7 @@ export interface SkillGroup {
 interface Props {
   skillGroups: SkillGroup[];
 }
-
+// todo разораться с key
 export default function SkillsTable({ skillGroups }: Props) {
   return (
     <TableContainer component={Paper}>
@@ -79,7 +79,7 @@ export default function SkillsTable({ skillGroups }: Props) {
               </TableRow>
 
               {group.skills.map((skill, index) => (
-                <TableRow key={skill.name}>
+                <TableRow key={skill.id}>
                   <TableCell>{skill.name}</TableCell>
                   {index === 0 && (
                     <TableCell rowSpan={group.skills.length} align="center">

@@ -1,4 +1,4 @@
-import { defaultStats } from "./starts-default.const.ts";
+import { defaultStats } from "./stats-default.const.ts";
 import type { FormType } from "../types/form/form.type.ts";
 
 export const FORM_DEFAULT_VALUES: FormType = {

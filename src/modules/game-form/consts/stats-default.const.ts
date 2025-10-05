@@ -6,7 +6,7 @@ import type {
   Stats,
   Strength,
   WillPower,
-} from "../types/form/attributes.ts";
+} from "../types/form/attributes.type.ts";
 
 // --- атрибуты и дефолты ---
 
