@@ -1,5 +1,6 @@
-import SkillsTable from "../SkillsTable.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
+import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
+import SkillsTable from "../SkillsTable.tsx";
 
 export default function IntelligenceSkillTableTest() {
   const { values } = useCustomFormContext();
@@ -14,10 +15,12 @@ export default function IntelligenceSkillTableTest() {
     .filter(([key]) => key !== "name" && key !== "value")
     .map(([groupKey, group]) => {
       const basePath = `stats.intelligence.${groupKey}`;
-      const skills = Object.entries(group.skills).map(([skillKey, skill]) => ({
-        fieldName: `${basePath}.skills.${skillKey}.focus`,
-        ...skill,
-      }));
+      const skills = Object.entries<BaseSkill>(group.skills).map(
+        ([skillKey, skill]) => ({
+          fieldName: `${basePath}.skills.${skillKey}.focus`,
+          ...skill,
+        }),
+      );
 
       return {
         name: group.name,

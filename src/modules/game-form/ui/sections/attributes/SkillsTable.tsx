@@ -80,7 +80,19 @@ export default function SkillsTable({ skillGroups }: Props) {
 
               {group.skills.map((skill, index) => (
                 <TableRow key={skill.id}>
-                  <TableCell>{skill.name}</TableCell>
+                  {skill.name !== "" && <TableCell>{skill.name}</TableCell>}
+                  {skill.name === "" && (
+                    <TableCell>
+                      {
+                        // todo типизация fieldName
+                        <TextFieldController
+                          fieldType="text"
+                          fieldName={`stats.intelligence.craft.skills.${skill.id}.name`}
+                        />
+                      }
+                    </TableCell>
+                  )}
+
                   {index === 0 && (
                     <TableCell rowSpan={group.skills.length} align="center">
                       <TextFieldController
