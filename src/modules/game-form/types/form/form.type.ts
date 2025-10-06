@@ -5,9 +5,11 @@ export interface FormArrayFields<T> {
   list: T[];
 }
 
-export type CheckBoxList = FormArrayFields<{
+export interface Checkbox {
   checked: boolean;
-}>;
+}
+
+export type CheckBoxList = FormArrayFields<Checkbox>;
 
 export interface AttackMethod {
   name: string;
