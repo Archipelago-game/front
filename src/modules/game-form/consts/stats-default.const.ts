@@ -6,11 +6,12 @@ import type {
   Stats,
   Strength,
   WillPower,
-} from "../types/form/attributes.ts";
+} from "../types/form/attributes.type.ts";
 
 // --- атрибуты и дефолты ---
 
 const defaultDexterity: Dexterity = {
+  name: "Ловкость",
   value: 0,
   traditional: {
     name: "Традиционные",
@@ -34,6 +35,7 @@ const defaultDexterity: Dexterity = {
 };
 
 const defaultInsight: Insight = {
+  name: "Проницательность",
   value: 0,
   social: {
     name: "Социальные",
@@ -70,6 +72,7 @@ const defaultInsight: Insight = {
 };
 
 const defaultCoordination: Coordination = {
+  name: "Координация",
   value: 0,
   firearms: {
     name: "Огнестрельное",
@@ -102,6 +105,7 @@ const defaultCoordination: Coordination = {
 };
 
 const defaultWillPower: WillPower = {
+  name: "Сила воли",
   value: 0,
   discipline: {
     name: "Дисциплина",
@@ -116,6 +120,7 @@ const defaultWillPower: WillPower = {
 };
 
 const defaultStrength: Strength = {
+  name: "Сила",
   value: 0,
   endurance: {
     name: "Выносливость",
@@ -129,6 +134,7 @@ const defaultStrength: Strength = {
 };
 
 const defaultIntelligence: Intelligence = {
+  name: "Интеллект",
   value: 0,
   craft: {
     name: "Ремесло",

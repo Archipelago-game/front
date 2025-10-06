@@ -1,4 +1,4 @@
-import type { Stats } from "./attributes.ts";
+import type { Stats } from "./attributes.type.ts";
 
 export interface FormArrayFields<T> {
   amount: number;

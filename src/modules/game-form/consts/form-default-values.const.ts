@@ -1,4 +1,4 @@
-import { defaultStats } from "./starts-default.const.ts";
+import { defaultStats } from "./stats-default.const.ts";
 import type { FormType } from "../types/form/form.type.ts";
 
 export const FORM_DEFAULT_VALUES: FormType = {
@@ -8,7 +8,13 @@ export const FORM_DEFAULT_VALUES: FormType = {
   languages: "",
   luck: {
     amount: 5,
-    list: [],
+    list: [
+      { checked: false },
+      { checked: false },
+      { checked: false },
+      { checked: false },
+      { checked: false },
+    ],
   },
   experience: {
     total: 0,

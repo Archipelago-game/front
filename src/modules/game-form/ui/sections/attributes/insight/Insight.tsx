@@ -1,12 +1,13 @@
 import Attribute from "../Attribute.tsx";
-import InsightSkillsTable from "./InsightSkillsTable.tsx";
+
 import InsightTitle from "./InsightTitle.tsx";
+import InsightSkillTableAuto from "./InsightSkillsTableAuto.tsx";
 
 export default function Insight() {
   return (
     <Attribute>
       <InsightTitle />
-      <InsightSkillsTable />
+      <InsightSkillTableAuto />
     </Attribute>
   );
 }

@@ -1,7 +1,7 @@
 import SkillsTable, {
   type SkillGroup,
   type SkillItem,
-} from "../SkillsTable.tsx";
+} from "../skill-table/SkillsTable.tsx";
 
 const traditional: SkillItem[] = [
   { name: "Ближний бой", fieldName: "stats.dexterity.traditional.melee" },

@@ -1,12 +1,13 @@
 import Attribute from "../Attribute.tsx";
-import StrengthSkillTable from "./StrengthSkillTable.tsx";
+
 import StrengthTitle from "./StrengthTitle.tsx";
+import StrengthSkillTableAuto from "./StrengthSkillTableAuto.tsx";
 
 export default function Strength() {
   return (
     <Attribute>
       <StrengthTitle />
-      <StrengthSkillTable />
+      <StrengthSkillTableAuto />
     </Attribute>
   );
 }

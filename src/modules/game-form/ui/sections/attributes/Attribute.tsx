@@ -5,5 +5,5 @@ interface Props {
   children: ReactNode;
 }
 export default function Attribute({ children }: Props) {
-  return <Box>{children}</Box>;
+  return <Box sx={{ minWidth: "350px" }}>{children}</Box>;
 }

@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 import type { FormNestedKeys } from "../../types/form-nested-keys.type.ts";
 import { type HTMLInputTypeAttribute } from "react";
 
-import { useFormContext } from "../../providers/use-context-form.hook.ts";
+import { useCustomFormContext } from "../../providers/use-custom-context-form.hook.ts";
 
 export interface DefaultFieldControllerProps {
   fieldName: FormNestedKeys;
@@ -15,7 +15,7 @@ export default function TextFieldController(
 ) {
   const { fieldType, fieldName } = props;
 
-  const formContext = useFormContext();
+  const formContext = useCustomFormContext();
   const { methods, onChange } = formContext;
 
   if (!formContext) {

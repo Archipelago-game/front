@@ -7,13 +7,13 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import type { FormNestedKeys } from "../../../types/form-nested-keys.type.ts";
+import type { FormNestedKeys } from "../../../../types/form-nested-keys.type.ts";
 
-import TextFieldController from "../../components/TextFieldController.tsx";
-import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
+import TextFieldController from "../../../components/TextFieldController.tsx";
+import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
+import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 
-export interface SkillItem {
-  name: string;
+export interface SkillItem extends BaseSkill {
   fieldName: FormNestedKeys;
 }
 
@@ -27,7 +27,7 @@ export interface SkillGroup {
 interface Props {
   skillGroups: SkillGroup[];
 }
-
+// todo разораться с key
 export default function SkillsTable({ skillGroups }: Props) {
   return (
     <TableContainer component={Paper}>
@@ -50,6 +50,7 @@ export default function SkillsTable({ skillGroups }: Props) {
               sx={{
                 color: theme.palette.label.text.secondary,
               }}
+              align={"center"}
             >
               Экс
             </TableCell>
@@ -57,6 +58,7 @@ export default function SkillsTable({ skillGroups }: Props) {
               sx={{
                 color: theme.palette.label.text.secondary,
               }}
+              align={"center"}
             >
               Фок
             </TableCell>
@@ -64,6 +66,7 @@ export default function SkillsTable({ skillGroups }: Props) {
               sx={{
                 color: theme.palette.label.text.secondary,
               }}
+              align={"center"}
             >
               О.З.
             </TableCell>
@@ -79,8 +82,20 @@ export default function SkillsTable({ skillGroups }: Props) {
               </TableRow>
 
               {group.skills.map((skill, index) => (
-                <TableRow key={skill.name}>
-                  <TableCell>{skill.name}</TableCell>
+                <TableRow key={skill.id}>
+                  {skill.name !== "" && <TableCell>{skill.name}</TableCell>}
+                  {skill.name === "" && (
+                    <TableCell>
+                      {
+                        // todo типизация fieldName
+                        <TextFieldController
+                          fieldType="text"
+                          fieldName={`stats.intelligence.craft.skills.${skill.id}.name`}
+                        />
+                      }
+                    </TableCell>
+                  )}
+
                   {index === 0 && (
                     <TableCell rowSpan={group.skills.length} align="center">
                       <TextFieldController

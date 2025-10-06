@@ -10,12 +10,14 @@ interface FormContext {
   values: FormType | null;
 }
 
-export const FormContext = createContext<FormContext | null>(null);
+export const CustomFormContext = createContext<FormContext | null>(null);
 
-export function useFormContext() {
-  const context = useContext(FormContext);
+export function useCustomFormContext() {
+  const context = useContext(CustomFormContext);
   if (!context) {
-    throw new Error("useFormContext must be used within FormContextProvider");
+    throw new Error(
+      "useCustomFormContext must be used within FormContextProvider",
+    );
   }
   return context;
 }

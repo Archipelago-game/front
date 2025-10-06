@@ -1,10 +1,10 @@
 import GameForm from "../../modules/game-form/GameForm.tsx";
-import { FormContextProvider } from "../../modules/game-form/providers/form-context.provider.tsx";
+import { CustomFormContextProvider } from "../../modules/game-form/providers/custom-form-context.provider.tsx";
 
 export default function GameFormPage() {
   return (
-    <FormContextProvider>
+    <CustomFormContextProvider>
       <GameForm />
-    </FormContextProvider>
+    </CustomFormContextProvider>
   );
 }
