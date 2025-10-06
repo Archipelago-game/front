@@ -1,0 +1,90 @@
+import { Box, Checkbox } from "@mui/material";
+import CustomLabel from "../../../components/CustomLabel.tsx";
+import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
+import { Controller, useFieldArray } from "react-hook-form";
+import type { FormType } from "../../../../types/form/form.type.ts";
+import TextFieldController from "../../../components/TextFieldController.tsx";
+import { useEffect, useState } from "react";
+
+export default function PhysicalDefence() {
+  const { values, methods, onChange } = useCustomFormContext();
+
+  const { fields, replace } = useFieldArray<FormType>({
+    name: "defence.physical.health.list",
+    control: methods.control,
+  });
+
+  const [healthAmount, setHealthAmount] = useState(
+    values?.defence.physical.health.amount ?? 0,
+  );
+
+  useEffect(() => {
+    const subscription = methods.watch((value, { name }) => {
+      if (name === "defence.physical.health.amount") {
+        resetDisabledCheckboxes(value?.defence?.physical?.health?.amount ?? 20);
+        setHealthAmount(value?.defence?.physical?.health?.amount ?? 20);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [methods]);
+
+  const isDisabled = (index: number) => index > healthAmount - 1;
+
+  function resetDisabledCheckboxes(amount: number) {
+    if (values?.defence?.physical?.health?.list.length) {
+      for (
+        let i = amount - 1;
+        i < values?.defence?.physical?.health?.list.length;
+        i++
+      ) {
+        methods.setValue(`defence.physical.health.list.${i}.checked`, false);
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (values) {
+      replace(values.defence.physical.health.list);
+    }
+  }, [values?.defence.physical.health.list, replace]);
+
+  useEffect(() => {
+    if (values) {
+      setHealthAmount(values?.defence.physical.health.amount);
+    }
+  }, [values?.defence.physical.health.amount]);
+
+  if (!values) return null;
+
+  return (
+    <Box sx={{ width: "fit-content" }}>
+      <CustomLabel label={{ text: "Физическая" }} orientation="row">
+        <TextFieldController fieldName="defence.physical.health.amount" />
+      </CustomLabel>
+
+      <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ width: "120px" }}>
+            {fields.map((field, i) => (
+              <Controller
+                key={field.id}
+                name={`defence.physical.health.list.${i}.checked`}
+                control={methods.control}
+                render={({ field }) => (
+                  <Checkbox
+                    size="medium"
+                    sx={{ padding: 0 }}
+                    {...field}
+                    disabled={isDisabled(i)}
+                    checked={field.value}
+                    onChange={(e) => onChange(field, e)}
+                  />
+                )}
+              />
+            ))}
+          </Box>
+        </Box>
+      </CustomLabel>
+    </Box>
+  );
+}
