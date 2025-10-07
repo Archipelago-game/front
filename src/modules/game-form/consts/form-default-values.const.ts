@@ -133,13 +133,12 @@ export const FORM_DEFAULT_VALUES: FormType = {
   },
   stats: defaultStats,
   equipment: {
-    amount: 5,
     list: [
-      { checked: false },
-      { checked: false },
-      { checked: false },
-      { checked: false },
-      { checked: false },
+      { value: "" },
+      { value: "" },
+      { value: "" },
+      { value: "" },
+      { value: "" },
     ],
   },
 };

@@ -1,5 +1,13 @@
 import type { Stats } from "./attributes.type.ts";
 
+interface TextItem {
+  value: string;
+}
+
+export interface TextList {
+  list: TextItem[];
+}
+
 export interface FormArrayFields<T> {
   amount: number;
   list: T[];
@@ -67,5 +75,5 @@ export interface FormType {
   attack: Attack;
   defence: Defence;
   stats: Stats;
-  equipment: CheckBoxList;
+  equipment: TextList;
 }
