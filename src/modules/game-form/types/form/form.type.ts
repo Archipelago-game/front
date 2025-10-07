@@ -31,7 +31,7 @@ export interface AttackMethod {
 
 export type AttackMethods = FormArrayFields<AttackMethod>;
 
-interface Attack {
+export interface Attack {
   damageBonus: {
     physical: number;
     mental: number;
@@ -62,6 +62,13 @@ interface Defence {
   };
 }
 
+export interface Talent {
+  name: string;
+  branch: string;
+  effect: string;
+  rang: number;
+}
+
 export interface FormType {
   name: string;
   age: number;
@@ -79,4 +86,5 @@ export interface FormType {
     equipment: TextList;
     wallet: number;
   };
+  talents: Talent[];
 }

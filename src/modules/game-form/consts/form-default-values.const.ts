@@ -1,6 +1,7 @@
 import { defaultStats } from "./stats-default.const.ts";
 import type { FormType } from "../types/form/form.type.ts";
 import { defaultAttack } from "./attack-default.const.ts";
+import { defaultTalents } from "./talents-default.const.ts";
 
 export const FORM_DEFAULT_VALUES: FormType = {
   name: "",
@@ -123,4 +124,5 @@ export const FORM_DEFAULT_VALUES: FormType = {
     },
     wallet: 0,
   },
+  talents: defaultTalents,
 };

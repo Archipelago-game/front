@@ -1,4 +1,6 @@
-const defaultAttackMethod = {
+import type { Attack, AttackMethod } from "../types/form/form.type.ts";
+
+const defaultAttackMethod: AttackMethod = {
   name: "",
   distance: 0,
   half: 0,
@@ -17,7 +19,7 @@ const defaultAttackMethod = {
   properties: "",
 };
 
-export const defaultAttack = {
+export const defaultAttack: Attack = {
   damageBonus: {
     physical: 0,
     mental: 0,
