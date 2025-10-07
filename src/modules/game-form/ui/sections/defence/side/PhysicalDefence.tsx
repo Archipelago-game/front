@@ -56,7 +56,7 @@ export default function PhysicalDefence() {
   if (!values) return null;
 
   return (
-    <Box sx={{ width: "fit-content" }}>
+    <Box>
       <CustomLabel label={{ text: "Физическая" }} orientation="row">
         <TextFieldController fieldName="defence.physical.health.amount" />
       </CustomLabel>
