@@ -8,7 +8,7 @@ import Defence from "./ui/sections/defence/Defence.tsx";
 import { useCustomFormContext } from "./providers/use-custom-context-form.hook.ts";
 
 import Attributes from "./ui/sections/attributes/Attributes.tsx";
-import EquipmentSection from "./ui/sections/equipment/EquipmentSection.tsx";
+import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 export default function GameForm() {
   const formContext = useCustomFormContext();
@@ -23,7 +23,7 @@ export default function GameForm() {
       <Grid size={5}>
         <Attack values={values} formHook={methods} onChange={onChange} />
         <Defence formHook={methods} onChange={onChange} />
-        <EquipmentSection />
+        <Inventory />
       </Grid>
       <Grid size={7}>
         <Grid container spacing={2}>

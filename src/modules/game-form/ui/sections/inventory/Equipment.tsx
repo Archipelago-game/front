@@ -8,15 +8,15 @@ export default function Equipment() {
   const { methods, onChange, values } = useCustomFormContext();
 
   const { fields, replace } = useFieldArray({
-    name: `equipment.list`,
+    name: `inventory.equipment.list`,
     control: methods.control,
   });
 
   useEffect(() => {
     if (values) {
-      replace(values.equipment.list);
+      replace(values.inventory.equipment.list);
     }
-  }, [values?.equipment.list, replace]);
+  }, [values?.inventory.equipment.list, replace]);
 
   return (
     <CustomLabel
@@ -30,7 +30,7 @@ export default function Equipment() {
       {fields.map((field, index) => (
         <Controller
           key={field.id}
-          name={`equipment.list.${index}.value`}
+          name={`inventory.equipment.list.${index}.value`}
           control={methods.control}
           render={({ field }) => (
             <TextField

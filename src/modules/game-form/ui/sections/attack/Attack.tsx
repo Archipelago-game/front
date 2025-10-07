@@ -26,6 +26,7 @@ interface Props extends DefaultFormComponentProps {
 export default function Attack({ formHook, onChange, values }: Props) {
   return (
     <>
+      {/* todo вынести в отдельный компонент */}
       <Typography
         variant="h4"
         sx={{

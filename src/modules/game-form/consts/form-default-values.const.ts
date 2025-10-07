@@ -132,13 +132,16 @@ export const FORM_DEFAULT_VALUES: FormType = {
     },
   },
   stats: defaultStats,
-  equipment: {
-    list: [
-      { value: "" },
-      { value: "" },
-      { value: "" },
-      { value: "" },
-      { value: "" },
-    ],
+  inventory: {
+    equipment: {
+      list: [
+        { value: "" },
+        { value: "" },
+        { value: "" },
+        { value: "" },
+        { value: "" },
+      ],
+    },
+    wallet: 0,
   },
 };

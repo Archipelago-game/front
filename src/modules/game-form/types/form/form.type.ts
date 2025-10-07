@@ -75,5 +75,8 @@ export interface FormType {
   attack: Attack;
   defence: Defence;
   stats: Stats;
-  equipment: TextList;
+  inventory: {
+    equipment: TextList;
+    wallet: number;
+  };
 }
