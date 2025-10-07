@@ -1,5 +1,8 @@
 import { Box } from "@mui/material";
 import PhysicalDefence from "./PhysicalDefence.tsx";
+import MentalDefence from "./MentalDefence.tsx";
+import Wounds from "./Wounds.tsx";
+import Injuries from "./Injuries.tsx";
 
 export default function SideDefence() {
   return (
@@ -11,6 +14,9 @@ export default function SideDefence() {
       }}
     >
       <PhysicalDefence />
+      <Wounds />
+      <MentalDefence />
+      <Injuries />
     </Box>
   );
 }

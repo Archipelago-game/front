@@ -18,12 +18,12 @@ export default function GameForm() {
   }
 
   return (
-    <Grid container spacing={5}>
-      <Grid size={4}>
+    <Grid container spacing={2}>
+      <Grid size={5}>
         <Attack values={values} formHook={methods} onChange={onChange} />
         <Defence formHook={methods} onChange={onChange} />
       </Grid>
-      <Grid size={8}>
+      <Grid size={7}>
         <Grid container spacing={2}>
           <Grid size={12}>
             <BaseInfo formHook={methods} onChange={onChange} />

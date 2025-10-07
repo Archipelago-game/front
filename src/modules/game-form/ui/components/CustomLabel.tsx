@@ -11,7 +11,7 @@ export interface CustomLabelProps {
     color?: "primary" | "secondary";
   };
   orientation?: "column" | "row";
-  children: ReactNode;
+  children?: ReactNode;
   sx?: SxProps;
 }
 
@@ -27,8 +27,10 @@ export default function CustomLabel(props: CustomLabelProps) {
         ...sx,
       }}
     >
+      {/* todo выделить в отдельный компонент */}
       <Box
         sx={{
+          width: children ? "unset" : "100%",
           display: "flex",
           ...defaultLabelTextStyles(theme, label?.color),
         }}
@@ -37,7 +39,7 @@ export default function CustomLabel(props: CustomLabelProps) {
           {label?.text}
         </Typography>
       </Box>
-      <Box sx={{ flex: 1 }}>{children}</Box>
+      {children && <Box sx={{ flex: 1 }}>{children}</Box>}
     </Box>
   );
 }
