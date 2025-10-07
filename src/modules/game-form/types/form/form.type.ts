@@ -8,7 +8,7 @@ export interface FormArrayFields<T> {
 export interface Checkbox {
   checked: boolean;
 }
-
+// todo убрать из FormArrayFields amount. Добавлять по необходимости через &{amount: number}
 export type CheckBoxList = FormArrayFields<Checkbox>;
 
 export interface AttackMethod {
@@ -67,4 +67,5 @@ export interface FormType {
   attack: Attack;
   defence: Defence;
   stats: Stats;
+  equipment: CheckBoxList;
 }
