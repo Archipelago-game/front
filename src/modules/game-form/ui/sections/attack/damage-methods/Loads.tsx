@@ -29,7 +29,7 @@ export default function Loads(props: Props) {
           control={formHook.control}
           render={({ field }) => (
             <Checkbox
-              size={props.size ?? "small"}
+              size={props.size ?? "medium"}
               sx={{ padding: 0 }}
               {...field}
               checked={field.value}
