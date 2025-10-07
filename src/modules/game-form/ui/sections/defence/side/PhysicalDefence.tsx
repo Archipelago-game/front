@@ -19,10 +19,12 @@ export default function PhysicalDefence() {
   );
 
   useEffect(() => {
-    const subscription = methods.watch((value, { name }) => {
+    const subscription = methods.watch((_, { name }) => {
       if (name === "defence.physical.health.amount") {
-        resetDisabledCheckboxes(value?.defence?.physical?.health?.amount ?? 20);
-        setHealthAmount(value?.defence?.physical?.health?.amount ?? 20);
+        const amount = methods.getValues("defence.physical.health.amount");
+        const list = methods.getValues("defence.physical.health.list");
+        resetDisabledCheckboxes(amount, list);
+        setHealthAmount(amount);
       }
     });
     return () => subscription.unsubscribe();
@@ -30,15 +32,12 @@ export default function PhysicalDefence() {
 
   const isDisabled = (index: number) => index > healthAmount - 1;
 
-  function resetDisabledCheckboxes(amount: number) {
-    if (values?.defence?.physical?.health?.list.length) {
-      for (
-        let i = amount - 1;
-        i < values?.defence?.physical?.health?.list.length;
-        i++
-      ) {
-        methods.setValue(`defence.physical.health.list.${i}.checked`, false);
-      }
+  function resetDisabledCheckboxes(
+    amount: number,
+    list: { checked: boolean }[],
+  ): void {
+    for (let i = amount; i < list.length - 1; i++) {
+      methods.setValue(`defence.physical.health.list.${i}.checked`, false);
     }
   }
 
