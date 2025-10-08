@@ -1,35 +1,18 @@
-import { Box, Grid, TextField } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import CustomLabel from "../../components/CustomLabel.tsx";
-import { Controller } from "react-hook-form";
 
-import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
+import BaseField from "../../components/BaseField.tsx";
 
-export default function BaseInfo({
-  formHook,
-  onChange,
-}: DefaultFormComponentProps) {
+export default function BaseInfo() {
   return (
     <Grid container spacing={2}>
       <Grid size={4}>
-        <CustomLabel
+        <BaseField
+          fieldName="name"
           label={{
             text: "Имя персонажа",
           }}
-        >
-          <Controller
-            name="name"
-            control={formHook.control}
-            render={({ field }) => (
-              <TextField
-                fullWidth
-                variant="outlined"
-                size="small"
-                {...field}
-                onChange={(e) => onChange(field, e)}
-              />
-            )}
-          />
-        </CustomLabel>
+        />
       </Grid>
       <Grid size={8}>
         <CustomLabel>
@@ -40,75 +23,37 @@ export default function BaseInfo({
               gap: "0.2em",
             }}
           >
-            <CustomLabel
+            <BaseField
+              fieldName="age"
               label={{
                 color: "secondary",
                 text: "Возраст",
               }}
               orientation="row"
-            >
-              <Controller
-                name="age"
-                control={formHook.control}
-                render={({ field }) => (
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    size="small"
-                    type="number"
-                    {...field}
-                    onChange={(e) => onChange(field, e)}
-                  />
-                )}
-              />
-            </CustomLabel>
-            <CustomLabel
+            />
+
+            <BaseField
+              fieldName="homeland"
               label={{
                 color: "secondary",
                 text: "Родина",
               }}
               orientation="row"
-            >
-              <Controller
-                name="homeland"
-                control={formHook.control}
-                render={({ field }) => (
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    size="small"
-                    {...field}
-                    onChange={(e) => onChange(field, e)}
-                  />
-                )}
-              />
-            </CustomLabel>
+            />
+
             <Box
               sx={{
                 width: "100%",
               }}
             >
-              <CustomLabel
+              <BaseField
+                fieldName="languages"
                 label={{
                   color: "secondary",
                   text: "Языки",
                 }}
                 orientation="row"
-              >
-                <Controller
-                  name="languages"
-                  control={formHook.control}
-                  render={({ field }) => (
-                    <TextField
-                      fullWidth
-                      variant="outlined"
-                      size="small"
-                      {...field}
-                      onChange={(e) => onChange(field, e)}
-                    />
-                  )}
-                />
-              </CustomLabel>
+              />
             </Box>
           </Box>
         </CustomLabel>
