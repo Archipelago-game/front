@@ -24,7 +24,7 @@ export default function GameForm() {
     <Grid container spacing={2}>
       <Grid size={5}>
         <Attack values={values} formHook={methods} onChange={onChange} />
-        <Defence formHook={methods} onChange={onChange} />
+        <Defence />
         <Inventory />
       </Grid>
       <Grid size={7}>

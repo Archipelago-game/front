@@ -1,14 +1,10 @@
-import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
 import { Box, Grid, Typography } from "@mui/material";
 import Brave from "./Brave.tsx";
 import Armor from "./armor/Armor.tsx";
 import ArmorProperty from "./armor/ArmorProperty.tsx";
 import SideDefence from "./side/SideDefence.tsx";
 
-export default function Defence({
-  formHook,
-  onChange,
-}: DefaultFormComponentProps) {
+export default function Defence() {
   return (
     <>
       <Typography
@@ -28,7 +24,7 @@ export default function Defence({
               gap: 1,
             }}
           >
-            <Brave formHook={formHook} onChange={onChange} />
+            <Brave />
             <Armor />
             <ArmorProperty />
           </Box>

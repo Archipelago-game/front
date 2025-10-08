@@ -1,34 +1,14 @@
-import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
-import CustomLabel from "../../components/CustomLabel.tsx";
-import { Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
+import BaseField from "../../components/BaseField.tsx";
 
-export default function Brave({
-  formHook,
-  onChange,
-}: DefaultFormComponentProps) {
+export default function Brave() {
   return (
-    <CustomLabel
+    <BaseField
+      fieldName="defence.brave"
       label={{
         color: "primary",
         text: "Отвага",
       }}
       orientation="row"
-    >
-      <Controller
-        name="defence.brave"
-        control={formHook.control}
-        render={({ field }) => (
-          <TextField
-            fullWidth
-            variant="outlined"
-            size="small"
-            type="number"
-            {...field}
-            onChange={(e) => onChange(field, e)}
-          />
-        )}
-      />
-    </CustomLabel>
+    />
   );
 }
