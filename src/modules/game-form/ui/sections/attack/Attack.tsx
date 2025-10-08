@@ -36,7 +36,7 @@ export default function Attack({ formHook, onChange, values }: Props) {
         Атака
       </Typography>
       <Box mb={1}>
-        <DamageBonus formHook={formHook} onChange={onChange} />
+        <DamageBonus />
       </Box>
       <DamageMethods
         formHook={formHook}
