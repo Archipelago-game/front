@@ -10,6 +10,8 @@ import { useCustomFormContext } from "./providers/use-custom-context-form.hook.t
 import Attributes from "./ui/sections/attributes/Attributes.tsx";
 import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
+import Talents from "./ui/sections/talants/Talents.tsx";
+
 export default function GameForm() {
   const formContext = useCustomFormContext();
   const { methods, onChange, values } = useCustomFormContext();
@@ -44,6 +46,9 @@ export default function GameForm() {
 
           <Grid size={12}>
             <Attributes />
+          </Grid>
+          <Grid size={12}>
+            <Talents />
           </Grid>
         </Grid>
       </Grid>
