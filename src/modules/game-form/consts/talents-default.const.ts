@@ -1,10 +1,13 @@
-import type { Talent } from "../types/form/form.type.ts";
+import type { Talent, Talents } from "../types/form/form.type.ts";
 
-const defaultTalent = {
+const defaultTalent: Talent = {
   name: "",
   branch: "",
   effect: "",
   rang: 0,
 };
 
-export const defaultTalents: Talent[] = [defaultTalent, defaultTalent];
+export const defaultTalents: Talents = {
+  amount: 3,
+  list: [defaultTalent, defaultTalent, defaultTalent],
+};

@@ -69,6 +69,8 @@ export interface Talent {
   rang: number;
 }
 
+export type Talents = FormArrayFields<Talent>;
+
 export interface FormType {
   name: string;
   age: number;
@@ -86,5 +88,5 @@ export interface FormType {
     equipment: TextList;
     wallet: number;
   };
-  talents: Talent[];
+  talents: Talents;
 }
