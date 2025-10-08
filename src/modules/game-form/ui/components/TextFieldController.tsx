@@ -30,10 +30,8 @@ export default function TextFieldController(
         <TextField
           sx={{
             minWidth: "50px",
-
-            "& input[type=number]": {
-              MozAppearance: "textfield", // Firefox
-              padding: "4px",
+            "& .MuiInputBase-input": {
+              padding: "4px 8px", // вертикальный и горизонтальный padding
             },
             "& input[type=number]::-webkit-outer-spin-button": {
               WebkitAppearance: "none",
