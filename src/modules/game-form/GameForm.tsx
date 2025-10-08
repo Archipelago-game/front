@@ -24,13 +24,13 @@ export default function GameForm() {
     <Grid container spacing={2}>
       <Grid size={5}>
         <Attack values={values} formHook={methods} onChange={onChange} />
-        <Defence formHook={methods} onChange={onChange} />
+        <Defence />
         <Inventory />
       </Grid>
       <Grid size={7}>
         <Grid container spacing={2}>
           <Grid size={12}>
-            <BaseInfo formHook={methods} onChange={onChange} />
+            <BaseInfo />
           </Grid>
           <Grid size={12}>
             <Box
@@ -40,7 +40,7 @@ export default function GameForm() {
               }}
             >
               <Luck values={values} formHook={methods} onChange={onChange} />
-              <Experience formHook={methods} onChange={onChange} />
+              <Experience />
             </Box>
           </Grid>
 

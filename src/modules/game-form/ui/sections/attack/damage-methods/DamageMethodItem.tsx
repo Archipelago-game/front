@@ -1,6 +1,4 @@
-import CustomLabel from "../../../components/CustomLabel.tsx";
-import { Box, TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
+import { Box } from "@mui/material";
 
 import type { DefaultFormComponentProps } from "../../../../types/default-form-section-props.type.ts";
 import type {
@@ -8,6 +6,7 @@ import type {
   FormType,
 } from "../../../../types/form/form.type.ts";
 import Loads from "./Loads.tsx";
+import BaseField from "../../../components/BaseField.tsx";
 
 interface Props extends DefaultFormComponentProps {
   index: number;
@@ -38,27 +37,14 @@ export default function DamageMethodItem(props: Props) {
   const { index, formHook, onChange } = props;
   return (
     <Box key={index}>
-      {/* note Название */}
-      <CustomLabel
+      <BaseField
+        fieldName={`attack.methods.list.${index}.name`}
         label={{
           text: "Название",
         }}
         orientation="row"
-      >
-        <Controller
-          name={`attack.methods.list.${index}.name`}
-          control={formHook.control}
-          render={({ field }) => (
-            <TextField
-              fullWidth
-              variant="outlined"
-              size="small"
-              {...field}
-              onChange={(e) => onChange(field, e)}
-            />
-          )}
-        />
-      </CustomLabel>
+      />
+
       <Box
         display="flex"
         sx={{
@@ -66,7 +52,8 @@ export default function DamageMethodItem(props: Props) {
         }}
       >
         {fieldConfigList.map((fieldConfig) => (
-          <CustomLabel
+          <BaseField
+            fieldName={`attack.methods.list.${index}.${fieldConfig.key}`}
             key={fieldConfig.key}
             label={{
               text: fieldConfig.label,
@@ -74,21 +61,7 @@ export default function DamageMethodItem(props: Props) {
               size: "body2",
             }}
             orientation="column"
-          >
-            <Controller
-              name={`attack.methods.list.${index}.${fieldConfig.key}`}
-              control={formHook.control}
-              render={({ field }) => (
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  size="small"
-                  {...field}
-                  onChange={(e) => onChange(field, e)}
-                />
-              )}
-            />
-          </CustomLabel>
+          />
         ))}
         <Loads
           index={index}
