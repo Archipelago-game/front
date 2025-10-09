@@ -37,6 +37,7 @@ export default function GameForm() {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
+                flexWrap: "wrap",
               }}
             >
               <Luck values={values} formHook={methods} onChange={onChange} />
