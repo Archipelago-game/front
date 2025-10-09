@@ -33,6 +33,9 @@ body {
 #root {
   width: 100%;
   min-height: 100vh;
+  overflow: hidden;
+
+  border: 1px solid red;
 }
 
 

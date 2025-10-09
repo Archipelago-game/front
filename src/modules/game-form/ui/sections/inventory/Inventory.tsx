@@ -14,10 +14,10 @@ export default function Inventory() {
         Инвентарь
       </Typography>
       <Grid container spacing={2}>
-        <Grid size={9}>
+        <Grid size={{ sm: 12, md: 9 }} order={{ sm: 2, md: 1 }}>
           <Equipment />
         </Grid>
-        <Grid size={3}>
+        <Grid size={{ sm: 12, md: 3 }} order={{ sm: 1, md: 2 }}>
           <Wallet />
         </Grid>
       </Grid>

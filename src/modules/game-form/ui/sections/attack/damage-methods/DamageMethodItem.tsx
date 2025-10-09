@@ -49,6 +49,7 @@ export default function DamageMethodItem(props: Props) {
         display="flex"
         sx={{
           gap: "0.2em",
+          flexWrap: "wrap",
         }}
       >
         {fieldConfigList.map((fieldConfig) => (

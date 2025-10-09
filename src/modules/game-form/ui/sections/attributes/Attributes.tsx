@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import { Typography } from "@mui/material";
 import Dexterity from "./dexterity/Dexterity.tsx";
 import Coordination from "./coordination/Coordination.tsx";
@@ -8,6 +9,7 @@ import Intelligence from "./intelligence/Intelligence.tsx";
 import { Masonry } from "@mui/lab";
 
 export default function Attributes() {
+  const isBelow730 = useMediaQuery("(max-width:730px)");
   return (
     <>
       <Typography
@@ -18,7 +20,7 @@ export default function Attributes() {
       >
         Атрибуты и Навыки
       </Typography>
-      <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
+      <Masonry columns={isBelow730 ? 1 : { sm: 2, md: 1, lg: 2 }} spacing={2}>
         <Dexterity />
         <Coordination />
         <Insight />

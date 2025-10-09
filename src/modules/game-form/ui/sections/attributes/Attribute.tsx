@@ -5,5 +5,18 @@ interface Props {
   children: ReactNode;
 }
 export default function Attribute({ children }: Props) {
-  return <Box sx={{ minWidth: "350px" }}>{children}</Box>;
+  return (
+    <Box
+      className={"test"}
+      sx={{
+        minWidth: "330px",
+        ["@media (max-width: 400px)"]: {
+          minWidth: "290px",
+          fontSize: "12px",
+        },
+      }}
+    >
+      {children}
+    </Box>
+  );
 }
