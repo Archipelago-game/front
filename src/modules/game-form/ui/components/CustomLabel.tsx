@@ -35,7 +35,17 @@ export default function CustomLabel(props: CustomLabelProps) {
           ...defaultLabelTextStyles(theme, label?.color),
         }}
       >
-        <Typography sx={{ textAlign: "center" }} variant={label?.size ?? "h6"}>
+        <Typography
+          sx={{
+            textAlign: "center",
+            fontSize: {
+              xs: ".8em", // <600px
+              sm: ".9em",
+              md: "1em", // ≥960px
+            },
+          }}
+          variant={label?.size ?? "h6"}
+        >
           {label?.text}
         </Typography>
       </Box>

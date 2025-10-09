@@ -16,7 +16,7 @@ export default function Defence() {
         Защита
       </Typography>
       <Grid container spacing={2}>
-        <Grid size={8}>
+        <Grid size={{ md: 7, xl: 8 }}>
           <Box
             sx={{
               display: "flex",
@@ -29,7 +29,7 @@ export default function Defence() {
             <ArmorProperty />
           </Box>
         </Grid>
-        <Grid size={4}>
+        <Grid size={{ md: 5, xl: 4 }}>
           <SideDefence />
         </Grid>
       </Grid>
