@@ -12,6 +12,7 @@ export default function BaseInfo() {
           label={{
             text: "Имя персонажа",
           }}
+          fieldType="text"
         />
       </Grid>
       <Grid size={8}>
@@ -39,6 +40,7 @@ export default function BaseInfo() {
                 text: "Родина",
               }}
               orientation="row"
+              fieldType="text"
             />
 
             <Box
@@ -53,6 +55,7 @@ export default function BaseInfo() {
                   text: "Языки",
                 }}
                 orientation="row"
+                fieldType="text"
               />
             </Box>
           </Box>
