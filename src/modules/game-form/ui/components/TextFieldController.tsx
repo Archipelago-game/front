@@ -1,5 +1,5 @@
 import { Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { type SxProps, TextField } from "@mui/material";
 import type { FormNestedKeys } from "../../types/form-nested-keys.type.ts";
 import { type HTMLInputTypeAttribute } from "react";
 
@@ -8,12 +8,13 @@ import { useCustomFormContext } from "../../providers/use-custom-context-form.ho
 export interface DefaultFieldControllerProps {
   fieldName: FormNestedKeys;
   fieldType?: HTMLInputTypeAttribute;
+  sx?: SxProps;
 }
 
 export default function TextFieldController(
   props: DefaultFieldControllerProps,
 ) {
-  const { fieldType, fieldName } = props;
+  const { fieldType, fieldName, sx } = props;
 
   const formContext = useCustomFormContext();
   const { methods, onChange } = formContext;
@@ -41,6 +42,8 @@ export default function TextFieldController(
               WebkitAppearance: "none",
               margin: 0,
             },
+
+            ...sx,
           }}
           fullWidth
           variant="outlined"
