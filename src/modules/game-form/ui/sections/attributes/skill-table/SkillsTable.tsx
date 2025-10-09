@@ -7,20 +7,21 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import type { FormNestedKeys } from "../../../../types/form-nested-keys.type.ts";
 
 import TextFieldController from "../../../components/TextFieldController.tsx";
 import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
 import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
+import type { FieldPath } from "react-hook-form";
+import type { FormType } from "../../../../types/form/form.type.ts";
 
 export interface SkillItem extends BaseSkill {
-  fieldName: FormNestedKeys;
+  fieldName: FieldPath<FormType>;
 }
 
 export interface SkillGroup {
   name: string;
-  expertiseFieldName: FormNestedKeys;
-  OZFieldName: FormNestedKeys;
+  expertiseFieldName: FieldPath<FormType>;
+  OZFieldName: FieldPath<FormType>;
   skills: SkillItem[];
 }
 
@@ -102,7 +103,9 @@ export default function SkillsTable({ skillGroups }: Props) {
                         // todo типизация fieldName
                         <TextFieldController
                           fieldType="text"
-                          fieldName={`stats.intelligence.craft.skills.${skill.id}.name`}
+                          fieldName={
+                            `stats.intelligence.craft.skills.${skill.id}.name ` as FieldPath<FormType>
+                          }
                         />
                       }
                     </TableCell>
