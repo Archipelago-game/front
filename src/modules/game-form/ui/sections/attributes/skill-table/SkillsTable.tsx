@@ -14,22 +14,25 @@ import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 
-export interface SkillItem extends BaseSkill {
-  fieldName: FieldPath<FormType>;
-}
+export type SkillListWithField<T extends string> = {
+  [K in T]: BaseSkill<T> & { fieldName: FieldPath<FormType> };
+};
 
-export interface SkillGroup {
+export interface SkillGroup<T extends string> {
   name: string;
   expertiseFieldName: FieldPath<FormType>;
   OZFieldName: FieldPath<FormType>;
-  skills: SkillItem[];
+  skills: SkillListWithField<T>[];
 }
 
-interface Props {
-  skillGroups: SkillGroup[];
+interface Props<T extends string> {
+  skillGroups: SkillGroup<T>[];
 }
 // todo разораться с key
-export default function SkillsTable({ skillGroups }: Props) {
+
+export default function SkillsTable<T extends string>({
+  skillGroups,
+}: Props<T>) {
   return (
     <TableContainer component={Paper}>
       <Table>
