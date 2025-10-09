@@ -34,7 +34,7 @@ export default function Talent() {
                 fieldType="text"
               />
             </Grid>
-            <Grid size={{ xs: 12, md: 4 }}>
+            <Grid size={{ xs: 6, md: 4 }}>
               <BaseField
                 fieldName={`talents.list.${i}.branch`}
                 label={{
@@ -44,19 +44,19 @@ export default function Talent() {
                 orientation="row"
                 fieldType="text"
               />
-              <Grid size={{ xs: 12, md: 9 }}>
-                <BaseField
-                  fieldName={`talents.list.${i}.effect`}
-                  label={{
-                    text: "Эффект",
-                    color: "secondary",
-                  }}
-                  orientation="row"
-                  fieldType="text"
-                />
-              </Grid>
             </Grid>
-            <Grid size={{ xs: 12, md: 3 }}>
+            <Grid size={{ xs: 12, md: 9 }} order={{ xs: 4, sm: 3 }}>
+              <BaseField
+                fieldName={`talents.list.${i}.effect`}
+                label={{
+                  text: "Эффект",
+                  color: "secondary",
+                }}
+                orientation="row"
+                fieldType="text"
+              />
+            </Grid>
+            <Grid size={{ xs: 6, md: 3 }} order={{ xs: 3, sm: 4 }}>
               <BaseField
                 fieldName={`talents.list.${i}.rang`}
                 label={{
