@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 
 import Luck from "./ui/sections/luck/Luck.tsx";
@@ -22,6 +22,11 @@ export default function GameForm() {
 
   return (
     <Grid container spacing={2}>
+      <Grid size={12}>
+        <Typography variant="h3" align="center">
+          Архипелаг
+        </Typography>
+      </Grid>
       <Grid size={{ md: 5 }} order={{ xs: 2, md: 1 }}>
         <Attack values={values} formHook={methods} onChange={onChange} />
         <Defence />

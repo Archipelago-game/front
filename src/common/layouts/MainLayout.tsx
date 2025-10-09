@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 export default function MainLayout() {
   return (
-    <Container maxWidth={"xl"} sx={{ px: 2 }}>
+    <Container maxWidth={"xl"} sx={{ px: 2, paddingBottom: 2 }}>
       <Outlet />
     </Container>
   );
