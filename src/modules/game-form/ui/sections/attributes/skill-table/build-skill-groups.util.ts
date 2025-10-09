@@ -3,13 +3,16 @@ import type {
   Stats,
 } from "../../../../types/form/attributes.type.ts";
 
-export function buildSkillGroups<T extends keyof Stats>(stat: Stats[T]) {
+export function buildSkillGroups<T extends keyof Stats>(
+  attributeKey: T,
+  stat: Stats[T],
+) {
   return (
     Object.entries(stat)
       // отфильтруем, чтобы не брать base-поля BaseAttribute (name, value)
       .filter(([key]) => key !== "name" && key !== "value")
       .map(([groupKey, group]) => {
-        const basePath = `stats.${groupKey}`;
+        const basePath = `stats.${attributeKey}.${groupKey}`;
         const skills = Object.entries<BaseSkill>(group.skills).map(
           ([skillKey, skill]) => ({
             fieldName: `${basePath}.skills.${skillKey}.focus`,

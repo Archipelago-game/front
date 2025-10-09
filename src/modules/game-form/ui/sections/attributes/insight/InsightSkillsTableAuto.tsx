@@ -10,7 +10,7 @@ export default function InsightSkillTableAuto() {
 
   const insight = values.stats.insight;
 
-  const groups = buildSkillGroups(insight);
+  const groups = buildSkillGroups("insight", insight);
 
   return <SkillsTable skillGroups={groups} />;
 }

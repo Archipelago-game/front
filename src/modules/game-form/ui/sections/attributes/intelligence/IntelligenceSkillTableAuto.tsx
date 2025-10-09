@@ -10,7 +10,7 @@ export default function IntelligenceSkillTableAuto() {
 
   const intelligence = values.stats.intelligence;
 
-  const groups = buildSkillGroups(intelligence);
+  const groups = buildSkillGroups("intelligence", intelligence);
   console.log(groups);
 
   return <SkillsTable skillGroups={groups} />;

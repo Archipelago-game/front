@@ -9,7 +9,7 @@ export default function DexteritySkillTableAuto() {
 
   const dexterity = values.stats.dexterity;
 
-  const groups = buildSkillGroups(dexterity);
+  const groups = buildSkillGroups("dexterity", dexterity);
 
   return <SkillsTable skillGroups={groups} />;
 }
