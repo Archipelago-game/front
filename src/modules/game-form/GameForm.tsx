@@ -22,12 +22,12 @@ export default function GameForm() {
 
   return (
     <Grid container spacing={2}>
-      <Grid size={{ md: 5 }} order={{ sm: 2, md: 1 }}>
+      <Grid size={{ md: 5 }} order={{ xs: 2, md: 1 }}>
         <Attack values={values} formHook={methods} onChange={onChange} />
         <Defence />
         <Inventory />
       </Grid>
-      <Grid size={{ md: 7 }} order={{ sm: 1, md: 2 }}>
+      <Grid size={{ md: 7 }} order={{ xs: 1, md: 2 }}>
         <Grid container spacing={2}>
           <Grid size={12}>
             <BaseInfo />
