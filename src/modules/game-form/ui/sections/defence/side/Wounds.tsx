@@ -14,9 +14,9 @@ export default function Wounds() {
 
   useEffect(() => {
     if (values) {
-      replace(values.defence.physical.health.list);
+      replace(values.defence.physical.wounds.list);
     }
-  }, [values?.defence.physical.health.list, replace]);
+  }, [values?.defence.physical.wounds.list, replace]);
 
   return (
     <CustomLabel
