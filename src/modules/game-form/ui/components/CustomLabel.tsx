@@ -41,7 +41,7 @@ export default function CustomLabel(props: CustomLabelProps) {
             fontSize: {
               xs: ".8em", // <600px
               sm: ".9em",
-              md: "1em", // ≥960px
+              md: "0.9em", // ≥960px
             },
           }}
           variant={label?.size ?? "h6"}
