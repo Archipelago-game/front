@@ -16,9 +16,9 @@ export default function MentalDefence() {
 
   useEffect(() => {
     if (values) {
-      replace(values.defence.physical.health.list);
+      replace(values.defence.mental.resolve.list);
     }
-  }, [values?.defence.physical.health.list, replace]);
+  }, [values?.defence.mental.resolve.list, replace]);
 
   return (
     <Box>
