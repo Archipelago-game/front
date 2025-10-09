@@ -20,6 +20,9 @@ export default function Loads(props: Props) {
           md: 1,
           lg: 0,
         },
+        [`@media (max-width:500px)`]: {
+          width: "100%",
+        },
       }}
     >
       <CustomLabel
