@@ -83,7 +83,19 @@ export default function SkillsTable({ skillGroups }: Props) {
 
               {group.skills.map((skill, index) => (
                 <TableRow key={skill.id}>
-                  {skill.name !== "" && <TableCell>{skill.name}</TableCell>}
+                  {skill.name !== "" && (
+                    <TableCell
+                      sx={{
+                        fontSize: {
+                          xs: ".8em", // <600px
+                          sm: ".8em",
+                          md: "0.8em", // ≥960px
+                        },
+                      }}
+                    >
+                      {skill.name}
+                    </TableCell>
+                  )}
                   {skill.name === "" && (
                     <TableCell>
                       {
