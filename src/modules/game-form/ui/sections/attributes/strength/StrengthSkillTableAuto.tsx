@@ -10,7 +10,7 @@ export default function StrengthSkillTableAuto() {
 
   const strength = values.stats.strength;
 
-  const groups = buildSkillGroups(strength);
+  const groups = buildSkillGroups("strength", strength);
 
   return <SkillsTable skillGroups={groups} />;
 }

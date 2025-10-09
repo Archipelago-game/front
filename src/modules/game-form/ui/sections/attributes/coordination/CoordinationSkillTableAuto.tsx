@@ -9,7 +9,7 @@ export default function CoordinationSkillTableAuto() {
 
   const coordination = values.stats.coordination;
 
-  const groups = buildSkillGroups(coordination);
+  const groups = buildSkillGroups("coordination", coordination);
 
   return <SkillsTable skillGroups={groups} />;
 }

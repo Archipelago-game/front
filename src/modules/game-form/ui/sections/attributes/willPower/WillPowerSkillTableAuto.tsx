@@ -10,7 +10,7 @@ export default function WillPowerSkillTableAuto() {
 
   const willpower = values.stats.willpower;
 
-  const groups = buildSkillGroups(willpower);
+  const groups = buildSkillGroups("willpower", willpower);
 
   return <SkillsTable skillGroups={groups} />;
 }
