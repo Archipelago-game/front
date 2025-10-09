@@ -1,12 +1,13 @@
-import { Controller } from "react-hook-form";
+import { Controller, type FieldPath } from "react-hook-form";
 import { type SxProps, TextField } from "@mui/material";
-import type { FormNestedKeys } from "../../types/form-nested-keys.type.ts";
+
 import { type HTMLInputTypeAttribute } from "react";
 
 import { useCustomFormContext } from "../../providers/use-custom-context-form.hook.ts";
+import type { FormType } from "../../types/form/form.type.ts";
 
 export interface DefaultFieldControllerProps {
-  fieldName: FormNestedKeys;
+  fieldName: FieldPath<FormType>;
   fieldType?: HTMLInputTypeAttribute;
   sx?: SxProps;
 }

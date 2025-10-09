@@ -1,15 +1,4 @@
 import type { FormArrayFields, FormType } from "./form/form.type.ts";
-// import type { DecrementDepth } from "./field-array-key.type.ts";
-
-// type NestedKeys<T, Depth extends number = 5> = [Depth] extends [0]
-//   ? never
-//   : {
-//       [K in keyof T & string]: T[K] extends FormArrayFields<infer U>
-//         ? `${K}` | `${K}.list.${number}.${NestedKeys<U, DecrementDepth<Depth>>}`
-//         : T[K] extends object
-//           ? `${K}` | `${K}.${NestedKeys<T[K], DecrementDepth<Depth>>}`
-//           : `${K}`;
-//     }[keyof T & string];
 
 // утилиты, если их ещё нет в файле
 type DecrementDepth<N extends number> = N extends 5
@@ -23,8 +12,6 @@ type DecrementDepth<N extends number> = N extends 5
         : N extends 1
           ? 0
           : 0;
-
-type OnlyString<T> = Extract<T, string>;
 
 // основной тип
 type NestedKeys<T, Depth extends number = 5> = [Depth] extends [0]
