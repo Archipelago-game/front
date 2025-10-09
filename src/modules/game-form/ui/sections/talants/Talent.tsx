@@ -23,8 +23,8 @@ export default function Talent() {
     <Grid container gap={2}>
       {fields.map((field, i) => (
         <Box key={field.id}>
-          <Grid container key={field.id}>
-            <Grid size={8}>
+          <Grid container key={field.id} wrap={"wrap"}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <BaseField
                 fieldName={`talents.list.${i}.name`}
                 label={{
@@ -34,7 +34,7 @@ export default function Talent() {
                 fieldType="text"
               />
             </Grid>
-            <Grid size={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
               <BaseField
                 fieldName={`talents.list.${i}.branch`}
                 label={{
@@ -44,19 +44,19 @@ export default function Talent() {
                 orientation="row"
                 fieldType="text"
               />
+              <Grid size={{ xs: 12, md: 9 }}>
+                <BaseField
+                  fieldName={`talents.list.${i}.effect`}
+                  label={{
+                    text: "Эффект",
+                    color: "secondary",
+                  }}
+                  orientation="row"
+                  fieldType="text"
+                />
+              </Grid>
             </Grid>
-            <Grid size={9}>
-              <BaseField
-                fieldName={`talents.list.${i}.effect`}
-                label={{
-                  text: "Эффект",
-                  color: "secondary",
-                }}
-                orientation="row"
-                fieldType="text"
-              />
-            </Grid>
-            <Grid size={3}>
+            <Grid size={{ xs: 12, md: 3 }}>
               <BaseField
                 fieldName={`talents.list.${i}.rang`}
                 label={{
