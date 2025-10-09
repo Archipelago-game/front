@@ -33,6 +33,7 @@ export default function Equipment() {
         <Box key={field.id}>
           <TextFieldController
             fieldName={`inventory.equipment.list.${index}.value`}
+            fieldType="text"
           />
         </Box>
       ))}

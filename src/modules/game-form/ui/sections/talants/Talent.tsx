@@ -31,6 +31,7 @@ export default function Talent() {
                   text: "Название",
                 }}
                 orientation="row"
+                fieldType="text"
               />
             </Grid>
             <Grid size={4}>
@@ -41,6 +42,7 @@ export default function Talent() {
                   color: "secondary",
                 }}
                 orientation="row"
+                fieldType="text"
               />
             </Grid>
             <Grid size={9}>
@@ -51,11 +53,12 @@ export default function Talent() {
                   color: "secondary",
                 }}
                 orientation="row"
+                fieldType="text"
               />
             </Grid>
             <Grid size={3}>
               <BaseField
-                fieldName={`talents.list.${i}.effect`}
+                fieldName={`talents.list.${i}.rang`}
                 label={{
                   text: "Ранг",
                   color: "secondary",
