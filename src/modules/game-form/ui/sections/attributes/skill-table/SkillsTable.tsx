@@ -7,28 +7,33 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import type { FormNestedKeys } from "../../../../types/form-nested-keys.type.ts";
 
 import TextFieldController from "../../../components/TextFieldController.tsx";
 import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
 import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
+import type { FieldPath } from "react-hook-form";
+import type { FormType } from "../../../../types/form/form.type.ts";
+import { Fragment } from "react";
 
-export interface SkillItem extends BaseSkill {
-  fieldName: FormNestedKeys;
+export interface SkillItem<T extends string> extends BaseSkill<T> {
+  fieldName: FieldPath<FormType>;
 }
 
-export interface SkillGroup {
+export interface SkillGroup<T extends string> {
   name: string;
-  expertiseFieldName: FormNestedKeys;
-  OZFieldName: FormNestedKeys;
-  skills: SkillItem[];
+  expertiseFieldName: FieldPath<FormType>;
+  OZFieldName: FieldPath<FormType>;
+  skills: SkillItem<T>[];
 }
 
-interface Props {
-  skillGroups: SkillGroup[];
+interface Props<T extends string> {
+  skillGroups: SkillGroup<T>[];
 }
 // todo разораться с key
-export default function SkillsTable({ skillGroups }: Props) {
+
+export default function SkillsTable<T extends string>({
+  skillGroups,
+}: Props<T>) {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -74,7 +79,7 @@ export default function SkillsTable({ skillGroups }: Props) {
         </TableHead>
         <TableBody>
           {skillGroups.map((group) => (
-            <>
+            <Fragment key={group.expertiseFieldName}>
               <TableRow key={group.name}>
                 <TableCell sx={{ width: "100%" }} colSpan={4}>
                   <strong>{group.name}</strong>
@@ -102,7 +107,9 @@ export default function SkillsTable({ skillGroups }: Props) {
                         // todo типизация fieldName
                         <TextFieldController
                           fieldType="text"
-                          fieldName={`stats.intelligence.craft.skills.${skill.id}.name`}
+                          fieldName={
+                            `stats.intelligence.craft.skills.${skill.id}.name ` as FieldPath<FormType>
+                          }
                         />
                       }
                     </TableCell>
@@ -127,7 +134,7 @@ export default function SkillsTable({ skillGroups }: Props) {
                   )}
                 </TableRow>
               ))}
-            </>
+            </Fragment>
           ))}
         </TableBody>
       </Table>

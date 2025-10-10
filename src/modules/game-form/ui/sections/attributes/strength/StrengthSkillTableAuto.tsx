@@ -1,7 +1,6 @@
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 
-import { buildSkillGroups } from "../skill-table/build-skill-groups.util.ts";
-import SkillsTable from "../skill-table/SkillsTable.tsx";
+import SkillsTable, { type SkillGroup } from "../skill-table/SkillsTable.tsx";
 
 export default function StrengthSkillTableAuto() {
   const { values } = useCustomFormContext();
@@ -10,7 +9,23 @@ export default function StrengthSkillTableAuto() {
 
   const strength = values.stats.strength;
 
-  const groups = buildSkillGroups("strength", strength);
+  const strengthSkillGroups: SkillGroup<string>[] = [
+    {
+      name: strength.endurance.name,
+      expertiseFieldName: "stats.strength.endurance.expertise",
+      OZFieldName: "stats.strength.endurance.OZ",
+      skills: [
+        {
+          ...strength.endurance.skills.athletics,
+          fieldName: "stats.strength.endurance.skills.athletics.focus",
+        },
+        {
+          ...strength.endurance.skills.resistance,
+          fieldName: "stats.strength.endurance.skills.resistance.focus",
+        },
+      ],
+    },
+  ];
 
-  return <SkillsTable skillGroups={groups} />;
+  return <SkillsTable skillGroups={strengthSkillGroups} />;
 }

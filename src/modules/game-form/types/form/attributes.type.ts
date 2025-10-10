@@ -1,16 +1,16 @@
-export interface BaseSkill {
-  id: string;
+export interface BaseSkill<T extends string> {
+  id: T;
   name: string;
   focus: number;
 }
 
-export type SkillsType<T extends string> = Record<T, BaseSkill>;
+export type SkillList<T extends string> = { [key in T]: BaseSkill<T> };
 
 export interface BaseSkillGroup<T extends string> {
   name: string;
   expertise: number;
   OZ: number;
-  skills: SkillsType<T>;
+  skills: SkillList<T>;
 }
 
 export interface BaseAttribute {
