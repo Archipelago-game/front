@@ -13,7 +13,7 @@ export function buildSkillGroups<T extends keyof Stats>(
       .filter(([key]) => key !== "name" && key !== "value")
       .map(([groupKey, group]) => {
         const basePath = `stats.${attributeKey}.${groupKey}`;
-        const skills = Object.entries<BaseSkill>(group.skills).map(
+        const skills = Object.entries<BaseSkill<string>>(group.skills).map(
           ([skillKey, skill]) => ({
             fieldName: `${basePath}.skills.${skillKey}.focus`,
             ...skill,
