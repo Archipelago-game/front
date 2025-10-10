@@ -13,6 +13,7 @@ import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
 import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
+import { Fragment } from "react";
 
 export interface SkillItem<T extends string> extends BaseSkill<T> {
   fieldName: FieldPath<FormType>;
@@ -78,7 +79,7 @@ export default function SkillsTable<T extends string>({
         </TableHead>
         <TableBody>
           {skillGroups.map((group) => (
-            <>
+            <Fragment key={group.expertiseFieldName}>
               <TableRow key={group.name}>
                 <TableCell sx={{ width: "100%" }} colSpan={4}>
                   <strong>{group.name}</strong>
@@ -133,7 +134,7 @@ export default function SkillsTable<T extends string>({
                   )}
                 </TableRow>
               ))}
-            </>
+            </Fragment>
           ))}
         </TableBody>
       </Table>
