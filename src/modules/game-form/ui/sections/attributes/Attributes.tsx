@@ -20,7 +20,7 @@ export default function Attributes() {
       >
         Атрибуты и Навыки
       </Typography>
-      <Masonry columns={isBelow730 ? 1 : { sm: 2, md: 1, lg: 2 }} spacing={2}>
+      <Masonry columns={isBelow730 ? 1 : { sm: 2, md: 2, lg: 3 }} spacing={2}>
         <Dexterity />
         <Coordination />
         <Insight />
