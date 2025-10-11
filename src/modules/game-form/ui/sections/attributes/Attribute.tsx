@@ -9,7 +9,7 @@ export default function Attribute({ children }: Props) {
     <Box
       className={"test"}
       sx={{
-        minWidth: "330px",
+        minWidth: "300px",
         ["@media (max-width: 400px)"]: {
           minWidth: "290px",
           fontSize: "12px",
