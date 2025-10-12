@@ -11,6 +11,8 @@ export default function SideDefence() {
         display: "flex",
         flexDirection: "column",
         gap: 1,
+
+        border: "1px solid red",
       }}
     >
       <PhysicalDefence />

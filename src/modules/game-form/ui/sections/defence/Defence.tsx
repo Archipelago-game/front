@@ -16,8 +16,13 @@ export default function Defence() {
       >
         Защита
       </Typography>
-      <Grid container spacing={2}>
-        <Grid size={isBelow450 ? 12 : { xs: 7, sm: 8, md: 7, xl: 8 }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+        }}
+      >
+        <Grid>
           <Box
             sx={{
               display: "flex",
@@ -33,7 +38,7 @@ export default function Defence() {
         <Grid size={isBelow450 ? 12 : { xs: 5, sm: 4, md: 5, xl: 4 }}>
           <SideDefence />
         </Grid>
-      </Grid>
+      </Box>
     </>
   );
 }
