@@ -22,7 +22,7 @@ export default function MentalDefence() {
   }, [values?.defence.mental.resolve.list, replace]);
 
   return (
-    <Box sx={{ width: "fit-content" }}>
+    <Box>
       <CustomLabel
         label={{ text: "Ментальная" }}
         orientation="row"
