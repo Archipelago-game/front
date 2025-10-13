@@ -25,7 +25,6 @@ export default function CustomLabel(props: CustomLabelProps) {
         display: "flex",
         flexDirection: orientation ?? "column",
         ...sx,
-        outline: "1px solid red",
       }}
     >
       {/* todo выделить в отдельный компонент */}
