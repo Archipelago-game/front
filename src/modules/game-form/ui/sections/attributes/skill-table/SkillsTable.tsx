@@ -104,7 +104,6 @@ export default function SkillsTable<T extends string>({
                   {skill.name === "" && (
                     <TableCell>
                       {
-                        // todo типизация fieldName
                         <TextFieldController
                           fieldType="text"
                           fieldName={
