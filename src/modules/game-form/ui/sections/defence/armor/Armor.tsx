@@ -1,11 +1,13 @@
-import CustomLabel from "../../../components/CustomLabel.tsx";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Head from "./Head.tsx";
 import RightHand from "./RightHand.tsx";
 import LeftHand from "./LeftHand.tsx";
 import LeftLeg from "./LeftLeg.tsx";
 import RightLeg from "./LeftLeg.tsx";
 import Body from "./Body.tsx";
+import { fitContentStyle } from "../side/styles/side-defence.styles.ts";
+import { defaultLabelTextStyles } from "../../../components/styles/label.styles.ts";
+import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
 
 const handStyles = {
   gridRow: "1 / 3",
@@ -15,19 +17,29 @@ const handStyles = {
 
 export default function Armor() {
   return (
-    <CustomLabel
-      label={{
-        text: "Броня",
-      }}
-      orientation="column"
-    >
+    <Box>
+      <Typography
+        sx={{
+          textAlign: "center",
+          fontSize: {
+            xs: ".8em", // <600px
+            sm: ".9em",
+            md: ".9em", // ≥960px
+          },
+          marginBottom: "4px",
+          ...defaultLabelTextStyles(theme, "primary"),
+        }}
+        variant={"h6"}
+      >
+        Броня
+      </Typography>
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: "repeat(3, 70px)",
           gridTemplateRows: "repeat(3, 1fr)",
           gap: 1,
-          marginTop: "4px",
+          ...fitContentStyle,
         }}
       >
         <Box
@@ -39,10 +51,10 @@ export default function Armor() {
           <Head />
         </Box>
 
-        <Box sx={handStyles}>
+        <Box sx={{ ...handStyles }}>
           <RightHand />
         </Box>
-        <Box sx={handStyles}>
+        <Box sx={{ ...handStyles }}>
           <LeftHand />
         </Box>
         <Box
@@ -72,6 +84,6 @@ export default function Armor() {
           <LeftLeg />
         </Box>
       </Box>
-    </CustomLabel>
+    </Box>
   );
 }

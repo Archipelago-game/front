@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 
 import Luck from "./ui/sections/luck/Luck.tsx";
@@ -11,6 +11,7 @@ import Attributes from "./ui/sections/attributes/Attributes.tsx";
 import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import Talents from "./ui/sections/talants/Talents.tsx";
+import Header from "./ui/sections/header/Header.tsx";
 
 export default function GameForm() {
   const formContext = useCustomFormContext();
@@ -21,18 +22,26 @@ export default function GameForm() {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid size={12}>
-        <Typography variant="h3" align="center">
-          Архипелаг
-        </Typography>
+    <Grid
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "360px 1fr",
+        gap: 2,
+      }}
+    >
+      <Grid
+        sx={{
+          gridColumn: "span 2",
+        }}
+      >
+        <Header />
       </Grid>
-      <Grid size={{ md: 5 }} order={{ xs: 2, md: 1 }}>
+      <Box>
         <Attack values={values} formHook={methods} onChange={onChange} />
         <Defence />
         <Inventory />
-      </Grid>
-      <Grid size={{ md: 7 }} order={{ xs: 1, md: 2 }}>
+      </Box>
+      <Box>
         <Grid container spacing={2}>
           <Grid size={12}>
             <BaseInfo />
@@ -45,7 +54,7 @@ export default function GameForm() {
                 flexWrap: "wrap",
               }}
             >
-              <Luck values={values} formHook={methods} onChange={onChange} />
+              <Luck />
               <Experience />
             </Box>
           </Grid>
@@ -57,7 +66,7 @@ export default function GameForm() {
             <Talents />
           </Grid>
         </Grid>
-      </Grid>
+      </Box>
     </Grid>
   );
 }

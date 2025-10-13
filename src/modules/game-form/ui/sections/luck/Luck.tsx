@@ -1,14 +1,21 @@
-import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
 import CustomLabel from "../../components/CustomLabel.tsx";
-import CheckboxList from "../../components/checkbox/CheckboxList.tsx";
-import type { FormType } from "../../../types/form/form.type.ts";
-import { Box, useMediaQuery } from "@mui/material";
 
-interface Props extends DefaultFormComponentProps {
-  values: FormType;
-}
+import { Box, Checkbox, useMediaQuery } from "@mui/material";
+import { Controller } from "react-hook-form";
+import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
+import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
 
-export default function Luck({ formHook, onChange, values }: Props) {
+export default function Luck() {
+  const { methods, onChange, values } = useCustomFormContext();
+
+  const fields = useSyncFieldArray({
+    name: "luck",
+    amount: values?.luck.amount ?? 5,
+    defaultValue: { checked: false },
+    formHook: methods,
+    onChange: onChange,
+  });
+
   const isBelow530 = useMediaQuery("(max-width: 530px)");
 
   return (
@@ -18,16 +25,22 @@ export default function Luck({ formHook, onChange, values }: Props) {
       }}
     >
       <CustomLabel label={{ text: "Удача/Решимость" }} sx={{ flex: "1 1 1" }}>
-        <Box>
-          <CheckboxList
-            formHook={formHook}
-            onChange={onChange}
-            name="luck"
-            amount={values.luck.amount}
-            size="large"
-            defaultValue={{ checked: false }}
+        {fields.map((field, index) => (
+          <Controller
+            key={field.id}
+            name={`luck.list.${index}.checked`}
+            control={methods.control}
+            render={({ field }) => (
+              <Checkbox
+                size={"large"}
+                sx={{ padding: 0 }}
+                {...field}
+                checked={field.value}
+                onChange={(e) => onChange(field, e)}
+              />
+            )}
           />
-        </Box>
+        ))}
       </CustomLabel>
     </Box>
   );

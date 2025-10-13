@@ -1,13 +1,13 @@
-import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Brave from "./Brave.tsx";
 import Armor from "./armor/Armor.tsx";
 import ArmorProperty from "./armor/ArmorProperty.tsx";
 import SideDefence from "./side/SideDefence.tsx";
+import { fitContentStyle } from "./side/styles/side-defence.styles.ts";
 
 export default function Defence() {
-  const isBelow450 = useMediaQuery("(max-width:450px)");
   return (
-    <>
+    <Box sx={{ ...fitContentStyle }}>
       <Typography
         variant="h4"
         sx={{
@@ -16,24 +16,25 @@ export default function Defence() {
       >
         Защита
       </Typography>
-      <Grid container spacing={2}>
-        <Grid size={isBelow450 ? 12 : { xs: 7, sm: 8, md: 7, xl: 8 }}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 1,
-            }}
-          >
-            <Brave />
-            <Armor />
-            <ArmorProperty />
-          </Box>
-        </Grid>
-        <Grid size={isBelow450 ? 12 : { xs: 5, sm: 4, md: 5, xl: 4 }}>
-          <SideDefence />
-        </Grid>
-      </Grid>
-    </>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+          }}
+        >
+          <Brave />
+          <Armor />
+          <ArmorProperty />
+        </Box>
+        <SideDefence />
+      </Box>
+    </Box>
   );
 }
