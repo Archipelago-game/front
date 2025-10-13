@@ -6,9 +6,17 @@ import { useCustomFormContext } from "../../../../providers/use-custom-context-f
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
+import TextFieldController from "../../../components/TextFieldController.tsx";
+import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
 export default function MentalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
+
+  const { isDisabled } = useWatchCheckboxAmount({
+    defaultAmount: values?.defence.mental.resolve.amount ?? 20,
+    amountName: "defence.mental.resolve.amount",
+    listName: "defence.mental.resolve.list",
+  });
 
   const { fields, replace } = useFieldArray<FormType>({
     name: "defence.mental.resolve.list",
@@ -27,7 +35,15 @@ export default function MentalDefence() {
         label={{ text: "Ментальная" }}
         orientation="row"
         sx={{ width: "100%" }}
-      ></CustomLabel>
+      >
+        <TextFieldController
+          fieldName="defence.mental.resolve.amount"
+          sx={{
+            minWidth: "25px",
+            width: "30px",
+          }}
+        />
+      </CustomLabel>
 
       <CustomLabel label={{ text: "Решимость", color: "secondary" }}>
         <Box sx={{ ...gridStyle }}>
@@ -41,6 +57,7 @@ export default function MentalDefence() {
                   size="medium"
                   sx={{ padding: 0 }}
                   {...field}
+                  disabled={isDisabled(i)}
                   checked={field.value}
                   onChange={(e) => onChange(field, e)}
                 />
