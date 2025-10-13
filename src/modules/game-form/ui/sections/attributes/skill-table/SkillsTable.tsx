@@ -36,7 +36,7 @@ export default function SkillsTable<T extends string>({
 }: Props<T>) {
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table sx={{ "& .MuiTableCell-root": { padding: "2px" } }}>
         <TableHead>
           <TableRow
             sx={{
