@@ -7,13 +7,8 @@ interface Props {
 export default function Attribute({ children }: Props) {
   return (
     <Box
-      className={"test"}
       sx={{
-        minWidth: "300px",
-        ["@media (max-width: 400px)"]: {
-          minWidth: "290px",
-          fontSize: "12px",
-        },
+        minWidth: "280px",
       }}
     >
       {children}
