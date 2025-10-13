@@ -24,7 +24,7 @@ export default function Armor() {
           fontSize: {
             xs: ".8em", // <600px
             sm: ".9em",
-            md: "0.9em", // ≥960px
+            md: ".9em", // ≥960px
           },
           marginBottom: "4px",
           ...defaultLabelTextStyles(theme, "primary"),
@@ -36,7 +36,7 @@ export default function Armor() {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 80px)",
+          gridTemplateColumns: "repeat(3, 70px)",
           gridTemplateRows: "repeat(3, 1fr)",
           gap: 1,
           ...fitContentStyle,

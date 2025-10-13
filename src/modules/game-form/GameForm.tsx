@@ -11,6 +11,7 @@ import Attributes from "./ui/sections/attributes/Attributes.tsx";
 import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import Talents from "./ui/sections/talants/Talents.tsx";
+import Header from "./ui/sections/header/Header.tsx";
 
 export default function GameForm() {
   const formContext = useCustomFormContext();
@@ -21,18 +22,28 @@ export default function GameForm() {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid size={12}>
-        <Typography variant="h3" align="center">
-          Архипелаг
-        </Typography>
+    // <Grid container spacing={2}>
+    <Grid
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "auto, 1fr",
+      }}
+    >
+      <Grid
+        sx={{
+          gridColumn: "span 2",
+        }}
+      >
+        <Header />
       </Grid>
-      <Grid size={{ md: 5 }} order={{ xs: 2, md: 1 }}>
+      {/*<Grid size={{ md: 3 }} order={{ xs: 2, md: 1 }}>*/}
+      <Grid>
         <Attack values={values} formHook={methods} onChange={onChange} />
         <Defence />
         <Inventory />
       </Grid>
-      <Grid size={{ md: 7 }} order={{ xs: 1, md: 2 }}>
+      {/*<Grid size={{ md: 9 }} order={{ xs: 1, md: 2 }}>*/}
+      <Grid>
         <Grid container spacing={2}>
           <Grid size={12}>
             <BaseInfo />
