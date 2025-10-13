@@ -41,7 +41,6 @@ export default function PhysicalDefence() {
           fieldName="defence.physical.health.amount"
           sx={{
             minWidth: "25px",
-            width: "30px",
           }}
         />
       </CustomLabel>
