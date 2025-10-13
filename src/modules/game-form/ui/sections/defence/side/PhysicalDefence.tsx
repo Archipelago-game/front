@@ -5,7 +5,7 @@ import { Controller, useFieldArray } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import TextFieldController from "../../../components/TextFieldController.tsx";
 import { useEffect, useState } from "react";
-import { fitContentStyle, gridStyle } from "./styles/side-defence.styles.ts";
+import { gridStyle } from "./styles/side-defence.styles.ts";
 
 export default function PhysicalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
@@ -57,7 +57,7 @@ export default function PhysicalDefence() {
   if (!values) return null;
 
   return (
-    <Box sx={fitContentStyle}>
+    <Box>
       <CustomLabel
         label={{ text: "Физическая" }}
         orientation="row"
@@ -73,7 +73,7 @@ export default function PhysicalDefence() {
       </CustomLabel>
 
       <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>
-        <Box sx={{ width: "120px", ...gridStyle }}>
+        <Box sx={{ ...gridStyle }}>
           {fields.map((field, i) => (
             <Controller
               key={field.id}

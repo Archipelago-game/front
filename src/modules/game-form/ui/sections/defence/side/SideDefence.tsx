@@ -3,6 +3,7 @@ import PhysicalDefence from "./PhysicalDefence.tsx";
 import MentalDefence from "./MentalDefence.tsx";
 import Wounds from "./Wounds.tsx";
 import Injuries from "./Injuries.tsx";
+import { fitContentStyle } from "./styles/side-defence.styles.ts";
 
 export default function SideDefence() {
   return (
@@ -13,6 +14,7 @@ export default function SideDefence() {
         gap: 1,
 
         border: "1px solid red",
+        ...fitContentStyle,
       }}
     >
       <PhysicalDefence />
