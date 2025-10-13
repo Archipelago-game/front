@@ -25,7 +25,7 @@ export default function GameForm() {
     <Grid
       sx={{
         display: "grid",
-        gridTemplateColumns: "350px 1fr",
+        gridTemplateColumns: "360px 1fr",
         gap: 2,
       }}
     >

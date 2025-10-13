@@ -54,7 +54,7 @@ export default function Armor() {
         <Box sx={{ ...handStyles }}>
           <RightHand />
         </Box>
-        <Box sx={handStyles}>
+        <Box sx={{ ...handStyles }}>
           <LeftHand />
         </Box>
         <Box
