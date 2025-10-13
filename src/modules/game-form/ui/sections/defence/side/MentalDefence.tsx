@@ -30,7 +30,7 @@ export default function MentalDefence() {
       ></CustomLabel>
 
       <CustomLabel label={{ text: "Решимость", color: "secondary" }}>
-        <Box sx={{ width: "120px", ...gridStyle }}>
+        <Box sx={{ ...gridStyle }}>
           {fields.map((field, i) => (
             <Controller
               key={field.id}
