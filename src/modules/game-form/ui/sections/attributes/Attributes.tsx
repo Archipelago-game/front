@@ -7,6 +7,7 @@ import WillPower from "./willPower/WillPower.tsx";
 import Strength from "./strength/Strength.tsx";
 import Intelligence from "./intelligence/Intelligence.tsx";
 import { Masonry } from "@mui/lab";
+import { Box } from "@mui/system";
 
 export default function Attributes() {
   const isBelow730 = useMediaQuery("(max-width:730px)");
@@ -28,6 +29,25 @@ export default function Attributes() {
         <Strength />
         <Intelligence />
       </Masonry>
+
+      <Box
+        sx={{
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "repeat(3, 1fr)",
+            xl: "repeat(3, 1fr)",
+          },
+        }}
+      >
+        <Dexterity />
+        <Coordination />
+        <Insight />
+        <WillPower />
+        <Strength />
+        <Intelligence />
+      </Box>
     </>
   );
 }
