@@ -1,41 +1,29 @@
-import { useEffect, useRef } from "react";
-import type { CSSProperties } from "react";
+import { Box } from "@mui/material";
+import { useRef, useEffect } from "react";
 import "./animation.css";
+import { theme } from "../../common/styles/theme/custom-theme.ts";
 
 export default function AnimatedSvg() {
-  const contourRef = useRef<SVGPathElement | null>(null);
-  const fillRef = useRef<SVGPathElement | null>(null);
+  const primaryPath = useRef<SVGPathElement | null>(null);
+  const secondaryPath = useRef<SVGPathElement | null>(null);
 
-  useEffect(() => {
-    initializeStyles();
-  }, []);
+  function initializeStyles(contourRef: SVGPathElement) {
+    const pathLength = contourRef.getTotalLength();
+    contourRef.style.strokeDasharray = String(pathLength);
+    contourRef.style.strokeDashoffset = String(pathLength);
+    contourRef.style.opacity = "1";
+  }
 
-  const initializeStyles = () => {
-    const contourPath = contourRef.current;
-    const fillPath = fillRef.current;
+  function drawAnimation(
+    primaryPath: SVGPathElement,
+    secondaryPath: SVGPathElement,
+  ) {
+    const pathLength = primaryPath.getTotalLength();
 
-    if (!contourPath || !fillPath) return;
+    primaryPath.style.stroke = `${theme.palette.label.background.primary}`;
+    secondaryPath.style.stroke = `${theme.palette.label.background.secondary}`;
 
-    const pathLength = contourPath.getTotalLength();
-
-    contourPath.style.strokeDasharray = `${pathLength}`;
-    contourPath.style.strokeDashoffset = `${pathLength}`;
-    contourPath.style.opacity = "1";
-
-    fillPath.style.opacity = "0";
-  };
-
-  const startAnimation = () => {
-    const contourPath = contourRef.current;
-    const fillPath = fillRef.current;
-
-    if (!contourPath || !fillPath) return;
-
-    const pathLength = contourPath.getTotalLength();
-    initializeStyles();
-
-    // Анимация контура
-    contourPath.animate(
+    primaryPath.animate(
       [{ strokeDashoffset: pathLength }, { strokeDashoffset: 0 }],
       {
         duration: 2000,
@@ -44,128 +32,90 @@ export default function AnimatedSvg() {
       },
     );
 
-    // Анимация заливки
-    setTimeout(() => {
-      fillPath.animate([{ opacity: 0 }, { opacity: 1 }], {
-        duration: 1500,
-        easing: "ease-out",
+    secondaryPath.animate(
+      [{ strokeDashoffset: pathLength }, { strokeDashoffset: 0 }],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
         fill: "forwards",
-      });
-    }, 2000);
-  };
+        delay: 200,
+      },
+    );
+  }
+
+  function backgroundAnimation(path: SVGPathElement) {
+    path.style.opacity = "0";
+    path.style.fill = "url(#gradient1)";
+    path.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: 2000,
+      easing: "ease-in-out",
+      fill: "forwards",
+    });
+  }
 
   useEffect(() => {
-    startAnimation();
+    if (primaryPath.current && secondaryPath.current) {
+      initializeStyles(primaryPath.current);
+      initializeStyles(secondaryPath.current);
+      drawAnimation(primaryPath.current, secondaryPath.current);
+      backgroundAnimation(secondaryPath.current);
+    }
   }, []);
 
   return (
-    <div style={styles.container}>
-      <svg
-        width="0"
-        height="0"
-        viewBox="0 0 5120 5120"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <clipPath
-          id="svgClip"
-          clipPathUnits="objectBoundingBox"
-          transform="scale(0.0001953125)"
-        >
-          <path
-            d="M2340 4164 c-227 -169 -563 -410 -667 -479 -40 -26 -73 -54 -73 -61
-      0 -6 20 -24 44 -38 88 -52 81 40 84 -1011 2 -642 0 -941 -8 -967 -14 -49 -130
-      -222 -224 -333 -41 -49 -76 -95 -76 -101 0 -6 64 -70 143 -142 78 -71 159
-      -148 180 -171 24 -26 43 -39 51 -34 7 5 53 53 103 109 106 117 333 334 481
-      459 56 47 102 92 102 99 0 7 -16 28 -36 47 -20 18 -49 52 -65 73 l-29 39 0
-      342 c0 279 3 345 14 354 9 8 79 11 232 9 l219 -3 3 -383 c2 -367 1 -384 -18
-      -422 -11 -22 -34 -55 -50 -74 l-31 -34 138 -139 c120 -120 254 -272 359 -405
-      16 -21 37 -38 46 -38 21 0 408 407 408 430 0 9 -12 27 -26 41 -15 13 -75 82
-      -135 153 -89 106 -109 136 -114 170 -3 23 -5 446 -3 941 3 750 5 905 17 927 8
-      16 36 42 63 59 26 17 48 37 48 44 0 7 -84 69 -187 138 -104 68 -316 220 -473
-      336 -157 116 -294 210 -305 210 -11 0 -108 -66 -215 -145z m289 -586 l190
-      -143 1 -327 0 -328 -235 0 -235 0 0 451 c0 291 4 457 10 470 7 13 21 19 45 19
-      28 0 66 -24 224 -142z"
-          />
-        </clipPath>
-      </svg>
-
-      <div style={styles.svgContainer}>
-        <div className="shape"></div>
+    <Box
+      sx={{
+        position: "absolute",
+        inset: "0",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Box>
         <svg
+          className={"svg"}
           version="1.0"
           xmlns="http://www.w3.org/2000/svg"
           width="512"
           height="512"
-          viewBox="0 0 512 512"
+          viewBox="0 0 192 192"
           preserveAspectRatio="xMidYMid meet"
         >
+          <defs>
+            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#000000" />
+              <stop offset="100%" stopColor="#707442" />
+            </linearGradient>
+          </defs>
           <g
-            transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-            stroke="#000"
+            transform="translate(0,192) scale(0.1,-0.1)"
             fill="none"
-            strokeWidth="8"
+            stroke="none"
           >
             <path
-              ref={contourRef}
-              d="M2340 4164 c-227 -169 -563 -410 -667 -479 -40 -26 -73 -54 -73 -61
-                  0 -6 20 -24 44 -38 88 -52 81 40 84 -1011 2 -642 0 -941 -8 -967 -14 -49 -130
-                  -222 -224 -333 -41 -49 -76 -95 -76 -101 0 -6 64 -70 143 -142 78 -71 159
-                  -148 180 -171 24 -26 43 -39 51 -34 7 5 53 53 103 109 106 117 333 334 481
-                  459 56 47 102 92 102 99 0 7 -16 28 -36 47 -20 18 -49 52 -65 73 l-29 39 0
-                  342 c0 279 3 345 14 354 9 8 79 11 232 9 l219 -3 3 -383 c2 -367 1 -384 -18
-                  -422 -11 -22 -34 -55 -50 -74 l-31 -34 138 -139 c120 -120 254 -272 359 -405
-                  16 -21 37 -38 46 -38 21 0 408 407 408 430 0 9 -12 27 -26 41 -15 13 -75 82
-                  -135 153 -89 106 -109 136 -114 170 -3 23 -5 446 -3 941 3 750 5 905 17 927 8
-                  16 36 42 63 59 26 17 48 37 48 44 0 7 -84 69 -187 138 -104 68 -316 220 -473
-                  336 -157 116 -294 210 -305 210 -11 0 -108 -66 -215 -145z m289 -586 l190
-                  -143 1 -327 0 -328 -235 0 -235 0 0 451 c0 291 4 457 10 470 7 13 21 19 45 19
-                  28 0 66 -24 224 -142z"
+              ref={primaryPath}
+              d="M915 1588 c-30 -22 -295 -212 -313 -224 -2 -1 8 -13 22 -27 l26 -26
+            0 -351 c0 -391 4 -368 -74 -464 l-44 -53 68 -68 69 -68 73 75 c40 41 99 98
+            132 126 l59 51 -27 31 c-25 31 -26 36 -26 161 l0 129 90 0 90 0 0 -144 c0
+            -129 -2 -146 -20 -169 l-21 -26 43 -43 c24 -24 71 -74 104 -111 l60 -69 77 82
+            78 81 -56 65 -55 65 0 350 0 350 27 25 c14 13 24 26 22 28 -2 1 -33 22 -69 46
+            -36 24 -105 74 -155 110 -147 109 -133 104 -180 68z m78 -251 l67 -49 0 -124
+            0 -124 -90 0 -90 0 0 174 c0 130 3 175 13 179 15 5 16 5 100 -56z"
             />
-          </g>
-          <g
-            transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
-            stroke="#000"
-            fill="#000"
-            opacity="0"
-          >
             <path
-              ref={fillRef}
-              d="M2340 4164 c-227 -169 -563 -410 -667 -479 -40 -26 -73 -54 -73 -61
-                  0 -6 20 -24 44 -38 88 -52 81 40 84 -1011 2 -642 0 -941 -8 -967 -14 -49 -130
-                  -222 -224 -333 -41 -49 -76 -95 -76 -101 0 -6 64 -70 143 -142 78 -71 159
-                  -148 180 -171 24 -26 43 -39 51 -34 7 5 53 53 103 109 106 117 333 334 481
-                  459 56 47 102 92 102 99 0 7 -16 28 -36 47 -20 18 -49 52 -65 73 л-29 39 0
-                  342 c0 279 3 345 14 354 9 8 79 11 232 9 l219 -3 3 -383 c2 -367 1 -384 -18
-                  -422 -11 -22 -34 -55 -50 -74 л-31 -34 138 -139 c120 -120 254 -272 359 -405
-                  16 -21 37 -38 46 -38 21 0 408 407 408 430 0 9 -12 27 -26 41 -15 13 -75 82
-                  -135 153 -89 106 -109 136 -114 170 -3 23 -5 446 -3 941 3 750 5 905 17 927 8
-                  16 36 42 63 59 26 17 48 37 48 44 0 7 -84 69 -187 138 -104 68 -316 220 -473
-                  336 -157 116 -294 210 -305 210 -11 0 -108 -66 -215 -145z m289 -586 l190
-                  -143 1 -327 0 -328 -235 0 -235 0 0 451 c0 291 4 457 10 470 7 13 21 19 45 19
-                  28 0 66 -24 224 -142z"
+              ref={secondaryPath}
+              d="M915 1588 c-30 -22 -295 -212 -313 -224 -2 -1 8 -13 22 -27 l26 -26
+            0 -351 c0 -391 4 -368 -74 -464 l-44 -53 68 -68 69 -68 73 75 c40 41 99 98
+            132 126 l59 51 -27 31 c-25 31 -26 36 -26 161 l0 129 90 0 90 0 0 -144 c0
+            -129 -2 -146 -20 -169 l-21 -26 43 -43 c24 -24 71 -74 104 -111 l60 -69 77 82
+            78 81 -56 65 -55 65 0 350 0 350 27 25 c14 13 24 26 22 28 -2 1 -33 22 -69 46
+            -36 24 -105 74 -155 110 -147 109 -133 104 -180 68z m78 -251 l67 -49 0 -124
+            0 -124 -90 0 -90 0 0 174 c0 130 3 175 13 179 15 5 16 5 100 -56z"
             />
           </g>
         </svg>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
-
-const styles: Record<string, CSSProperties> = {
-  container: {
-    position: "absolute",
-    inset: "0",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  svgContainer: {
-    position: "relative",
-    width: "fit-content",
-    outline: "1px solid #000000",
-    margin: "0 auto",
-  },
-  controls: {
-    textAlign: "center",
-  },
-};
