@@ -6,7 +6,7 @@ import Insight from "./insight/Insight.tsx";
 import WillPower from "./willPower/WillPower.tsx";
 import Strength from "./strength/Strength.tsx";
 import Intelligence from "./intelligence/Intelligence.tsx";
-import { Masonry } from "@mui/lab";
+
 import { Box } from "@mui/system";
 import { useState, type ReactNode, useEffect } from "react";
 import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
