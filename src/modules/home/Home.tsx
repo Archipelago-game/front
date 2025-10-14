@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import AnimatedSvg from "../screen-saver/ScreenSaver.tsx";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function Home() {
     >
       <Button>Персонажи</Button>
       <Button onClick={() => navigate("/game-form")}>Форма персонажа</Button>
+      <AnimatedSvg />
     </Box>
   );
 }
