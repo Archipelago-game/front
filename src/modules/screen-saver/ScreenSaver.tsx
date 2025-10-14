@@ -3,7 +3,14 @@ import { useRef, useEffect } from "react";
 import "./animation.css";
 import { theme } from "../../common/styles/theme/custom-theme.ts";
 
-export default function AnimatedSvg() {
+import "./animation.css";
+
+interface Props {
+  onFinish?: () => void;
+}
+
+export default function AnimatedSvg(props: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const primaryPath = useRef<SVGPathElement | null>(null);
   const secondaryPath = useRef<SVGPathElement | null>(null);
 
@@ -12,6 +19,23 @@ export default function AnimatedSvg() {
     contourRef.style.strokeDasharray = String(pathLength);
     contourRef.style.strokeDashoffset = String(pathLength);
     contourRef.style.opacity = "1";
+  }
+
+  function startAnimation(
+    primaryPath: SVGPathElement,
+    secondaryPath: SVGPathElement,
+    containerRef: HTMLDivElement,
+  ) {
+    drawAnimation(primaryPath, secondaryPath);
+    const animation = backgroundAnimation(secondaryPath);
+    animation.onfinish = () => {
+      setTimeout(() => {
+        containerRef.classList.add("transparent");
+      }, 1000);
+      setTimeout(() => {
+        props?.onFinish?.();
+      }, 2000);
+    };
   }
 
   function drawAnimation(
@@ -32,7 +56,7 @@ export default function AnimatedSvg() {
       },
     );
 
-    secondaryPath.animate(
+    const secondaryPathAnimation = secondaryPath.animate(
       [{ strokeDashoffset: pathLength }, { strokeDashoffset: 0 }],
       {
         duration: 2000,
@@ -41,35 +65,43 @@ export default function AnimatedSvg() {
         delay: 200,
       },
     );
+    return secondaryPathAnimation;
   }
 
   function backgroundAnimation(path: SVGPathElement) {
     path.style.opacity = "0";
     path.style.fill = "url(#gradient1)";
-    path.animate([{ opacity: 0 }, { opacity: 1 }], {
+    return path.animate([{ opacity: 0 }, { opacity: 1 }], {
       duration: 2000,
       easing: "ease-in-out",
       fill: "forwards",
+      delay: 1000,
     });
   }
 
   useEffect(() => {
-    if (primaryPath.current && secondaryPath.current) {
+    if (primaryPath.current && secondaryPath.current && containerRef.current) {
       initializeStyles(primaryPath.current);
       initializeStyles(secondaryPath.current);
-      drawAnimation(primaryPath.current, secondaryPath.current);
-      backgroundAnimation(secondaryPath.current);
+      startAnimation(
+        primaryPath.current,
+        secondaryPath.current,
+        containerRef.current,
+      );
     }
   }, []);
 
   return (
     <Box
+      ref={containerRef}
       sx={{
         position: "absolute",
         inset: "0",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: theme.palette.background.paper,
+        transition: "opacity 1s",
       }}
     >
       <Box>
