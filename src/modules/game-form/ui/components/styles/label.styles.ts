@@ -5,8 +5,9 @@ export const defaultLabelTextStyles = (
   color?: keyof typeof theme.palette.label.text,
 ) => ({
   alignItems: "center",
-  paddingInline: "0.5em",
-  minHeight: "32px",
+  paddingInline: "0.5rem",
+  // note высота label
+  minHeight: "26px",
   color: theme.palette.label.text[color ?? "primary"],
   backgroundColor: theme.palette.label.background[color ?? "primary"],
 });
