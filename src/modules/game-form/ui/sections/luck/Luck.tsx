@@ -32,7 +32,7 @@ export default function Luck() {
             control={methods.control}
             render={({ field }) => (
               <Checkbox
-                size={"large"}
+                size={"medium"}
                 sx={{ padding: 0 }}
                 {...field}
                 checked={field.value}

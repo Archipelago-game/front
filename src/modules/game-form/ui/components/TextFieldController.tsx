@@ -33,7 +33,9 @@ export default function TextFieldController(
           sx={{
             minWidth: "35px",
             "& .MuiInputBase-input": {
-              padding: "4px 4px", // вертикальный и горизонтальный padding
+              // note стили полей ввода
+              padding: "4px 4px",
+              fontSize: "12px",
             },
             "& input[type=number]::-webkit-outer-spin-button": {
               WebkitAppearance: "none",

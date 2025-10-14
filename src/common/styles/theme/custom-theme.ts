@@ -26,8 +26,8 @@ export const theme = createTheme({
     values: {
       xs: 0,
       sm: 600,
-      md: 960, // ← изменили стандартное значение
-      lg: 1200,
+      md: 960,
+      lg: 1260,
       xl: 1536,
     },
   },

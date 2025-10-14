@@ -9,6 +9,9 @@ export default function Brave() {
         text: "Отвага",
       }}
       orientation="row"
+      sx={{
+        flex: "0 1 0",
+      }}
     />
   );
 }

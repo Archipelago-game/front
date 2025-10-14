@@ -17,7 +17,18 @@ export default function AttributeTitle({ fieldName, title }: Props) {
       }}
     >
       <Box sx={{ flexGrow: 1, ...defaultLabelTextStyles(theme, "primary") }}>
-        <Typography variant="h6">{title}</Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: {
+              xs: ".9em", // <600px
+              sm: "1em",
+              md: "1em", // ≥960px
+            },
+          }}
+        >
+          {title}
+        </Typography>
       </Box>
       <Box>
         <TextFieldController fieldName={fieldName} />
