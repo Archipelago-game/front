@@ -1,7 +1,7 @@
 import { CustomFormContextProvider } from "../../modules/game-form/providers/custom-form-context.provider.tsx";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Backendless from "../../api/backendless-config";
+import Backendless, { oauthApi } from "../../api/backendless-config";
 import {
   saveUserToken,
   getUserToken,
@@ -18,9 +18,8 @@ export default function AuthDonePage() {
   const [error, setError] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<BackendlessUser | null>(null);
 
-  // URL for redirect to Google OAuth
-  const redirectUrl =
-    "https://api.backendless.com/921EA541-5840-4551-9113-0FD60D6B3802/E21FF1D5-DAE8-4ACE-B1DB-E86A67A23FDC/users/oauth/googleplus/authorize";
+  // Redirect URL after OAuth (current page)
+  const redirectAfterLoginUrl = `${window.location.origin}/auth-done`;
 
   // Check if token already exists
   useEffect(() => {
@@ -115,8 +114,25 @@ export default function AuthDonePage() {
     }
   };
 
-  const handleRedirect = () => {
-    window.location.href = redirectUrl;
+  const handleRedirect = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      console.log("Getting OAuth URL for:", redirectAfterLoginUrl);
+
+      // Get OAuth URL from Backendless API
+      const oauthUrl = await oauthApi.getGoogleOAuthUrl(redirectAfterLoginUrl);
+
+      console.log("Received OAuth URL:", oauthUrl);
+
+      // Redirect to OAuth URL
+      window.location.href = oauthUrl;
+    } catch (err) {
+      console.error("Error getting OAuth URL:", err);
+      setError("Ошибка получения URL авторизации");
+      setIsLoading(false);
+    }
   };
 
   const handleLogout = () => {
