@@ -24,7 +24,7 @@ const attributeMap: AttributeMap = {
   "6": <Strength />,
 };
 
-type AttributeOrderKey = "lg" | "md" | "xs";
+type AttributeOrderKey = "lg" | "md" | "phablet" | "tablet" | "xs";
 
 const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
   lg: [
@@ -36,6 +36,12 @@ const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
     ["1", "3", "5"],
     ["2", "4", "6"],
   ],
+
+  tablet: [["1", "4", "2", "5", "3", "6"]],
+  phablet: [
+    ["1", "3", "5"],
+    ["2", "4", "6"],
+  ],
   xs: [["1", "4", "2", "5", "3", "6"]],
 };
 
@@ -43,6 +49,10 @@ export default function Attributes() {
   const [currentMedia, setCurrentMedia] = useState<AttributeOrderKey>("lg");
   const isLg = useMediaQuery(theme.breakpoints.up("lg"));
   const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("tablet", "md"));
+  const isPhablet = useMediaQuery(
+    theme.breakpoints.between("phablet", "tablet"),
+  );
   const isXs = useMediaQuery(theme.breakpoints.between("xs", "md"));
 
   useEffect(() => {
@@ -50,10 +60,14 @@ export default function Attributes() {
       setCurrentMedia("lg");
     } else if (isMd) {
       setCurrentMedia("md");
+    } else if (isTablet) {
+      setCurrentMedia("tablet");
+    } else if (isPhablet) {
+      setCurrentMedia("phablet");
     } else {
       setCurrentMedia("xs");
     }
-  }, [isLg, isMd, isXs]);
+  }, [isLg, isMd, isXs, isPhablet, isTablet]);
 
   return (
     <>
@@ -72,6 +86,8 @@ export default function Attributes() {
           gap: 2,
           gridTemplateColumns: {
             xs: "1fr",
+            phablet: "repeat(2, 1fr)",
+            tablet: "1fr",
             md: "repeat(2, 1fr)",
             lg: "repeat(3, 1fr)",
           },
