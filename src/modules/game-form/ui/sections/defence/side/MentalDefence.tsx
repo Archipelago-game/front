@@ -40,7 +40,6 @@ export default function MentalDefence() {
           fieldName="defence.mental.resolve.amount"
           sx={{
             minWidth: "25px",
-            width: "30px",
           }}
         />
       </CustomLabel>
