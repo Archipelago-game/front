@@ -1,9 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Brave from "./Brave.tsx";
 import Armor from "./armor/Armor.tsx";
 import ArmorProperty from "./armor/ArmorProperty.tsx";
 import SideDefence from "./side/SideDefence.tsx";
 import { fitContentStyle } from "./side/styles/side-defence.styles.ts";
+import SectionTitle from "../../components/SectionTitle.tsx";
 
 export default function Defence() {
   return (
@@ -15,14 +16,8 @@ export default function Defence() {
         },
       }}
     >
-      <Typography
-        variant="h4"
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        Защита
-      </Typography>
+      <SectionTitle title="Защита" />
+
       <Box
         sx={{
           display: "grid",

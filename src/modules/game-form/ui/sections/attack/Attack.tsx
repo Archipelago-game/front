@@ -1,10 +1,11 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
 
 import DamageBonus from "./damage-bonus/DamageBonus.tsx";
 import DamageMethods from "./damage-methods/DamageMethods.tsx";
 import type { FormType } from "../../../types/form/form.type.ts";
+import SectionTitle from "../../components/SectionTitle.tsx";
 
 const defaultValues = {
   name: "",
@@ -26,15 +27,7 @@ interface Props extends DefaultFormComponentProps {
 export default function Attack({ formHook, onChange, values }: Props) {
   return (
     <Box>
-      {/* todo вынести в отдельный компонент */}
-      <Typography
-        variant="h4"
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        Атака
-      </Typography>
+      <SectionTitle title="Атака" />
       <Box mb={1}>
         <DamageBonus />
       </Box>
