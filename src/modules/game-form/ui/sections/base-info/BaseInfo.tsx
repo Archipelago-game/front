@@ -5,8 +5,8 @@ import BaseField from "../../components/BaseField.tsx";
 
 export default function BaseInfo() {
   return (
-    <Grid container spacing={2}>
-      <Grid size={{ xs: 12, sm: 4 }}>
+    <Grid container spacing={1}>
+      <Grid size={{ xs: 12, md: 4 }}>
         <BaseField
           fieldName="name"
           label={{
@@ -15,7 +15,7 @@ export default function BaseInfo() {
           fieldType="text"
         />
       </Grid>
-      <Grid size={{ xs: 12, sm: 8 }}>
+      <Grid size={{ xs: 12, md: 8 }}>
         <CustomLabel>
           <Box
             sx={{
