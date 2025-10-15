@@ -12,3 +12,7 @@ export interface AuthResponse {
   user: BackendlessUser;
   token?: string;
 }
+
+export interface OAuthUrlResponse {
+  oauthUrl: string;
+}
