@@ -39,6 +39,7 @@ export default function Armor() {
           gridTemplateColumns: "repeat(3, 70px)",
           gridTemplateRows: "repeat(3, 1fr)",
           gap: 1,
+          margin: "0 auto",
           ...fitContentStyle,
         }}
       >

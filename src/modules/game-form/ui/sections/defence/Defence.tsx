@@ -7,7 +7,14 @@ import { fitContentStyle } from "./side/styles/side-defence.styles.ts";
 
 export default function Defence() {
   return (
-    <Box sx={{ ...fitContentStyle }}>
+    <Box
+      sx={{
+        ...fitContentStyle,
+        ["@media (max-width: 730px)"]: {
+          width: "100%",
+        },
+      }}
+    >
       <Typography
         variant="h4"
         sx={{
@@ -18,8 +25,12 @@ export default function Defence() {
       </Typography>
       <Box
         sx={{
-          display: "flex",
+          display: "grid",
           gap: 1,
+          gridTemplateColumns: "1fr auto ",
+          ["@media (max-width: 390px)"]: {
+            gridTemplateColumns: "1fr",
+          },
         }}
       >
         <Box
