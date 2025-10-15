@@ -2,15 +2,11 @@ import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AnimatedSvg from "../screen-saver/ScreenSaver.tsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Home() {
-  const [isShowScreenSaver, setShowScreenSaver] = useState(false);
+  const [isShowScreenSaver, setShowScreenSaver] = useState(true);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setShowScreenSaver(true);
-  }, []);
 
   return (
     <Box

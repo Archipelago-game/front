@@ -33,8 +33,8 @@ const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
     ["3", "6"],
   ],
   md: [
-    ["1", "4", "5"],
-    ["2", "3", "6"],
+    ["1", "3", "5"],
+    ["2", "4", "6"],
   ],
   xs: [["1", "4", "2", "5", "3", "6"]],
 };

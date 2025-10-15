@@ -14,15 +14,18 @@ export const oauthApi = {
    * Get OAuth URL for Google authentication
    */
   async getGoogleOAuthUrl(redirectAfterLoginUrl: string): Promise<string> {
-    const response = await fetch(`${BASE_URL}/users/oauth/googleplus/request_url`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${BASE_URL}/users/oauth/googleplus/request_url`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          redirectAfterLoginUrl,
+        }),
       },
-      body: JSON.stringify({
-        redirectAfterLoginUrl,
-      }),
-    });
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -31,7 +34,7 @@ export const oauthApi = {
     // Backendless returns the URL as plain text, not JSON
     const oauthUrl = await response.text();
 
-    if (!oauthUrl || !oauthUrl.startsWith('http')) {
+    if (!oauthUrl || !oauthUrl.startsWith("http")) {
       throw new Error("Invalid OAuth URL received");
     }
 
