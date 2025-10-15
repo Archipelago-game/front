@@ -1,5 +1,5 @@
 import { useMediaQuery } from "@mui/material";
-import { Typography } from "@mui/material";
+
 import Dexterity from "./dexterity/Dexterity.tsx";
 import Coordination from "./coordination/Coordination.tsx";
 import Insight from "./insight/Insight.tsx";
@@ -10,6 +10,7 @@ import Intelligence from "./intelligence/Intelligence.tsx";
 import { Box } from "@mui/system";
 import { useState, type ReactNode, useEffect } from "react";
 import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
+import SectionTitle from "../../components/SectionTitle.tsx";
 
 type AttributeMapKey = "1" | "2" | "3" | "4" | "5" | "6";
 
@@ -71,15 +72,7 @@ export default function Attributes() {
 
   return (
     <>
-      <Typography
-        variant="h4"
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        Атрибуты и Навыки
-      </Typography>
-
+      <SectionTitle title="Атрибуты и Навыки" />
       <Box
         sx={{
           display: "grid",
