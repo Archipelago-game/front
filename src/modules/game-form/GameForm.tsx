@@ -22,27 +22,41 @@ export default function GameForm() {
   }
 
   return (
-    <Grid
+    <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: "360px 1fr",
         gap: 2,
+        gridTemplateColumns: "360px 1fr",
+
+        ["@media (max-width: 730px)"]: {
+          display: "grid",
+          gridTemplateColumns: "1fr",
+        },
       }}
     >
-      <Grid
+      <Box
         sx={{
           gridColumn: "span 2",
+          ["@media (max-width: 730px)"]: {
+            gridColumn: "span 1",
+          },
         }}
       >
         <Header />
-      </Grid>
-      <Box>
+      </Box>
+      <Box
+        sx={{
+          ["@media (max-width: 730px)"]: {
+            order: "2",
+          },
+        }}
+      >
         <Attack values={values} formHook={methods} onChange={onChange} />
         <Defence />
         <Inventory />
       </Box>
       <Box>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           <Grid size={12}>
             <BaseInfo />
           </Grid>
@@ -52,10 +66,19 @@ export default function GameForm() {
                 display: "flex",
                 justifyContent: "space-between",
                 flexWrap: "wrap",
+                gap: 1,
               }}
             >
               <Luck />
-              <Experience />
+              <Box
+                sx={{
+                  ["@media (max-width: 868px)"]: {
+                    order: -1,
+                  },
+                }}
+              >
+                <Experience />
+              </Box>
             </Box>
           </Grid>
 
@@ -67,6 +90,6 @@ export default function GameForm() {
           </Grid>
         </Grid>
       </Box>
-    </Grid>
+    </Box>
   );
 }
