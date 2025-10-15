@@ -8,15 +8,22 @@ export default function SideDefence() {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
+        display: "grid",
+        gridTemplateColumns: "1fr",
         gap: 1,
+        ["@media (max-width: 390px)"]: {
+          gridTemplateColumns: "1fr 1fr",
+        },
       }}
     >
-      <PhysicalDefence />
-      <Wounds />
-      <MentalDefence />
-      <Injuries />
+      <Box>
+        <PhysicalDefence />
+        <Wounds />
+      </Box>
+      <Box>
+        <MentalDefence />
+        <Injuries />
+      </Box>
     </Box>
   );
 }
