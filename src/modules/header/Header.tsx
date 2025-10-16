@@ -1,5 +1,6 @@
-import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import User from "./User.tsx";
+import Logo from "./Logo.tsx";
 
 export default function Header() {
   return (
@@ -11,21 +12,17 @@ export default function Header() {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
-          alignItems: "baseline",
         }}
       >
+        <User />
         <Box
-          component="img"
-          src="/img/favicon-concept_cutted.svg"
           sx={{
-            height: "50px",
-            width: "auto",
+            flex: "1 1 auto",
+            alignSelf: "center",
           }}
-        />
-        <Typography variant="h3" align="center">
-          рхипелаг
-        </Typography>
+        >
+          <Logo />
+        </Box>
       </Box>
     </Box>
   );
