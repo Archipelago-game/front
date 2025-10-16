@@ -11,7 +11,6 @@ import Attributes from "./ui/sections/attributes/Attributes.tsx";
 import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import Talents from "./ui/sections/talants/Talents.tsx";
-import Header from "./ui/sections/header/Header.tsx";
 
 export default function GameForm() {
   const formContext = useCustomFormContext();
@@ -34,16 +33,6 @@ export default function GameForm() {
         },
       }}
     >
-      <Box
-        sx={{
-          gridColumn: "span 2",
-          ["@media (max-width: 730px)"]: {
-            gridColumn: "span 1",
-          },
-        }}
-      >
-        <Header />
-      </Box>
       <Box
         sx={{
           ["@media (max-width: 730px)"]: {
