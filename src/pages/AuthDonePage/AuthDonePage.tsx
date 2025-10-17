@@ -8,6 +8,8 @@ import {
   hasUserToken,
   saveUserInfo,
   removeUserInfo,
+  saveUserId,
+  removeUserId,
 } from "../../api/token-utils";
 import { Button, Box, Typography, Alert } from "@mui/material";
 import type { BackendlessUser } from "../../api/backendless-types";
@@ -31,7 +33,9 @@ export default function AuthDonePage() {
 
   // Handle redirect after authorization
   useEffect(() => {
-    const code = searchParams.get("code");
+    const userToken = searchParams.get("userToken");
+    const userId = searchParams.get("userId");
+
     const errorParam = searchParams.get("error");
 
     if (errorParam) {
@@ -39,9 +43,10 @@ export default function AuthDonePage() {
       return;
     }
 
-    if (code) {
-      // If authorization code exists, get token
-      handleAuthCallback();
+    if (userToken && userId) {
+      // If authorization code exists, set user
+      console.log(userToken);
+      handleAuthCallback(userToken, userId);
     }
   }, [searchParams]);
 
@@ -66,49 +71,32 @@ export default function AuthDonePage() {
     }
   };
 
-  const handleAuthCallback = async () => {
+  const handleAuthCallback = async (userToken: string, userId: string) => {
     try {
       setIsLoading(true);
       setError(null);
 
-      // After redirect, Backendless automatically sets the user
+      // Установить токен в Backendless
+      Backendless.UserService.setCurrentUser(userToken);
+
+      // Сохранить токен (localStorage/cookies/context)
+      saveUserToken(userToken);
+      saveUserId(userId);
+      const user = (await Backendless.Data.of("Users").findById(
+        userId,
+      )) as BackendlessUser;
       // Check if current user exists
-      const user = Backendless.UserService.getCurrentUser() as BackendlessUser;
 
       if (user) {
-        // Get user token from user object
-        const userToken = user["user-token"] || user.userToken;
-
-        // Save token and user information
-        if (userToken) {
-          saveUserToken(userToken);
-        }
         saveUserInfo(user);
         setUserInfo(user);
-
-        console.log("Token received:", userToken);
-        console.log("User:", user);
-      } else {
-        // If user not found, try to get it asynchronously
-        try {
-          const currUser =
-            (await Backendless.UserService.getCurrentUser()) as BackendlessUser;
-          if (currUser) {
-            const userToken = currUser["user-token"] || currUser.userToken;
-            if (userToken) {
-              saveUserToken(userToken);
-            }
-            saveUserInfo(currUser);
-            setUserInfo(currUser);
-          }
-        } catch (asyncErr) {
-          console.error("Error getting user:", asyncErr);
-          setError("Пользователь не найден после авторизации");
-        }
+        console.log(user);
+        // note очищает адресную строку от query параметров
+        // window.history.replaceState({}, document.title, window.location.pathname);
       }
     } catch (err) {
       console.error("Error getting token:", err);
-      setError("Ошибка получения токена авторизации");
+      setError("Ошибка получения userInfo");
     } finally {
       setIsLoading(false);
     }
@@ -139,6 +127,7 @@ export default function AuthDonePage() {
     Backendless.UserService.logout();
     localStorage.removeItem("backendless_user_token");
     removeUserInfo();
+    removeUserId();
     setUserInfo(null);
     setError(null);
   };

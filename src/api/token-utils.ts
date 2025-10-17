@@ -2,6 +2,7 @@
 import type { BackendlessUser } from "./backendless-types";
 
 const TOKEN_KEY = "backendless_user_token";
+const USER_ID_KEY = "backendless_user_token_uid";
 
 /**
  * Save user token to localStorage
@@ -10,6 +11,13 @@ export function saveUserToken(token: string): void {
   localStorage.setItem(TOKEN_KEY, token);
 }
 
+export function saveUserId(userId: string): void {
+  localStorage.setItem(USER_ID_KEY, userId);
+}
+
+export function removeUserId(): void {
+  localStorage.removeItem(USER_ID_KEY);
+}
 /**
  * Get user token from localStorage
  */
