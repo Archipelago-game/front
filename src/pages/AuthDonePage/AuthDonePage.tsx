@@ -5,11 +5,8 @@ import Backendless, { oauthApi } from "../../api/backendless-config";
 import {
   saveUserToken,
   getUserToken,
-  hasUserToken,
   saveUserInfo,
-  removeUserInfo,
   saveUserId,
-  removeUserId,
 } from "../../api/token-utils";
 import { Button, Box, Typography, Alert } from "@mui/material";
 import type { BackendlessUser } from "../../api/backendless-types";
@@ -22,14 +19,6 @@ export default function AuthDonePage() {
 
   // Redirect URL after OAuth (current page)
   const redirectAfterLoginUrl = `${window.location.origin}/auth-done`;
-
-  // Check if token already exists
-  useEffect(() => {
-    if (hasUserToken()) {
-      // If token exists, get user information
-      loadCurrentUser();
-    }
-  }, []);
 
   // Handle redirect after authorization
   useEffect(() => {
@@ -49,27 +38,6 @@ export default function AuthDonePage() {
       handleAuthCallback(userToken, userId);
     }
   }, [searchParams]);
-
-  const loadCurrentUser = async () => {
-    try {
-      setIsLoading(true);
-      const user =
-        (await Backendless.UserService.getCurrentUser()) as BackendlessUser;
-      if (user) {
-        const userToken = user["user-token"] || user.userToken;
-        if (userToken) {
-          saveUserToken(userToken);
-        }
-        saveUserInfo(user);
-        setUserInfo(user);
-      }
-    } catch (err) {
-      console.error("Error getting user:", err);
-      setError("Ошибка получения информации о пользователе");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleAuthCallback = async (userToken: string, userId: string) => {
     try {
@@ -123,20 +91,11 @@ export default function AuthDonePage() {
     }
   };
 
-  const handleLogout = () => {
-    Backendless.UserService.logout();
-    localStorage.removeItem("backendless_user_token");
-    removeUserInfo();
-    removeUserId();
-    setUserInfo(null);
-    setError(null);
-  };
-
   return (
     <CustomFormContextProvider>
       <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
         <Typography variant="h4" gutterBottom>
-          Авторизация
+          Кто ты, воин?
         </Typography>
 
         {error && (
@@ -163,15 +122,9 @@ export default function AuthDonePage() {
             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
               Токен: {getUserToken()?.substring(0, 20)}...
             </Typography>
-            <Button variant="outlined" onClick={handleLogout}>
-              Выйти
-            </Button>
           </Box>
         ) : (
           <Box>
-            <Typography variant="body1" sx={{ mb: 2 }}>
-              Для доступа к приложению необходимо авторизоваться через Google
-            </Typography>
             <Button
               variant="contained"
               onClick={handleRedirect}
