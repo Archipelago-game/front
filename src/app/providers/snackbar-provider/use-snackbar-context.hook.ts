@@ -12,7 +12,7 @@ interface SnackbarContextType {
 
 export const SnackbarContext = createContext<SnackbarContextType | null>(null);
 
-export const useSnackbar = () => {
+export const useSnackbarContext = () => {
   const context = useContext(SnackbarContext);
   if (!context)
     throw new Error("useSnackbar must be used within SnackbarProvider");
