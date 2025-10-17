@@ -1,4 +1,4 @@
-import { Alert, Box, Button, IconButton, Snackbar } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import { theme } from "../../common/styles/theme/custom-theme.ts";
 
 import { useUserContext } from "../../app/providers/user-provider/use-user-context.hook.ts";
 import { useEffect, useState } from "react";
+import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 
 const AUTH_PAGE_PATH = "/auth-done";
 
@@ -18,10 +19,14 @@ export default function User() {
   const location = useLocation();
   const navigate = useNavigate();
   const { userInfo, removeUserInfo } = useUserContext();
+  const { showMessage } = useSnackbarContext();
 
-  const handleLogout = () => {
-    Backendless.UserService.logout();
+  const handleLogout = async () => {
+    await Backendless.UserService.logout();
     removeUserInfo();
+    showMessage({
+      message: "Успешно вышли",
+    });
   };
 
   useEffect(() => {
@@ -34,11 +39,6 @@ export default function User() {
 
   return (
     <Box>
-      <Snackbar open={true} autoHideDuration={6000} onClose={() => {}}>
-        <Alert onClose={() => {}} severity="success">
-          Сообщение отправлено!
-        </Alert>
-      </Snackbar>
       <Box
         sx={{
           position: "relative",

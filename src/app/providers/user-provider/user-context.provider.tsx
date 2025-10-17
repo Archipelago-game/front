@@ -34,8 +34,9 @@ export function UserContextProvider({ children }: Props) {
     )) as BackendlessUser;
 
     if (!user) {
-      setState(user);
+      return;
     }
+    setState(user);
   };
 
   const removeUser = useCallback(() => {
