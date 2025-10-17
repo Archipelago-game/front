@@ -6,6 +6,7 @@ export interface BackendlessUser {
   name?: string;
   "user-token"?: string;
   userToken?: string;
+  oAuthIdentities?: OAuthIdentity[];
 }
 
 export interface AuthResponse {
@@ -15,4 +16,10 @@ export interface AuthResponse {
 
 export interface OAuthUrlResponse {
   oauthUrl: string;
+}
+
+export interface OAuthIdentity {
+  displayName: string;
+  oAuthId: string;
+  providerCode: string;
 }

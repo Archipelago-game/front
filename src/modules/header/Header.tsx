@@ -11,7 +11,10 @@ export default function Header() {
     >
       <Box
         sx={{
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr",
+          alignItems: "center",
+          width: "100%",
         }}
       >
         <User />
@@ -22,6 +25,7 @@ export default function Header() {
           }}
         >
           <Logo />
+          <Box />
         </Box>
       </Box>
     </Box>
