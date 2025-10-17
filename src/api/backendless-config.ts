@@ -23,6 +23,7 @@ export const oauthApi = {
         },
         body: JSON.stringify({
           redirectAfterLoginUrl,
+          scopes: ["email", "https://www.googleapis.com/auth/userinfo.profile"],
         }),
       },
     );
