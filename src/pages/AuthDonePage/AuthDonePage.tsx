@@ -98,7 +98,7 @@ export default function AuthDonePage() {
         )}
 
         {!userInfo && (
-          <Box>
+          <Box textAlign="center">
             <Button
               variant="contained"
               onClick={handleRedirect}
