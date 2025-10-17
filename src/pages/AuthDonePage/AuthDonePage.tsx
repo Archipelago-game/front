@@ -2,20 +2,16 @@ import { CustomFormContextProvider } from "../../modules/game-form/providers/cus
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Backendless, { oauthApi } from "../../api/backendless-config";
-import {
-  saveUserToken,
-  getUserToken,
-  saveUserInfo,
-  saveUserId,
-} from "../../api/token-utils";
+import { saveUserId } from "../../api/token-utils";
 import { Button, Box, Typography, Alert } from "@mui/material";
 import type { BackendlessUser } from "../../api/backendless-types";
+import { useUserContext } from "../../app/providers/user-provider/use-user-context.hook.ts";
 
 export default function AuthDonePage() {
   const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [userInfo, setUserInfo] = useState<BackendlessUser | null>(null);
+  const { userInfo, setUserInfo } = useUserContext();
 
   // Redirect URL after OAuth (current page)
   const redirectAfterLoginUrl = `${window.location.origin}/auth-done`;
@@ -48,7 +44,6 @@ export default function AuthDonePage() {
       Backendless.UserService.setCurrentUser(userToken);
 
       // Сохранить токен (localStorage/cookies/context)
-      saveUserToken(userToken);
       saveUserId(userId);
       const user = (await Backendless.Data.of("Users").findById(
         userId,
@@ -56,9 +51,7 @@ export default function AuthDonePage() {
       // Check if current user exists
 
       if (user) {
-        saveUserInfo(user);
         setUserInfo(user);
-        console.log(user);
         // note очищает адресную строку от query параметров
         // window.history.replaceState({}, document.title, window.location.pathname);
       }
@@ -94,8 +87,8 @@ export default function AuthDonePage() {
   return (
     <CustomFormContextProvider>
       <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
-        <Typography variant="h4" gutterBottom>
-          Кто ты, воин?
+        <Typography variant="h4" gutterBottom textAlign="center">
+          {userInfo ? `Добро пожаловать, ${userInfo.name}` : "Кто ты, воин?"}
         </Typography>
 
         {error && (
@@ -104,26 +97,7 @@ export default function AuthDonePage() {
           </Alert>
         )}
 
-        {isLoading && (
-          <Alert severity="info" sx={{ mb: 2 }}>
-            Загрузка...
-          </Alert>
-        )}
-
-        {userInfo ? (
-          <Box>
-            <Alert severity="success" sx={{ mb: 2 }}>
-              Авторизация успешна!
-            </Alert>
-            <Typography variant="h6" gutterBottom>
-              Добро пожаловать,{" "}
-              {userInfo.email || userInfo.name || "Пользователь"}!
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-              Токен: {getUserToken()?.substring(0, 20)}...
-            </Typography>
-          </Box>
-        ) : (
+        {!userInfo && (
           <Box>
             <Button
               variant="contained"

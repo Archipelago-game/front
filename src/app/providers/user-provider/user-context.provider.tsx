@@ -8,7 +8,6 @@ import {
 import type { BackendlessUser } from "../../../api/backendless-types.ts";
 import {
   getUserId,
-  hasUserToken,
   removeUserId,
   removeUserInfo,
   removeUserToken,
@@ -23,17 +22,13 @@ export function UserContextProvider({ children }: Props) {
   const [state, setState] = useState<BackendlessUser | null>(null);
 
   useEffect(() => {
-    if (hasUserToken()) {
-      setUser();
+    const userId = getUserId();
+    if (userId) {
+      setUser(userId);
     }
   }, []);
 
-  const setUser = async () => {
-    const userId = getUserId();
-    if (!userId) {
-      return;
-    }
-
+  const setUser = async (userId: string) => {
     const user = (await Backendless.Data.of("Users").findById(
       userId,
     )) as BackendlessUser;
@@ -52,9 +47,9 @@ export function UserContextProvider({ children }: Props) {
 
   const value = useMemo(
     () => ({
-      user: state,
-      setUser: setState,
-      removeUser: removeUser,
+      userInfo: state,
+      setUserInfo: setState,
+      removeUserInfo: removeUser,
     }),
     [state, setState, removeUser],
   );

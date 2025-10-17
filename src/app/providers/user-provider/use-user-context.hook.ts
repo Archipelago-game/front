@@ -7,15 +7,15 @@ import {
 import type { BackendlessUser } from "../../../api/backendless-types.ts";
 
 interface UserContext {
-  user: BackendlessUser | null;
-  setUser: Dispatch<SetStateAction<BackendlessUser | null>>;
-  removeUser: () => void;
+  userInfo: BackendlessUser | null;
+  setUserInfo: Dispatch<SetStateAction<BackendlessUser | null>>;
+  removeUserInfo: () => void;
 }
 
 const defaultValue = {
-  user: null,
-  setUser: () => {},
-  removeUser: () => {},
+  userInfo: null,
+  setUserInfo: () => {},
+  removeUserInfo: () => {},
 };
 
 export const UserContext = createContext<UserContext | null>(defaultValue);
