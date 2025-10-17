@@ -6,7 +6,7 @@ import {
 } from "react";
 import type { BackendlessUser } from "../../../api/backendless-types.ts";
 
-interface UserContext {
+interface UserContextType {
   userInfo: BackendlessUser | null;
   setUserInfo: Dispatch<SetStateAction<BackendlessUser | null>>;
   removeUserInfo: () => void;
@@ -18,7 +18,7 @@ const defaultValue = {
   removeUserInfo: () => {},
 };
 
-export const UserContext = createContext<UserContext | null>(defaultValue);
+export const UserContext = createContext<UserContextType | null>(defaultValue);
 
 export function useUserContext() {
   const context = useContext(UserContext);
