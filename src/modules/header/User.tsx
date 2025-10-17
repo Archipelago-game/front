@@ -12,8 +12,6 @@ import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-sn
 
 const AUTH_PAGE_PATH = "/auth-done";
 
-// todo сообщения о действиях
-// todo UserContext
 export default function User() {
   const [isAutPage, setIsAutPage] = useState(false);
   const location = useLocation();
@@ -50,7 +48,7 @@ export default function User() {
           },
         }}
       >
-        <IconButton onClick={() => navigate("/auth-done")}>
+        <IconButton>
           <AccountCircle
             sx={{
               fontSize: "40px",
@@ -82,7 +80,12 @@ export default function User() {
             )}
 
             {!userInfo && (
-              <Button component="a" href="/auth-done" variant="contained">
+              <Button
+                onClick={() =>
+                  navigate("/auth-done", { state: { from: location.pathname } })
+                }
+                variant="contained"
+              >
                 Авторизоваться
               </Button>
             )}

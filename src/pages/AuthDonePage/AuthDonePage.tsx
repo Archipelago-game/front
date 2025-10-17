@@ -1,6 +1,6 @@
 import { CustomFormContextProvider } from "../../modules/game-form/providers/custom-form-context.provider.tsx";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Backendless, { oauthApi } from "../../api/backendless-config";
 import { saveUserId } from "../../api/token-utils";
 import { Button, Box, Typography } from "@mui/material";
@@ -10,6 +10,8 @@ import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-sn
 
 export default function AuthDonePage() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const { userInfo, setUserInfo, removeUserInfo } = useUserContext();
   const { showMessage } = useSnackbarContext();
@@ -94,6 +96,9 @@ export default function AuthDonePage() {
     removeUserInfo();
   };
 
+  // fix после перезагрузки не работает
+  const from = location.state?.from || "/";
+
   return (
     <CustomFormContextProvider>
       <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
@@ -101,20 +106,27 @@ export default function AuthDonePage() {
           {userInfo ? `Добро пожаловать, ${userInfo.name}` : "Кто ты, воин?"}
         </Typography>
 
-        {userInfo && (
-          <Box textAlign="center">
-            <Button
-              variant="contained"
-              onClick={handleLogout}
-              disabled={isLoading}
-            >
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 2,
+          }}
+        >
+          <Button
+            onClick={() => navigate(from, { replace: true })}
+            disabled={isLoading}
+          >
+            Продолжить прерванный путь
+          </Button>
+
+          {userInfo && (
+            <Button onClick={handleLogout} disabled={isLoading}>
               Выйти
             </Button>
-          </Box>
-        )}
+          )}
 
-        {!userInfo && (
-          <Box textAlign="center">
+          {!userInfo && (
             <Button
               variant="contained"
               onClick={handleRedirect}
@@ -122,8 +134,8 @@ export default function AuthDonePage() {
             >
               Войти через Google
             </Button>
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
     </CustomFormContextProvider>
   );
