@@ -15,7 +15,7 @@ import { theme } from "../../common/styles/theme/custom-theme.ts";
 import type { BackendlessUser } from "../../api/backendless-types.ts";
 
 // todo сообщения о действиях
-// todo userContext
+// todo UserContext
 export default function User() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
