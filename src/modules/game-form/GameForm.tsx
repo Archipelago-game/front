@@ -14,7 +14,7 @@ import Talents from "./ui/sections/talants/Talents.tsx";
 
 export default function GameForm() {
   const formContext = useCustomFormContext();
-  const { methods, onChange, values } = useCustomFormContext();
+  const { values } = formContext;
 
   if (!formContext || !values) {
     return null;
@@ -40,10 +40,11 @@ export default function GameForm() {
           },
         }}
       >
-        <Attack values={values} formHook={methods} onChange={onChange} />
+        <Attack values={values} />
         <Defence />
         <Inventory />
       </Box>
+
       <Box>
         <Grid container spacing={1}>
           <Grid size={12}>

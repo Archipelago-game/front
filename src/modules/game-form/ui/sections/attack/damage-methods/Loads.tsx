@@ -1,17 +1,28 @@
-import type { FieldArrayComponentProps } from "../../../../types/field-array-component-props.type.ts";
 import { useSyncFieldArray } from "../../../../hooks/use-sync-field-array.hook.ts";
 import { Controller } from "react-hook-form";
 import { Box, Checkbox, type CheckboxProps } from "@mui/material";
 import CustomLabel from "../../../components/CustomLabel.tsx";
+import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
+import type { FieldArrayComponentShortProps } from "../../../../types/field-array-component-props.type.ts";
 
-interface Props extends FieldArrayComponentProps {
+interface Props extends FieldArrayComponentShortProps {
   size?: CheckboxProps["size"];
   index: number;
 }
 
 export default function Loads(props: Props) {
-  const { formHook, onChange } = props;
-  const fields = useSyncFieldArray(props);
+  const formContext = useCustomFormContext();
+  const { methods, onChange } = formContext;
+
+  const fields = useSyncFieldArray({
+    ...props,
+    formHook: methods,
+    onChange,
+  });
+
+  if (!formContext) {
+    return null;
+  }
 
   return (
     <Box
@@ -37,7 +48,7 @@ export default function Loads(props: Props) {
           <Controller
             key={field.id}
             name={`attack.methods.list.${props.index}.loads.list.${index}.checked`}
-            control={formHook.control}
+            control={methods.control}
             render={({ field }) => (
               <Checkbox
                 size={props.size ?? "medium"}

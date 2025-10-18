@@ -5,11 +5,9 @@ import DexteritySkillTableAuto from "./DexteritySkillsTableAuto.tsx";
 
 export default function Dexterity() {
   return (
-    <>
-      <Attribute>
-        <DexterityTitle />
-        <DexteritySkillTableAuto />
-      </Attribute>
-    </>
+    <Attribute>
+      <DexterityTitle />
+      <DexteritySkillTableAuto />
+    </Attribute>
   );
 }

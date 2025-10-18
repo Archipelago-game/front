@@ -16,6 +16,7 @@ export default function TextFieldController(
   props: DefaultFieldControllerProps,
 ) {
   const { fieldType, fieldName, sx } = props;
+  const defaultValue = fieldType === "number" ? 0 : "";
 
   const formContext = useCustomFormContext();
   const { methods, onChange } = formContext;
@@ -28,6 +29,7 @@ export default function TextFieldController(
     <Controller
       name={fieldName}
       control={methods.control}
+      defaultValue={defaultValue}
       render={({ field }) => (
         <TextField
           sx={{

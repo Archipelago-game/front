@@ -5,11 +5,9 @@ import CoordinationSkillTableAuto from "./CoordinationSkillTableAuto.tsx";
 
 export default function Coordination() {
   return (
-    <>
-      <Attribute>
-        <CoordinationTitle />
-        <CoordinationSkillTableAuto />
-      </Attribute>
-    </>
+    <Attribute>
+      <CoordinationTitle />
+      <CoordinationSkillTableAuto />
+    </Attribute>
   );
 }

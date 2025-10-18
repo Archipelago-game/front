@@ -1,7 +1,5 @@
 import { Box } from "@mui/material";
 
-import type { DefaultFormComponentProps } from "../../../types/default-form-section-props.type.ts";
-
 import DamageBonus from "./damage-bonus/DamageBonus.tsx";
 import DamageMethods from "./damage-methods/DamageMethods.tsx";
 import type { FormType } from "../../../types/form/form.type.ts";
@@ -20,11 +18,11 @@ const defaultValues = {
   properties: "",
 };
 
-interface Props extends DefaultFormComponentProps {
+interface Props {
   values: FormType;
 }
 
-export default function Attack({ formHook, onChange, values }: Props) {
+export default function Attack({ values }: Props) {
   return (
     <Box>
       <SectionTitle title="Атака" />
@@ -32,8 +30,6 @@ export default function Attack({ formHook, onChange, values }: Props) {
         <DamageBonus />
       </Box>
       <DamageMethods
-        formHook={formHook}
-        onChange={onChange}
         name="attack.methods"
         amount={2}
         values={values}

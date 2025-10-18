@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 
-import type { DefaultFormComponentProps } from "../../../../types/default-form-section-props.type.ts";
 import type {
   AttackMethod,
   FormType,
@@ -8,7 +7,7 @@ import type {
 import Loads from "./Loads.tsx";
 import BaseField from "../../../components/BaseField.tsx";
 
-interface Props extends DefaultFormComponentProps {
+interface Props {
   index: number;
   values: FormType;
 }
@@ -33,8 +32,7 @@ const fieldConfigList: FieldConfig[] = [
   },
 ];
 
-export default function DamageMethodItem(props: Props) {
-  const { index, formHook, onChange } = props;
+export default function DamageMethodItem({ index }: Props) {
   return (
     <Box key={index}>
       <BaseField
@@ -68,8 +66,6 @@ export default function DamageMethodItem(props: Props) {
           index={index}
           name={`attack.methods.list.${index}.loads`}
           amount={5}
-          formHook={formHook}
-          onChange={onChange}
           defaultValue={{ checked: false }}
         />
       </Box>

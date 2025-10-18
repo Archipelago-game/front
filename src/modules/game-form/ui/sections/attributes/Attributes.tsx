@@ -71,7 +71,7 @@ export default function Attributes() {
   }, [isLg, isMd, isXs, isPhablet, isTablet]);
 
   return (
-    <>
+    <Box>
       <SectionTitle title="Атрибуты и Навыки" />
       <Box
         sx={{
@@ -98,13 +98,13 @@ export default function Attributes() {
             }}
           >
             <>
-              {col.map((item) => {
-                return attributeMap[item];
-              })}
+              {col.map((item) => (
+                <Box key={item}>{attributeMap[item]}</Box>
+              ))}
             </>
           </Box>
         ))}
       </Box>
-    </>
+    </Box>
   );
 }
