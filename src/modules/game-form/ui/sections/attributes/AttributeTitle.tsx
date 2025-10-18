@@ -31,7 +31,7 @@ export default function AttributeTitle({ fieldName, title }: Props) {
         </Typography>
       </Box>
       <Box>
-        <TextFieldController fieldName={fieldName} />
+        <TextFieldController fieldName={fieldName} orientation="row" />
       </Box>
     </Box>
   );
