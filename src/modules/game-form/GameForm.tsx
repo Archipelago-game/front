@@ -44,6 +44,7 @@ export default function GameForm() {
         <Defence />
         <Inventory />
       </Box>
+
       <Box>
         <Grid container spacing={1}>
           <Grid size={12}>
