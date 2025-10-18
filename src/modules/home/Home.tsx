@@ -17,7 +17,9 @@ export default function Home() {
     >
       <Button>Персонажи</Button>
       <Button onClick={() => navigate("/game-form")}>Форма персонажа</Button>
-      <Button onClick={() => navigate("/world-description")}>Описание мира</Button>
+      <Button onClick={() => navigate("/world-description")}>
+        Описание мира
+      </Button>
       {isShowScreenSaver && (
         <AnimatedSvg
           onFinish={() => {

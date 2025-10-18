@@ -2,7 +2,7 @@ import { CustomFormContextProvider } from "../../modules/game-form/providers/cus
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Backendless, { oauthApi } from "../../api/backendless-config";
-import { saveUserId } from "../../api/token-utils";
+import { saveUserId, saveUserToken } from "../../api/token-utils";
 import { Button, Box, Typography } from "@mui/material";
 import type { BackendlessUser } from "../../api/backendless-types";
 import { useUserContext } from "../../app/providers/user-provider/use-user-context.hook.ts";
@@ -49,6 +49,7 @@ export default function AuthDonePage() {
 
       // Сохранить токен (localStorage/cookies/context)
       saveUserId(userId);
+      saveUserToken(userToken);
       const user = (await Backendless.Data.of("Users").findById(
         userId,
       )) as BackendlessUser;
