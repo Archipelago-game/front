@@ -7,15 +7,13 @@ import TextFieldController, {
 type Props = DefaultFieldControllerProps & Omit<CustomLabelProps, "children">;
 
 export default function BaseField(props: Props) {
-  const { fieldName, fieldType } = props;
-
   return (
     <CustomLabel
       label={props.label}
       orientation={props.orientation}
       sx={props.sx}
     >
-      <TextFieldController fieldName={fieldName} fieldType={fieldType} />
+      <TextFieldController {...props} />
     </CustomLabel>
   );
 }

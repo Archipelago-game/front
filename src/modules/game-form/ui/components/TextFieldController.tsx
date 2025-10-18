@@ -10,12 +10,13 @@ export interface DefaultFieldControllerProps {
   fieldName: FieldPath<FormType>;
   fieldType?: HTMLInputTypeAttribute;
   sx?: SxProps;
+  orientation?: "column" | "row";
 }
 
 export default function TextFieldController(
   props: DefaultFieldControllerProps,
 ) {
-  const { fieldType, fieldName, sx } = props;
+  const { fieldType, fieldName, sx, orientation = "column" } = props;
   const defaultValue = fieldType === "number" ? 0 : "";
 
   const formContext = useCustomFormContext();
@@ -25,6 +26,31 @@ export default function TextFieldController(
     return null;
   }
 
+  const dynamicRadius = (orientation: "column" | "row") => {
+    let topLeft = 4;
+    let topRight = 4;
+    let bottomLeft = 4;
+    const bottomRight = 4;
+
+    if (orientation === "column") {
+      topLeft = 0;
+      topRight = 0;
+    } else if (orientation === "row") {
+      topLeft = 0;
+      bottomLeft = 0;
+    }
+
+    return {
+      topLeft,
+      topRight,
+      bottomLeft,
+      bottomRight,
+    };
+  };
+
+  const { topLeft, topRight, bottomLeft, bottomRight } =
+    dynamicRadius(orientation);
+
   return (
     <Controller
       name={fieldName}
@@ -33,6 +59,12 @@ export default function TextFieldController(
       render={({ field }) => (
         <TextField
           sx={{
+            "& .MuiOutlinedInput-root": {
+              borderTopLeftRadius: `${topLeft}px`,
+              borderTopRightRadius: `${topRight}px`,
+              borderBottomLeftRadius: `${bottomLeft}px`,
+              borderBottomRightRadius: `${bottomRight}px`,
+            },
             minWidth: "35px",
             "& .MuiInputBase-input": {
               // note стили полей ввода
