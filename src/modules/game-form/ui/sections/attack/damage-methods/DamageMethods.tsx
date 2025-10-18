@@ -1,16 +1,22 @@
-import type { FieldArrayComponentProps } from "../../../../types/field-array-component-props.type.ts";
+import type { FieldArrayComponentShortProps } from "../../../../types/field-array-component-props.type.ts";
 import { useSyncFieldArray } from "../../../../hooks/use-sync-field-array.hook.ts";
 
 import DamageMethodItem from "./DamageMethodItem.tsx";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { Box } from "@mui/material";
+import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 
-interface Props extends FieldArrayComponentProps {
+interface Props extends FieldArrayComponentShortProps {
   values: FormType;
 }
 
 export default function DamageMethods(props: Props) {
-  const fields = useSyncFieldArray(props);
+  const { methods, onChange } = useCustomFormContext();
+  const fields = useSyncFieldArray({
+    ...props,
+    formHook: methods,
+    onChange,
+  });
 
   return (
     <Box
@@ -21,13 +27,7 @@ export default function DamageMethods(props: Props) {
       }}
     >
       {fields.map((_, i) => (
-        <DamageMethodItem
-          key={i}
-          index={i}
-          formHook={props.formHook}
-          onChange={props.onChange}
-          values={props.values}
-        />
+        <DamageMethodItem key={i} index={i} values={props.values} />
       ))}
     </Box>
   );

@@ -8,3 +8,9 @@ export interface FieldArrayComponentProps extends DefaultFormComponentProps {
   amount: number;
   defaultValue: any;
 }
+
+export interface FieldArrayComponentShortProps {
+  name: FieldArrayKeys;
+  amount: number;
+  defaultValue: any;
+}
