@@ -40,6 +40,7 @@ export default function DamageMethodItem({ index }: Props) {
         label={{
           text: "Название",
         }}
+        fieldType="text"
         orientation="row"
       />
 
