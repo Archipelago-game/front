@@ -41,10 +41,11 @@ export function useWatchCheckboxAmount(props: Props) {
 
   function resetDisabledCheckboxes(amount: number, list: Checkbox[]): void {
     for (let i = amount; i < list.length - 1; i++) {
-      methods.setValue(
-        `${listName}.${i}.checked` as FieldPath<FormType>,
-        false,
-      );
+      const path = `${listName}.${i}.checked` as FieldPath<FormType>;
+      const currentValue = methods.getValues(path);
+      if (currentValue !== "checked") {
+        methods.setValue(path, false);
+      }
     }
   }
 
@@ -52,7 +53,7 @@ export function useWatchCheckboxAmount(props: Props) {
     if (isCheckboxList(list)) {
       resetDisabledCheckboxes(amountValue, list);
     }
-  }, [methods, defaultAmount, amountValue, list]);
+  }, [amountValue]);
 
   return { isDisabled };
 }
