@@ -1,6 +1,6 @@
 import type { Talent, Talents } from "../types/form/form.type.ts";
 
-const defaultTalent: Talent = {
+export const defaultTalent: Talent = {
   name: "",
   branch: "",
   effect: "",

@@ -5,7 +5,6 @@ export default function Talents() {
   return (
     <>
       <SectionTitle title="Таланты" />
-
       <Talent />
     </>
   );
