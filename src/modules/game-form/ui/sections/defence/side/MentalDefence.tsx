@@ -6,8 +6,9 @@ import { useCustomFormContext } from "../../../../providers/use-custom-context-f
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
-import TextFieldController from "../../../components/TextFieldController.tsx";
+
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
+import BaseField from "../../../components/BaseField.tsx";
 
 export default function MentalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
@@ -31,18 +32,12 @@ export default function MentalDefence() {
 
   return (
     <Box>
-      <CustomLabel
+      <BaseField
         label={{ text: "Ментальная" }}
         orientation="row"
         sx={{ width: "100%" }}
-      >
-        <TextFieldController
-          fieldName="defence.mental.resolve.amount"
-          sx={{
-            minWidth: "25px",
-          }}
-        />
-      </CustomLabel>
+        fieldName="defence.mental.resolve.amount"
+      />
 
       <CustomLabel label={{ text: "Решимость", color: "secondary" }}>
         <Box sx={{ ...gridStyle }}>

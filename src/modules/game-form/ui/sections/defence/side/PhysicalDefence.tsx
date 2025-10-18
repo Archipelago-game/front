@@ -3,10 +3,11 @@ import CustomLabel from "../../../components/CustomLabel.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { Controller, useFieldArray } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
-import TextFieldController from "../../../components/TextFieldController.tsx";
+
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
+import BaseField from "../../../components/BaseField.tsx";
 
 export default function PhysicalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
@@ -32,18 +33,12 @@ export default function PhysicalDefence() {
 
   return (
     <Box>
-      <CustomLabel
+      <BaseField
+        fieldName={"defence.physical.health.amount"}
         label={{ text: "Физическая" }}
         orientation="row"
         sx={{ width: "100%" }}
-      >
-        <TextFieldController
-          fieldName="defence.physical.health.amount"
-          sx={{
-            minWidth: "25px",
-          }}
-        />
-      </CustomLabel>
+      />
 
       <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>
         <Box sx={{ ...gridStyle }}>
