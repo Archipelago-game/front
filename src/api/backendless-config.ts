@@ -13,14 +13,6 @@ export const oauthApi = {
   /**
    * Get OAuth URL for Google authentication
    */
-
-  reinitApi(userToken: string) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    Backendless["RequestHeaders"]["user-token"] = userToken;
-    Backendless.initApp(APP_ID, API_KEY);
-  },
-
   async getGoogleOAuthUrl(redirectAfterLoginUrl: string): Promise<string> {
     const response = await fetch(
       `${BASE_URL}/users/oauth/googleplus/request_url`,
