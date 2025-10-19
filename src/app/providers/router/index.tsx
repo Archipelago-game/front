@@ -3,7 +3,6 @@ import MainLayout from "../../../common/layouts/MainLayout.tsx";
 import HomePage from "../../../pages/home/HomePage.tsx";
 import GameFormPage from "../../../pages/GameFormPage/GameFormPage.tsx";
 import AuthDonePage from "../../../pages/AuthDonePage/AuthDonePage.tsx";
-import WorldDescriptionPage from "../../../pages/WorldDescriptionPage/WorldDescriptionPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -21,10 +20,6 @@ export const router = createBrowserRouter([
       {
         path: "auth-done",
         element: <AuthDonePage />,
-      },
-      {
-        path: "world-description",
-        element: <WorldDescriptionPage />,
       },
     ],
   },

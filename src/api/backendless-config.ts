@@ -1,5 +1,4 @@
 import Backendless from "backendless";
-import { getUserToken } from "./token-utils";
 
 // Backendless configuration
 const APP_ID = "921EA541-5840-4551-9113-0FD60D6B3802";
@@ -8,32 +7,6 @@ const BASE_URL = `https://api.backendless.com/${APP_ID}/${API_KEY}`;
 
 // Initialize Backendless
 Backendless.initApp(APP_ID, API_KEY);
-
-// Настройка токена для Backendless
-const setupBackendlessToken = async () => {
-  const token = getUserToken();
-  console.log("token", token);
-  if (token) {
-    // Устанавливаем токен для всех запросов Backendless
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    await Backendless.UserService.setCurrentUserToken(token);
-    const valid = await Backendless.UserService.isValidLogin();
-    console.log(valid);
-    // Попробуем взять пользователя из SDK
-
-    const user = await Backendless.UserService.getCurrentUser();
-    console.log(user);
-  }
-};
-
-// Вызываем настройку токена при инициализации
-await setupBackendlessToken();
-
-// Экспортируем функцию для обновления токена
-export const updateBackendlessToken = async () => {
-  await setupBackendlessToken();
-};
 
 // OAuth API functions
 export const oauthApi = {
