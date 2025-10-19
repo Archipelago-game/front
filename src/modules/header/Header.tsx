@@ -1,6 +1,7 @@
-import { Box } from "@mui/system";
+import { Stack, Box } from "@mui/material";
 import User from "./User.tsx";
 import Logo from "./Logo.tsx";
+import SidebarMenu from "./SidebarMenu.tsx";
 
 export default function Header() {
   return (
@@ -25,8 +26,10 @@ export default function Header() {
           }}
         >
           <Logo />
-          <Box />
         </Box>
+        <Stack alignItems="flex-end">
+          <SidebarMenu />
+        </Stack>
       </Box>
     </Box>
   );

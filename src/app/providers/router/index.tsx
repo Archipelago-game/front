@@ -3,6 +3,7 @@ import MainLayout from "../../../common/layouts/MainLayout.tsx";
 import HomePage from "../../../pages/home/HomePage.tsx";
 import GameFormPage from "../../../pages/GameFormPage/GameFormPage.tsx";
 import AuthDonePage from "../../../pages/AuthDonePage/AuthDonePage.tsx";
+import CharactersPage from "../../../pages/CharactersPage.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "characters",
+        element: <CharactersPage />,
       },
       {
         path: "game-form",
