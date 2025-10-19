@@ -1,13 +1,12 @@
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import AnimatedSvg from "../screen-saver/ScreenSaver.tsx";
 import { useState } from "react";
 import Prelude from "./Prelude";
 
 export default function Home() {
   const [isShowScreenSaver, setShowScreenSaver] = useState(true);
-  const navigate = useNavigate();
 
   return (
     <Box
@@ -16,19 +15,22 @@ export default function Home() {
         flexDirection: "column",
       }}
     >
-      <Button>Персонажи</Button>
-      <Button onClick={() => navigate("/game-form")}>Форма персонажа</Button>
-      <Button onClick={() => navigate("/auth-done")}>Страница логина</Button>
+      <Button component={RouterLink} to={"/characters"}>
+        Авторизоваться
+      </Button>
+      <Button component={RouterLink} to={"/characters"}>
+        Персонажи
+      </Button>
+
+      <Prelude />
+
       {isShowScreenSaver && (
         <AnimatedSvg
           onFinish={() => {
-            setTimeout(() => {
-              setShowScreenSaver(false);
-            }, 500);
+            setShowScreenSaver(false);
           }}
         />
       )}
-      {!isShowScreenSaver && <Prelude />}
     </Box>
   );
 }
