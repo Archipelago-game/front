@@ -34,7 +34,6 @@ export default function User() {
       setIsAutPage(false);
     }
   }, [location.pathname]);
-
   return (
     <Box>
       <Box
@@ -49,14 +48,28 @@ export default function User() {
         }}
       >
         <IconButton>
-          <AccountCircle
-            sx={{
-              fontSize: "40px",
-              color: userInfo
-                ? theme.palette.label.background.secondary
-                : "grey",
-            }}
-          />
+          {userInfo?.avatar ? (
+            <Box
+              component="img"
+              src={userInfo.avatar}
+              alt="User Avatar"
+              sx={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <AccountCircle
+              sx={{
+                fontSize: "40px",
+                color: userInfo
+                  ? theme.palette.label.background.secondary
+                  : "grey",
+              }}
+            />
+          )}
         </IconButton>
 
         {!isAutPage && (

@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AnimatedSvg from "../screen-saver/ScreenSaver.tsx";
 import { useState } from "react";
+import Prelude from "./Prelude";
 
 export default function Home() {
   const [isShowScreenSaver, setShowScreenSaver] = useState(true);
@@ -17,6 +18,7 @@ export default function Home() {
     >
       <Button>Персонажи</Button>
       <Button onClick={() => navigate("/game-form")}>Форма персонажа</Button>
+      <Button onClick={() => navigate("/auth-done")}>Страница логина</Button>
       {isShowScreenSaver && (
         <AnimatedSvg
           onFinish={() => {
@@ -26,6 +28,7 @@ export default function Home() {
           }}
         />
       )}
+      {!isShowScreenSaver && <Prelude />}
     </Box>
   );
 }

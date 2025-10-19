@@ -6,6 +6,7 @@ export interface BackendlessUser {
   name?: string;
   "user-token"?: string;
   userToken?: string;
+  avatar?: string;
   oAuthIdentities?: OAuthIdentity[];
 }
 
