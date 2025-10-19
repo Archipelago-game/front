@@ -7,6 +7,10 @@ import { Button, Box, Typography } from "@mui/material";
 import type { BackendlessUser } from "../../api/backendless-types";
 import { useUserContext } from "../../app/providers/user-provider/use-user-context.hook.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
+import {
+  setTokenLocalStorage,
+  setUserIdLocalStorage,
+} from "../../api/local-storage.ts";
 
 export default function AuthDonePage() {
   const [searchParams] = useSearchParams();
@@ -23,6 +27,9 @@ export default function AuthDonePage() {
   useEffect(() => {
     const userToken = searchParams.get("userToken");
     const userId = searchParams.get("userId");
+
+    setTokenLocalStorage(userToken);
+    setUserIdLocalStorage(userId);
 
     const errorParam = searchParams.get("error");
 
@@ -46,6 +53,7 @@ export default function AuthDonePage() {
 
       // Установить токен в Backendless
       Backendless.UserService.setCurrentUser(userToken);
+      Backendless.LocalCache.set("user-token", userToken);
 
       // Сохранить токен (localStorage/cookies/context)
       saveUserId(userId);
