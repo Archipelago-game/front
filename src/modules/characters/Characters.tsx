@@ -13,7 +13,7 @@ export default function Characters({
 }: Props) {
   return (
     <Box>
-      <Typography variant="h2" fontSize={"2em"}>
+      <Typography variant="h2" fontSize={"1.8em"}>
         Герои
       </Typography>
 
