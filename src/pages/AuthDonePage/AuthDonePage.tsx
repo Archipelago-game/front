@@ -2,15 +2,11 @@ import { CustomFormContextProvider } from "../../modules/game-form/providers/cus
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Backendless, { oauthApi } from "../../api/backendless-config";
-import { saveUserId } from "../../api/token-utils";
+import { AuthUtils } from "../../api/token-utils";
 import { Button, Box, Typography } from "@mui/material";
 import type { BackendlessUser } from "../../api/backendless-types";
 import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
-import {
-  setTokenLocalStorage,
-  setUserIdLocalStorage,
-} from "../../api/local-storage.ts";
 
 export default function AuthDonePage() {
   const [searchParams] = useSearchParams();
@@ -27,9 +23,6 @@ export default function AuthDonePage() {
   useEffect(() => {
     const userToken = searchParams.get("userToken");
     const userId = searchParams.get("userId");
-
-    setTokenLocalStorage(userToken);
-    setUserIdLocalStorage(userId);
 
     const errorParam = searchParams.get("error");
 
@@ -56,7 +49,7 @@ export default function AuthDonePage() {
       Backendless.LocalCache.set("user-token", userToken);
 
       // Сохранить токен (localStorage/cookies/context)
-      saveUserId(userId);
+      AuthUtils.saveUserId(userId);
       const user = (await Backendless.Data.of("Users").findById(
         userId,
       )) as BackendlessUser;

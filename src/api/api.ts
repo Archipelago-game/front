@@ -1,7 +1,8 @@
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
 import { getLocalStorage, setLocalStorage } from "./local-storage.ts";
-import { getUserToken, getUserInfo } from "./token-utils.ts";
+
 import type { BackendlessUser } from "./backendless-types.ts";
+import Backendless from "./backendless-config.ts";
 
 export const api = {
   async getOne(): Promise<FormType> {
@@ -13,16 +14,11 @@ export const api = {
   },
 
   /**
-   * Get user token for API requests
-   */
-  getUserToken(): string | null {
-    return getUserToken();
-  },
-
-  /**
    * Get current user information
    */
-  getCurrentUser(): BackendlessUser | null {
-    return getUserInfo();
+  async getCurrentUser(userId: string): Promise<BackendlessUser> {
+    return (await Backendless.Data.of("Users").findById(
+      userId,
+    )) as BackendlessUser;
   },
 };
