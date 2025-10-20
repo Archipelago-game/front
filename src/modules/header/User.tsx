@@ -1,22 +1,22 @@
 import { Box, Button, IconButton } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import Backendless from "../../api/backendless-config.ts";
 
 import { theme } from "../../common/styles/theme/custom-theme.ts";
 
-import { useUserContext } from "../../app/providers/user-provider/use-user-context.hook.ts";
+import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 import { useEffect, useState } from "react";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
+import AuthorizationButton from "../../common/components/auth-button/AuthorizationButton.tsx";
 
 const AUTH_PAGE_PATH = "/auth-done";
 
 export default function User() {
   const [isAutPage, setIsAutPage] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
-  const { userInfo, removeUserInfo } = useUserContext();
+  const { userInfo, removeUserInfo } = useAuthContext();
   const { showMessage } = useSnackbarContext();
 
   const handleLogout = async () => {
@@ -92,16 +92,7 @@ export default function User() {
               </Button>
             )}
 
-            {!userInfo && (
-              <Button
-                onClick={() =>
-                  navigate("/auth-done", { state: { from: location.pathname } })
-                }
-                variant="contained"
-              >
-                Авторизоваться
-              </Button>
-            )}
+            {!userInfo && <AuthorizationButton />}
           </Box>
         )}
       </Box>

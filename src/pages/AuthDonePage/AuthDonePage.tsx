@@ -5,7 +5,7 @@ import Backendless, { oauthApi } from "../../api/backendless-config";
 import { saveUserId } from "../../api/token-utils";
 import { Button, Box, Typography } from "@mui/material";
 import type { BackendlessUser } from "../../api/backendless-types";
-import { useUserContext } from "../../app/providers/user-provider/use-user-context.hook.ts";
+import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import {
   setTokenLocalStorage,
@@ -17,7 +17,7 @@ export default function AuthDonePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const { userInfo, setUserInfo, removeUserInfo } = useUserContext();
+  const { userInfo, setUserInfo, removeUserInfo } = useAuthContext();
   const { showMessage } = useSnackbarContext();
 
   // Redirect URL after OAuth (current page)
