@@ -6,32 +6,26 @@ import {
   useState,
 } from "react";
 import type { BackendlessUser } from "../../../api/backendless-types.ts";
-import {
-  getUserId,
-  removeUserId,
-  removeUserInfo,
-  removeUserToken,
-} from "../../../api/token-utils.ts";
-import Backendless from "../../../api/backendless-config.ts";
-import { UserContext } from "./use-user-context.hook.ts";
+import { AuthUtils } from "../../../api/token-utils.ts";
+
+import { AuthContext } from "./use-auth-context.hook.ts";
+import { api } from "../../../api/api.ts";
 
 interface Props {
   children?: ReactNode;
 }
-export function UserContextProvider({ children }: Props) {
+export function AuthContextProvider({ children }: Props) {
   const [state, setState] = useState<BackendlessUser | null>(null);
 
   useEffect(() => {
-    const userId = getUserId();
+    const userId = AuthUtils.getUserId();
     if (userId) {
       setUser(userId);
     }
   }, []);
 
   const setUser = async (userId: string) => {
-    const user = (await Backendless.Data.of("Users").findById(
-      userId,
-    )) as BackendlessUser;
+    const user = await api.getCurrentUser(userId);
 
     if (!user) {
       return;
@@ -41,13 +35,12 @@ export function UserContextProvider({ children }: Props) {
 
   const removeUser = useCallback(() => {
     setState(null);
-    removeUserToken();
-    removeUserInfo();
-    removeUserId();
+    AuthUtils.removeUserId();
   }, []);
 
   const value = useMemo(
     () => ({
+      isAuthorized: !!state,
       userInfo: state,
       setUserInfo: setState,
       removeUserInfo: removeUser,
@@ -55,5 +48,5 @@ export function UserContextProvider({ children }: Props) {
     [state, setState, removeUser],
   );
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -1,23 +1,18 @@
-import { CustomFormContextProvider } from "../../modules/game-form/providers/custom-form-context.provider.tsx";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Backendless, { oauthApi } from "../../api/backendless-config";
-import { saveUserId } from "../../api/token-utils";
+import { AuthUtils } from "../../api/token-utils";
 import { Button, Box, Typography } from "@mui/material";
 import type { BackendlessUser } from "../../api/backendless-types";
-import { useUserContext } from "../../app/providers/user-provider/use-user-context.hook.ts";
+import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
-import {
-  setTokenLocalStorage,
-  setUserIdLocalStorage,
-} from "../../api/local-storage.ts";
 
 export default function AuthDonePage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const { userInfo, setUserInfo, removeUserInfo } = useUserContext();
+  const { userInfo, setUserInfo, removeUserInfo } = useAuthContext();
   const { showMessage } = useSnackbarContext();
 
   // Redirect URL after OAuth (current page)
@@ -27,9 +22,6 @@ export default function AuthDonePage() {
   useEffect(() => {
     const userToken = searchParams.get("userToken");
     const userId = searchParams.get("userId");
-
-    setTokenLocalStorage(userToken);
-    setUserIdLocalStorage(userId);
 
     const errorParam = searchParams.get("error");
 
@@ -56,7 +48,7 @@ export default function AuthDonePage() {
       Backendless.LocalCache.set("user-token", userToken);
 
       // Сохранить токен (localStorage/cookies/context)
-      saveUserId(userId);
+      AuthUtils.saveUserId(userId);
       const user = (await Backendless.Data.of("Users").findById(
         userId,
       )) as BackendlessUser;
@@ -108,43 +100,41 @@ export default function AuthDonePage() {
   const from = location.state?.from || "/";
 
   return (
-    <CustomFormContextProvider>
-      <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
-        <Typography variant="h4" gutterBottom textAlign="center">
-          {userInfo ? `Добро пожаловать, ${userInfo.name}` : "Кто ты, воин?"}
-        </Typography>
+    <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+      <Typography variant="h4" gutterBottom textAlign="center">
+        {userInfo ? `Добро пожаловать, ${userInfo.name}` : "Кто ты, воин?"}
+      </Typography>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 2,
-          }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 2,
+        }}
+      >
+        <Button
+          onClick={() => navigate(from, { replace: true })}
+          disabled={isLoading}
         >
+          Продолжить прерванный путь
+        </Button>
+
+        {userInfo && (
+          <Button onClick={handleLogout} disabled={isLoading}>
+            Выйти
+          </Button>
+        )}
+
+        {!userInfo && (
           <Button
-            onClick={() => navigate(from, { replace: true })}
+            variant="contained"
+            onClick={handleRedirect}
             disabled={isLoading}
           >
-            Продолжить прерванный путь
+            Войти через Google
           </Button>
-
-          {userInfo && (
-            <Button onClick={handleLogout} disabled={isLoading}>
-              Выйти
-            </Button>
-          )}
-
-          {!userInfo && (
-            <Button
-              variant="contained"
-              onClick={handleRedirect}
-              disabled={isLoading}
-            >
-              Войти через Google
-            </Button>
-          )}
-        </Box>
+        )}
       </Box>
-    </CustomFormContextProvider>
+    </Box>
   );
 }

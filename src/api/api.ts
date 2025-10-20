@@ -1,28 +1,32 @@
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
-import { getLocalStorage, setLocalStorage } from "./local-storage.ts";
-import { getUserToken, getUserInfo } from "./token-utils.ts";
+import { CharactersUtils } from "./local-storage.ts";
+
 import type { BackendlessUser } from "./backendless-types.ts";
+import Backendless from "./backendless-config.ts";
 
 export const api = {
-  async getOne(): Promise<FormType> {
-    return getLocalStorage();
+  async getCharacters() {
+    return CharactersUtils.getCharacters();
   },
 
-  async save(data: FormType) {
-    setLocalStorage(data);
+  async addNewCharacter() {
+    CharactersUtils.setNewCharacterForm();
   },
 
-  /**
-   * Get user token for API requests
-   */
-  getUserToken(): string | null {
-    return getUserToken();
+  async getCharacterForm(index: number): Promise<FormType> {
+    return CharactersUtils.getCharacterForm(index);
+  },
+
+  async saveCharacterForm(index: number, data: FormType) {
+    CharactersUtils.setCharacterForm(index, data);
   },
 
   /**
    * Get current user information
    */
-  getCurrentUser(): BackendlessUser | null {
-    return getUserInfo();
+  async getCurrentUser(userId: string): Promise<BackendlessUser> {
+    return (await Backendless.Data.of("Users").findById(
+      userId,
+    )) as BackendlessUser;
   },
 };

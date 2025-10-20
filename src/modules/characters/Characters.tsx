@@ -1,10 +1,32 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import type { FormType } from "../game-form/types/form/form.type.ts";
 
-export default function Characters() {
+interface Props {
+  characters: FormType[];
+  openCharacterForm: (index: number) => void;
+  addCharacter: () => void;
+}
+export default function Characters({
+  characters,
+  openCharacterForm,
+  addCharacter,
+}: Props) {
   return (
     <Box>
-      <Typography variant="h2">Characters</Typography>
-      <Box>List</Box>
+      <Typography variant="h2" fontSize={"2em"}>
+        Герои
+      </Typography>
+
+      <Box component="ul">
+        {characters.map((character, index) => (
+          <Box component="li">
+            <Button onClick={() => openCharacterForm(index)}>
+              {character.name}
+            </Button>
+          </Box>
+        ))}
+        <Button onClick={addCharacter}>Новый герой</Button>
+      </Box>
     </Box>
   );
 }

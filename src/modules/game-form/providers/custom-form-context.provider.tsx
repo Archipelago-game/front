@@ -12,6 +12,7 @@ import type { FormType } from "../types/form/form.type.ts";
 import { FORM_DEFAULT_VALUES } from "../consts/form-default-values.const.ts";
 import { type ControllerRenderProps, useForm } from "react-hook-form";
 import { api } from "../../../api/api.ts";
+import { useParams } from "react-router-dom";
 
 interface Props {
   children: ReactNode;
@@ -19,6 +20,8 @@ interface Props {
 
 export function CustomFormContextProvider({ children }: Props) {
   const [formValues, setFormValues] = useState<FormType>(FORM_DEFAULT_VALUES);
+
+  const { characterIndex } = useParams();
 
   const methods = useForm<FormType>({
     defaultValues: formValues,
@@ -30,13 +33,16 @@ export function CustomFormContextProvider({ children }: Props) {
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
       field.onChange(e);
-      await api.save(methods.getValues());
+      if (characterIndex === null) {
+        return;
+      }
+      await api.saveCharacterForm(Number(characterIndex), methods.getValues());
     },
     [],
   );
 
-  const fetchData = useCallback(async () => {
-    const data = await api.getOne();
+  const fetchData = useCallback(async (characterIndex: number) => {
+    const data = await api.getCharacterForm(characterIndex);
     setFormValues(data);
   }, []);
 
@@ -50,8 +56,10 @@ export function CustomFormContextProvider({ children }: Props) {
   );
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (characterIndex) {
+      fetchData(Number(characterIndex));
+    }
+  }, [characterIndex]);
 
   useEffect(() => {
     methods.reset(formValues);

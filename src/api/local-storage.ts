@@ -2,40 +2,55 @@ import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-va
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
 
 const STORAGE_KEY = "ARCHIPELAGO";
-const USER_TOKEN_KEY = "USER_TOKEN";
-const USER_ID_KEY = "USER_ID";
 
-export function getLocalStorage() {
-  const data = localStorage.getItem(STORAGE_KEY);
-  if (data) {
-    return JSON.parse(data);
-  }
-  console.log(`local storage by key ${STORAGE_KEY} is empty`);
-  return FORM_DEFAULT_VALUES;
-}
+export const LocalStoragePatch = {
+  convertObjToArray() {
+    const data = CharactersUtils.getCharacters();
+    if (!data) {
+      return;
+    }
 
-export function setLocalStorage(data: FormType) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+    if (!Array.isArray(data)) {
+      CharactersUtils.setCharacters([data]);
+    }
+  },
+};
 
-export function setTokenLocalStorage(token: string | null) {
-  if (!token) {
-    localStorage.removeItem(USER_TOKEN_KEY);
-  }
-  localStorage.setItem(USER_TOKEN_KEY, token || "");
-}
+export const CharactersUtils = {
+  getCharacters() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (data) {
+      return JSON.parse(data) as FormType[];
+    }
 
-export function getTokenLocalStorage() {
-  localStorage.getItem(USER_TOKEN_KEY);
-}
+    return [];
+  },
 
-export function setUserIdLocalStorage(userId: string | null) {
-  if (!userId) {
-    localStorage.removeItem(USER_ID_KEY);
-  }
-  localStorage.setItem(USER_ID_KEY, userId || "");
-}
+  getCharacterForm(index: number) {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (data) {
+      const parsed = JSON.parse(data) as FormType[];
+      if (parsed.length >= index) {
+        return parsed[index];
+      }
+    }
 
-export function getUserIdLocalStorage() {
-  localStorage.getItem(USER_ID_KEY);
-}
+    return FORM_DEFAULT_VALUES;
+  },
+
+  setCharacters(data: FormType[]) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  },
+
+  setCharacterForm(index: number, data: FormType) {
+    const characters = this.getCharacters();
+    const newCharacters = characters.toSpliced(index, 1, data);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newCharacters));
+  },
+
+  setNewCharacterForm() {
+    const characters = this.getCharacters();
+    characters.push(FORM_DEFAULT_VALUES);
+    this.setCharacters(characters);
+  },
+};
