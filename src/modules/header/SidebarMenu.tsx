@@ -12,10 +12,6 @@ const menuItems = [
     name: "Персонажи",
     href: "/characters",
   },
-  {
-    name: "Форма персонажа",
-    href: "/game-form",
-  },
 ];
 
 export default function SidebarMenu() {

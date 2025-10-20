@@ -19,13 +19,16 @@ export default function Characters({
 
       <Box component="ul">
         {characters.map((character, index) => (
-          <Box component="li">
+          <Box
+            component="li"
+            key={`${index}${character.name}${character.age}${index}`}
+          >
             <Button onClick={() => openCharacterForm(index)}>
-              {character.name}
+              {character.name === "" ? "Безымянный герой" : character.name}
             </Button>
           </Box>
         ))}
-        <Button onClick={addCharacter}>Новый герой</Button>
+        <Button onClick={addCharacter}>Создать нового героя</Button>
       </Box>
     </Box>
   );

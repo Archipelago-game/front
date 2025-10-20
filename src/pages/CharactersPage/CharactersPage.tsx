@@ -15,7 +15,7 @@ export default function CharactersPage() {
 
   const addCharacter = async () => {
     await api.addNewCharacter();
-    await fetchCharacters();
+    navigate(`/game-form/${characters.length}`);
   };
 
   const openCharacterForm = async (index: number) => {
