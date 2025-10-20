@@ -30,13 +30,13 @@ export function CustomFormContextProvider({ children }: Props) {
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
       field.onChange(e);
-      await api.save(methods.getValues());
+      await api.saveCharacterForm(methods.getValues());
     },
     [],
   );
 
   const fetchData = useCallback(async () => {
-    const data = await api.getOne();
+    const data = await api.getCharacterForm();
     setFormValues(data);
   }, []);
 
