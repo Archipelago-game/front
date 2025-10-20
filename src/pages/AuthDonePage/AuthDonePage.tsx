@@ -1,4 +1,3 @@
-import { CustomFormContextProvider } from "../../modules/game-form/providers/custom-form-context.provider.tsx";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Backendless, { oauthApi } from "../../api/backendless-config";
@@ -101,43 +100,41 @@ export default function AuthDonePage() {
   const from = location.state?.from || "/";
 
   return (
-    <CustomFormContextProvider>
-      <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
-        <Typography variant="h4" gutterBottom textAlign="center">
-          {userInfo ? `Добро пожаловать, ${userInfo.name}` : "Кто ты, воин?"}
-        </Typography>
+    <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+      <Typography variant="h4" gutterBottom textAlign="center">
+        {userInfo ? `Добро пожаловать, ${userInfo.name}` : "Кто ты, воин?"}
+      </Typography>
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 2,
-          }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 2,
+        }}
+      >
+        <Button
+          onClick={() => navigate(from, { replace: true })}
+          disabled={isLoading}
         >
+          Продолжить прерванный путь
+        </Button>
+
+        {userInfo && (
+          <Button onClick={handleLogout} disabled={isLoading}>
+            Выйти
+          </Button>
+        )}
+
+        {!userInfo && (
           <Button
-            onClick={() => navigate(from, { replace: true })}
+            variant="contained"
+            onClick={handleRedirect}
             disabled={isLoading}
           >
-            Продолжить прерванный путь
+            Войти через Google
           </Button>
-
-          {userInfo && (
-            <Button onClick={handleLogout} disabled={isLoading}>
-              Выйти
-            </Button>
-          )}
-
-          {!userInfo && (
-            <Button
-              variant="contained"
-              onClick={handleRedirect}
-              disabled={isLoading}
-            >
-              Войти через Google
-            </Button>
-          )}
-        </Box>
+        )}
       </Box>
-    </CustomFormContextProvider>
+    </Box>
   );
 }

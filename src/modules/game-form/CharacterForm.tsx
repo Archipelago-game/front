@@ -12,7 +12,7 @@ import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import Talents from "./ui/sections/talants/Talents.tsx";
 
-export default function GameForm() {
+export default function CharacterForm() {
   const formContext = useCustomFormContext();
   const { values } = formContext;
 
