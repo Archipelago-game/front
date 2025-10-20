@@ -6,7 +6,7 @@ export default function MainLayout() {
   return (
     <Container
       maxWidth={"xl"}
-      sx={{ px: 2, paddingBottom: 2, height: "100vh", border: "1px solid red" }}
+      sx={{ px: 2, paddingBottom: 2, height: "100vh" }}
     >
       <Box
         sx={{
@@ -17,7 +17,16 @@ export default function MainLayout() {
         }}
       >
         <Header />
-        <Outlet />
+        <Box
+          sx={{
+            position: "relative",
+            overflowY: "auto",
+            scrollBehavior: "smooth",
+            scrollbarWidth: "none",
+          }}
+        >
+          <Outlet />
+        </Box>
       </Box>
     </Container>
   );
