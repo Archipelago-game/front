@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
             element: <CharactersPage />,
           },
           {
-            path: "game-form",
+            path: "game-form/:characterIndex",
             element: <CharacterPage />,
           },
         ],

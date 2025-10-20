@@ -9,9 +9,9 @@ export const LocalStoragePatch = {
     if (!data) {
       return;
     }
-    const parsedData = JSON.parse(data);
-    if (!Array.isArray(parsedData)) {
-      CharactersUtils.setCharacters([parsedData]);
+
+    if (!Array.isArray(data)) {
+      CharactersUtils.setCharacters([data]);
     }
   },
 };
@@ -20,7 +20,7 @@ export const CharactersUtils = {
   getCharacters() {
     const data = localStorage.getItem(STORAGE_KEY);
     if (data) {
-      return JSON.parse(data);
+      return JSON.parse(data) as FormType[];
     }
 
     return [];
@@ -30,7 +30,9 @@ export const CharactersUtils = {
     const data = localStorage.getItem(STORAGE_KEY);
     if (data) {
       const parsed = JSON.parse(data) as FormType[];
-      return parsed[index];
+      if (parsed.length >= index) {
+        return parsed[index];
+      }
     }
 
     return FORM_DEFAULT_VALUES;

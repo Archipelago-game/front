@@ -5,6 +5,14 @@ import type { BackendlessUser } from "./backendless-types.ts";
 import Backendless from "./backendless-config.ts";
 
 export const api = {
+  async getCharacters() {
+    return CharactersUtils.getCharacters();
+  },
+
+  async addNewCharacter() {
+    CharactersUtils.setNewCharacterForm();
+  },
+
   async getCharacterForm(index: number): Promise<FormType> {
     return CharactersUtils.getCharacterForm(index);
   },

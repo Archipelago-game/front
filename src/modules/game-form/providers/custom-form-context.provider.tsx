@@ -12,7 +12,7 @@ import type { FormType } from "../types/form/form.type.ts";
 import { FORM_DEFAULT_VALUES } from "../consts/form-default-values.const.ts";
 import { type ControllerRenderProps, useForm } from "react-hook-form";
 import { api } from "../../../api/api.ts";
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 interface Props {
   children: ReactNode;
@@ -20,8 +20,8 @@ interface Props {
 
 export function CustomFormContextProvider({ children }: Props) {
   const [formValues, setFormValues] = useState<FormType>(FORM_DEFAULT_VALUES);
-  const [characterIndex, setCharacterIndex] = useState<number | null>(null);
-  const [searchParams] = useSearchParams();
+
+  const { characterIndex } = useParams();
 
   const methods = useForm<FormType>({
     defaultValues: formValues,
@@ -36,7 +36,7 @@ export function CustomFormContextProvider({ children }: Props) {
       if (characterIndex === null) {
         return;
       }
-      await api.saveCharacterForm(characterIndex, methods.getValues());
+      await api.saveCharacterForm(Number(characterIndex), methods.getValues());
     },
     [],
   );
@@ -56,12 +56,10 @@ export function CustomFormContextProvider({ children }: Props) {
   );
 
   useEffect(() => {
-    const characterIndex = searchParams.get("characterIndex");
     if (characterIndex) {
-      setCharacterIndex(Number(characterIndex));
       fetchData(Number(characterIndex));
     }
-  }, [searchParams]);
+  }, [characterIndex]);
 
   useEffect(() => {
     methods.reset(formValues);

@@ -1,8 +1,14 @@
 import { Box, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Header from "../../modules/header/Header.tsx";
+import { useEffect } from "react";
+import { LocalStoragePatch } from "../../api/local-storage.ts";
 
 export default function MainLayout() {
+  useEffect(() => {
+    LocalStoragePatch.convertObjToArray();
+  }, []);
+
   return (
     <Container
       maxWidth={"xl"}
