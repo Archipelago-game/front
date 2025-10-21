@@ -9,6 +9,7 @@ export interface CustomLabelProps {
     text?: string;
     size?: TypographyVariant;
     color?: "primary" | "secondary";
+    sx?: SxProps;
   };
   orientation?: "column" | "row";
   children?: ReactNode;
@@ -32,17 +33,19 @@ export default function CustomLabel(props: CustomLabelProps) {
         sx={{
           width: children ? "unset" : "100%",
           display: "flex",
+          fontSize: {
+            xs: ".8em", // <600px
+            sm: ".9em",
+            md: "0.9em", // ≥960px
+          },
           ...defaultLabelTextStyles(theme, label?.color),
+          ...label?.sx,
         }}
       >
         <Typography
           sx={{
             textAlign: "center",
-            fontSize: {
-              xs: ".8em", // <600px
-              sm: ".9em",
-              md: "0.9em", // ≥960px
-            },
+            fontSize: "inherit",
           }}
           variant={label?.size ?? "h6"}
         >

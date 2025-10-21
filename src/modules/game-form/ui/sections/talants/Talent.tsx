@@ -5,6 +5,11 @@ import { useCustomFormContext } from "../../../providers/use-custom-context-form
 import { useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
 import { defaultTalent } from "../../../consts/talents-default.const.ts";
+import TooltipWrapper from "../../components/TooltipWrapper.tsx";
+
+const LABEL_STYLES = {
+  sx: { width: "4rem" },
+};
 
 export default function Talent() {
   const { methods, values } = useCustomFormContext();
@@ -35,6 +40,7 @@ export default function Talent() {
                   fieldName={`talents.list.${i}.name`}
                   label={{
                     text: "Название",
+                    ...LABEL_STYLES,
                   }}
                   orientation="row"
                   fieldType="text"
@@ -46,23 +52,27 @@ export default function Talent() {
                   label={{
                     text: "Ветка",
                     color: "secondary",
+                    ...LABEL_STYLES,
                   }}
                   orientation="row"
                   fieldType="text"
                 />
               </Grid>
-              <Grid size={{ xs: 12, md: 9 }} order={{ xs: 4, md: 3 }}>
-                <BaseField
-                  fieldName={`talents.list.${i}.effect`}
-                  label={{
-                    text: "Эффект",
-                    color: "secondary",
-                  }}
-                  orientation="row"
-                  fieldType="text"
-                />
+              <Grid size={{ xs: 12, md: 10 }} order={{ xs: 4, md: 3 }}>
+                <TooltipWrapper text={field.effect}>
+                  <BaseField
+                    fieldName={`talents.list.${i}.effect`}
+                    label={{
+                      text: "Эффект",
+                      color: "secondary",
+                      ...LABEL_STYLES,
+                    }}
+                    orientation="row"
+                    fieldType="text"
+                  />
+                </TooltipWrapper>
               </Grid>
-              <Grid size={{ xs: 4, md: 3 }} order={{ xs: 3, md: 4 }}>
+              <Grid size={{ xs: 4, md: 2 }} order={{ xs: 3, md: 4 }}>
                 <BaseField
                   fieldName={`talents.list.${i}.rang`}
                   label={{
