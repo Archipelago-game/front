@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, IconButton } from "@mui/material";
 import BaseField from "../../components/BaseField.tsx";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
@@ -6,6 +6,7 @@ import { useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
 import { defaultTalent } from "../../../consts/talents-default.const.ts";
 import TooltipWrapper from "../../components/TooltipWrapper.tsx";
+import { Delete } from "@mui/icons-material";
 
 const LABEL_STYLES = {
   sx: { width: "4rem" },
@@ -31,9 +32,27 @@ export default function Talent() {
 
   return (
     <Box width={"fit-content"}>
-      <Grid container gap={2} justifyContent={"flex-end"}>
+      <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
         {fields.map((field, i) => (
-          <Box key={field.id}>
+          <Box
+            key={field.id}
+            sx={{
+              position: "relative",
+              paddingLeft: "20px",
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: -2,
+                left: 0,
+              }}
+            >
+              {/* todo стили для hover */}
+              <IconButton sx={{ padding: 0, margin: "0 auto" }}>
+                <Delete fontSize="small" />
+              </IconButton>
+            </Box>
             <Grid container key={field.id} wrap={"wrap"}>
               <Grid size={{ xs: 12, md: 8 }}>
                 <BaseField
@@ -44,6 +63,7 @@ export default function Talent() {
                   }}
                   orientation="row"
                   fieldType="text"
+                  disabled={true}
                 />
               </Grid>
               <Grid size={{ xs: 8, md: 4 }}>
@@ -56,6 +76,7 @@ export default function Talent() {
                   }}
                   orientation="row"
                   fieldType="text"
+                  disabled={true}
                 />
               </Grid>
               <Grid size={{ xs: 12, md: 10 }} order={{ xs: 4, md: 3 }}>
@@ -69,6 +90,7 @@ export default function Talent() {
                     }}
                     orientation="row"
                     fieldType="text"
+                    disabled={true}
                   />
                 </TooltipWrapper>
               </Grid>
@@ -80,6 +102,7 @@ export default function Talent() {
                     color: "secondary",
                   }}
                   orientation="row"
+                  disabled={true}
                 />
               </Grid>
             </Grid>

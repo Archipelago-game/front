@@ -11,12 +11,19 @@ export interface DefaultFieldControllerProps {
   fieldType?: HTMLInputTypeAttribute;
   sx?: SxProps;
   orientation?: "column" | "row";
+  disabled?: boolean;
 }
 
 export default function TextFieldController(
   props: DefaultFieldControllerProps,
 ) {
-  const { fieldType, fieldName, sx, orientation = "column" } = props;
+  const {
+    fieldType,
+    fieldName,
+    sx,
+    orientation = "column",
+    disabled = false,
+  } = props;
   const defaultValue = fieldType === "number" ? 0 : "";
 
   const formContext = useCustomFormContext();
@@ -82,6 +89,7 @@ export default function TextFieldController(
 
             ...sx,
           }}
+          disabled={disabled}
           fullWidth
           variant="outlined"
           size="small"
