@@ -7,6 +7,10 @@ import { useEffect } from "react";
 import { defaultTalent } from "../../../consts/talents-default.const.ts";
 import TooltipWrapper from "../../components/TooltipWrapper.tsx";
 
+const LABEL_STYLES = {
+  sx: { width: "4rem" },
+};
+
 export default function Talent() {
   const { methods, values } = useCustomFormContext();
 
@@ -36,6 +40,7 @@ export default function Talent() {
                   fieldName={`talents.list.${i}.name`}
                   label={{
                     text: "Название",
+                    ...LABEL_STYLES,
                   }}
                   orientation="row"
                   fieldType="text"
@@ -47,6 +52,7 @@ export default function Talent() {
                   label={{
                     text: "Ветка",
                     color: "secondary",
+                    ...LABEL_STYLES,
                   }}
                   orientation="row"
                   fieldType="text"
@@ -59,6 +65,7 @@ export default function Talent() {
                     label={{
                       text: "Эффект",
                       color: "secondary",
+                      ...LABEL_STYLES,
                     }}
                     orientation="row"
                     fieldType="text"
