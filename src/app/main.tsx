@@ -8,15 +8,18 @@ import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../common/styles/theme/custom-theme.ts";
 import { AuthContextProvider } from "./providers/auth-provider/auth-context.provider.tsx";
 import { SnackbarProvider } from "./providers/snackbar-provider/snackbar-context.provider.tsx";
+import { ScreenSaverContextProvider } from "../modules/screen-saver/screen-saver-context.provider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <AuthContextProvider>
-        <SnackbarProvider>
-          <RouterProvider router={router} />
-        </SnackbarProvider>
-      </AuthContextProvider>
+      <ScreenSaverContextProvider>
+        <AuthContextProvider>
+          <SnackbarProvider>
+            <RouterProvider router={router} />
+          </SnackbarProvider>
+        </AuthContextProvider>
+      </ScreenSaverContextProvider>
     </ThemeProvider>
   </StrictMode>,
 );

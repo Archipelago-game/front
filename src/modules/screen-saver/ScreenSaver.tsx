@@ -4,12 +4,11 @@ import "./animation.css";
 import { theme } from "../../common/styles/theme/custom-theme.ts";
 
 import "./animation.css";
+import { useScreenSaverContext } from "./use-screen-saver-context.hook.ts";
 
-interface Props {
-  onFinish?: () => void;
-}
+export default function ScreenSaver() {
+  const { fullAnimation, spinner } = useScreenSaverContext();
 
-export default function AnimatedSvg(props: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const primaryPath = useRef<SVGPathElement | null>(null);
   const secondaryPath = useRef<SVGPathElement | null>(null);
@@ -19,6 +18,18 @@ export default function AnimatedSvg(props: Props) {
     contourRef.style.strokeDasharray = String(pathLength);
     contourRef.style.strokeDashoffset = String(pathLength);
     contourRef.style.opacity = "1";
+  }
+
+  function containerOnStart(containerRef: HTMLDivElement) {
+    containerRef.classList.remove("transparent");
+    containerRef.style.zIndex = "10";
+  }
+
+  function containerOnEnd(containerRef: HTMLDivElement) {
+    containerRef.classList.add("transparent");
+    setTimeout(() => {
+      containerRef.style.zIndex = "10";
+    }, 100);
   }
 
   function startAnimation(
@@ -33,7 +44,7 @@ export default function AnimatedSvg(props: Props) {
         containerRef.classList.add("transparent");
       }, 1000);
       setTimeout(() => {
-        props?.onFinish?.();
+        fullAnimation.stop();
       }, 2000);
     };
   }
@@ -90,6 +101,24 @@ export default function AnimatedSvg(props: Props) {
       );
     }
   }, []);
+
+  useEffect(() => {
+    if (fullAnimation.isShow) {
+      if (
+        primaryPath.current &&
+        secondaryPath.current &&
+        containerRef.current
+      ) {
+        initializeStyles(primaryPath.current);
+        initializeStyles(secondaryPath.current);
+        startAnimation(
+          primaryPath.current,
+          secondaryPath.current,
+          containerRef.current,
+        );
+      }
+    }
+  }, [fullAnimation.isShow]);
 
   return (
     <Box
