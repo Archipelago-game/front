@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { defaultTalent } from "../../../consts/talents-default.const.ts";
 import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/TooltipWrapper.tsx";
 import { Delete } from "@mui/icons-material";
+import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
+import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 
 const LABEL_STYLES = {
   sx: { width: "4rem" },
@@ -14,6 +16,7 @@ const LABEL_STYLES = {
 
 export default function Talent() {
   const { methods, values } = useCustomFormContext();
+  const { open } = useConfirmDialogContext();
 
   const { fields, replace, append, remove } = useFieldArray({
     name: "talents.list",
@@ -24,8 +27,13 @@ export default function Talent() {
     append(defaultTalent);
   };
 
-  const deleteTalent = (talentIndex: number) => {
-    remove(talentIndex);
+  const deleteTalent = (talentIndex: number, talentName: string) => {
+    open({
+      message: `ты действительно хочешь удалить талант ${talentName}`,
+      onConfirm: () => {
+        remove(talentIndex);
+      },
+    });
   };
 
   useEffect(() => {
@@ -54,8 +62,8 @@ export default function Talent() {
             >
               {/* todo стили для hover */}
               <IconButton
-                onClick={() => deleteTalent(i)}
-                sx={{ padding: 0, margin: "0 auto" }}
+                onClick={() => deleteTalent(i, field.name)}
+                sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
               >
                 <Delete fontSize="small" />
               </IconButton>

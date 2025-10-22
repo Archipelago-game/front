@@ -7,24 +7,24 @@ import {
   Button,
 } from "@mui/material";
 
-interface ConfirmDialogProps {
-  open: boolean;
+export interface ConfirmDialogProps {
+  isOpen: boolean;
   title?: string;
   message: string;
   onConfirm: () => void;
-  onCancel: () => void;
+  onCancel?: () => void;
 }
 
 export function ConfirmDialog({
-  open,
+  isOpen,
   title = "Подтверждение",
   message,
   onConfirm,
-  onCancel,
+  onCancel = () => {},
 }: ConfirmDialogProps) {
   return (
     <Dialog
-      open={open}
+      open={isOpen}
       onClose={onCancel}
       aria-labelledby="confirm-dialog-title"
       aria-describedby="confirm-dialog-description"
@@ -36,10 +36,16 @@ export function ConfirmDialog({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel} color="inherit">
+        <Button onClick={onCancel} color="inherit" size="small">
           Отмена
         </Button>
-        <Button onClick={onConfirm} color="error" variant="contained" autoFocus>
+        <Button
+          onClick={onConfirm}
+          color="error"
+          variant="contained"
+          autoFocus
+          size="small"
+        >
           Подтвердить
         </Button>
       </DialogActions>
