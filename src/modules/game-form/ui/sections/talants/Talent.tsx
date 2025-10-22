@@ -1,11 +1,14 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, IconButton } from "@mui/material";
 import BaseField from "../../components/BaseField.tsx";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
 import { defaultTalent } from "../../../consts/talents-default.const.ts";
-import TooltipWrapper from "../../components/TooltipWrapper.tsx";
+import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/TooltipWrapper.tsx";
+import { Delete } from "@mui/icons-material";
+import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
+import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 
 const LABEL_STYLES = {
   sx: { width: "4rem" },
@@ -13,8 +16,9 @@ const LABEL_STYLES = {
 
 export default function Talent() {
   const { methods, values } = useCustomFormContext();
+  const { open } = useConfirmDialogContext();
 
-  const { fields, replace, append } = useFieldArray({
+  const { fields, replace, append, remove } = useFieldArray({
     name: "talents.list",
     control: methods.control,
   });
@@ -23,17 +27,46 @@ export default function Talent() {
     append(defaultTalent);
   };
 
+  const deleteTalent = (talentIndex: number, talentName: string) => {
+    open({
+      message: `ты действительно хочешь удалить талант ${talentName}`,
+      onConfirm: () => {
+        remove(talentIndex);
+      },
+    });
+  };
+
   useEffect(() => {
     if (values) {
       replace(values.talents.list);
     }
-  }, [values?.talents.list, methods]);
+  }, [values?.talents.list]);
 
   return (
     <Box width={"fit-content"}>
-      <Grid container gap={2} justifyContent={"flex-end"}>
+      <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
         {fields.map((field, i) => (
-          <Box key={field.id}>
+          <Box
+            key={field.id}
+            sx={{
+              position: "relative",
+              paddingLeft: "25px",
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                top: -2,
+                left: 1,
+              }}
+            >
+              <IconButton
+                onClick={() => deleteTalent(i, field.name)}
+                sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
+              >
+                <Delete fontSize="small" />
+              </IconButton>
+            </Box>
             <Grid container key={field.id} wrap={"wrap"}>
               <Grid size={{ xs: 12, md: 8 }}>
                 <BaseField
@@ -44,6 +77,7 @@ export default function Talent() {
                   }}
                   orientation="row"
                   fieldType="text"
+                  disabled={true}
                 />
               </Grid>
               <Grid size={{ xs: 8, md: 4 }}>
@@ -56,6 +90,7 @@ export default function Talent() {
                   }}
                   orientation="row"
                   fieldType="text"
+                  disabled={true}
                 />
               </Grid>
               <Grid size={{ xs: 12, md: 10 }} order={{ xs: 4, md: 3 }}>
@@ -69,6 +104,7 @@ export default function Talent() {
                     }}
                     orientation="row"
                     fieldType="text"
+                    disabled={true}
                   />
                 </TooltipWrapper>
               </Grid>
@@ -80,6 +116,7 @@ export default function Talent() {
                     color: "secondary",
                   }}
                   orientation="row"
+                  disabled={true}
                 />
               </Grid>
             </Grid>

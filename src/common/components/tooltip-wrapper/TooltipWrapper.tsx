@@ -20,7 +20,29 @@ export default function TooltipWrapper({ children, text }: Props) {
           leaveTouchDelay={1000}
           tabIndex={0}
         >
-          <IconButton sx={{ padding: 0 }}>
+          <IconButton
+            sx={{
+              padding: 0,
+              transition: "all .2s",
+              "&:hover": {
+                color: "success.main",
+                transform: "scale(1.1)",
+              },
+              "&:active": {
+                color: "success.dark",
+                transform: "scale(0.95)",
+              },
+              "&:focus-visible": {
+                outline: "1px solid",
+                outlineColor: "success.light",
+                outlineOffset: "2px",
+              },
+              "&:disabled": {
+                opacity: 0.5,
+                cursor: "not-allowed",
+              },
+            }}
+          >
             <QuestionMark fontSize="small" />
           </IconButton>
         </Tooltip>
