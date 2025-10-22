@@ -5,7 +5,7 @@ import { useCustomFormContext } from "../../../providers/use-custom-context-form
 import { useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
 import { defaultTalent } from "../../../consts/talents-default.const.ts";
-import TooltipWrapper from "../../components/TooltipWrapper.tsx";
+import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/TooltipWrapper.tsx";
 import { Delete } from "@mui/icons-material";
 
 const LABEL_STYLES = {
@@ -15,7 +15,7 @@ const LABEL_STYLES = {
 export default function Talent() {
   const { methods, values } = useCustomFormContext();
 
-  const { fields, replace, append } = useFieldArray({
+  const { fields, replace, append, remove } = useFieldArray({
     name: "talents.list",
     control: methods.control,
   });
@@ -24,11 +24,15 @@ export default function Talent() {
     append(defaultTalent);
   };
 
+  const deleteTalent = (talentIndex: number) => {
+    remove(talentIndex);
+  };
+
   useEffect(() => {
     if (values) {
       replace(values.talents.list);
     }
-  }, [values?.talents.list, methods]);
+  }, [values?.talents.list]);
 
   return (
     <Box width={"fit-content"}>
@@ -49,7 +53,10 @@ export default function Talent() {
               }}
             >
               {/* todo стили для hover */}
-              <IconButton sx={{ padding: 0, margin: "0 auto" }}>
+              <IconButton
+                onClick={() => deleteTalent(i)}
+                sx={{ padding: 0, margin: "0 auto" }}
+              >
                 <Delete fontSize="small" />
               </IconButton>
             </Box>
