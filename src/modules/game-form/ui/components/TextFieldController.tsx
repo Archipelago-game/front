@@ -66,6 +66,9 @@ export default function TextFieldController(
       render={({ field }) => (
         <TextField
           sx={{
+            "& .MuiInputBase-input.Mui-disabled": {
+              WebkitTextFillColor: "#000",
+            },
             "& .MuiOutlinedInput-root": {
               borderTopLeftRadius: `${topLeft}px`,
               borderTopRightRadius: `${topRight}px`,
