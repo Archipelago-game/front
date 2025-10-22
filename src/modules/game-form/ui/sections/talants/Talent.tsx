@@ -50,17 +50,16 @@ export default function Talent() {
             key={field.id}
             sx={{
               position: "relative",
-              paddingLeft: "20px",
+              paddingLeft: "25px",
             }}
           >
             <Box
               sx={{
                 position: "absolute",
                 top: -2,
-                left: 0,
+                left: 1,
               }}
             >
-              {/* todo стили для hover */}
               <IconButton
                 onClick={() => deleteTalent(i, field.name)}
                 sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}

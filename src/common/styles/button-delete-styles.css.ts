@@ -10,8 +10,7 @@ export const buttonDeleteStyles = {
   },
   "&:focus-visible": {
     outline: "1px solid",
-    outlineColor: "primary.main",
-    outlineOffset: "2px",
+    outlineColor: "error.light",
   },
   "&:disabled": {
     opacity: 0.5,
