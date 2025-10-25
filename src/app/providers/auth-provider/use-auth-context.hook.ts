@@ -4,13 +4,14 @@ import {
   type SetStateAction,
   useContext,
 } from "react";
-import type { BackendlessUser } from "../../../api/backendless-types.ts";
+import type { FirebaseUserData } from "../../../api/firebase-types.ts";
 
 interface AuthContextType {
   isAuthorized: boolean;
-  userInfo: BackendlessUser | null;
-  setUserInfo: Dispatch<SetStateAction<BackendlessUser | null>>;
+  userInfo: FirebaseUserData | null;
+  setUserInfo: Dispatch<SetStateAction<FirebaseUserData | null>>;
   removeUserInfo: () => void;
+  isLoading: boolean;
 }
 
 const defaultValue = {
@@ -18,6 +19,7 @@ const defaultValue = {
   userInfo: null,
   setUserInfo: () => {},
   removeUserInfo: () => {},
+  isLoading: true,
 };
 
 export const AuthContext = createContext<AuthContextType | null>(defaultValue);

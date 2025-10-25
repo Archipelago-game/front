@@ -5,37 +5,70 @@ import {
   useMemo,
   useState,
 } from "react";
-import type { BackendlessUser } from "../../../api/backendless-types.ts";
-import { AuthUtils } from "../../../api/token-utils.ts";
+import type { FirebaseUserData } from "../../../api/firebase-types.ts";
+import { FirebaseAuthService } from "../../../api/firebase-auth-service.ts";
 
 import { AuthContext } from "./use-auth-context.hook.ts";
-import { api } from "../../../api/api.ts";
 
 interface Props {
   children?: ReactNode;
 }
 export function AuthContextProvider({ children }: Props) {
-  const [state, setState] = useState<BackendlessUser | null>(null);
+  const [state, setState] = useState<FirebaseUserData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const userId = AuthUtils.getUserId();
-    if (userId) {
-      setUser(userId);
-    }
+    // Listen to auth state changes
+    const unsubscribe = FirebaseAuthService.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          // Try to get user data from Firestore, but don't fail if it doesn't work
+          const userData = await FirebaseAuthService.getUserData(user.uid);
+          if (userData) {
+            setState({
+              uid: userData.uid,
+              email: userData.email,
+              displayName: userData.displayName,
+              photoURL: userData.photoURL,
+              emailVerified: userData.emailVerified,
+            });
+          } else {
+            // Fallback to Firebase Auth user data if Firestore fails
+            setState({
+              uid: user.uid,
+              email: user.email || undefined,
+              displayName: user.displayName || undefined,
+              photoURL: user.photoURL || undefined,
+              emailVerified: user.emailVerified,
+            });
+          }
+        } catch (error) {
+          console.warn("Error getting user data:", error);
+          // Fallback to Firebase Auth user data
+          setState({
+            uid: user.uid,
+            email: user.email || undefined,
+            displayName: user.displayName || undefined,
+            photoURL: user.photoURL || undefined,
+            emailVerified: user.emailVerified,
+          });
+        }
+      } else {
+        setState(null);
+      }
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  const setUser = async (userId: string) => {
-    const user = await api.getCurrentUser(userId);
-
-    if (!user) {
-      return;
+  const removeUser = useCallback(async () => {
+    try {
+      await FirebaseAuthService.signOut();
+      setState(null);
+    } catch (error) {
+      console.error("Error signing out:", error);
     }
-    setState(user);
-  };
-
-  const removeUser = useCallback(() => {
-    setState(null);
-    AuthUtils.removeUserId();
   }, []);
 
   const value = useMemo(
@@ -44,8 +77,9 @@ export function AuthContextProvider({ children }: Props) {
       userInfo: state,
       setUserInfo: setState,
       removeUserInfo: removeUser,
+      isLoading,
     }),
-    [state, setState, removeUser],
+    [state, setState, removeUser, isLoading],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

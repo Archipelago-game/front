@@ -1,8 +1,6 @@
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, IconButton, CircularProgress } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useLocation } from "react-router-dom";
-
-import Backendless from "../../api/backendless-config.ts";
 
 import { theme } from "../../common/styles/theme/custom-theme.ts";
 
@@ -16,15 +14,23 @@ const AUTH_PAGE_PATH = "/auth-done";
 export default function User() {
   const [isAutPage, setIsAutPage] = useState(false);
   const location = useLocation();
-  const { userInfo, removeUserInfo } = useAuthContext();
+  const { userInfo, removeUserInfo, isLoading } = useAuthContext();
   const { showMessage } = useSnackbarContext();
 
   const handleLogout = async () => {
-    await Backendless.UserService.logout();
-    removeUserInfo();
-    showMessage({
-      message: "Успешно вышли",
-    });
+    try {
+      await removeUserInfo();
+      showMessage({
+        message: "Успешно вышли",
+        severity: "success",
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+      showMessage({
+        message: "Ошибка при выходе",
+        severity: "error",
+      });
+    }
   };
 
   useEffect(() => {
@@ -48,10 +54,12 @@ export default function User() {
         }}
       >
         <IconButton>
-          {userInfo?.avatar ? (
+          {isLoading ? (
+            <CircularProgress size={24} />
+          ) : userInfo?.photoURL ? (
             <Box
               component="img"
-              src={userInfo.avatar}
+              src={userInfo.photoURL}
               alt="User Avatar"
               sx={{
                 width: "40px",
