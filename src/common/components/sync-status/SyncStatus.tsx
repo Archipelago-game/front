@@ -1,5 +1,11 @@
 import { Box, Chip, Typography, Button, Tooltip } from "@mui/material";
-import { CloudSync, CloudOff, Storage, Restore } from "@mui/icons-material";
+import {
+  CloudSync,
+  CloudOff,
+  Storage,
+  Restore,
+  Delete,
+} from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { api } from "../../../api/api.ts";
 import { FirebaseCharactersService } from "../../../api/firebase-characters-service.ts";
@@ -58,6 +64,12 @@ export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
     }
   };
 
+  const handleClearBackup = () => {
+    FirebaseCharactersService.clearBackup();
+    setBackupInfo(null);
+    console.log("Резервная копия удалена");
+  };
+
   const getStatusColor = () => {
     switch (syncStatus) {
       case "synced":
@@ -104,19 +116,32 @@ export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
         </Typography>
       )}
       {backupInfo && (
-        <Tooltip
-          title={`Резервная копия от ${new Date(backupInfo.timestamp).toLocaleString()} (${backupInfo.count} персонажей)`}
-        >
-          <Button
-            size="small"
-            startIcon={<Restore />}
-            onClick={handleRestore}
-            variant="outlined"
-            color="warning"
+        <>
+          <Tooltip
+            title={`Резервная копия от ${new Date(backupInfo.timestamp).toLocaleString()} (${backupInfo.count} персонажей)`}
           >
-            Восстановить
-          </Button>
-        </Tooltip>
+            <Button
+              size="small"
+              startIcon={<Restore />}
+              onClick={handleRestore}
+              variant="outlined"
+              color="warning"
+            >
+              Восстановить
+            </Button>
+          </Tooltip>
+          <Tooltip title="Удалить резервную копию">
+            <Button
+              size="small"
+              startIcon={<Delete />}
+              onClick={handleClearBackup}
+              variant="outlined"
+              color="error"
+            >
+              Сбросить
+            </Button>
+          </Tooltip>
+        </>
       )}
     </Box>
   );
