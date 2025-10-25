@@ -14,8 +14,8 @@ export default function CharactersPage() {
   };
 
   const addCharacter = async () => {
-    await api.addNewCharacter();
-    navigate(`/game-form/${characters.length}`);
+    const newIndex = await api.addNewCharacter();
+    navigate(`/game-form/${newIndex}`);
   };
 
   const openCharacterForm = async (index: number) => {
@@ -23,7 +23,19 @@ export default function CharactersPage() {
   };
 
   useEffect(() => {
+    // Подписываемся на изменения персонажей в реальном времени
+    const unsubscribe = api.subscribeToCharacters((updatedCharacters) => {
+      setCharacters(updatedCharacters);
+    });
+
+    // Также загружаем данные при первом рендере
     fetchCharacters();
+
+    return () => {
+      if (typeof unsubscribe === "function") {
+        unsubscribe();
+      }
+    };
   }, []);
 
   return (
