@@ -1,4 +1,4 @@
-import type { User as FirebaseUser } from "firebase/auth";
+// import type { User as FirebaseUser } from "firebase/auth";
 
 // Firebase User interface extending Firebase's User
 export interface FirebaseUserData {
@@ -12,10 +12,10 @@ export interface FirebaseUserData {
 }
 
 // Auth response interface
-export interface AuthResponse {
-  user: FirebaseUserData;
-  token?: string;
-}
+// export interface AuthResponse {
+//   user: FirebaseUserData;
+//   token?: string;
+// }
 
 // User document in Firestore
 export interface UserDocument {

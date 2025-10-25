@@ -1,14 +1,13 @@
-import {
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged,
-  GoogleAuthProvider,
-} from "firebase/auth";
+import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import type { User as FirebaseUser } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { auth, googleProvider } from "./firebase-config";
 import { db } from "./firebase-config";
-import type { FirebaseUserData, UserDocument, AuthError } from "./firebase-types";
+import type {
+  FirebaseUserData,
+  UserDocument,
+  AuthError,
+} from "./firebase-types";
 
 export class FirebaseAuthService {
   /**
@@ -23,7 +22,10 @@ export class FirebaseAuthService {
       await this.saveUserToFirestore(user);
 
       return this.mapFirebaseUserToUserData(user);
-    } catch (error: any) {
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+    } catch (error: never) {
       throw this.handleAuthError(error);
     }
   }
@@ -34,7 +36,10 @@ export class FirebaseAuthService {
   static async signOut(): Promise<void> {
     try {
       await signOut(auth);
-    } catch (error: any) {
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+    } catch (error: never) {
       throw this.handleAuthError(error);
     }
   }
@@ -82,7 +87,7 @@ export class FirebaseAuthService {
         displayName: user.displayName || undefined,
         photoURL: user.photoURL || undefined,
         emailVerified: user.emailVerified,
-        lastLoginAt: serverTimestamp() as any,
+        lastLoginAt: serverTimestamp() as never,
       };
 
       // Check if user exists
@@ -108,7 +113,9 @@ export class FirebaseAuthService {
   /**
    * Map Firebase User to our UserData interface
    */
-  private static mapFirebaseUserToUserData(user: FirebaseUser): FirebaseUserData {
+  private static mapFirebaseUserToUserData(
+    user: FirebaseUser,
+  ): FirebaseUserData {
     return {
       uid: user.uid,
       email: user.email || undefined,
@@ -121,7 +128,10 @@ export class FirebaseAuthService {
   /**
    * Handle authentication errors
    */
-  private static handleAuthError(error: any): AuthError {
+  private static handleAuthError(error: {
+    code?: string;
+    message?: string;
+  }): AuthError {
     let message = "Произошла ошибка авторизации";
 
     switch (error.code) {

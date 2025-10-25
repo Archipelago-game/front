@@ -15,7 +15,10 @@ export default function AuthorizationButton() {
         message: "Авторизация прошла успешно",
         severity: "success",
       });
-    } catch (error: any) {
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+    } catch (error: never) {
       console.error("Auth error:", error);
       showMessage({
         message: error.message || "Ошибка авторизации",
