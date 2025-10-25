@@ -1,7 +1,8 @@
-import { Box, Chip, Typography } from "@mui/material";
-import { CloudSync, CloudOff, Storage } from "@mui/icons-material";
+import { Box, Chip, Typography, Button, Tooltip } from "@mui/material";
+import { CloudSync, CloudOff, Storage, Restore } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { api } from "../../../api/api.ts";
+import { FirebaseCharactersService } from "../../../api/firebase-characters-service.ts";
 
 interface SyncStatusProps {
   showDetails?: boolean;
@@ -12,6 +13,10 @@ export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
   const [syncStatus, setSyncStatus] = useState<
     "synced" | "syncing" | "offline"
   >("offline");
+  const [backupInfo, setBackupInfo] = useState<{
+    timestamp: string;
+    count: number;
+  } | null>(null);
 
   useEffect(() => {
     const handleOnline = () => {
@@ -34,11 +39,24 @@ export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
       setSyncStatus("synced");
     }
 
+    // Загружаем информацию о резервной копии
+    const backup = FirebaseCharactersService.getBackupInfo();
+    setBackupInfo(backup);
+
     return () => {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
   }, [isOnline]);
+
+  const handleRestore = () => {
+    const restored = FirebaseCharactersService.restoreFromBackup();
+    if (restored) {
+      console.log("Персонажи восстановлены из резервной копии");
+      // Можно добавить уведомление пользователю
+      window.location.reload(); // Перезагружаем страницу для обновления данных
+    }
+  };
 
   const getStatusColor = () => {
     switch (syncStatus) {
@@ -84,6 +102,21 @@ export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
         <Typography variant="caption" color="text.secondary">
           {getDetailsText()}
         </Typography>
+      )}
+      {backupInfo && (
+        <Tooltip
+          title={`Резервная копия от ${new Date(backupInfo.timestamp).toLocaleString()} (${backupInfo.count} персонажей)`}
+        >
+          <Button
+            size="small"
+            startIcon={<Restore />}
+            onClick={handleRestore}
+            variant="outlined"
+            color="warning"
+          >
+            Восстановить
+          </Button>
+        </Tooltip>
       )}
     </Box>
   );
