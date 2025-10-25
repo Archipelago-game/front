@@ -141,6 +141,35 @@ export class FirebaseCharactersService {
   }
 
   /**
+   * Проверяет, содержит ли локальный персонаж полезные данные
+   */
+  private static hasLocalData(character: FormType): boolean {
+    // Проверяем, есть ли у персонажа имя или другие значимые данные
+    const hasName = character.name && character.name.trim() !== "";
+    const hasAge = character.age > 0;
+    const hasExperience =
+      character.experience.total > 0 || character.experience.used > 0;
+    const hasHomeland = character.homeland && character.homeland.trim() !== "";
+    const hasLanguages =
+      character.languages && character.languages.trim() !== "";
+    const hasEquipment = character.inventory.equipment.list.some(
+      (item) => item.value.trim() !== "",
+    );
+    const hasWallet = character.inventory.wallet > 0;
+
+    // Персонаж считается "полезным", если есть хотя бы одно значимое поле
+    return (
+      hasName ||
+      hasAge ||
+      hasExperience ||
+      hasHomeland ||
+      hasLanguages ||
+      hasEquipment ||
+      hasWallet
+    );
+  }
+
+  /**
    * Проверяет, можно ли автоматически разрешить конфликт
    */
   private static canAutoResolveConflict(
@@ -337,6 +366,9 @@ export class FirebaseCharactersService {
       const firebaseCharacters = await this.getCharacters(userId);
       const localCharacters = CharactersUtils.getCharacters();
 
+      // Создаем резервную копию локальных данных перед синхронизацией
+      this.createBackup(localCharacters);
+
       // Получаем метаданные локальных персонажей
       const localMetadata = this.getLocalCharacterMetadata();
 
@@ -351,8 +383,17 @@ export class FirebaseCharactersService {
         return;
       }
 
-      // Если Firebase не пустой - проверяем конфликты
-      if (firebaseCharacters.length > 0) {
+      // Если localStorage пустой, но Firebase не пустой - загружаем из Firebase
+      if (localCharacters.length === 0 && firebaseCharacters.length > 0) {
+        console.log(
+          "Синхронизация: загружаем данные из Firebase в localStorage",
+        );
+        CharactersUtils.setCharacters(firebaseCharacters);
+        return;
+      }
+
+      // Если оба не пустые - проверяем конфликты
+      if (firebaseCharacters.length > 0 && localCharacters.length > 0) {
         console.log(
           "Синхронизация: проверяем конфликты и синхронизируем данные",
         );
@@ -424,8 +465,15 @@ export class FirebaseCharactersService {
                 mergedCharacters.push(remoteChar);
               }
             } else {
-              // Нет конфликта - используем более новую версию
-              mergedCharacters.push(remoteChar);
+              // Нет конфликта - приоритет локальным данным если они содержат информацию
+              if (localChar && this.hasLocalData(localChar)) {
+                console.log(`Приоритет локальным данным для персонажа ${i}`);
+                mergedCharacters.push(localChar);
+                // Синхронизируем локальные изменения в Firebase
+                await this.saveCharacter(userId, i, localChar);
+              } else {
+                mergedCharacters.push(remoteChar);
+              }
             }
           }
         }
@@ -499,6 +547,55 @@ export class FirebaseCharactersService {
    */
   static clearPendingConflicts(): void {
     localStorage.removeItem("pendingConflicts");
+  }
+
+  /**
+   * Создать резервную копию данных
+   */
+  private static createBackup(characters: FormType[]): void {
+    const backup = {
+      timestamp: new Date().toISOString(),
+      characters: characters,
+    };
+    localStorage.setItem("charactersBackup", JSON.stringify(backup));
+    console.log("Создана резервная копия персонажей");
+  }
+
+  /**
+   * Восстановить данные из резервной копии
+   */
+  static restoreFromBackup(): FormType[] | null {
+    const backup = localStorage.getItem("charactersBackup");
+    if (backup) {
+      try {
+        const backupData = JSON.parse(backup);
+        console.log("Восстановление из резервной копии:", backupData.timestamp);
+        CharactersUtils.setCharacters(backupData.characters);
+        return backupData.characters;
+      } catch (error) {
+        console.error("Ошибка восстановления из резервной копии:", error);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Получить информацию о резервной копии
+   */
+  static getBackupInfo(): { timestamp: string; count: number } | null {
+    const backup = localStorage.getItem("charactersBackup");
+    if (backup) {
+      try {
+        const backupData = JSON.parse(backup);
+        return {
+          timestamp: backupData.timestamp,
+          count: backupData.characters.length,
+        };
+      } catch (error) {
+        console.error("Ошибка чтения информации о резервной копии:", error);
+      }
+    }
+    return null;
   }
 
   /**
