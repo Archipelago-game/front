@@ -19,7 +19,7 @@
     "@mui/lab": "^7.0.0-beta.17",
     "@mui/material": "^7.3.2",
     "@mui/system": "^7.3.2",
-    "backendless": "^7.4.7",
+    "firebase": "^12.4.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.63.0",
