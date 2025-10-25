@@ -559,6 +559,14 @@ export class FirebaseCharactersService {
     };
     localStorage.setItem("charactersBackup", JSON.stringify(backup));
     console.log("Создана резервная копия персонажей");
+
+    // Автоматически удаляем резервную копию через 24 часа
+    setTimeout(
+      () => {
+        this.clearBackup();
+      },
+      24 * 60 * 60 * 1000,
+    ); // 24 часа
   }
 
   /**
@@ -587,15 +595,36 @@ export class FirebaseCharactersService {
     if (backup) {
       try {
         const backupData = JSON.parse(backup);
+        const backupTime = new Date(backupData.timestamp);
+        const now = new Date();
+        const hoursDiff =
+          (now.getTime() - backupTime.getTime()) / (1000 * 60 * 60);
+
+        // Если резервная копия старше 24 часов, удаляем её
+        if (hoursDiff > 24) {
+          this.clearBackup();
+          return null;
+        }
+
         return {
           timestamp: backupData.timestamp,
           count: backupData.characters.length,
         };
       } catch (error) {
         console.error("Ошибка чтения информации о резервной копии:", error);
+        // Если ошибка парсинга, удаляем поврежденную резервную копию
+        this.clearBackup();
       }
     }
     return null;
+  }
+
+  /**
+   * Удалить резервную копию
+   */
+  static clearBackup(): void {
+    localStorage.removeItem("charactersBackup");
+    console.log("Резервная копия удалена");
   }
 
   /**
