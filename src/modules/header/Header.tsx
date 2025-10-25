@@ -2,6 +2,7 @@ import { Stack, Box } from "@mui/material";
 import User from "./User.tsx";
 import Logo from "./Logo.tsx";
 import SidebarMenu from "./SidebarMenu.tsx";
+import SyncStatus from "../../common/components/sync-status/SyncStatus.tsx";
 
 export default function Header() {
   return (
@@ -18,7 +19,10 @@ export default function Header() {
           width: "100%",
         }}
       >
-        <User />
+        <Stack spacing={1}>
+          <User />
+          <SyncStatus showDetails={true} />
+        </Stack>
         <Box
           sx={{
             flex: "1 1 auto",
