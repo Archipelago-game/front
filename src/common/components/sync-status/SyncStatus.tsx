@@ -72,19 +72,21 @@ export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
   };
 
   return (
-    <Box display="flex" alignItems="center" gap={1}>
-      <Chip
-        icon={getStatusIcon()}
-        label={getStatusText()}
-        color={getStatusColor() as never}
-        size="small"
-        variant="outlined"
-      />
-      {showDetails && (
-        <Typography variant="caption" color="text.secondary">
-          {getDetailsText()}
-        </Typography>
-      )}
+    <Box display="flex">
+      <Box display="flex" flexDirection={"column"} gap={1}>
+        <Chip
+          icon={getStatusIcon()}
+          label={getStatusText()}
+          color={getStatusColor() as never}
+          size="small"
+          variant="outlined"
+        />
+        {showDetails && (
+          <Typography variant="caption" color="text.secondary">
+            {getDetailsText()}
+          </Typography>
+        )}
+      </Box>
     </Box>
   );
 }

@@ -21,7 +21,6 @@ export default function Header() {
       >
         <Stack spacing={1}>
           <User />
-          {/*<SyncStatus showDetails={true} />*/}
         </Stack>
         <Box
           sx={{
@@ -34,6 +33,9 @@ export default function Header() {
         <Stack alignItems="flex-end">
           <SidebarMenu />
         </Stack>
+      </Box>
+      <Box>
+        <SyncStatus showDetails={true} />
       </Box>
     </Box>
   );
