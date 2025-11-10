@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import { FirebaseAuthService } from "../../../api/firebase-auth-service";
 import { useSnackbarContext } from "../../../app/providers/snackbar-provider/use-snackbar-context.hook";
@@ -35,7 +35,9 @@ export default function AuthorizationButton() {
       onClick={handleGoogleSignIn}
       disabled={isLoading}
     >
-      {isLoading ? "Авторизация..." : "Войти через Google"}
+      <Box component={"span"} sx={{ whiteSpace: "nowrap" }}>
+        {isLoading ? "Авторизация..." : "Войти через Google"}
+      </Box>
     </Button>
   );
 }

@@ -21,7 +21,7 @@ export default function Header() {
       >
         <Stack spacing={1}>
           <User />
-          <SyncStatus showDetails={true} />
+          {/*<SyncStatus showDetails={true} />*/}
         </Stack>
         <Box
           sx={{
