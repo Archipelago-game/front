@@ -45,7 +45,7 @@ export const CharactersUtils = {
   setCharacterForm(index: number, data: FormType) {
     const characters = this.getCharacters();
     const newCharacters = characters.toSpliced(index, 1, data);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newCharacters));
+    this.setCharacters(newCharacters);
   },
 
   setNewCharacterForm() {
