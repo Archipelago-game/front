@@ -7,6 +7,8 @@ interface SyncStatusProps {
   showDetails?: boolean;
 }
 
+// note в данный момент не отображает действительное состояние
+
 export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
   const [isOnline, setIsOnline] = useState(api.isOnline());
   const [syncStatus, setSyncStatus] = useState<
