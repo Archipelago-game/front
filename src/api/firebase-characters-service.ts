@@ -11,6 +11,7 @@ import type { Unsubscribe } from "firebase/firestore";
 import { db } from "./firebase-config";
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
 import { CharactersUtils } from "./local-storage";
+import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-values.const.ts";
 
 // Интерфейс для персонажа в Firestore
 export interface CharacterDocument {
@@ -288,10 +289,7 @@ export class FirebaseCharactersService {
       const characters = await this.getCharacters(userId);
       const newIndex = characters.length;
 
-      // Создаем нового персонажа с дефолтными значениями
-      const newCharacter = CharactersUtils.getCharacterForm(0); // Получаем дефолтные значения
-
-      await this.saveCharacter(userId, newIndex, newCharacter);
+      await this.saveCharacter(userId, newIndex, FORM_DEFAULT_VALUES);
 
       return newIndex;
     } catch (error) {

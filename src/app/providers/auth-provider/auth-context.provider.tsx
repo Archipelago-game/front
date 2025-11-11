@@ -83,7 +83,7 @@ export function AuthContextProvider({ children }: Props) {
       removeUserInfo: removeUser,
       isLoading,
     }),
-    [state, setState, removeUser, isLoading],
+    [state, removeUser, isLoading],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
