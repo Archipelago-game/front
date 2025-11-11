@@ -195,8 +195,8 @@ export class FirebaseCharactersService {
         message: (error as { message: string })?.message,
         userId,
       });
-
-      return [];
+      // todo решить что лучше: выбрасывать ошибку или возвращать пустой массив
+      throw error;
     }
   }
 
