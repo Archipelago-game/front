@@ -44,6 +44,7 @@ export class FirebaseCharactersService {
    * Генерирует уникальный ID устройства
    */
   private static getDeviceId(): string {
+    // todo сделать отдельный метод сохранения deviceId в localStorage
     let deviceId = localStorage.getItem("deviceId");
     if (!deviceId) {
       deviceId = `device_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -170,16 +171,13 @@ export class FirebaseCharactersService {
 
     return simpleChanges && complexStructuresUnchanged;
   }
+
   /**
    * Получить всех персонажей пользователя из Firebase
    */
+
   static async getCharacters(userId: string): Promise<FormType[]> {
     try {
-      if (!userId) {
-        console.warn("UserId не предоставлен, используем localStorage");
-        return CharactersUtils.getCharacters();
-      }
-
       const charactersRef = collection(db, "users", userId, "documents");
       const snapshot = await getDocs(charactersRef);
 
@@ -197,8 +195,8 @@ export class FirebaseCharactersService {
         message: (error as { message: string })?.message,
         userId,
       });
-      // Fallback на localStorage
-      return CharactersUtils.getCharacters();
+
+      return [];
     }
   }
 
