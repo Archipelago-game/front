@@ -2,10 +2,14 @@ import {
   collection,
   doc,
   getDocs,
+  getDoc,
   setDoc,
-  deleteDoc,
   serverTimestamp,
   onSnapshot,
+  Timestamp,
+  addDoc,
+  type FirestoreDataConverter,
+  type DocumentData,
 } from "firebase/firestore";
 import type { Unsubscribe } from "firebase/firestore";
 import { db } from "./firebase-config";
@@ -15,22 +19,20 @@ import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-va
 
 // Интерфейс для персонажа в Firestore
 export interface CharacterDocument {
-  id: string;
+  id?: string;
   data: FormType;
-  createdAt: Date;
-  updatedAt: Date;
   userId: string;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
   version: number; // Версия для отслеживания изменений
   lastModifiedBy: string; // UID пользователя, который последний раз изменял
   deviceId?: string; // ID устройства для отслеживания
+  deleted: boolean;
 }
 
 // Интерфейс для локального персонажа с метаданными
-export interface LocalCharacter {
-  data: FormType;
-  lastSyncAt: Date;
-  version: number;
-  isDirty: boolean; // Есть ли несинхронизированные изменения
+export interface LocalCharacter extends FormType {
+  id: string;
 }
 
 // Интерфейс для ошибок Firebase
@@ -38,6 +40,18 @@ export interface FirebaseError {
   code: string;
   message: string;
 }
+
+const characterConverter: FirestoreDataConverter<CharacterDocument> = {
+  toFirestore(character: CharacterDocument): DocumentData {
+    // eslint-disable-next-line
+    const { id, ...data } = character;
+    return data;
+  },
+  fromFirestore(snapshot, options): CharacterDocument {
+    const data = snapshot.data(options);
+    return { id: snapshot.id, ...data } as CharacterDocument;
+  },
+};
 
 export class FirebaseCharactersService {
   /**
@@ -47,28 +61,32 @@ export class FirebaseCharactersService {
     // todo сделать отдельный метод сохранения deviceId в localStorage
     let deviceId = localStorage.getItem("deviceId");
     if (!deviceId) {
-      deviceId = `device_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      deviceId = `device_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
       localStorage.setItem("deviceId", deviceId);
     }
     return deviceId;
   }
 
+  static getUserCharactersRef(userId: string) {
+    return collection(db, "users", userId, "characters").withConverter(
+      characterConverter,
+    );
+  }
+
   /**
    * Получить всех персонажей пользователя из Firebase
    */
-
-  static async getCharacters(userId: string): Promise<FormType[]> {
+  static async getCharacters(userId: string): Promise<CharacterDocument[]> {
     try {
-      const charactersRef = collection(db, "users", userId, "documents");
+      const charactersRef = this.getUserCharactersRef(userId);
       const snapshot = await getDocs(charactersRef);
 
-      const characters: FormType[] = [];
-      snapshot.forEach((doc) => {
-        const characterData = doc.data() as CharacterDocument;
-        characters.push(characterData.data);
-      });
-
-      return characters;
+      return snapshot.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as CharacterDocument),
+        }))
+        .filter((character) => !character.deleted);
     } catch (error) {
       console.error("Ошибка загрузки персонажей из Firebase:", error);
       console.error("Детали ошибки:", {
@@ -86,20 +104,18 @@ export class FirebaseCharactersService {
    */
   static async getCharacter(
     userId: string,
-    characterIndex: number,
-  ): Promise<FormType> {
-    try {
-      const characters = await this.getCharacters(userId);
-      if (characters.length > characterIndex) {
-        return characters[characterIndex];
-      }
+    characterId: string,
+  ): Promise<CharacterDocument | null> {
+    // todo добавить try\catch и загрузку из localStorage в случае catch
+    const charactersRef = this.getUserCharactersRef(userId);
+    const characterDocRef = doc(charactersRef, characterId);
 
-      // Fallback на localStorage
-      return CharactersUtils.getCharacterForm(characterIndex);
-    } catch (error) {
-      console.error("Ошибка загрузки персонажа из Firebase:", error);
-      return CharactersUtils.getCharacterForm(characterIndex);
+    const snapshot = await getDoc(characterDocRef);
+
+    if (!snapshot.exists()) {
+      return null; // персонаж не найден
     }
+    return snapshot.data();
   }
 
   /**
@@ -107,253 +123,60 @@ export class FirebaseCharactersService {
    */
   static async saveCharacter(
     userId: string,
-    characterIndex: number,
-    characterData: FormType,
+    characterData: CharacterDocument,
   ): Promise<void> {
-    try {
-      const characterId = `character_${characterIndex}`;
-      const characterRef = doc(db, "users", userId, "documents", characterId);
+    // todo добавить try\catch и сохранение в localStorage в случае catch
+    const charactersRef = this.getUserCharactersRef(userId);
+    const characterDocRef = doc(charactersRef, characterData.id);
+    const newVersion = characterData.version + 1;
 
-      // Получаем текущие метаданные
-      const localMetadata = this.getLocalCharacterMetadata();
-      const currentVersion = (localMetadata[characterIndex]?.version || 0) + 1;
+    const characterDoc: CharacterDocument = {
+      ...characterData,
+      updatedAt: serverTimestamp() as unknown as Timestamp,
+      version: newVersion,
+      lastModifiedBy: userId,
+      deviceId: this.getDeviceId(),
+    };
 
-      const characterDoc: Omit<CharacterDocument, "id"> = {
-        data: characterData,
-        createdAt: serverTimestamp() as unknown as Date,
-        updatedAt: serverTimestamp() as unknown as Date,
-        userId,
-        version: currentVersion,
-        lastModifiedBy: userId,
-        deviceId: this.getDeviceId(),
-      };
-
-      await setDoc(characterRef, characterDoc);
-
-      // Обновляем локальные метаданные
-      const updatedMetadata = [...localMetadata];
-      updatedMetadata[characterIndex] = {
-        data: characterData,
-        lastSyncAt: new Date(),
-        version: currentVersion,
-        isDirty: false,
-      };
-      this.saveLocalCharacterMetadata(updatedMetadata);
-
-      // Также сохраняем в localStorage для офлайн режима
-      CharactersUtils.setCharacterForm(characterIndex, characterData);
-    } catch (error) {
-      console.error("Ошибка сохранения персонажа в Firebase:", error);
-
-      // Помечаем как "грязный" для последующей синхронизации
-      const localMetadata = this.getLocalCharacterMetadata();
-      if (localMetadata[characterIndex]) {
-        localMetadata[characterIndex].isDirty = true;
-        this.saveLocalCharacterMetadata(localMetadata);
-      }
-
-      // Fallback на localStorage
-      CharactersUtils.setCharacterForm(characterIndex, characterData);
-      throw this.handleFirebaseError(
-        error as { code?: string; message?: string },
-      );
-    }
+    await setDoc(characterDocRef, characterDoc);
   }
 
   /**
    * Создать нового персонажа
    */
-  static async createCharacter(userId: string): Promise<number> {
+  static async createCharacter(userId: string) {
+    const newCharacterDoc: CharacterDocument = {
+      data: FORM_DEFAULT_VALUES,
+      userId,
+      createdAt: serverTimestamp() as unknown as Timestamp,
+      updatedAt: serverTimestamp() as unknown as Timestamp,
+      version: 1,
+      lastModifiedBy: userId,
+      deviceId: this.getDeviceId(),
+      deleted: false,
+    };
     try {
-      const characters = await this.getCharacters(userId);
-      const newIndex = characters.length;
-
-      await this.saveCharacter(userId, newIndex, FORM_DEFAULT_VALUES);
-
-      return newIndex;
+      const charactersRef = this.getUserCharactersRef(userId);
+      await addDoc(charactersRef, newCharacterDoc);
     } catch (error) {
       console.error("Ошибка создания персонажа в Firebase:", error);
       // Fallback на localStorage
       CharactersUtils.setNewCharacterForm();
-      return CharactersUtils.getCharacters().length - 1;
     }
   }
 
   /**
    * Удалить персонажа
    */
-  static async deleteCharacter(
-    userId: string,
-    characterIndex: number,
-  ): Promise<void> {
-    try {
-      const characterId = `character_${characterIndex}`;
-      const characterRef = doc(db, "users", userId, "documents", characterId);
-
-      await deleteDoc(characterRef);
-
-      // Также удаляем из localStorage
-      const characters = CharactersUtils.getCharacters();
-      const newCharacters = characters.filter(
-        (_, index) => index !== characterIndex,
-      );
-      CharactersUtils.setCharacters(newCharacters);
-    } catch (error) {
-      console.error("Ошибка удаления персонажа из Firebase:", error);
-      throw this.handleFirebaseError(
-        error as { code?: string; message?: string },
-      );
+  static async deleteCharacter(userId: string, characterId: string) {
+    // todo добавить try\catch и работу с localStorage в случае catch
+    const characterDoc = await this.getCharacter(userId, characterId);
+    if (characterDoc) {
+      await this.saveCharacter(userId, {
+        ...characterDoc,
+        deleted: true,
+      });
     }
-  }
-
-  /**
-   * Синхронизировать данные между Firebase и localStorage с разрешением конфликтов
-   */
-  static async syncWithLocalStorage(userId: string): Promise<void> {
-    try {
-      const firebaseCharacters = await this.getCharacters(userId);
-      const localCharacters = CharactersUtils.getCharacters();
-
-      // Получаем метаданные локальных персонажей
-      const localMetadata = this.getLocalCharacterMetadata();
-
-      // Если Firebase пустой, но localStorage не пустой - загружаем из localStorage
-      if (firebaseCharacters.length === 0 && localCharacters.length > 0) {
-        console.log(
-          "Синхронизация: загружаем данные из localStorage в Firebase",
-        );
-        for (let i = 0; i < localCharacters.length; i++) {
-          await this.saveCharacter(userId, i, localCharacters[i]);
-        }
-        return;
-      }
-
-      // Если Firebase не пустой - проверяем конфликты
-      if (firebaseCharacters.length > 0) {
-        console.log(
-          "Синхронизация: проверяем конфликты и синхронизируем данные",
-        );
-
-        const mergedCharacters: FormType[] = [];
-        const conflicts: Array<{
-          index: number;
-          local: FormType;
-          remote: FormType;
-        }> = [];
-
-        // Обрабатываем каждого персонажа
-        for (
-          let i = 0;
-          i < Math.max(firebaseCharacters.length, localCharacters.length);
-          i++
-        ) {
-          const localChar = localCharacters[i];
-          const remoteChar = firebaseCharacters[i];
-
-          if (!localChar && remoteChar) {
-            // Только удаленный персонаж - берем его
-            mergedCharacters.push(remoteChar);
-          } else if (localChar && !remoteChar) {
-            // Только локальный персонаж - сохраняем в Firebase
-            mergedCharacters.push(localChar);
-            await this.saveCharacter(userId, i, localChar);
-          } else if (localChar && remoteChar) {
-            // Есть оба - проверяем конфликт
-            const localMeta = localMetadata[i];
-            const hasConflict =
-              localMeta &&
-              this.hasVersionConflict(
-                localMeta.version,
-                1, // Упрощенно, в реальности нужно получать версию из Firebase
-                localMeta.lastSyncAt,
-                new Date(), // Упрощенно
-              );
-
-            if (hasConflict) {
-              // Пытаемся автоматически разрешить простые конфликты
-              const autoMerged = this.mergeCharacterData(
-                localChar,
-                remoteChar,
-                "merge",
-              );
-
-              // Проверяем, можно ли автоматически разрешить конфликт
-              const canAutoResolve = this.canAutoResolveConflict(
-                localChar,
-                remoteChar,
-              );
-
-              if (canAutoResolve) {
-                // Автоматически разрешаем конфликт
-                console.log(
-                  `Автоматически разрешен конфликт для персонажа ${i}`,
-                );
-                mergedCharacters.push(autoMerged);
-              } else {
-                // Сложный конфликт - добавляем в список для ручного разрешения
-                conflicts.push({
-                  index: i,
-                  local: localChar,
-                  remote: remoteChar,
-                });
-
-                // Пока используем удаленную версию, но помечаем конфликт
-                mergedCharacters.push(remoteChar);
-              }
-            } else {
-              // Нет конфликта - используем более новую версию
-              mergedCharacters.push(remoteChar);
-            }
-          }
-        }
-
-        // Обновляем localStorage
-        CharactersUtils.setCharacters(mergedCharacters);
-
-        // Если есть конфликты - уведомляем пользователя
-        if (conflicts.length > 0) {
-          console.warn(
-            `Обнаружено ${conflicts.length} конфликтов при синхронизации`,
-          );
-          this.notifyConflicts(conflicts);
-        }
-      }
-    } catch (error) {
-      console.error("Ошибка синхронизации:", error);
-    }
-  }
-
-  /**
-   * Получить метаданные локальных персонажей
-   */
-  private static getLocalCharacterMetadata(): LocalCharacter[] {
-    const metadata = localStorage.getItem("characterMetadata");
-    if (metadata) {
-      return JSON.parse(metadata);
-    }
-    return [];
-  }
-
-  /**
-   * Сохранить метаданные локальных персонажей
-   */
-  private static saveLocalCharacterMetadata(metadata: LocalCharacter[]): void {
-    localStorage.setItem("characterMetadata", JSON.stringify(metadata));
-  }
-
-  /**
-   * Уведомить о конфликтах
-   */
-  private static notifyConflicts(
-    conflicts: Array<{ index: number; local: FormType; remote: FormType }>,
-  ): void {
-    console.warn("Обнаружены конфликты данных:", conflicts);
-
-    // Сохраняем конфликты в localStorage для последующего разрешения
-    localStorage.setItem("pendingConflicts", JSON.stringify(conflicts));
-
-    // Можно добавить уведомление через snackbar или модальное окно
-    // Например: showConflictDialog(conflicts);
   }
 
   /**
