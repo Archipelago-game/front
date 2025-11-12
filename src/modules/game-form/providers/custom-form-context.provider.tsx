@@ -13,15 +13,19 @@ import { FORM_DEFAULT_VALUES } from "../consts/form-default-values.const.ts";
 import { type ControllerRenderProps, useForm } from "react-hook-form";
 import { api } from "../../../api/api.ts";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../../app/providers/auth-provider/use-auth-context.hook.ts";
+import type { CharacterDocument } from "../../../api/firebase-characters-service.ts";
 
 interface Props {
   children: ReactNode;
 }
 
 export function CustomFormContextProvider({ children }: Props) {
+  const { userInfo } = useAuthContext();
+  const [characterDoc, setCharacterDoc] = useState<CharacterDocument>("");
   const [formValues, setFormValues] = useState<FormType>(FORM_DEFAULT_VALUES);
 
-  const { characterIndex } = useParams();
+  const { characterId } = useParams();
 
   const methods = useForm<FormType>({
     defaultValues: formValues,
@@ -33,16 +37,16 @@ export function CustomFormContextProvider({ children }: Props) {
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
       field.onChange(e);
-      if (characterIndex === null) {
+      if (characterId === null) {
         return;
       }
-      await api.saveCharacterForm(Number(characterIndex), methods.getValues());
+      await api.saveCharacterForm(characterId, methods.getValues());
     },
     [],
   );
 
-  const fetchData = useCallback(async (characterIndex: number) => {
-    const data = await api.getCharacterForm(characterIndex);
+  const fetchData = useCallback(async (userId: string, characterId: string) => {
+    const data = await api.getCharacterForm(userId, characterId);
     setFormValues(data);
   }, []);
 
@@ -56,10 +60,10 @@ export function CustomFormContextProvider({ children }: Props) {
   );
 
   useEffect(() => {
-    if (characterIndex) {
-      fetchData(Number(characterIndex));
+    if (characterId && userInfo) {
+      fetchData(userInfo.uid, characterId);
     }
-  }, [characterIndex]);
+  }, [characterId, userInfo]);
 
   useEffect(() => {
     methods.reset(formValues);

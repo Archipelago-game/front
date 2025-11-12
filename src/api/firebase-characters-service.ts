@@ -4,10 +4,11 @@ import {
   getDocs,
   getDoc,
   setDoc,
+  updateDoc,
+  addDoc,
   serverTimestamp,
   onSnapshot,
   Timestamp,
-  addDoc,
   type FirestoreDataConverter,
   type DocumentData,
 } from "firebase/firestore";
@@ -119,6 +120,50 @@ export class FirebaseCharactersService {
   }
 
   /**
+   * Создать нового персонажа
+   */
+
+  static createCharacterDocument(userId: string): CharacterDocument {
+    return {
+      data: FORM_DEFAULT_VALUES,
+      userId,
+      createdAt: serverTimestamp() as unknown as Timestamp,
+      updatedAt: serverTimestamp() as unknown as Timestamp,
+      version: 1,
+      lastModifiedBy: userId,
+      deviceId: this.getDeviceId(),
+      deleted: false,
+    };
+  }
+
+  static async createCharacter(userId: string) {
+    const newCharacterDoc = this.createCharacterDocument(userId);
+    try {
+      const charactersRef = this.getUserCharactersRef(userId);
+      await addDoc(charactersRef, newCharacterDoc);
+    } catch (error) {
+      console.error("Ошибка создания персонажа в Firebase:", error);
+      // Fallback на localStorage
+      localstorageCharactersService.setNewCharacterForm();
+    }
+  }
+
+  static async updateCharacter(data: {
+    userId: string;
+    characterId: string;
+    newData: Partial<CharacterDocument>;
+  }): Promise<void> {
+    const { userId, characterId, newData } = data;
+    const ref = doc(db, "users", userId, "characters", characterId);
+    const newDoc: Partial<CharacterDocument> = {
+      ...newData,
+      updatedAt: serverTimestamp() as unknown as Timestamp,
+      lastModifiedBy: userId,
+    };
+    await updateDoc(ref, newDoc);
+  }
+
+  /**
    * Сохранить персонажа в Firebase с версионированием
    */
   static async saveCharacter(
@@ -139,30 +184,6 @@ export class FirebaseCharactersService {
     };
 
     await setDoc(characterDocRef, characterDoc);
-  }
-
-  /**
-   * Создать нового персонажа
-   */
-  static async createCharacter(userId: string) {
-    const newCharacterDoc: CharacterDocument = {
-      data: FORM_DEFAULT_VALUES,
-      userId,
-      createdAt: serverTimestamp() as unknown as Timestamp,
-      updatedAt: serverTimestamp() as unknown as Timestamp,
-      version: 1,
-      lastModifiedBy: userId,
-      deviceId: this.getDeviceId(),
-      deleted: false,
-    };
-    try {
-      const charactersRef = this.getUserCharactersRef(userId);
-      await addDoc(charactersRef, newCharacterDoc);
-    } catch (error) {
-      console.error("Ошибка создания персонажа в Firebase:", error);
-      // Fallback на localStorage
-      localstorageCharactersService.setNewCharacterForm();
-    }
   }
 
   /**

@@ -7,7 +7,6 @@ import {
 } from "react";
 import type { FirebaseUserData } from "../../../api/firebase-types.ts";
 import { FirebaseAuthService } from "../../../api/firebase-auth-service.ts";
-import { api } from "../../../api/api.ts";
 
 import { AuthContext } from "./use-auth-context.hook.ts";
 
@@ -23,7 +22,6 @@ export function AuthContextProvider({ children }: Props) {
     const unsubscribe = FirebaseAuthService.onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          // Try to get user data from Firestore, but don't fail if it doesn't work
           const userData = await FirebaseAuthService.getUserData(user.uid);
           if (userData) {
             setState({
@@ -43,9 +41,6 @@ export function AuthContextProvider({ children }: Props) {
               emailVerified: user.emailVerified,
             });
           }
-
-          // Синхронизируем данные персонажей при авторизации
-          await api.syncUserData();
         } catch (error) {
           console.warn("Error getting user data:", error);
           // Fallback to Firebase Auth user data
