@@ -180,54 +180,29 @@ export class FirebaseCharactersService {
   }
 
   /**
-   * Получить ожидающие разрешения конфликты
-   */
-  static getPendingConflicts(): Array<{
-    index: number;
-    local: FormType;
-    remote: FormType;
-  }> {
-    const conflicts = localStorage.getItem("pendingConflicts");
-    if (conflicts) {
-      return JSON.parse(conflicts);
-    }
-    return [];
-  }
-
-  /**
-   * Очистить ожидающие конфликты
-   */
-  static clearPendingConflicts(): void {
-    localStorage.removeItem("pendingConflicts");
-  }
-
-  /**
    * Подписаться на изменения персонажей в реальном времени
    */
   static subscribeToCharacters(
     userId: string,
-    callback: (characters: FormType[]) => void,
+    callback: (characters: CharacterDocument[]) => void,
   ): Unsubscribe {
-    const charactersRef = collection(db, "users", userId, "documents");
+    const charactersRef = this.getUserCharactersRef(userId);
 
     return onSnapshot(
       charactersRef,
       (snapshot) => {
-        const characters: FormType[] = [];
-        snapshot.forEach((doc) => {
-          const characterData = doc.data() as CharacterDocument;
-          characters.push(characterData.data);
-        });
-
-        // Обновляем localStorage
-        CharactersUtils.setCharacters(characters);
+        const characters: CharacterDocument[] = snapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            ...(doc.data() as CharacterDocument),
+          }))
+          .filter((character) => !character.deleted);
 
         callback(characters);
       },
       (error) => {
         console.error("Ошибка подписки на персонажей:", error);
-        // Fallback на localStorage
-        callback(CharactersUtils.getCharacters());
+        throw error;
       },
     );
   }
@@ -242,6 +217,9 @@ export class FirebaseCharactersService {
   /**
    * Обработка ошибок Firebase
    */
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   private static handleFirebaseError(error: {
     code?: string;
     message?: string;
