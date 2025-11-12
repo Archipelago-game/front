@@ -14,7 +14,7 @@ import {
 import type { Unsubscribe } from "firebase/firestore";
 import { db } from "./firebase-config";
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
-import { CharactersUtils } from "./local-storage";
+import { localstorageCharactersService } from "./local-storage";
 import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-values.const.ts";
 
 // Интерфейс для персонажа в Firestore
@@ -161,7 +161,7 @@ export class FirebaseCharactersService {
     } catch (error) {
       console.error("Ошибка создания персонажа в Firebase:", error);
       // Fallback на localStorage
-      CharactersUtils.setNewCharacterForm();
+      localstorageCharactersService.setNewCharacterForm();
     }
   }
 

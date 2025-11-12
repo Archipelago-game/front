@@ -5,18 +5,18 @@ const STORAGE_KEY = "ARCHIPELAGO";
 
 export const LocalStoragePatch = {
   convertObjToArray() {
-    const data = CharactersUtils.getCharacters();
+    const data = localstorageCharactersService.getCharacters();
     if (!data) {
       return;
     }
 
     if (!Array.isArray(data)) {
-      CharactersUtils.setCharacters([data]);
+      localstorageCharactersService.setCharacters([data]);
     }
   },
 };
 
-export const CharactersUtils = {
+export const localstorageCharactersService = {
   getCharacters() {
     const data = localStorage.getItem(STORAGE_KEY);
     if (data) {
