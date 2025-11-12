@@ -1,5 +1,3 @@
-import type { FormType } from "../modules/game-form/types/form/form.type.ts";
-import { CharactersUtils } from "./local-storage.ts";
 import { FirebaseAuthService } from "./firebase-auth-service.ts";
 import {
   type CharacterDocument,
@@ -57,21 +55,6 @@ export const api = {
     callback: (characters: CharacterDocument[]) => void,
   ) {
     return FirebaseCharactersService.subscribeToCharacters(userId, callback);
-  },
-
-  /**
-   * Синхронизировать данные при авторизации
-   */
-  async syncUserData() {
-    const currentUser = FirebaseAuthService.getCurrentUser();
-
-    if (currentUser && FirebaseCharactersService.isOnline()) {
-      try {
-        await FirebaseCharactersService.syncWithLocalStorage(currentUser.uid);
-      } catch (error) {
-        console.warn("Ошибка синхронизации данных:", error);
-      }
-    }
   },
 
   /**
