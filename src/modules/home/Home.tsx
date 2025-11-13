@@ -29,7 +29,7 @@ export default function Home() {
           Персонажи
         </Button>
       )}
-      <Grid>tst</Grid>
+
       <Prelude />
 
       {isShowScreenSaver && (
