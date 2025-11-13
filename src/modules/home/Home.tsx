@@ -16,11 +16,16 @@ export default function Home() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: "10px",
+        gap: "20px",
       }}
     >
       {userInfo && (
-        <Button component={RouterLink} to={"/characters"}>
+        <Button
+          component={RouterLink}
+          to={"/characters"}
+          size="large"
+          variant="outlined"
+        >
           Персонажи
         </Button>
       )}
