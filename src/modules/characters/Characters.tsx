@@ -3,7 +3,7 @@ import type { FormType } from "../game-form/types/form/form.type.ts";
 
 interface Props {
   characters: FormType[];
-  openCharacterForm: (index: number) => void;
+  openCharacterForm: (index: string) => void;
   addCharacter: () => void;
 }
 export default function Characters({

@@ -1,48 +1,48 @@
 import { useNavigate } from "react-router-dom";
-import Characters from "../../modules/characters/Characters.tsx";
-import { api } from "../../api/api.ts";
-import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
+
+import { api } from "../../api/api.ts";
+
+import Characters from "../../modules/characters/Characters.tsx";
+import { Box } from "@mui/system";
+
+import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
 
 export default function CharactersPage() {
   const navigate = useNavigate();
-  const [characters, setCharacters] = useState<FormType[]>([]);
+  const { userInfo } = useAuthContext();
+  const [characterDocs, setCharacterDocs] = useState<CharacterDocument[]>([]);
 
-  const fetchCharacters = async () => {
-    const data = await api.getCharacters();
-    setCharacters(data);
+  const fetchCharacters = async (userId: string) => {
+    const data = await api.getCharacters(userId);
+    setCharacterDocs(data);
   };
 
-  const addCharacter = async () => {
-    const newIndex = await api.addNewCharacter();
+  const addCharacter = async (userId: string) => {
+    const newIndex = await api.addNewCharacter(userId);
     navigate(`/game-form/${newIndex}`);
   };
 
-  const openCharacterForm = async (index: number) => {
-    navigate(`/game-form/${index}`);
+  const openCharacterForm = async (characterId: string) => {
+    navigate(`/game-form/${characterId}`);
   };
 
   useEffect(() => {
-    // Подписываемся на изменения персонажей в реальном времени
-    const unsubscribe = api.subscribeToCharacters((updatedCharacters) => {
-      setCharacters(updatedCharacters);
-    });
+    if (userInfo) {
+      fetchCharacters(userInfo.uid);
+    }
+  }, [userInfo]);
 
-    // Также загружаем данные при первом рендере
-    fetchCharacters();
-
-    return () => {
-      if (typeof unsubscribe === "function") {
-        unsubscribe();
-      }
-    };
-  }, []);
+  if (!userInfo) {
+    return <Box>Персонажи не найдены</Box>;
+  }
 
   return (
     <Characters
-      characters={characters}
+      characters={characterDocs.map((d) => d.data)}
       openCharacterForm={openCharacterForm}
-      addCharacter={addCharacter}
+      addCharacter={() => addCharacter(userInfo.uid)}
     />
   );
 }
