@@ -13,18 +13,27 @@ import { FORM_DEFAULT_VALUES } from "../consts/form-default-values.const.ts";
 import { type ControllerRenderProps, useForm } from "react-hook-form";
 import { api } from "../../../api/api.ts";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../../app/providers/auth-provider/use-auth-context.hook.ts";
+import type { CharacterDocument } from "../../../api/firebase-characters-service.ts";
+
+import debounce from "lodash.debounce";
 
 interface Props {
   children: ReactNode;
 }
 
-export function CustomFormContextProvider({ children }: Props) {
-  const [formValues, setFormValues] = useState<FormType>(FORM_DEFAULT_VALUES);
+const saveCharacterForm = debounce(api.saveCharacterForm, 500);
 
-  const { characterIndex } = useParams();
+export function CustomFormContextProvider({ children }: Props) {
+  const { userInfo } = useAuthContext();
+  const [characterDoc, setCharacterDoc] = useState<CharacterDocument | null>(
+    null,
+  );
+
+  const { characterId } = useParams();
 
   const methods = useForm<FormType>({
-    defaultValues: formValues,
+    defaultValues: characterDoc?.data ?? FORM_DEFAULT_VALUES,
   });
 
   const onChange = useCallback(
@@ -33,37 +42,46 @@ export function CustomFormContextProvider({ children }: Props) {
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
       field.onChange(e);
-      if (characterIndex === null) {
+      if (characterId === null || userInfo === null || characterDoc === null) {
+        console.log(
+          `нет одного из следующих свойств: characterId: ${characterId}, userInfo: ${userInfo},  characterDoc: ${characterDoc}`,
+        );
         return;
       }
-      await api.saveCharacterForm(Number(characterIndex), methods.getValues());
+
+      await saveCharacterForm(userInfo.uid, {
+        ...characterDoc,
+        data: methods.getValues(),
+      });
     },
-    [],
+    [userInfo, characterDoc, characterId],
   );
 
-  const fetchData = useCallback(async (characterIndex: number) => {
-    const data = await api.getCharacterForm(characterIndex);
-    setFormValues(data);
+  const fetchData = useCallback(async (userId: string, characterId: string) => {
+    const characterDoc = await api.getCharacterForm(userId, characterId);
+    if (characterDoc) {
+      setCharacterDoc(characterDoc);
+    }
   }, []);
 
   const value = useMemo(
     () => ({
       methods,
       onChange,
-      values: formValues,
+      values: characterDoc?.data ?? FORM_DEFAULT_VALUES,
     }),
-    [formValues, methods, onChange],
+    [characterDoc, methods, onChange],
   );
 
   useEffect(() => {
-    if (characterIndex) {
-      fetchData(Number(characterIndex));
+    if (characterId && userInfo) {
+      fetchData(userInfo.uid, characterId);
     }
-  }, [characterIndex]);
+  }, [characterId, userInfo]);
 
   useEffect(() => {
-    methods.reset(formValues);
-  }, [formValues, methods]);
+    methods.reset(characterDoc?.data ?? FORM_DEFAULT_VALUES);
+  }, [characterDoc, methods]);
 
   return (
     <CustomFormContext.Provider value={value}>

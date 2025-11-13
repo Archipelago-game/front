@@ -1,28 +1,19 @@
-import { Box, Chip, Typography, Button, Tooltip } from "@mui/material";
-import {
-  CloudSync,
-  CloudOff,
-  Storage,
-  Restore,
-  Delete,
-} from "@mui/icons-material";
+import { Box, Chip, Typography } from "@mui/material";
+import { CloudSync, CloudOff, Storage } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { api } from "../../../api/api.ts";
-import { FirebaseCharactersService } from "../../../api/firebase-characters-service.ts";
 
 interface SyncStatusProps {
   showDetails?: boolean;
 }
+
+// note в данный момент не отображает действительное состояние
 
 export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
   const [isOnline, setIsOnline] = useState(api.isOnline());
   const [syncStatus, setSyncStatus] = useState<
     "synced" | "syncing" | "offline"
   >("offline");
-  const [backupInfo, setBackupInfo] = useState<{
-    timestamp: string;
-    count: number;
-  } | null>(null);
 
   useEffect(() => {
     const handleOnline = () => {
@@ -45,30 +36,11 @@ export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
       setSyncStatus("synced");
     }
 
-    // Загружаем информацию о резервной копии
-    const backup = FirebaseCharactersService.getBackupInfo();
-    setBackupInfo(backup);
-
     return () => {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
   }, [isOnline]);
-
-  const handleRestore = () => {
-    const restored = FirebaseCharactersService.restoreFromBackup();
-    if (restored) {
-      console.log("Персонажи восстановлены из резервной копии");
-      // Можно добавить уведомление пользователю
-      window.location.reload(); // Перезагружаем страницу для обновления данных
-    }
-  };
-
-  const handleClearBackup = () => {
-    FirebaseCharactersService.clearBackup();
-    setBackupInfo(null);
-    console.log("Резервная копия удалена");
-  };
 
   const getStatusColor = () => {
     switch (syncStatus) {
@@ -102,47 +74,21 @@ export default function SyncStatus({ showDetails = false }: SyncStatusProps) {
   };
 
   return (
-    <Box display="flex" alignItems="center" gap={1}>
-      <Chip
-        icon={getStatusIcon()}
-        label={getStatusText()}
-        color={getStatusColor() as never}
-        size="small"
-        variant="outlined"
-      />
-      {showDetails && (
-        <Typography variant="caption" color="text.secondary">
-          {getDetailsText()}
-        </Typography>
-      )}
-      {backupInfo && (
-        <>
-          <Tooltip
-            title={`Резервная копия от ${new Date(backupInfo.timestamp).toLocaleString()} (${backupInfo.count} персонажей)`}
-          >
-            <Button
-              size="small"
-              startIcon={<Restore />}
-              onClick={handleRestore}
-              variant="outlined"
-              color="warning"
-            >
-              Восстановить
-            </Button>
-          </Tooltip>
-          <Tooltip title="Удалить резервную копию">
-            <Button
-              size="small"
-              startIcon={<Delete />}
-              onClick={handleClearBackup}
-              variant="outlined"
-              color="error"
-            >
-              Сбросить
-            </Button>
-          </Tooltip>
-        </>
-      )}
+    <Box display="flex">
+      <Box display="flex" flexDirection={"column"} gap={1}>
+        <Chip
+          icon={getStatusIcon()}
+          label={getStatusText()}
+          color={getStatusColor() as never}
+          size="small"
+          variant="outlined"
+        />
+        {showDetails && (
+          <Typography variant="caption" color="text.secondary">
+            {getDetailsText()}
+          </Typography>
+        )}
+      </Box>
     </Box>
   );
 }

@@ -1,9 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
-import type { FormType } from "../game-form/types/form/form.type.ts";
+import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
 
 interface Props {
-  characters: FormType[];
-  openCharacterForm: (index: number) => void;
+  characters: CharacterDocument[];
+  openCharacterForm: (characterId: string) => void;
   addCharacter: () => void;
 }
 export default function Characters({
@@ -21,10 +21,17 @@ export default function Characters({
         {characters.map((character, index) => (
           <Box
             component="li"
-            key={`${index}${character.name}${character.age}${index}`}
+            key={`${index}${character.data.name}${character.data.age}${index}`}
           >
-            <Button onClick={() => openCharacterForm(index)}>
-              {character.name === "" ? "Безымянный герой" : character.name}
+            {/* todo переделать по-человечески */}
+            <Button
+              onClick={() =>
+                character.id ? openCharacterForm(character.id) : () => {}
+              }
+            >
+              {character.data.name === ""
+                ? "Безымянный герой"
+                : character.data.name}
             </Button>
           </Box>
         ))}

@@ -5,18 +5,18 @@ const STORAGE_KEY = "ARCHIPELAGO";
 
 export const LocalStoragePatch = {
   convertObjToArray() {
-    const data = CharactersUtils.getCharacters();
+    const data = localstorageCharactersService.getCharacters();
     if (!data) {
       return;
     }
 
     if (!Array.isArray(data)) {
-      CharactersUtils.setCharacters([data]);
+      localstorageCharactersService.setCharacters([data]);
     }
   },
 };
 
-export const CharactersUtils = {
+export const localstorageCharactersService = {
   getCharacters() {
     const data = localStorage.getItem(STORAGE_KEY);
     if (data) {
@@ -45,7 +45,7 @@ export const CharactersUtils = {
   setCharacterForm(index: number, data: FormType) {
     const characters = this.getCharacters();
     const newCharacters = characters.toSpliced(index, 1, data);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newCharacters));
+    this.setCharacters(newCharacters);
   },
 
   setNewCharacterForm() {
