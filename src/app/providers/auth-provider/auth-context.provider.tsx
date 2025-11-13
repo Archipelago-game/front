@@ -7,7 +7,6 @@ import {
 } from "react";
 import type { FirebaseUserData } from "../../../api/firebase-types.ts";
 import { FirebaseAuthService } from "../../../api/firebase-auth-service.ts";
-import { api } from "../../../api/api.ts";
 
 import { AuthContext } from "./use-auth-context.hook.ts";
 
@@ -43,9 +42,6 @@ export function AuthContextProvider({ children }: Props) {
               emailVerified: user.emailVerified,
             });
           }
-
-          // Синхронизируем данные персонажей при авторизации
-          await api.syncUserData();
         } catch (error) {
           console.warn("Error getting user data:", error);
           // Fallback to Firebase Auth user data
