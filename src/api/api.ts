@@ -13,7 +13,7 @@ export const api = {
   async addNewCharacter(userId: string) {
     return await FirebaseCharactersService.createCharacter(userId);
   },
-
+  // note тестовый коммент
   async getCharacterForm(
     userId: string,
     characterId: string,
