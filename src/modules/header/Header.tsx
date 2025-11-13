@@ -35,7 +35,7 @@ export default function Header() {
         </Stack>
       </Box>
       <Box>
-        <SyncStatus showDetails={true} />
+        <SyncStatus />
       </Box>
     </Box>
   );
