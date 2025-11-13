@@ -1,9 +1,13 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, type ButtonProps } from "@mui/material";
 import { useState } from "react";
 import { FirebaseAuthService } from "../../../api/firebase-auth-service";
 import { useSnackbarContext } from "../../../app/providers/snackbar-provider/use-snackbar-context.hook";
 
-export default function AuthorizationButton() {
+interface Props {
+  variant?: ButtonProps["variant"];
+}
+
+export default function AuthorizationButton({ variant = "contained" }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const { showMessage } = useSnackbarContext();
 
@@ -30,13 +34,9 @@ export default function AuthorizationButton() {
   };
 
   return (
-    <Button
-      variant="contained"
-      onClick={handleGoogleSignIn}
-      disabled={isLoading}
-    >
+    <Button variant={variant} onClick={handleGoogleSignIn} disabled={isLoading}>
       <Box component={"span"} sx={{ whiteSpace: "nowrap" }}>
-        {isLoading ? "Авторизация..." : "Войти через Google"}
+        {isLoading ? "Авторизация..." : "Войти"}
       </Box>
     </Button>
   );

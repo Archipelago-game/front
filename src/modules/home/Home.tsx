@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import AnimatedSvg from "../screen-saver/ScreenSaver.tsx";
 import { useState } from "react";
 import Prelude from "./Prelude";
-import AuthorizationButton from "../../common/components/auth-button/AuthorizationButton.tsx";
+
 import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 
 export default function Home() {
@@ -19,14 +19,11 @@ export default function Home() {
         gap: "10px",
       }}
     >
-      {!userInfo && (
-        <Box textAlign="center">
-          <AuthorizationButton />
-        </Box>
+      {userInfo && (
+        <Button component={RouterLink} to={"/characters"}>
+          Персонажи
+        </Button>
       )}
-      <Button component={RouterLink} to={"/characters"}>
-        Персонажи
-      </Button>
 
       <Prelude />
 
