@@ -8,6 +8,7 @@ import { useAuthContext } from "../../app/providers/auth-provider/use-auth-conte
 import { useEffect, useState } from "react";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import AuthorizationButton from "../../common/components/auth-button/AuthorizationButton.tsx";
+import OnlineStatus from "../../common/components/sync-status/OnlineStatus.tsx";
 
 const AUTH_PAGE_PATH = "/auth-done";
 
@@ -53,34 +54,50 @@ export default function User() {
           },
         }}
       >
-        <IconButton>
-          {isLoading ? (
-            <CircularProgress size={24} />
-          ) : userInfo?.photoURL ? (
-            <Box
-              component="img"
-              src={userInfo.photoURL}
-              alt="User Avatar"
-              sx={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                objectFit: "cover",
-              }}
-            />
-          ) : (
-            <AccountCircle
-              sx={{
-                fontSize: "40px",
-                color: userInfo
-                  ? theme.palette.label.background.secondary
-                  : "grey",
-              }}
-            />
-          )}
-        </IconButton>
+        {!userInfo && <AuthorizationButton variant="outlined" />}
 
-        {!isAutPage && (
+        {userInfo && (
+          <Box
+            sx={{
+              position: "absolute",
+              right: "5px",
+              transform: "translateX(100%)",
+            }}
+          >
+            <OnlineStatus />
+          </Box>
+        )}
+
+        {userInfo && (
+          <IconButton>
+            {isLoading ? (
+              <CircularProgress size={24} />
+            ) : userInfo.photoURL ? (
+              <Box
+                component="img"
+                src={userInfo.photoURL}
+                alt="User Avatar"
+                sx={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                }}
+              />
+            ) : (
+              <AccountCircle
+                sx={{
+                  fontSize: "40px",
+                  color: userInfo
+                    ? theme.palette.label.background.secondary
+                    : "grey",
+                }}
+              />
+            )}
+          </IconButton>
+        )}
+
+        {!isAutPage && userInfo && (
           <Box
             className="dropdown"
             sx={{
@@ -99,8 +116,6 @@ export default function User() {
                 Выйти
               </Button>
             )}
-
-            {!userInfo && <AuthorizationButton />}
           </Box>
         )}
       </Box>
