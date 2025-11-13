@@ -25,7 +25,6 @@ export default function Characters({
           >
             {/* todo переделать по-человечески */}
             <Button
-              disabled={!!character.id}
               onClick={() =>
                 character.id ? openCharacterForm(character.id) : () => {}
               }

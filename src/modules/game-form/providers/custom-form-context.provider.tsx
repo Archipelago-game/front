@@ -16,9 +16,13 @@ import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../../app/providers/auth-provider/use-auth-context.hook.ts";
 import type { CharacterDocument } from "../../../api/firebase-characters-service.ts";
 
+import debounce from "lodash.debounce";
+
 interface Props {
   children: ReactNode;
 }
+
+const saveCharacterForm = debounce(api.saveCharacterForm, 500);
 
 export function CustomFormContextProvider({ children }: Props) {
   const { userInfo } = useAuthContext();
@@ -40,16 +44,17 @@ export function CustomFormContextProvider({ children }: Props) {
       field.onChange(e);
       if (characterId === null || userInfo === null || characterDoc === null) {
         console.log(
-          `нет одного из следующих свойств: characterId: ${characterId}, userInfo: ${userInfo},  characterDoc: ${!!characterDoc}`,
+          `нет одного из следующих свойств: characterId: ${characterId}, userInfo: ${userInfo},  characterDoc: ${characterDoc}`,
         );
         return;
       }
-      await api.saveCharacterForm(userInfo.uid, {
+
+      await saveCharacterForm(userInfo.uid, {
         ...characterDoc,
         data: methods.getValues(),
       });
     },
-    [],
+    [userInfo, characterDoc, characterId],
   );
 
   const fetchData = useCallback(async (userId: string, characterId: string) => {

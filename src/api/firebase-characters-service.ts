@@ -80,6 +80,7 @@ export class FirebaseCharactersService {
    * Получить всех персонажей пользователя из Firebase
    */
   static async getCharacters(userId: string): Promise<CharacterDocument[]> {
+    console.log("getCharacters", userId);
     try {
       const charactersRef = this.getUserCharactersRef(userId);
       const queryCharacterDocs = query(
