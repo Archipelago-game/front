@@ -40,7 +40,7 @@ export default function CharactersPage() {
 
   return (
     <Characters
-      characters={characterDocs.map((d) => d.data)}
+      characters={characterDocs}
       openCharacterForm={openCharacterForm}
       addCharacter={() => addCharacter(userInfo.uid)}
     />
