@@ -18,7 +18,7 @@ export default function PhysicalDefence() {
   });
 
   const { isDisabled } = useWatchCheckboxAmount({
-    defaultAmount: values?.defence.mental.resolve.amount ?? 20,
+    defaultAmount: values?.defence?.mental?.resolve?.amount ?? 20,
     amountName: "defence.physical.health.amount",
     listName: "defence.physical.health.list",
   });

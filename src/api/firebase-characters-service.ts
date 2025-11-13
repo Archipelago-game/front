@@ -11,6 +11,8 @@ import {
   Timestamp,
   type FirestoreDataConverter,
   type DocumentData,
+  orderBy,
+  query,
 } from "firebase/firestore";
 import type { Unsubscribe } from "firebase/firestore";
 import { db } from "./firebase-config";
@@ -80,7 +82,11 @@ export class FirebaseCharactersService {
   static async getCharacters(userId: string): Promise<CharacterDocument[]> {
     try {
       const charactersRef = this.getUserCharactersRef(userId);
-      const snapshot = await getDocs(charactersRef);
+      const queryCharacterDocs = query(
+        charactersRef,
+        orderBy("createdAt", "asc"),
+      );
+      const snapshot = await getDocs(queryCharacterDocs);
 
       return snapshot.docs
         .map((doc) => ({

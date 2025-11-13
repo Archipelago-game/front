@@ -20,6 +20,7 @@ export function AuthContextProvider({ children }: Props) {
   useEffect(() => {
     // Listen to auth state changes
     const unsubscribe = FirebaseAuthService.onAuthStateChanged(async (user) => {
+      console.log("user", user);
       if (user) {
         try {
           const userData = await FirebaseAuthService.getUserData(user.uid);

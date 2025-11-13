@@ -22,13 +22,14 @@ interface Props {
 
 export function CustomFormContextProvider({ children }: Props) {
   const { userInfo } = useAuthContext();
-  const [characterDoc, setCharacterDoc] = useState<CharacterDocument>("");
-  const [formValues, setFormValues] = useState<FormType>(FORM_DEFAULT_VALUES);
+  const [characterDoc, setCharacterDoc] = useState<CharacterDocument | null>(
+    null,
+  );
 
   const { characterId } = useParams();
 
   const methods = useForm<FormType>({
-    defaultValues: formValues,
+    defaultValues: characterDoc?.data ?? FORM_DEFAULT_VALUES,
   });
 
   const onChange = useCallback(
@@ -37,26 +38,34 @@ export function CustomFormContextProvider({ children }: Props) {
       e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
       field.onChange(e);
-      if (characterId === null) {
+      if (characterId === null || userInfo === null || characterDoc === null) {
+        console.log(
+          `нет одного из следующих свойств: characterId: ${characterId}, userInfo: ${userInfo},  characterDoc: ${!!characterDoc}`,
+        );
         return;
       }
-      await api.saveCharacterForm(characterId, methods.getValues());
+      await api.saveCharacterForm(userInfo.uid, {
+        ...characterDoc,
+        data: methods.getValues(),
+      });
     },
     [],
   );
 
   const fetchData = useCallback(async (userId: string, characterId: string) => {
-    const data = await api.getCharacterForm(userId, characterId);
-    setFormValues(data);
+    const characterDoc = await api.getCharacterForm(userId, characterId);
+    if (characterDoc) {
+      setCharacterDoc(characterDoc);
+    }
   }, []);
 
   const value = useMemo(
     () => ({
       methods,
       onChange,
-      values: formValues,
+      values: characterDoc?.data ?? FORM_DEFAULT_VALUES,
     }),
-    [formValues, methods, onChange],
+    [characterDoc, methods, onChange],
   );
 
   useEffect(() => {
@@ -66,8 +75,8 @@ export function CustomFormContextProvider({ children }: Props) {
   }, [characterId, userInfo]);
 
   useEffect(() => {
-    methods.reset(formValues);
-  }, [formValues, methods]);
+    methods.reset(characterDoc?.data ?? FORM_DEFAULT_VALUES);
+  }, [characterDoc, methods]);
 
   return (
     <CustomFormContext.Provider value={value}>

@@ -20,8 +20,10 @@ export default function CharactersPage() {
   };
 
   const addCharacter = async (userId: string) => {
-    const newIndex = await api.addNewCharacter(userId);
-    navigate(`/game-form/${newIndex}`);
+    await api.addNewCharacter(userId);
+    await fetchCharacters(userId);
+    const newCharacter = characterDocs[characterDocs.length - 1];
+    navigate(`/game-form/${newCharacter.id}`);
   };
 
   const openCharacterForm = async (characterId: string) => {
