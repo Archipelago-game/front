@@ -9,8 +9,10 @@ import { Box } from "@mui/system";
 
 import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
+import { useConfirmDialogContext } from "../../modules/confirm-dialog/use-confirm-dialog.hook.ts";
 
 export default function CharactersPage() {
+  const { open } = useConfirmDialogContext();
   const { showMessage } = useSnackbarContext();
   const navigate = useNavigate();
   const { userInfo } = useAuthContext();
@@ -28,9 +30,14 @@ export default function CharactersPage() {
   };
 
   const deleteCharacter = async (userId: string, characterId: string) => {
-    await api.deleteCharacter(userId, characterId);
-    await fetchCharacters(userId);
-    showMessage({ message: "герой был удален" });
+    open({
+      message: "Действительно хотите удалить героя?",
+      onConfirm: async () => {
+        await api.deleteCharacter(userId, characterId);
+        await fetchCharacters(userId);
+        showMessage({ message: "герой был удален" });
+      },
+    });
   };
 
   const openCharacterForm = async (characterId: string) => {
