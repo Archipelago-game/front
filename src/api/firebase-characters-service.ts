@@ -17,7 +17,7 @@ import {
 import type { Unsubscribe } from "firebase/firestore";
 import { db } from "./firebase-config";
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
-import { localstorageCharactersService } from "./local-storage";
+
 import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-values.const.ts";
 
 // Интерфейс для персонажа в Firestore
@@ -80,7 +80,6 @@ export class FirebaseCharactersService {
    * Получить всех персонажей пользователя из Firebase
    */
   static async getCharacters(userId: string): Promise<CharacterDocument[]> {
-    console.log("getCharacters", userId);
     try {
       const charactersRef = this.getUserCharactersRef(userId);
       const queryCharacterDocs = query(
@@ -129,7 +128,6 @@ export class FirebaseCharactersService {
   /**
    * Создать нового персонажа
    */
-
   static createCharacterDocument(userId: string): CharacterDocument {
     return {
       data: FORM_DEFAULT_VALUES,
@@ -145,14 +143,10 @@ export class FirebaseCharactersService {
 
   static async createCharacter(userId: string) {
     const newCharacterDoc = this.createCharacterDocument(userId);
-    try {
-      const charactersRef = this.getUserCharactersRef(userId);
-      await addDoc(charactersRef, newCharacterDoc);
-    } catch (error) {
-      console.error("Ошибка создания персонажа в Firebase:", error);
-      // Fallback на localStorage
-      localstorageCharactersService.setNewCharacterForm();
-    }
+    const charactersRef = this.getUserCharactersRef(userId);
+    const docRef = await addDoc(charactersRef, newCharacterDoc);
+
+    return docRef.id;
   }
 
   static async updateCharacter(data: {
@@ -171,13 +165,12 @@ export class FirebaseCharactersService {
   }
 
   /**
-   * Сохранить персонажа в Firebase с версионированием
+   * Сохранить персонажа
    */
   static async saveCharacter(
     userId: string,
     characterData: CharacterDocument,
   ): Promise<void> {
-    // todo добавить try\catch и сохранение в localStorage в случае catch
     const charactersRef = this.getUserCharactersRef(userId);
     const characterDocRef = doc(charactersRef, characterData.id);
     const newVersion = characterData.version + 1;
