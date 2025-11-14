@@ -8,8 +8,10 @@ import Characters from "../../modules/characters/Characters.tsx";
 import { Box } from "@mui/system";
 
 import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
+import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 
 export default function CharactersPage() {
+  const { showMessage } = useSnackbarContext();
   const navigate = useNavigate();
   const { userInfo } = useAuthContext();
   const [characterDocs, setCharacterDocs] = useState<CharacterDocument[]>([]);
@@ -24,6 +26,12 @@ export default function CharactersPage() {
     await fetchCharacters(userId);
     const newCharacter = characterDocs[characterDocs.length - 1];
     navigate(`/game-form/${newCharacter.id}`);
+  };
+
+  const deleteCharacter = async (userId: string, characterId: string) => {
+    await api.deleteCharacter(userId, characterId);
+    await fetchCharacters(userId);
+    showMessage({ message: "герой был удален" });
   };
 
   const openCharacterForm = async (characterId: string) => {
@@ -45,6 +53,9 @@ export default function CharactersPage() {
       characters={characterDocs}
       openCharacterForm={openCharacterForm}
       addCharacter={() => addCharacter(userInfo.uid)}
+      deleteCharacter={(characterId: string) =>
+        deleteCharacter(userInfo.uid, characterId)
+      }
     />
   );
 }

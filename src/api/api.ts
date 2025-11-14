@@ -25,6 +25,10 @@ export const api = {
     await FirebaseCharactersService.saveCharacter(userId, data);
   },
 
+  async deleteCharacter(userId: string, characterId: string) {
+    await FirebaseCharactersService.deleteCharacter(userId, characterId);
+  },
+
   /**
    * Get current user information
    */
