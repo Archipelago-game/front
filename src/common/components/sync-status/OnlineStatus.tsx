@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { CloudOff, Cloud } from "@mui/icons-material";
+import { CloudOff, CloudOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { api } from "../../../api/api.ts";
 
@@ -28,7 +28,7 @@ export default function OnlineStatus() {
 
   const getStatusIcon = () => {
     if (!isOnline) return <CloudOff color="warning" />;
-    return <Cloud color="success" />;
+    return <CloudOutlined color="success" />;
   };
 
   return (
