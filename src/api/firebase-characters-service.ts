@@ -5,7 +5,6 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-  addDoc,
   serverTimestamp,
   onSnapshot,
   Timestamp,
@@ -25,8 +24,8 @@ export interface CharacterDocument {
   id?: string;
   data: FormType;
   userId: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: Timestamp | Date;
+  updatedAt: Timestamp | Date;
   version: number; // Версия для отслеживания изменений
   lastModifiedBy: string; // UID пользователя, который последний раз изменял
   deviceId?: string; // ID устройства для отслеживания
@@ -129,11 +128,12 @@ export class FirebaseCharactersService {
    * Создать нового персонажа
    */
   static createCharacterDocument(userId: string): CharacterDocument {
+    const now = new Date();
     return {
       data: FORM_DEFAULT_VALUES,
       userId,
-      createdAt: serverTimestamp() as unknown as Timestamp,
-      updatedAt: serverTimestamp() as unknown as Timestamp,
+      createdAt: now,
+      updatedAt: now,
       version: 1,
       lastModifiedBy: userId,
       deviceId: this.getDeviceId(),
@@ -144,7 +144,21 @@ export class FirebaseCharactersService {
   static async createCharacter(userId: string) {
     const newCharacterDoc = this.createCharacterDocument(userId);
     const charactersRef = this.getUserCharactersRef(userId);
-    const docRef = await addDoc(charactersRef, newCharacterDoc);
+    const docRef = doc(charactersRef);
+
+    setDoc(docRef, newCharacterDoc);
+
+    if (this.isOnline()) {
+      await updateDoc(docRef, {
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+    } else {
+      updateDoc(docRef, {
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+    }
 
     return docRef.id;
   }
