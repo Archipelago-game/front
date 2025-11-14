@@ -5,7 +5,6 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-  addDoc,
   serverTimestamp,
   onSnapshot,
   Timestamp,
@@ -17,7 +16,7 @@ import {
 import type { Unsubscribe } from "firebase/firestore";
 import { db } from "./firebase-config";
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
-import { localstorageCharactersService } from "./local-storage";
+
 import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-values.const.ts";
 
 // Интерфейс для персонажа в Firestore
@@ -25,8 +24,8 @@ export interface CharacterDocument {
   id?: string;
   data: FormType;
   userId: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: Timestamp | Date;
+  updatedAt: Timestamp | Date;
   version: number; // Версия для отслеживания изменений
   lastModifiedBy: string; // UID пользователя, который последний раз изменял
   deviceId?: string; // ID устройства для отслеживания
@@ -80,7 +79,6 @@ export class FirebaseCharactersService {
    * Получить всех персонажей пользователя из Firebase
    */
   static async getCharacters(userId: string): Promise<CharacterDocument[]> {
-    console.log("getCharacters", userId);
     try {
       const charactersRef = this.getUserCharactersRef(userId);
       const queryCharacterDocs = query(
@@ -129,13 +127,13 @@ export class FirebaseCharactersService {
   /**
    * Создать нового персонажа
    */
-
   static createCharacterDocument(userId: string): CharacterDocument {
+    const now = new Date();
     return {
       data: FORM_DEFAULT_VALUES,
       userId,
-      createdAt: serverTimestamp() as unknown as Timestamp,
-      updatedAt: serverTimestamp() as unknown as Timestamp,
+      createdAt: now,
+      updatedAt: now,
       version: 1,
       lastModifiedBy: userId,
       deviceId: this.getDeviceId(),
@@ -145,14 +143,24 @@ export class FirebaseCharactersService {
 
   static async createCharacter(userId: string) {
     const newCharacterDoc = this.createCharacterDocument(userId);
-    try {
-      const charactersRef = this.getUserCharactersRef(userId);
-      await addDoc(charactersRef, newCharacterDoc);
-    } catch (error) {
-      console.error("Ошибка создания персонажа в Firebase:", error);
-      // Fallback на localStorage
-      localstorageCharactersService.setNewCharacterForm();
+    const charactersRef = this.getUserCharactersRef(userId);
+    const docRef = doc(charactersRef);
+
+    setDoc(docRef, newCharacterDoc);
+
+    if (this.isOnline()) {
+      await updateDoc(docRef, {
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+    } else {
+      updateDoc(docRef, {
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
     }
+
+    return docRef.id;
   }
 
   static async updateCharacter(data: {
@@ -171,13 +179,12 @@ export class FirebaseCharactersService {
   }
 
   /**
-   * Сохранить персонажа в Firebase с версионированием
+   * Сохранить персонажа
    */
   static async saveCharacter(
     userId: string,
     characterData: CharacterDocument,
   ): Promise<void> {
-    // todo добавить try\catch и сохранение в localStorage в случае catch
     const charactersRef = this.getUserCharactersRef(userId);
     const characterDocRef = doc(charactersRef, characterData.id);
     const newVersion = characterData.version + 1;
