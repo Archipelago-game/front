@@ -4,16 +4,22 @@ import Header from "../../modules/header/Header.tsx";
 import { useEffect } from "react";
 import { LocalStoragePatch } from "../../api/local-storage.ts";
 
+import AnimatedSvg from "../../modules/screen-saver/ScreenSaver.tsx";
+import { useScreenSaver } from "../../modules/screen-saver/screen-saver.hook.ts";
+
 export default function MainLayout() {
+  const { setIsShow: setIsScreenSaverShow } = useScreenSaver();
   useEffect(() => {
     LocalStoragePatch.convertObjToArray();
+    setIsScreenSaverShow(true);
   }, []);
 
   return (
     <Container
       maxWidth={"xl"}
-      sx={{ px: 2, paddingBottom: 2, height: "100vh" }}
+      sx={{ px: 2, paddingBottom: 2, height: "100vh", border: "1px solid red" }}
     >
+      <AnimatedSvg />
       <Box
         sx={{
           display: "grid",

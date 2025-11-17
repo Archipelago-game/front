@@ -4,12 +4,15 @@ import "./animation.css";
 import { theme } from "../../common/styles/theme/custom-theme.ts";
 
 import "./animation.css";
+import { useScreenSaver } from "./screen-saver.hook.ts";
 
 interface Props {
   onFinish?: () => void;
 }
 
 export default function AnimatedSvg(props: Props) {
+  const { isShow, setIsShow } = useScreenSaver();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const primaryPath = useRef<SVGPathElement | null>(null);
   const secondaryPath = useRef<SVGPathElement | null>(null);
@@ -34,6 +37,7 @@ export default function AnimatedSvg(props: Props) {
       }, 1000);
       setTimeout(() => {
         props?.onFinish?.();
+        setIsShow(false);
       }, 2000);
     };
   }
@@ -80,7 +84,12 @@ export default function AnimatedSvg(props: Props) {
   }
 
   useEffect(() => {
-    if (primaryPath.current && secondaryPath.current && containerRef.current) {
+    if (
+      isShow &&
+      primaryPath.current &&
+      secondaryPath.current &&
+      containerRef.current
+    ) {
       initializeStyles(primaryPath.current);
       initializeStyles(secondaryPath.current);
       startAnimation(
@@ -89,7 +98,9 @@ export default function AnimatedSvg(props: Props) {
         containerRef.current,
       );
     }
-  }, []);
+  }, [isShow]);
+
+  if (!isShow) return null;
 
   return (
     <Box
@@ -102,6 +113,7 @@ export default function AnimatedSvg(props: Props) {
         alignItems: "center",
         backgroundColor: theme.palette.background.paper,
         transition: "opacity 1s",
+        zIndex: isShow ? 2000 : -2000,
       }}
     >
       <Box>

@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function ScreenSaverProvider({ children }: Props) {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(true);
 
   const value: ScreenSaverContextType = useMemo(
     () => ({
