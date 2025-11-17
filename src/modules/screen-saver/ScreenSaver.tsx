@@ -13,7 +13,9 @@ interface Props {
 export default function AnimatedSvg(props: Props) {
   const { isShow, setIsShow } = useScreenSaver();
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const innerContainerRef = useRef<HTMLDivElement>(null);
+
   const primaryPath = useRef<SVGPathElement | null>(null);
   const secondaryPath = useRef<SVGPathElement | null>(null);
 
@@ -27,17 +29,25 @@ export default function AnimatedSvg(props: Props) {
   function startAnimation(
     primaryPath: SVGPathElement,
     secondaryPath: SVGPathElement,
-    containerRef: HTMLDivElement,
+    backgroundRef: HTMLDivElement,
+    innerContainerRef: HTMLDivElement,
   ) {
     drawAnimation(primaryPath, secondaryPath);
-    const animation = backgroundAnimation(secondaryPath);
-    animation.onfinish = () => {
-      setTimeout(() => {
-        containerRef.classList.add("transparent");
-      }, 1000);
+    const fillInAnimationRef = fillInAnimation(secondaryPath);
+
+    fillInAnimationRef.onfinish = () => {
+      const moveAnimationRef = moveAnimation(innerContainerRef);
+
+      backgroundRef.classList.add("transparent");
+
+      if (moveAnimationRef !== null) {
+        moveAnimationRef.onfinish = () => {
+          setIsShow(false);
+        };
+      }
+
       setTimeout(() => {
         props?.onFinish?.();
-        setIsShow(false);
       }, 2000);
     };
   }
@@ -71,7 +81,7 @@ export default function AnimatedSvg(props: Props) {
     );
   }
 
-  function backgroundAnimation(path: SVGPathElement) {
+  function fillInAnimation(path: SVGPathElement) {
     path.style.opacity = "0";
     path.style.fill = "url(#gradient1)";
     return path.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -82,50 +92,93 @@ export default function AnimatedSvg(props: Props) {
     });
   }
 
-  function moveAnimation(containerRef: HTMLDivElement) {}
+  function moveAnimation(ref: HTMLDivElement) {
+    const moveAnim = ref.animate(
+      [
+        {
+          transform: "translate(-50%, -50%) scale(1)",
+        },
+        {
+          transform: "translate(-100%, -100%) scale(0.2)",
+        },
+      ],
+      {
+        duration: 2000,
+        easing: "ease-in-out",
+        fill: "forwards",
+      },
+    );
+
+    let fadeAnim: Animation | null = null;
+
+    moveAnim.onfinish = () => {
+      fadeAnim = ref.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 1000,
+        easing: "ease-in-out",
+        fill: "forwards",
+      });
+    };
+
+    return fadeAnim;
+  }
 
   useEffect(() => {
     if (
-      false &&
+      isShow &&
       primaryPath.current &&
       secondaryPath.current &&
-      containerRef.current
+      backgroundRef.current &&
+      innerContainerRef.current
     ) {
       initializeStyles(primaryPath.current);
       initializeStyles(secondaryPath.current);
       startAnimation(
         primaryPath.current,
         secondaryPath.current,
-        containerRef.current,
+        backgroundRef.current,
+        innerContainerRef.current,
       );
     }
   }, [isShow]);
 
-  // if (!isShow) return null;
+  if (!isShow) return null;
 
   return (
     <Box
-      ref={containerRef}
+      ref={backgroundRef}
       sx={{
         position: "absolute",
         inset: "0",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: theme.palette.background.paper,
-        transition: "opacity 1s",
-        // zIndex: isShow ? 2000 : -2000,
-        zIndex: 2000,
-        opacity: 1,
+        zIndex: isShow ? 2000 : -2000,
+        border: "1px solid green",
       }}
     >
-      <Box sx={{ border: "1px solid red" }}>
+      <Box
+        ref={backgroundRef}
+        sx={{
+          position: "absolute",
+          inset: 0,
+          backgroundColor: theme.palette.background.paper,
+          transition: "opacity 1s",
+          opacity: 1,
+        }}
+      />
+      <Box
+        ref={innerContainerRef}
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          transformOrigin: "center center",
+        }}
+      >
         <svg
           className={"svg"}
           version="1.0"
           xmlns="http://www.w3.org/2000/svg"
           width="auto"
-          height="100%"
+          height="80vh"
           viewBox="0 0 451 697"
           preserveAspectRatio="xMidYMid meet"
         >
