@@ -9,6 +9,7 @@ import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/Too
 import { Delete } from "@mui/icons-material";
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
+import { useModal } from "../../../../../app/providers/global-modal/use-modal.hook.ts";
 
 const LABEL_STYLES = {
   sx: { width: "4rem" },
@@ -17,6 +18,7 @@ const LABEL_STYLES = {
 export default function Talent() {
   const { methods, values } = useCustomFormContext();
   const { open } = useConfirmDialogContext();
+  const {} = useModal();
 
   const { fields, replace, append, remove } = useFieldArray({
     name: "talents.list",
@@ -29,7 +31,7 @@ export default function Talent() {
 
   const deleteTalent = (talentIndex: number, talentName: string) => {
     open({
-      message: `ты действительно хочешь удалить талант ${talentName}`,
+      message: `ты действительно хочешь удалить талант ${talentName}?`,
       onConfirm: () => {
         remove(talentIndex);
       },
