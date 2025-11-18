@@ -6,28 +6,33 @@ interface Props {
   level: number;
   description: string;
 }
+
+const styles = {
+  border: "1px solid black",
+};
+
 export default function TalentsGuideLine(props: Props) {
   const { branch, name, level, description } = props;
   return (
     <Grid container size={12}>
-      <Grid size={12}>
+      <Grid size={8}>
         {/*  Ветка */}
-        {branch}
+        <i>{branch}</i>
       </Grid>
 
-      <Grid size={9}>
+      <Grid size={3}>
+        {/*  Уровень */}
+        уровень {level}
+      </Grid>
+
+      <Grid size={1}>
+        {/* Checkbox */}
+        <Checkbox sx={{ padding: 0 }} />
+      </Grid>
+
+      <Grid size={12}>
         {/*  Название */}
-        {name}
-      </Grid>
-
-      <Grid size={2}>
-        {/*  Уровень */}
-        {level}
-      </Grid>
-
-      <Grid size={2}>
-        {/*  Уровень */}
-        <Checkbox />
+        <b>{name}</b>
       </Grid>
 
       <Grid size={12}>

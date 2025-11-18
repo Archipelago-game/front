@@ -10,6 +10,7 @@ import { Delete } from "@mui/icons-material";
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 import { useModal } from "../../../../../app/providers/global-modal/use-modal.hook.ts";
+import TalentsGuide from "./TalentsGuide.tsx";
 
 const LABEL_STYLES = {
   sx: { width: "4rem" },
@@ -18,14 +19,21 @@ const LABEL_STYLES = {
 export default function Talent() {
   const { methods, values } = useCustomFormContext();
   const { open } = useConfirmDialogContext();
-  const {} = useModal();
+  const { openModal } = useModal();
 
   const { fields, replace, append, remove } = useFieldArray({
     name: "talents.list",
     control: methods.control,
   });
 
+  const content = () => {
+    return <TalentsGuide />;
+  };
+
   const addTalent = () => {
+    openModal({
+      content,
+    });
     append(defaultTalent);
   };
 
