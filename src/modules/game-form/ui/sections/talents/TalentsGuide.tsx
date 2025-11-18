@@ -11,9 +11,7 @@ export default function TalentsGuide() {
   const [talents, setTalents] = useState<TalentGuideType[]>(talentsGuide);
   return (
     <>
-      <Box sx={{ position: "sticky" }}>
-        <Box>TESt</Box>
-      </Box>
+      <Box sx={{ position: "sticky" }}>Выбор</Box>
       <Box
         sx={{
           overflowY: "auto",
