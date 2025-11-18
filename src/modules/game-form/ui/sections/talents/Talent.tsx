@@ -33,6 +33,7 @@ export default function Talent() {
   const addTalent = () => {
     openModal({
       content,
+      title: "Таланты",
     });
     append(defaultTalent);
   };

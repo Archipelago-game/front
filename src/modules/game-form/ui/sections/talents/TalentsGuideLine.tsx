@@ -7,9 +7,9 @@ interface Props {
   description: string;
 }
 
-const styles = {
-  border: "1px solid black",
-};
+// const styles = {
+//   border: "1px solid black",
+// };
 
 export default function TalentsGuideLine(props: Props) {
   const { branch, name, level, description } = props;
@@ -22,7 +22,7 @@ export default function TalentsGuideLine(props: Props) {
 
       <Grid size={3}>
         {/*  Уровень */}
-        уровень {level}
+        ур. {level}
       </Grid>
 
       <Grid size={1}>

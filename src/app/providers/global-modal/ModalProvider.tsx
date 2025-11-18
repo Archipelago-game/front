@@ -62,11 +62,11 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
               flexDirection: "column",
 
               width: "90vw",
-              height: "90vh",
-              maxHeight: "90vh",
+              height: "95vh",
+              maxHeight: "95vh",
               overflow: "hidden",
 
-              p: 4,
+              p: 2,
               bgcolor: "background.paper",
               boxShadow: 24,
               borderRadius: 2,
@@ -98,15 +98,17 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
             <Stack
               direction="row"
               spacing={2}
+              pt={1}
               sx={{ flex: "0 0 auto", justifyContent: "flex-end" }}
             >
               {modalOptions.showCancelButton !== false && (
-                <Button variant="outlined" onClick={handleCancel}>
+                <Button size="small" variant="outlined" onClick={handleCancel}>
                   Отмена
                 </Button>
               )}
               {modalOptions.showConfirmButton !== false && (
                 <Button
+                  size="small"
                   form={modalOptions?.formId}
                   type={modalOptions?.formId ? "submit" : "button"}
                   variant="contained"
