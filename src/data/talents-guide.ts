@@ -1,11 +1,11 @@
-export interface TalentGuide {
+export interface TalentGuideType {
   branch: string;
   name: string;
   description: string;
   level: number;
 }
 
-export const talentsGuide: TalentGuide[] = [
+export const talentsGuide: TalentGuideType[] = [
   {
     branch: "Ближний Бой",
     name: "Коли Острым Концом",
