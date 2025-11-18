@@ -3,7 +3,7 @@ import { Checkbox, Grid } from "@mui/material";
 interface Props {
   branch: string;
   name: string;
-  level: number;
+  rang: number;
   description: string;
 }
 
@@ -12,7 +12,7 @@ interface Props {
 // };
 
 export default function TalentsGuideLine(props: Props) {
-  const { branch, name, level, description } = props;
+  const { branch, name, rang, description } = props;
   return (
     <Grid container size={12}>
       <Grid size={8}>
@@ -22,7 +22,7 @@ export default function TalentsGuideLine(props: Props) {
 
       <Grid size={3}>
         {/*  Уровень */}
-        ур. {level}
+        ур. {rang}
       </Grid>
 
       <Grid size={1}>

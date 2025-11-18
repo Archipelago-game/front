@@ -15,8 +15,14 @@ interface Props<T> {
   onChange: (e: SelectChangeEvent<T>) => void;
   label?: string;
   displayEmpty?: boolean;
+  emptyOption?: SelectOption<string>;
   sx?: SxProps<Theme>;
 }
+
+const defaultEmptyOption = {
+  value: "",
+  label: "Не выбрано",
+};
 
 export default function CustomSelect<T extends string | number>({
   options,
@@ -25,6 +31,7 @@ export default function CustomSelect<T extends string | number>({
   label,
   name = "",
   displayEmpty = false,
+  emptyOption = defaultEmptyOption,
   sx = {},
 }: Props<T>) {
   return (
@@ -43,8 +50,8 @@ export default function CustomSelect<T extends string | number>({
         name={name}
       >
         {displayEmpty && (
-          <MenuItem value={0}>
-            <em>Не выбрано</em>
+          <MenuItem value={emptyOption.label}>
+            <em>{emptyOption.label}</em>
           </MenuItem>
         )}
         {options.map((option) => (
