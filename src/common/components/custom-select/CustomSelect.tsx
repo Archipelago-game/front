@@ -50,7 +50,7 @@ export default function CustomSelect<T extends string | number>({
         name={name}
       >
         {displayEmpty && (
-          <MenuItem value={emptyOption.label}>
+          <MenuItem value={emptyOption.value}>
             <em>{emptyOption.label}</em>
           </MenuItem>
         )}
