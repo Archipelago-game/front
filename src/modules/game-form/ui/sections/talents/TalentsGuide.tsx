@@ -6,30 +6,15 @@ import {
 import TalentsGuideLine from "./TalentsGuideLine.tsx";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { getUniqueTalentBranches } from "./get-unique-talent-branches.utils.ts";
-import CustomSelect from "../../../../../common/components/custom-select/CustomSelect.tsx";
 
-const branchOptions = getUniqueTalentBranches(talentsGuide).map((branch) => ({
-  value: branch,
-  label: branch,
-}));
+import TalentsFilterForm from "./TalentsFilterForm.tsx";
 
 export default function TalentsGuide() {
   const [talents, setTalents] = useState<TalentGuideType[]>(talentsGuide);
-  const [currentBranch, setCurrentBranch] = useState<string>("");
-  const [searchValue, setSearchValue] = useState<string>("");
 
   return (
     <>
-      <Box sx={{ position: "sticky" }}>
-        <CustomSelect
-          value={currentBranch}
-          options={branchOptions}
-          displayEmpty={true}
-          emptyOption={{ value: "", label: "Все ветки" }}
-          onChange={(e) => setCurrentBranch(e.target.value)}
-        />
-      </Box>
+      <TalentsFilterForm />
       <Box
         sx={{
           overflowY: "auto",
