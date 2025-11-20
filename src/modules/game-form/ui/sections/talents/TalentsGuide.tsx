@@ -14,7 +14,7 @@ import TalentsFilterForm, {
 import { TALENTS_FILTER_FORM_DEFAULT_VALUES } from "./filter-form-default-values.const.ts";
 
 function filterByBranch(talents: TalentGuideType[], branch: string) {
-  if (!branch) {
+  if (branch === "allBranches") {
     return talents;
   }
   return talents.filter((talent) => talent.branch === branch);
@@ -36,7 +36,6 @@ export default function TalentsGuide() {
 
   const onFilterFormChange = (values: TalentsFilterFormValues) => {
     let talentsFiltered: TalentGuideType[] = [];
-    console.log("branch", values.branch);
     if (filterValues.current.branch !== values.branch) {
       talentsFiltered = filterByBranch(talentsGuide, values.branch);
     } else {

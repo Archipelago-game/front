@@ -7,7 +7,10 @@ import { getUniqueTalentBranches } from "./get-unique-talent-branches.utils.ts";
 
 import { talentsGuide } from "../../../../../data/talents-guide.ts";
 import { useMemo } from "react";
-import { TALENTS_FILTER_FORM_DEFAULT_VALUES } from "./filter-form-default-values.const.ts";
+import {
+  EMPTY_BRANCH_OPTION,
+  TALENTS_FILTER_FORM_DEFAULT_VALUES,
+} from "./filter-form-default-values.const.ts";
 
 export interface TalentsFilterFormValues {
   branch: string;
@@ -63,7 +66,7 @@ export default function TalentsFilterForm(props: Props) {
             options={branchOptions}
             label="ветки"
             displayEmpty={true}
-            emptyOption={{ value: "", label: "Все ветки" }}
+            emptyOption={EMPTY_BRANCH_OPTION}
             onChange={(e) => {
               field.onChange(e.target.value);
               handleFormChange();
