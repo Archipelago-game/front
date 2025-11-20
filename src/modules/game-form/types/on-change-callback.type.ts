@@ -3,6 +3,6 @@ import type { FormType } from "./form/form.type.ts";
 import type { ChangeEvent } from "react";
 
 export type OnChangeCallbackType = (
-  field: ControllerRenderProps<FormType>,
-  e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  field?: ControllerRenderProps<FormType>,
+  e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 ) => Promise<void> | void;

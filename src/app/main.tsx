@@ -10,14 +10,18 @@ import { AuthContextProvider } from "./providers/auth-provider/auth-context.prov
 import { SnackbarProvider } from "./providers/snackbar-provider/snackbar-context.provider.tsx";
 import { ConfirmDialogContextProvider } from "../modules/confirm-dialog/ConfirmDialogContextProvider.tsx";
 
+import { ModalProvider } from "./providers/global-modal/ModalProvider.tsx";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <AuthContextProvider>
         <SnackbarProvider>
-          <ConfirmDialogContextProvider>
-            <RouterProvider router={router} />
-          </ConfirmDialogContextProvider>
+          <ModalProvider>
+            <ConfirmDialogContextProvider>
+              <RouterProvider router={router} />
+            </ConfirmDialogContextProvider>
+          </ModalProvider>
         </SnackbarProvider>
       </AuthContextProvider>
     </ThemeProvider>

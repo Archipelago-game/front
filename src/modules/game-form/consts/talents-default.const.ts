@@ -39,6 +39,6 @@ export const talentsList: Talent[] = [
 ];
 
 export const defaultTalents: Talents = {
-  amount: 3,
-  list: talentsList,
+  amount: 1,
+  list: [],
 };
