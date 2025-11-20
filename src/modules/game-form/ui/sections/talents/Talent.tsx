@@ -34,8 +34,8 @@ export default function Talent() {
       effect: talent.description,
       rang: talent.rang,
     });
-    closeModal();
     onChange();
+    closeModal();
   };
 
   const content = () => {
@@ -54,6 +54,7 @@ export default function Talent() {
       message: `ты действительно хочешь удалить талант ${talentName}?`,
       onConfirm: () => {
         remove(talentIndex);
+        onChange();
       },
     });
   };
