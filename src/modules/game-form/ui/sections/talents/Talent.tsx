@@ -4,30 +4,42 @@ import BaseField from "../../components/BaseField.tsx";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
-import { defaultTalent } from "../../../consts/talents-default.const.ts";
+
 import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/TooltipWrapper.tsx";
 import { Delete } from "@mui/icons-material";
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 import { useModal } from "../../../../../app/providers/global-modal/use-modal.hook.ts";
 import TalentsGuide from "./TalentsGuide.tsx";
+import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
 
 const LABEL_STYLES = {
   sx: { width: "4rem" },
 };
 
 export default function Talent() {
-  const { methods, values } = useCustomFormContext();
+  const { methods, values, onChange } = useCustomFormContext();
   const { open } = useConfirmDialogContext();
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const { fields, replace, append, remove } = useFieldArray({
     name: "talents.list",
     control: methods.control,
   });
 
+  const onChoose = (talent: TalentGuideType) => {
+    append({
+      name: talent.name,
+      branch: talent.branch,
+      effect: talent.description,
+      rang: talent.rang,
+    });
+    closeModal();
+    onChange();
+  };
+
   const content = () => {
-    return <TalentsGuide />;
+    return <TalentsGuide onChoose={onChoose} />;
   };
 
   const addTalent = () => {
@@ -35,7 +47,6 @@ export default function Talent() {
       content,
       title: "Таланты",
     });
-    append(defaultTalent);
   };
 
   const deleteTalent = (talentIndex: number, talentName: string) => {

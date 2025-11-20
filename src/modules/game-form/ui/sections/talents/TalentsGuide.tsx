@@ -28,7 +28,11 @@ function filterByContent(talents: TalentGuideType[], value: string) {
   );
 }
 
-export default function TalentsGuide() {
+interface Props {
+  onChoose: (talent: TalentGuideType) => void;
+}
+
+export default function TalentsGuide({ onChoose }: Props) {
   const [talents, setTalents] = useState<TalentGuideType[]>(talentsGuide);
   const filterValues = useRef<TalentsFilterFormValues>(
     TALENTS_FILTER_FORM_DEFAULT_VALUES,
@@ -61,7 +65,8 @@ export default function TalentsGuide() {
           {talents.map((talent) => (
             <TalentsGuideLine
               key={`${talent.branch}${talent.rang}`}
-              {...talent}
+              talent={talent}
+              onChange={onChoose}
             />
           ))}
         </Grid>

@@ -1,5 +1,4 @@
 import {
-  type ChangeEvent,
   type ReactNode,
   useCallback,
   useEffect,
@@ -10,13 +9,14 @@ import { CustomFormContext } from "./use-custom-context-form.hook.ts";
 
 import type { FormType } from "../types/form/form.type.ts";
 import { FORM_DEFAULT_VALUES } from "../consts/form-default-values.const.ts";
-import { type ControllerRenderProps, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { api } from "../../../api/api.ts";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../../app/providers/auth-provider/use-auth-context.hook.ts";
 import type { CharacterDocument } from "../../../api/firebase-characters-service.ts";
 
 import debounce from "lodash.debounce";
+import type { OnChangeCallbackType } from "../types/on-change-callback.type.ts";
 
 interface Props {
   children: ReactNode;
@@ -36,12 +36,12 @@ export function CustomFormContextProvider({ children }: Props) {
     defaultValues: characterDoc?.data ?? FORM_DEFAULT_VALUES,
   });
 
-  const onChange = useCallback(
-    async (
-      field: ControllerRenderProps<FormType>,
-      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-      field.onChange(e);
+  const onChange: OnChangeCallbackType = useCallback(
+    async (field, e) => {
+      if (field && e) {
+        field.onChange(e);
+      }
+
       if (characterId === null || userInfo === null || characterDoc === null) {
         console.log(
           `нет одного из следующих свойств: characterId: ${characterId}, userInfo: ${userInfo},  characterDoc: ${characterDoc}`,
