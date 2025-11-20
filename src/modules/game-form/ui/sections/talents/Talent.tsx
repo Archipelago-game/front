@@ -46,6 +46,7 @@ export default function Talent() {
     openModal({
       content,
       title: "Таланты",
+      showConfirmButton: false,
     });
   };
 
@@ -100,7 +101,6 @@ export default function Talent() {
                   }}
                   orientation="row"
                   fieldType="text"
-                  disabled={true}
                 />
               </Grid>
               <Grid size={{ xs: 8, md: 4 }}>
@@ -113,7 +113,6 @@ export default function Talent() {
                   }}
                   orientation="row"
                   fieldType="text"
-                  disabled={true}
                 />
               </Grid>
               <Grid size={{ xs: 12, md: 10 }} order={{ xs: 4, md: 3 }}>
@@ -127,7 +126,6 @@ export default function Talent() {
                     }}
                     orientation="row"
                     fieldType="text"
-                    disabled={true}
                   />
                 </TooltipWrapper>
               </Grid>
@@ -139,7 +137,6 @@ export default function Talent() {
                     color: "secondary",
                   }}
                   orientation="row"
-                  disabled={true}
                 />
               </Grid>
             </Grid>

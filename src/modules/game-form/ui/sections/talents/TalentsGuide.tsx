@@ -21,9 +21,12 @@ function filterByBranch(talents: TalentGuideType[], branch: string) {
 }
 
 function filterByContent(talents: TalentGuideType[], value: string) {
+  if (value === "") {
+    return talents;
+  }
   return talents.filter(
     (talent) =>
-      talent.name.includes(value) ||
+      talent.name.toLowerCase().includes(value.toLowerCase()) ||
       talent.description.toLowerCase().includes(value.toLowerCase()),
   );
 }
@@ -40,11 +43,7 @@ export default function TalentsGuide({ onChoose }: Props) {
 
   const onFilterFormChange = (values: TalentsFilterFormValues) => {
     let talentsFiltered: TalentGuideType[] = [];
-    if (filterValues.current.branch !== values.branch) {
-      talentsFiltered = filterByBranch(talentsGuide, values.branch);
-    } else {
-      talentsFiltered = talents;
-    }
+    talentsFiltered = filterByBranch(talentsGuide, values.branch);
     talentsFiltered = filterByContent(talentsFiltered, values.search);
     setTalents(talentsFiltered);
     filterValues.current = values;
