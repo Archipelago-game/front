@@ -17,7 +17,14 @@ export default function TalentsGuideLine({ talent, onChange }: Props) {
   };
 
   return (
-    <Grid container size={12}>
+    <Grid
+      container
+      size={12}
+      sx={{
+        paddingTop: 1,
+        borderTop: "1px solid #eaeaea",
+      }}
+    >
       <Grid size={8}>
         {/*  Ветка */}
         <i>{branch}</i>

@@ -16,7 +16,8 @@ interface Props<T> {
   label?: string;
   displayEmpty?: boolean;
   emptyOption?: SelectOption<string>;
-  sx?: SxProps<Theme>;
+  sxContainer?: SxProps<Theme>;
+  sxSelect?: SxProps<Theme>;
 }
 
 const defaultEmptyOption = {
@@ -32,10 +33,15 @@ export default function CustomSelect<T extends string | number>({
   name = "",
   displayEmpty = false,
   emptyOption = defaultEmptyOption,
-  sx = {},
+  sxSelect = {},
+  sxContainer = {},
 }: Props<T>) {
   return (
-    <Box>
+    <Box
+      sx={{
+        ...sxContainer,
+      }}
+    >
       <Typography variant="body2" component="div">
         {label}
       </Typography>
@@ -45,7 +51,7 @@ export default function CustomSelect<T extends string | number>({
         size="small"
         sx={{
           minWidth: "200px",
-          ...sx,
+          ...sxSelect,
         }}
         name={name}
       >

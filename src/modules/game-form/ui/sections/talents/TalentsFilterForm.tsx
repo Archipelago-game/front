@@ -26,6 +26,17 @@ const branchOptions = getUniqueTalentBranches(talentsGuide).map((branch) => ({
   label: branch,
 }));
 
+const styles = {
+  width: {
+    xs: "100%",
+    sm: "auto",
+  },
+  flexGrow: {
+    xs: 1,
+    sm: 0,
+  },
+};
+
 export default function TalentsFilterForm(props: Props) {
   const { control, getValues } = useForm<TalentsFilterFormValues>({
     defaultValues: TALENTS_FILTER_FORM_DEFAULT_VALUES,
@@ -46,7 +57,8 @@ export default function TalentsFilterForm(props: Props) {
         position: "sticky",
         display: "flex",
         flexWrap: "wrap",
-        gap: 2,
+        columnGap: 2,
+        rowGap: 1,
         pb: 2,
       }}
     >
@@ -56,12 +68,17 @@ export default function TalentsFilterForm(props: Props) {
         control={control}
         render={({ field }) => (
           <CustomSelect<string>
-            sx={{
+            sxSelect={{
               "& .MuiSelect-select": {
                 padding: "4px",
                 fontSize: "12px",
               },
+              width: {
+                xs: "100%",
+                sm: "auto",
+              },
             }}
+            sxContainer={styles}
             {...field}
             options={branchOptions}
             label="ветки"
@@ -78,7 +95,11 @@ export default function TalentsFilterForm(props: Props) {
         name="search"
         control={control}
         render={({ field }) => (
-          <Box>
+          <Box
+            sx={{
+              ...styles,
+            }}
+          >
             <Typography variant="body2" component="div">
               поиск
             </Typography>
@@ -90,6 +111,7 @@ export default function TalentsFilterForm(props: Props) {
                   padding: "6px",
                   fontSize: "12px",
                 },
+                ...styles,
               }}
               {...field}
               onChange={(e) => {
