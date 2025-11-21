@@ -11,7 +11,7 @@ import Attributes from "./ui/sections/attributes/Attributes.tsx";
 import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import Talents from "./ui/sections/talents/Talents.tsx";
-import DraggableFab from "../draggable-fab/DraggableFab.tsx";
+import DraggableFab from "../draggable-fab/DraggableSpeedDial.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
