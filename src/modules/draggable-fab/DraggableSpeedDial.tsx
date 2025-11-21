@@ -1,5 +1,14 @@
-import { useState, useRef } from "react";
+import {
+  useState,
+  useRef,
+  type MouseEvent as ReactMouseEvent,
+  type TouchEvent as ReactTouchEvent,
+} from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
+
+type ReactDragEvent =
+  | ReactMouseEvent<HTMLDivElement>
+  | ReactTouchEvent<HTMLDivElement>;
 
 type DragEvent = MouseEvent | TouchEvent;
 
@@ -11,9 +20,11 @@ export default function DraggableSpeedDial() {
   const startPosition = useRef({ x: 0, y: 0 });
   const startMouse = useRef({ x: 0, y: 0 });
 
-  const onDragStart = (e: DragEvent) => {
-    const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
-    const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+  const onDragStart = (e: ReactDragEvent) => {
+    const isTouch = "touches" in e;
+
+    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
 
     startMouse.current = { x: clientX, y: clientY };
     startPosition.current = { x: position.x, y: position.y };
@@ -26,8 +37,10 @@ export default function DraggableSpeedDial() {
   };
 
   const onDragMove = (e: DragEvent) => {
-    const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
-    const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
+    const isTouch = "touches" in e;
+
+    const clientX = isTouch ? e.touches[0].clientX : e.clientX;
+    const clientY = isTouch ? e.touches[0].clientY : e.clientY;
 
     const dx = clientX - startMouse.current.x;
     const dy = clientY - startMouse.current.y;
@@ -54,16 +67,8 @@ export default function DraggableSpeedDial() {
   return (
     <div
       ref={dragRef}
-      onMouseDown={(e) => {
-        if (e instanceof MouseEvent) {
-          onDragStart(e);
-        }
-      }}
-      onTouchStart={(e) => {
-        if (e instanceof TouchEvent) {
-          onDragStart(e);
-        }
-      }}
+      onMouseDown={onDragStart}
+      onTouchStart={onDragStart}
       style={{
         position: "fixed",
         left: position.x,
