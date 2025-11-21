@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 
+type DragEvent = MouseEvent | TouchEvent;
+
 export default function DraggableSpeedDial() {
   const dragRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 100, y: 100 });
@@ -9,9 +11,9 @@ export default function DraggableSpeedDial() {
   const startPosition = useRef({ x: 0, y: 0 });
   const startMouse = useRef({ x: 0, y: 0 });
 
-  const onDragStart = (e: any) => {
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  const onDragStart = (e: DragEvent) => {
+    const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
+    const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
 
     startMouse.current = { x: clientX, y: clientY };
     startPosition.current = { x: position.x, y: position.y };
@@ -23,9 +25,9 @@ export default function DraggableSpeedDial() {
     document.addEventListener("touchend", onDragEnd);
   };
 
-  const onDragMove = (e: any) => {
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  const onDragMove = (e: DragEvent) => {
+    const clientX = e instanceof TouchEvent ? e.touches[0].clientX : e.clientX;
+    const clientY = e instanceof TouchEvent ? e.touches[0].clientY : e.clientY;
 
     const dx = clientX - startMouse.current.x;
     const dy = clientY - startMouse.current.y;
@@ -52,8 +54,16 @@ export default function DraggableSpeedDial() {
   return (
     <div
       ref={dragRef}
-      onMouseDown={onDragStart}
-      onTouchStart={onDragStart}
+      onMouseDown={(e) => {
+        if (e instanceof MouseEvent) {
+          onDragStart(e);
+        }
+      }}
+      onTouchStart={(e) => {
+        if (e instanceof TouchEvent) {
+          onDragStart(e);
+        }
+      }}
       style={{
         position: "fixed",
         left: position.x,
