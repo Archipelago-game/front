@@ -12,6 +12,10 @@ export interface DefaultFieldControllerProps {
   sx?: SxProps;
   orientation?: "column" | "row";
   disabled?: boolean;
+  multiline?: {
+    isMultiline?: boolean;
+    rows?: number;
+  };
 }
 
 export default function TextFieldController(
@@ -23,6 +27,10 @@ export default function TextFieldController(
     sx,
     orientation = "column",
     disabled = false,
+    multiline = {
+      isMultiline: false,
+      rows: 1,
+    },
   } = props;
   const defaultValue = fieldType === "number" ? 0 : "";
 
@@ -92,6 +100,8 @@ export default function TextFieldController(
 
             ...sx,
           }}
+          multiline={multiline.isMultiline}
+          rows={multiline.rows}
           disabled={disabled}
           fullWidth
           variant="outlined"
