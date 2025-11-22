@@ -14,7 +14,7 @@ type DragEvent = MouseEvent | TouchEvent;
 
 export default function DraggableSpeedDial() {
   const dragRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState({ x: 20, y: 20 });
 
   // --- Mouse + Touch Drag Handlers ---
   const startPosition = useRef({ x: 0, y: 0 });
@@ -65,31 +65,27 @@ export default function DraggableSpeedDial() {
   ];
 
   return (
-    <div
+    <SpeedDial
+      ariaLabel="draggable-speed-dial"
+      icon={<SpeedDialIcon />}
+      direction="up"
       ref={dragRef}
       onMouseDown={onDragStart}
       onTouchStart={onDragStart}
       style={{
         position: "fixed",
-        left: position.x,
-        top: position.y,
-        zIndex: 9999,
+        right: position.x,
+        bottom: position.y,
       }}
     >
-      <SpeedDial
-        ariaLabel="draggable-speed-dial"
-        icon={<SpeedDialIcon />}
-        direction="up"
-      >
-        {actions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={<span style={{ fontSize: 20 }}>{action.icon}</span>}
-            title={action.name}
-            onClick={() => console.log(action.name)}
-          />
-        ))}
-      </SpeedDial>
-    </div>
+      {actions.map((action) => (
+        <SpeedDialAction
+          key={action.name}
+          icon={<span style={{ fontSize: 20 }}>{action.icon}</span>}
+          title={action.name}
+          onClick={() => console.log(action.name)}
+        />
+      ))}
+    </SpeedDial>
   );
 }

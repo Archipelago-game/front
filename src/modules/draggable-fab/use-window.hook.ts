@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 
-type stateType = {
+type WindowSizeStateType = {
   height: number;
   width: number;
 };
 
 export function useWindow() {
-  const [size, setSize] = useState<stateType>({
+  const [size, setSize] = useState<WindowSizeStateType>({
     height: window.innerHeight,
     width: window.innerWidth,
   });
