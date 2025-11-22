@@ -1,14 +1,14 @@
-import { Box } from "@mui/material";
-
-import TextFieldController from "../../components/TextFieldController.tsx";
+import BaseField from "../../components/BaseField.tsx";
 
 export default function Notes() {
   return (
-    <Box>
-      <TextFieldController
-        name="notes"
-        multiline={{ isMultiline: true, rows: 4 }}
-      />
-    </Box>
+    <BaseField
+      fieldName="notes.text"
+      label={{
+        text: "Заметки",
+      }}
+      fieldType="text"
+      multiline={{ isMultiline: true, rows: 4 }}
+    />
   );
 }
