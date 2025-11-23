@@ -63,8 +63,8 @@ export default function DraggableSpeedDial() {
     const dy = clientY - startMouse.current.y;
 
     setPosition({
-      x: startPosition.current.x + dx,
-      y: startPosition.current.y + dy,
+      x: startPosition.current.x - dx,
+      y: startPosition.current.y - dy,
     });
   };
 
