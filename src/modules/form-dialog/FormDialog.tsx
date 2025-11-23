@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 
 export interface FormDialogProps {
   isOpen: boolean;
-  message: string;
   onConfirm: () => void;
   onCancel?: () => void;
   content: () => ReactNode;
