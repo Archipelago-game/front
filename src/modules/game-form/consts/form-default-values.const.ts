@@ -125,4 +125,14 @@ export const FORM_DEFAULT_VALUES: FormType = {
     wallet: 0,
   },
   talents: defaultTalents,
+  notes: {
+    text: "",
+  },
+  moralValue: {
+    authority: "",
+    pride: "",
+    rivalry: "",
+    idealism: "",
+    individualism: "",
+  },
 };

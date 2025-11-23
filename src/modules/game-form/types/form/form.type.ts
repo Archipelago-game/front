@@ -69,6 +69,18 @@ export interface Talent {
   rang: number;
 }
 
+export interface Notes {
+  text: string;
+}
+
+export interface MoralValue {
+  authority: string;
+  pride: string;
+  rivalry: string;
+  idealism: string;
+  individualism: string;
+}
+
 export type Talents = FormArrayFields<Talent>;
 
 export interface FormType {
@@ -89,4 +101,6 @@ export interface FormType {
     wallet: number;
   };
   talents: Talents;
+  notes: Notes;
+  moralValue: MoralValue;
 }

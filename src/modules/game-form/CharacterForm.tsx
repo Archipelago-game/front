@@ -11,6 +11,7 @@ import Attributes from "./ui/sections/attributes/Attributes.tsx";
 import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import Talents from "./ui/sections/talents/Talents.tsx";
+import DraggableFab from "../draggable-fab/DraggableSpeedDial.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -21,65 +22,68 @@ export default function CharacterForm() {
   }
 
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gap: 2,
-        gridTemplateColumns: "370px 1fr",
-
-        ["@media (max-width: 730px)"]: {
-          display: "grid",
-          gridTemplateColumns: "1fr",
-        },
-      }}
-    >
+    <>
+      <DraggableFab />
       <Box
         sx={{
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: "370px 1fr",
+
           ["@media (max-width: 730px)"]: {
-            order: "2",
+            display: "grid",
+            gridTemplateColumns: "1fr",
           },
         }}
       >
-        <Attack values={values} />
-        <Defence />
-        <Inventory />
-      </Box>
+        <Box
+          sx={{
+            ["@media (max-width: 730px)"]: {
+              order: "2",
+            },
+          }}
+        >
+          <Attack values={values} />
+          <Defence />
+          <Inventory />
+        </Box>
 
-      <Box>
-        <Grid container spacing={1}>
-          <Grid size={12}>
-            <BaseInfo />
-          </Grid>
-          <Grid size={12}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                gap: 1,
-              }}
-            >
-              <Luck />
+        <Box>
+          <Grid container spacing={1}>
+            <Grid size={12}>
+              <BaseInfo />
+            </Grid>
+            <Grid size={12}>
               <Box
                 sx={{
-                  ["@media (max-width: 868px)"]: {
-                    order: -1,
-                  },
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: 1,
                 }}
               >
-                <Experience />
+                <Luck />
+                <Box
+                  sx={{
+                    ["@media (max-width: 868px)"]: {
+                      order: -1,
+                    },
+                  }}
+                >
+                  <Experience />
+                </Box>
               </Box>
-            </Box>
-          </Grid>
+            </Grid>
 
-          <Grid size={12}>
-            <Attributes />
+            <Grid size={12}>
+              <Attributes />
+            </Grid>
+            <Grid size={12}>
+              <Talents />
+            </Grid>
           </Grid>
-          <Grid size={12}>
-            <Talents />
-          </Grid>
-        </Grid>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }

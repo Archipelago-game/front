@@ -1,11 +1,11 @@
 import Equipment from "./Equipment.tsx";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Wallet from "./Wallet.tsx";
 import SectionTitle from "../../components/SectionTitle.tsx";
 
 export default function Inventory() {
   return (
-    <>
+    <Box>
       <SectionTitle title="Инвентарь" />
 
       <Grid container spacing={2}>
@@ -16,6 +16,6 @@ export default function Inventory() {
           <Wallet />
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 }
