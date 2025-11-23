@@ -3,14 +3,29 @@ import {
   useRef,
   type MouseEvent as ReactMouseEvent,
   type TouchEvent as ReactTouchEvent,
+  type JSX,
 } from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
+import Notes from "../game-form/ui/sections/notes/Notes.tsx";
+import { useModal } from "../../app/providers/global-modal/use-modal.hook.ts";
 
 type ReactDragEvent =
   | ReactMouseEvent<HTMLDivElement>
   | ReactTouchEvent<HTMLDivElement>;
 
 type DragEvent = MouseEvent | TouchEvent;
+
+type SpeedDialActionComponent = {
+  icon: string;
+  name: string;
+  form: () => JSX.Element;
+};
+
+// --- Actions ---
+const actions: SpeedDialActionComponent[] = [
+  { icon: "📝", name: "Заметки", form: Notes },
+  { icon: "💎", name: "Ценности", form: Notes },
+];
 
 export default function DraggableSpeedDial() {
   const dragRef = useRef<HTMLDivElement>(null);
@@ -58,11 +73,14 @@ export default function DraggableSpeedDial() {
     document.removeEventListener("touchend", onDragEnd);
   };
 
-  // --- Actions ---
-  const actions = [
-    { icon: "📝", name: "Заметки" },
-    { icon: "💎", name: "Ценности" },
-  ];
+  const { openModal } = useModal();
+
+  const callModal = (Content: () => JSX.Element) => {
+    const content = () => <Content />;
+    openModal({
+      content,
+    });
+  };
 
   return (
     <SpeedDial
@@ -83,7 +101,7 @@ export default function DraggableSpeedDial() {
           key={action.name}
           icon={<span style={{ fontSize: 20 }}>{action.icon}</span>}
           title={action.name}
-          onClick={() => console.log(action.name)}
+          onClick={() => callModal(action.form)}
         />
       ))}
     </SpeedDial>
