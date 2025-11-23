@@ -1,4 +1,5 @@
 import BaseField from "../../components/BaseField.tsx";
+import { slotStyles } from "../styles.ts";
 
 export default function Pride() {
   return (
@@ -8,6 +9,7 @@ export default function Pride() {
         text: "Гордыня",
       }}
       fieldType="text"
+      sxSlotProps={slotStyles}
       multiline={{ isMultiline: true, rows: 2 }}
     />
   );

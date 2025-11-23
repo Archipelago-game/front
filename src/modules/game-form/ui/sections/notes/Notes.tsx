@@ -1,4 +1,5 @@
 import BaseField from "../../components/BaseField.tsx";
+import { slotStyles } from "../styles.ts";
 
 export default function Notes() {
   return (
@@ -8,6 +9,7 @@ export default function Notes() {
         text: "Заметки",
       }}
       fieldType="text"
+      sxSlotProps={slotStyles}
       multiline={{ isMultiline: true, rows: 4 }}
     />
   );

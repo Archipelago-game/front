@@ -10,6 +10,7 @@ export interface DefaultFieldControllerProps {
   fieldName: FieldPath<FormType>;
   fieldType?: HTMLInputTypeAttribute;
   sx?: SxProps;
+  sxSlotProps?: SxProps;
   orientation?: "column" | "row";
   disabled?: boolean;
   multiline?: {
@@ -25,6 +26,7 @@ export default function TextFieldController(
     fieldType,
     fieldName,
     sx,
+    sxSlotProps = "",
     orientation = "column",
     disabled = false,
     multiline = {
@@ -73,6 +75,11 @@ export default function TextFieldController(
       defaultValue={defaultValue}
       render={({ field }) => (
         <TextField
+          slotProps={{
+            input: {
+              sx: { ...sxSlotProps },
+            },
+          }}
           sx={{
             "& .MuiInputBase-input.Mui-disabled": {
               WebkitTextFillColor: "#000",
