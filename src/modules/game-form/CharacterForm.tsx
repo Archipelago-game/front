@@ -12,7 +12,6 @@ import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import Talents from "./ui/sections/talents/Talents.tsx";
 import DraggableFab from "../draggable-fab/DraggableSpeedDial.tsx";
-import Notes from "./ui/sections/notes/Notes.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -47,7 +46,6 @@ export default function CharacterForm() {
           <Attack values={values} />
           <Defence />
           <Inventory />
-          <Notes />
         </Box>
 
         <Box>

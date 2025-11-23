@@ -18,22 +18,21 @@ export function FormDialog({
     <Dialog
       open={isOpen}
       onClose={onCancel}
-      aria-labelledby="confirm-dialog-title"
-      aria-describedby="confirm-dialog-description"
+      aria-labelledby="формы"
+      aria-describedby="заполнение формы"
+      fullWidth={true}
     >
-      <DialogContent>{content()}</DialogContent>
+      <DialogContent
+        sx={{
+          paddingTop: 1,
+          paddingInline: 1,
+        }}
+      >
+        {content()}
+      </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel} color="inherit" size="small">
-          Отмена
-        </Button>
-        <Button
-          onClick={onConfirm}
-          color="error"
-          variant="contained"
-          autoFocus
-          size="small"
-        >
-          Подтвердить
+        <Button onClick={onConfirm} color="inherit" size="small">
+          Закрыть
         </Button>
       </DialogActions>
     </Dialog>

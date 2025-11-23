@@ -7,7 +7,8 @@ import {
 } from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import Notes from "../game-form/ui/sections/notes/Notes.tsx";
-import { useModal } from "../../app/providers/global-modal/use-modal.hook.ts";
+
+import { useFormDialogContext } from "../form-dialog/use-form-dialog.hook.ts";
 
 type ReactDragEvent =
   | ReactMouseEvent<HTMLDivElement>
@@ -73,12 +74,14 @@ export default function DraggableSpeedDial() {
     document.removeEventListener("touchend", onDragEnd);
   };
 
-  const { openModal } = useModal();
+  const { open } = useFormDialogContext();
 
   const callModal = (Content: () => JSX.Element) => {
     const content = () => <Content />;
-    openModal({
-      content,
+    open({
+      content: content,
+      // todo отобразить сообщение изменения сохранены
+      onConfirm: () => {},
     });
   };
 

@@ -5,7 +5,7 @@ import SectionTitle from "../../components/SectionTitle.tsx";
 
 export default function Inventory() {
   return (
-    <Box mb={2}>
+    <Box>
       <SectionTitle title="Инвентарь" />
 
       <Grid container spacing={2}>
