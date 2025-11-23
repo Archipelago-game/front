@@ -81,7 +81,6 @@ export default function DraggableSpeedDial() {
     const content = () => <Content />;
     open({
       content: content,
-      // todo отобразить сообщение изменения сохранены
       onConfirm: () => {},
     });
   };

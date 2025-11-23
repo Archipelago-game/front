@@ -26,6 +26,7 @@ export function FormDialog({
         sx={{
           paddingTop: 1,
           paddingInline: 1,
+          overflow: "hidden",
         }}
       >
         {content()}
