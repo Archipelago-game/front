@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import { Box } from "@mui/material";
 
-import TextFieldController from "../../components/TextFieldController.tsx";
+import TextFieldController from "../../components/controllers/TextFieldController.tsx";
 
 export default function Equipment() {
   const { methods, values } = useCustomFormContext();

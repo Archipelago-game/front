@@ -2,7 +2,7 @@ import CustomLabel from "../../../components/CustomLabel.tsx";
 
 import BaseField from "../../../components/BaseField.tsx";
 
-import type { DefaultFieldControllerProps } from "../../../components/TextFieldController.tsx";
+import type { DefaultFieldControllerProps } from "../../../components/controllers/TextFieldController.tsx";
 
 interface Props extends DefaultFieldControllerProps {
   primaryText: string;

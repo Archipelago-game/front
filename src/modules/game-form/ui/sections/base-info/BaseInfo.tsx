@@ -3,6 +3,7 @@ import CustomLabel from "../../components/CustomLabel.tsx";
 
 import BaseField from "../../components/BaseField.tsx";
 import SectionTitle from "../../components/SectionTitle.tsx";
+import Immortal from "./Immortal.tsx";
 
 export default function BaseInfo() {
   return (
@@ -18,6 +19,7 @@ export default function BaseInfo() {
             }}
             fieldType="text"
           />
+          <Immortal />
         </Grid>
         <Grid size={{ xs: 12, md: 8 }}>
           <CustomLabel>

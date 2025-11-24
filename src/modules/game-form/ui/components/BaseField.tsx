@@ -2,7 +2,7 @@ import CustomLabel, { type CustomLabelProps } from "./CustomLabel.tsx";
 
 import TextFieldController, {
   type DefaultFieldControllerProps,
-} from "./TextFieldController.tsx";
+} from "./controllers/TextFieldController.tsx";
 
 type Props = DefaultFieldControllerProps & Omit<CustomLabelProps, "children">;
 
