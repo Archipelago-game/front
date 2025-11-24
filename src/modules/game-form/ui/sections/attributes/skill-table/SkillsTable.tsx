@@ -14,7 +14,7 @@ import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { Fragment } from "react";
-import CalculatedValue from "../../../components/CalculatedValue.tsx";
+import OZDisplay from "./OZDisplay.tsx";
 
 export interface SkillItem<T extends string> extends BaseSkill<T> {
   fieldName: FieldPath<FormType>;
@@ -22,17 +22,19 @@ export interface SkillItem<T extends string> extends BaseSkill<T> {
 
 export interface SkillGroup<T extends string> {
   name: string;
+
   expertiseFieldName: FieldPath<FormType>;
   OZFieldName: FieldPath<FormType>;
   skills: SkillItem<T>[];
 }
 
 interface Props<T extends string> {
+  statValueName: FieldPath<FormType>;
   skillGroups: SkillGroup<T>[];
 }
-// todo разораться с key
 
 export default function SkillsTable<T extends string>({
+  statValueName,
   skillGroups,
 }: Props<T>) {
   return (
@@ -129,8 +131,10 @@ export default function SkillsTable<T extends string>({
 
                   {index === 0 && (
                     <TableCell rowSpan={group.skills.length} align="center">
-                      {/*<TextFieldController fieldName={group.OZFieldName} />*/}
-                      <CalculatedValue />
+                      <OZDisplay
+                        statValueName={statValueName}
+                        expertiseFieldName={group.expertiseFieldName}
+                      />
                     </TableCell>
                   )}
                 </TableRow>

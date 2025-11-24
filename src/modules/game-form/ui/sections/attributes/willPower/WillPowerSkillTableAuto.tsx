@@ -31,5 +31,10 @@ export default function WillPowerSkillTableAuto() {
     },
   ];
 
-  return <SkillsTable skillGroups={willPowerSkillGroups} />;
+  return (
+    <SkillsTable
+      statValueName={"stats.willpower.value"}
+      skillGroups={willPowerSkillGroups}
+    />
+  );
 }

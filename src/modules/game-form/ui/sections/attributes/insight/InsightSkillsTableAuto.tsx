@@ -61,5 +61,10 @@ export default function InsightSkillTableAuto() {
     },
   ];
 
-  return <SkillsTable skillGroups={insightSkillGroups} />;
+  return (
+    <SkillsTable
+      statValueName={"stats.insight.value"}
+      skillGroups={insightSkillGroups}
+    />
+  );
 }

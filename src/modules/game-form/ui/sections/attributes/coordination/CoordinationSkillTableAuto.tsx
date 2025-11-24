@@ -11,6 +11,7 @@ export default function CoordinationSkillTableAuto() {
   const coordinationSkillGroups: SkillGroup<string>[] = [
     {
       name: coordination.firearms.name,
+
       expertiseFieldName: "stats.coordination.firearms.expertise",
       OZFieldName: "stats.coordination.firearms.OZ",
       skills: [
@@ -60,5 +61,10 @@ export default function CoordinationSkillTableAuto() {
     },
   ];
 
-  return <SkillsTable skillGroups={coordinationSkillGroups} />;
+  return (
+    <SkillsTable
+      statValueName={"stats.coordination.value"}
+      skillGroups={coordinationSkillGroups}
+    />
+  );
 }

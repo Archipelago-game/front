@@ -50,5 +50,10 @@ export default function IntelligenceSkillTableAuto() {
     },
   ];
 
-  return <SkillsTable skillGroups={intelligenceSkillGroups} />;
+  return (
+    <SkillsTable
+      statValueName={"stats.intelligence.value"}
+      skillGroups={intelligenceSkillGroups}
+    />
+  );
 }
