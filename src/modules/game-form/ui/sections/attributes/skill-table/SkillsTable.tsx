@@ -14,6 +14,7 @@ import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { Fragment } from "react";
+import CalculatedValue from "../../../components/CalculatedValue.tsx";
 
 export interface SkillItem<T extends string> extends BaseSkill<T> {
   fieldName: FieldPath<FormType>;
@@ -128,7 +129,8 @@ export default function SkillsTable<T extends string>({
 
                   {index === 0 && (
                     <TableCell rowSpan={group.skills.length} align="center">
-                      <TextFieldController fieldName={group.OZFieldName} />
+                      {/*<TextFieldController fieldName={group.OZFieldName} />*/}
+                      <CalculatedValue />
                     </TableCell>
                   )}
                 </TableRow>
