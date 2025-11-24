@@ -9,6 +9,7 @@ export default function Attribute({ children }: Props) {
     <Box
       sx={{
         minWidth: "260px",
+        paddingInline: "2px",
       }}
     >
       {children}

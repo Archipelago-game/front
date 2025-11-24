@@ -27,5 +27,10 @@ export default function StrengthSkillTableAuto() {
     },
   ];
 
-  return <SkillsTable skillGroups={strengthSkillGroups} />;
+  return (
+    <SkillsTable
+      statValueName={"stats.strength.value"}
+      skillGroups={strengthSkillGroups}
+    />
+  );
 }

@@ -45,5 +45,10 @@ export default function DexteritySkillTableAuto() {
     },
   ];
 
-  return <SkillsTable skillGroups={dexteritySkillGroups} />;
+  return (
+    <SkillsTable
+      statValueName={"stats.dexterity.value"}
+      skillGroups={dexteritySkillGroups}
+    />
+  );
 }
