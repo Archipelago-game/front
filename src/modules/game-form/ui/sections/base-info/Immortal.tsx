@@ -1,16 +1,14 @@
 import CustomLabel from "../../components/CustomLabel.tsx";
 import { Controller } from "react-hook-form";
-import { Checkbox } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 
 export default function Immortal() {
   const { methods, onChange } = useCustomFormContext();
   return (
-    <CustomLabel
-      orientation="row"
-      label={{ text: "Бессмертный" }}
-      sx={{ flex: "1 1 1" }}
-    >
+    <Box display="flex">
+      <CustomLabel orientation="row" label={{ text: "Бессмертный" }} />
+
       <Controller
         name={`immortal.checked`}
         control={methods.control}
@@ -25,6 +23,6 @@ export default function Immortal() {
           />
         )}
       />
-    </CustomLabel>
+    </Box>
   );
 }
