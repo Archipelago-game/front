@@ -8,6 +8,7 @@ export const FORM_DEFAULT_VALUES: FormType = {
   age: 0,
   homeland: "",
   languages: "",
+  immortal: false,
   luck: {
     amount: 5,
     list: [

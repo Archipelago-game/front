@@ -88,6 +88,7 @@ export interface FormType {
   age: number;
   homeland: string;
   languages: string;
+  immortal: boolean;
   luck: CheckBoxList;
   experience: {
     total: number;
