@@ -83,8 +83,10 @@ export interface MoralValue {
 
 export interface Immortal {
   checked: boolean;
-  saltedExperience: number;
-  deferredExperience: number;
+  experience: {
+    salted: number;
+    deferred: number;
+  };
 }
 
 export type Talents = FormArrayFields<Talent>;

@@ -10,8 +10,10 @@ export const FORM_DEFAULT_VALUES: FormType = {
   languages: "",
   immortal: {
     checked: false,
-    saltedExperience: 0,
-    deferredExperience: 0,
+    experience: {
+      salted: 0,
+      deferred: 0,
+    },
   },
   luck: {
     amount: 5,
