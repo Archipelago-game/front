@@ -3,7 +3,7 @@ import { defaultLabelTextStyles } from "../../components/styles/label.styles.ts"
 import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
 import TextFieldController, {
   type DefaultFieldControllerProps,
-} from "../../components/TextFieldController.tsx";
+} from "../../components/controllers/TextFieldController.tsx";
 
 interface Props extends DefaultFieldControllerProps {
   title: string;

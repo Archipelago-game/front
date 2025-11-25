@@ -8,7 +8,7 @@ import {
   Paper,
 } from "@mui/material";
 
-import TextFieldController from "../../../components/TextFieldController.tsx";
+import TextFieldController from "../../../components/controllers/TextFieldController.tsx";
 import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
 import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 import type { FieldPath } from "react-hook-form";

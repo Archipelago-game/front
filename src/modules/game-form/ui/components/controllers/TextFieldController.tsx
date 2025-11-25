@@ -1,18 +1,11 @@
-import { Controller, type FieldPath } from "react-hook-form";
-import { type SxProps, TextField } from "@mui/material";
+import { Controller } from "react-hook-form";
+import { TextField } from "@mui/material";
 
-import { type HTMLInputTypeAttribute } from "react";
+import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 
-import { useCustomFormContext } from "../../providers/use-custom-context-form.hook.ts";
-import type { FormType } from "../../types/form/form.type.ts";
+import type { ControllerProps } from "./controller-props.type.ts";
 
-export interface DefaultFieldControllerProps {
-  fieldName: FieldPath<FormType>;
-  fieldType?: HTMLInputTypeAttribute;
-  sx?: SxProps;
-  sxSlotProps?: SxProps;
-  orientation?: "column" | "row";
-  disabled?: boolean;
+export interface DefaultFieldControllerProps extends ControllerProps {
   multiline?: {
     isMultiline?: boolean;
     rows?: number;

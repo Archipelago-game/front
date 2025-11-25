@@ -4,9 +4,14 @@ import { Box, Checkbox, useMediaQuery } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
+import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
 
 export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
+
+  const isImmortal = useWatchImmortal();
+
+  const isBelow560 = useMediaQuery("(max-width: 560px)");
 
   const fields = useSyncFieldArray({
     name: "luck",
@@ -16,15 +21,17 @@ export default function Luck() {
     onChange: onChange,
   });
 
-  const isBelow530 = useMediaQuery("(max-width: 530px)");
+  if (isImmortal) {
+    return null;
+  }
 
   return (
     <Box
       sx={{
-        width: isBelow530 ? "100%" : "fit-content",
+        width: isBelow560 ? "100%" : "fit-content",
       }}
     >
-      <CustomLabel label={{ text: "Удача/Решимость" }} sx={{ flex: "1 1 1" }}>
+      <CustomLabel label={{ text: "Удача/Решимость" }} sx={{ flex: "1 1 1px" }}>
         {fields.map((field, index) => (
           <Controller
             key={field.id}

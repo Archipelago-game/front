@@ -63,15 +63,7 @@ export default function CharacterForm() {
                 }}
               >
                 <Luck />
-                <Box
-                  sx={{
-                    ["@media (max-width: 868px)"]: {
-                      order: -1,
-                    },
-                  }}
-                >
-                  <Experience />
-                </Box>
+                <Experience />
               </Box>
             </Grid>
 
