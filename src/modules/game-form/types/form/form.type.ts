@@ -81,6 +81,12 @@ export interface MoralValue {
   individualism: string;
 }
 
+export interface Immortal {
+  checked: boolean;
+  saltedExperience: number;
+  deferredExperience: number;
+}
+
 export type Talents = FormArrayFields<Talent>;
 
 export interface FormType {
@@ -88,9 +94,7 @@ export interface FormType {
   age: number;
   homeland: string;
   languages: string;
-  immortal: {
-    checked: boolean;
-  };
+  immortal: Immortal;
   luck: CheckBoxList;
   experience: {
     total: number;
