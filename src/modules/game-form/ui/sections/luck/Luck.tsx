@@ -11,7 +11,7 @@ export default function Luck() {
 
   const isImmortal = useWatchImmortal();
 
-  const isBelow530 = useMediaQuery("(max-width: 530px)");
+  const isBelow560 = useMediaQuery("(max-width: 560px)");
 
   const fields = useSyncFieldArray({
     name: "luck",
@@ -28,10 +28,10 @@ export default function Luck() {
   return (
     <Box
       sx={{
-        width: isBelow530 ? "100%" : "fit-content",
+        width: isBelow560 ? "100%" : "fit-content",
       }}
     >
-      <CustomLabel label={{ text: "Удача/Решимость" }} sx={{ flex: "1 1 1" }}>
+      <CustomLabel label={{ text: "Удача/Решимость" }} sx={{ flex: "1 1 1px" }}>
         {fields.map((field, index) => (
           <Controller
             key={field.id}
