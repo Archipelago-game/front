@@ -1,17 +1,15 @@
 import CustomLabel from "../../components/CustomLabel.tsx";
 
 import { Box, Checkbox, useMediaQuery } from "@mui/material";
-import { Controller, useWatch } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
+import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
 
 export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
 
-  const isImmortal = useWatch({
-    control: methods.control,
-    name: "immortal.checked",
-  });
+  const isImmortal = useWatchImmortal();
 
   const isBelow530 = useMediaQuery("(max-width: 530px)");
 
