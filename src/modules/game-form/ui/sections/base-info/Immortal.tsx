@@ -5,6 +5,8 @@ import { useCustomFormContext } from "../../../providers/use-custom-context-form
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 import type { OnChangeCallbackType } from "../../../types/on-change-callback.type.ts";
 
+import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
+
 export default function Immortal() {
   const { methods, onChange } = useCustomFormContext();
   const { open } = useConfirmDialogContext();
@@ -31,7 +33,22 @@ export default function Immortal() {
   };
 
   return (
-    <Box display="flex">
+    <Box
+      display="flex"
+      sx={{ backgroundColor: theme.palette.label.background.primary }}
+      position="relative"
+    >
+      <Box
+        sx={{
+          position: "absolute",
+
+          width: "25px",
+          height: "25px",
+          top: "5px",
+          right: "5px",
+          background: "white",
+        }}
+      />
       <CustomLabel orientation="row" label={{ text: "Бессмертный" }} />
 
       <Controller
