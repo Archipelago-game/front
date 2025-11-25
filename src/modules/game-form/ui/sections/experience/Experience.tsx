@@ -28,6 +28,7 @@ export default function Experience() {
         ["@media (max-width: 560px)"]: {
           order: -1,
         },
+        transition: "width 1s ease",
       }}
     >
       <CustomLabel
