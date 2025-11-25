@@ -18,31 +18,30 @@ export default function Experience() {
     <CustomLabel label={{ text: "Опыт" }} sx={{ flex: "1 1 1" }}>
       <Box
         sx={{
-          width: isBelow530 ? "100%" : "300px",
+          width: isBelow530 ? "100%" : isImmortal ? "100%" : "300px",
+          ...styles,
         }}
       >
-        <Box sx={{ ...styles }}>
-          <BaseField
-            fieldName="experience.total"
-            label={{
-              color: "secondary",
-              text: "Всего",
-            }}
-            orientation="row"
-          />
+        <BaseField
+          fieldName="experience.total"
+          label={{
+            color: "secondary",
+            text: "Всего",
+          }}
+          orientation="row"
+        />
 
-          <BaseField
-            fieldName="experience.used"
-            label={{
-              color: "secondary",
-              text: "Исп.",
-            }}
-            orientation="row"
-          />
-        </Box>
+        <BaseField
+          fieldName="experience.used"
+          label={{
+            color: "secondary",
+            text: "Исп.",
+          }}
+          orientation="row"
+        />
 
         {isImmortal && (
-          <Box sx={{ ...styles }}>
+          <>
             <BaseField
               fieldName="immortal.experience.salted"
               label={{
@@ -60,7 +59,7 @@ export default function Experience() {
               }}
               orientation="row"
             />
-          </Box>
+          </>
         )}
       </Box>
     </CustomLabel>
