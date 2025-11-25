@@ -23,31 +23,42 @@ export default function Luck() {
     onChange: onChange,
   });
 
+  if (isImmortal) {
+    return (
+      <Box
+        sx={{
+          width: isBelow530 ? "100%" : "fit-content",
+        }}
+      ></Box>
+    );
+  }
+
   return (
     <Box
       sx={{
         width: isBelow530 ? "100%" : "fit-content",
       }}
     >
-      <CustomLabel label={{ text: "Удача/Решимость" }} sx={{ flex: "1 1 1" }}>
-        {fields.map((field, index) => (
-          <Controller
-            key={field.id}
-            name={`luck.list.${index}.checked`}
-            control={methods.control}
-            render={({ field }) => (
-              <Checkbox
-                size={"medium"}
-                sx={{ padding: 0 }}
-                {...field}
-                checked={field.value}
-                disabled={isImmortal}
-                onChange={(e) => onChange(field, e)}
-              />
-            )}
-          />
-        ))}
-      </CustomLabel>
+      {!isImmortal && (
+        <CustomLabel label={{ text: "Удача/Решимость" }} sx={{ flex: "1 1 1" }}>
+          {fields.map((field, index) => (
+            <Controller
+              key={field.id}
+              name={`luck.list.${index}.checked`}
+              control={methods.control}
+              render={({ field }) => (
+                <Checkbox
+                  size={"medium"}
+                  sx={{ padding: 0 }}
+                  {...field}
+                  checked={field.value}
+                  onChange={(e) => onChange(field, e)}
+                />
+              )}
+            />
+          ))}
+        </CustomLabel>
+      )}
     </Box>
   );
 }
