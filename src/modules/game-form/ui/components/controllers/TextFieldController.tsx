@@ -20,10 +20,16 @@ export interface DefaultFieldControllerProps extends ControllerProps {
 }
 
 const inputAdornmentStyles = {
+  wrapper: {
+    display: "flex",
+    gap: "8px",
+    paddingRight: "2px",
+    paddingBottom: "1px",
+  },
   input: {
     margin: 0,
   },
-  btn: { padding: "4px" },
+  btn: { padding: "4px", border: "1px solid #000", borderRadius: "50%" },
   icon: {
     fontSize: "12px",
   },
@@ -87,14 +93,7 @@ export default function TextFieldController(
               sx: { ...sxSlotProps, padding: 0 },
               endAdornment:
                 isShowChangeValueBtn && fieldType === "number" ? (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      gap: "2px",
-
-                      border: "1px solid red",
-                    }}
-                  >
+                  <Box sx={inputAdornmentStyles.wrapper}>
                     <InputAdornment
                       position="start"
                       sx={inputAdornmentStyles.input}
