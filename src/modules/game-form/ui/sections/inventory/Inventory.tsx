@@ -9,11 +9,11 @@ export default function Inventory() {
       <SectionTitle title="Инвентарь" />
 
       <Grid container spacing={2}>
-        <Grid size={{ xs: 12, md: 9 }} order={{ xs: 2, md: 1 }}>
-          <Equipment />
-        </Grid>
-        <Grid size={{ xs: 12, md: 3 }} order={{ xs: 1, md: 2 }}>
+        <Grid size={12}>
           <Wallet />
+        </Grid>
+        <Grid size={12}>
+          <Equipment />
         </Grid>
       </Grid>
     </Box>

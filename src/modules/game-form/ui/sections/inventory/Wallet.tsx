@@ -7,6 +7,7 @@ export default function Wallet() {
       label={{
         text: "Деньги",
       }}
+      isShowChangeValueBtn={true}
     />
   );
 }
