@@ -1,22 +1,39 @@
-import { Controller } from "react-hook-form";
-import { TextField } from "@mui/material";
+import { Controller, type ControllerRenderProps } from "react-hook-form";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 
 import type { ControllerProps } from "./controller-props.type.ts";
+import { Box } from "@mui/system";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+
+import type { FormType } from "../../../types/form/form.type.ts";
+import { calcDynamicRadius } from "./calc-dynamic-radius.util.ts";
 
 export interface DefaultFieldControllerProps extends ControllerProps {
   multiline?: {
     isMultiline?: boolean;
     rows?: number;
   };
+  isShowChangeValueBtn?: boolean;
 }
+
+const inputAdornmentStyles = {
+  input: {
+    margin: 0,
+  },
+  btn: { padding: "4px" },
+  icon: {
+    fontSize: "12px",
+  },
+};
 
 export default function TextFieldController(
   props: DefaultFieldControllerProps,
 ) {
   const {
-    fieldType,
+    fieldType = "number",
     fieldName,
     sx,
     sxSlotProps = "",
@@ -26,6 +43,7 @@ export default function TextFieldController(
       isMultiline: false,
       rows: 1,
     },
+    isShowChangeValueBtn = false,
   } = props;
   const defaultValue = fieldType === "number" ? 0 : "";
 
@@ -36,30 +54,26 @@ export default function TextFieldController(
     return null;
   }
 
-  const dynamicRadius = (orientation: "column" | "row") => {
-    let topLeft = 4;
-    let topRight = 4;
-    let bottomLeft = 4;
-    const bottomRight = 4;
-
-    if (orientation === "column") {
-      topLeft = 0;
-      topRight = 0;
-    } else if (orientation === "row") {
-      topLeft = 0;
-      bottomLeft = 0;
+  const increaseValue = (field: ControllerRenderProps<FormType>) => {
+    if (typeof field.value !== "number") {
+      return;
     }
 
-    return {
-      topLeft,
-      topRight,
-      bottomLeft,
-      bottomRight,
-    };
+    field.onChange(field.value + 1);
+    onChange();
+  };
+
+  const decreaseValue = (field: ControllerRenderProps<FormType>) => {
+    if (typeof field.value !== "number") {
+      return;
+    }
+    const next = field.value > 0 ? field.value - 1 : field.value;
+    field.onChange(next);
+    onChange();
   };
 
   const { topLeft, topRight, bottomLeft, bottomRight } =
-    dynamicRadius(orientation);
+    calcDynamicRadius(orientation);
 
   return (
     <Controller
@@ -70,24 +84,60 @@ export default function TextFieldController(
         <TextField
           slotProps={{
             input: {
-              sx: { ...sxSlotProps },
+              sx: { ...sxSlotProps, padding: 0 },
+              endAdornment:
+                isShowChangeValueBtn && fieldType === "number" ? (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      gap: "2px",
+
+                      border: "1px solid red",
+                    }}
+                  >
+                    <InputAdornment
+                      position="start"
+                      sx={inputAdornmentStyles.input}
+                    >
+                      <IconButton
+                        sx={inputAdornmentStyles.btn}
+                        onClick={() => decreaseValue(field)}
+                      >
+                        <RemoveIcon sx={inputAdornmentStyles.icon} />
+                      </IconButton>
+                    </InputAdornment>
+                    <InputAdornment
+                      position="end"
+                      sx={inputAdornmentStyles.input}
+                    >
+                      <IconButton
+                        size="small"
+                        sx={inputAdornmentStyles.btn}
+                        onClick={() => increaseValue(field)}
+                      >
+                        <AddIcon sx={inputAdornmentStyles.icon} />
+                      </IconButton>
+                    </InputAdornment>
+                  </Box>
+                ) : null,
             },
           }}
           sx={{
-            "& .MuiInputBase-input.Mui-disabled": {
-              WebkitTextFillColor: "#000",
-            },
+            minWidth: "35px",
             "& .MuiOutlinedInput-root": {
               borderTopLeftRadius: `${topLeft}px`,
               borderTopRightRadius: `${topRight}px`,
               borderBottomLeftRadius: `${bottomLeft}px`,
               borderBottomRightRadius: `${bottomRight}px`,
             },
-            minWidth: "35px",
+
             "& .MuiInputBase-input": {
               // note стили полей ввода
-              padding: "4px 4px",
+              padding: "4px",
               fontSize: "12px",
+            },
+            "& .MuiInputBase-input.Mui-disabled": {
+              WebkitTextFillColor: "#000",
             },
             "& input[type=number]::-webkit-outer-spin-button": {
               WebkitAppearance: "none",
@@ -106,7 +156,7 @@ export default function TextFieldController(
           fullWidth
           variant="outlined"
           size="small"
-          type={fieldType ?? "number"}
+          type={fieldType}
           {...field}
           onChange={(e) => onChange(field, e)}
         />
