@@ -6,12 +6,16 @@ import { theme } from "../../common/styles/theme/custom-theme.ts";
 import "./animation.css";
 import { useScreenSaver } from "./screen-saver.hook.ts";
 
+import { drawAnimation } from "./animations/draw-logo.ts";
+import { fillInAnimation } from "./animations/fill-logo.ts";
+import { HighlightWave } from "./animations/highlight-wave.ts";
+
 interface Props {
   onFinish?: () => void;
 }
 
-export default function AnimatedSvg(props: Props) {
-  const { isShow, setIsShow } = useScreenSaver();
+export default function AnimatedSvg() {
+  const { isShow } = useScreenSaver();
 
   const backgroundRef = useRef<HTMLDivElement>(null);
   const innerContainerRef = useRef<HTMLDivElement>(null);
@@ -26,100 +30,17 @@ export default function AnimatedSvg(props: Props) {
     contourRef.style.opacity = "1";
   }
 
-  function startAnimation(
+  async function startAnimation(
     primaryPath: SVGPathElement,
     secondaryPath: SVGPathElement,
     backgroundRef: HTMLDivElement,
     innerContainerRef: HTMLDivElement,
   ) {
     drawAnimation(primaryPath, secondaryPath);
-    const fillInAnimationRef = fillInAnimation(secondaryPath);
-
-    fillInAnimationRef.onfinish = () => {
-      const moveAnimationRef = moveAnimation(innerContainerRef);
-
-      backgroundRef.classList.add("transparent");
-
-      if (moveAnimationRef !== null) {
-        moveAnimationRef.onfinish = () => {
-          setIsShow(false);
-        };
-      }
-
-      setTimeout(() => {
-        props?.onFinish?.();
-      }, 2000);
-    };
-  }
-
-  function drawAnimation(
-    primaryPath: SVGPathElement,
-    secondaryPath: SVGPathElement,
-  ) {
-    const pathLength = primaryPath.getTotalLength();
-
-    primaryPath.style.stroke = `${theme.palette.label.background.primary}`;
-    secondaryPath.style.stroke = `${theme.palette.label.background.secondary}`;
-
-    primaryPath.animate(
-      [{ strokeDashoffset: pathLength }, { strokeDashoffset: 0 }],
-      {
-        duration: 2000,
-        easing: "ease-in-out",
-        fill: "forwards",
-      },
-    );
-
-    return secondaryPath.animate(
-      [{ strokeDashoffset: pathLength }, { strokeDashoffset: 0 }],
-      {
-        duration: 2000,
-        easing: "ease-in-out",
-        fill: "forwards",
-        delay: 200,
-      },
-    );
-  }
-
-  function fillInAnimation(path: SVGPathElement) {
-    path.style.opacity = "0";
-    path.style.fill = "url(#gradient1)";
-    return path.animate([{ opacity: 0 }, { opacity: 1 }], {
-      duration: 2000,
-      easing: "ease-in-out",
-      fill: "forwards",
-      delay: 1000,
-    });
-  }
-
-  function moveAnimation(ref: HTMLDivElement) {
-    const moveAnim = ref.animate(
-      [
-        {
-          transform: "translate(-50%, -50%) scale(1)",
-        },
-        {
-          transform: "translate(-100%, -100%) scale(0.2)",
-        },
-      ],
-      {
-        duration: 2000,
-        easing: "ease-in-out",
-        fill: "forwards",
-      },
-    );
-
-    let fadeAnim: Animation | null = null;
-
-    moveAnim.onfinish = () => {
-      fadeAnim = ref.animate([{ opacity: 1 }, { opacity: 0 }], {
-        duration: 1000,
-        easing: "ease-in-out",
-        fill: "forwards",
-      });
-    };
-
-    return fadeAnim;
+    await fillInAnimation(secondaryPath);
+    const highlightAnimation = await HighlightWave(primaryPath);
+    highlightAnimation.cancel();
+    // backgroundRef.classList.add("transparent");
   }
 
   useEffect(() => {
@@ -151,16 +72,14 @@ export default function AnimatedSvg(props: Props) {
         inset: "0",
         zIndex: isShow ? 2000 : -2000,
         border: "1px solid green",
+        transition: "opacity 1s",
       }}
     >
       <Box
-        ref={backgroundRef}
         sx={{
           position: "absolute",
           inset: 0,
           backgroundColor: theme.palette.background.paper,
-          transition: "opacity 1s",
-          opacity: 1,
         }}
       />
       <Box
@@ -183,9 +102,23 @@ export default function AnimatedSvg(props: Props) {
           preserveAspectRatio="xMidYMid meet"
         >
           <defs>
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <linearGradient id="fillGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#000000" />
               <stop offset="100%" stopColor="#707442" />
+            </linearGradient>
+
+            <linearGradient
+              id="highlightWave"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" stopColor="white" stopOpacity="0" />
+              <stop offset="40%" stopColor="white" stopOpacity="0" />
+              <stop offset="50%" stopColor="white" stopOpacity="0.8" />
+              <stop offset="60%" stopColor="white" stopOpacity="0" />
+              <stop offset="100%" stopColor="white" stopOpacity="0" />
             </linearGradient>
           </defs>
           <g
