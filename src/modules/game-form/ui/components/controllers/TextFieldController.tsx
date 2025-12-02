@@ -123,6 +123,9 @@ export default function TextFieldController(
           }}
           sx={{
             minWidth: "35px",
+            "& textarea": {
+              resize: "vertical",
+            },
             "& .MuiOutlinedInput-root": {
               borderTopLeftRadius: `${topLeft}px`,
               borderTopRightRadius: `${topRight}px`,
