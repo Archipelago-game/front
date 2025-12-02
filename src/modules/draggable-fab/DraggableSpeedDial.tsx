@@ -20,13 +20,14 @@ type DragEvent = MouseEvent | TouchEvent;
 type SpeedDialActionComponent = {
   icon: string;
   name: string;
+  title: string;
   form: () => JSX.Element;
 };
 
 // --- Actions ---
 const actions: SpeedDialActionComponent[] = [
-  { icon: "📝", name: "Заметки", form: Notes },
-  { icon: "💎", name: "Ценности", form: MoralValues },
+  { icon: "📝", name: "Заметки", title: "Заметки", form: Notes },
+  { icon: "💎", name: "Ценности", title: "Ценности", form: MoralValues },
 ];
 
 export default function DraggableSpeedDial() {
@@ -77,9 +78,10 @@ export default function DraggableSpeedDial() {
 
   const { open } = useFormDialogContext();
 
-  const callModal = (Content: () => JSX.Element) => {
+  const callModal = (title: string, Content: () => JSX.Element) => {
     const content = () => <Content />;
     open({
+      title,
       content: content,
       onConfirm: () => {},
     });
@@ -104,7 +106,7 @@ export default function DraggableSpeedDial() {
           key={action.name}
           icon={<span style={{ fontSize: 20 }}>{action.icon}</span>}
           title={action.name}
-          onClick={() => callModal(action.form)}
+          onClick={() => callModal(action.title, action.form)}
         />
       ))}
     </SpeedDial>

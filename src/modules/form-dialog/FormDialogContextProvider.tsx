@@ -10,6 +10,7 @@ export function FormDialogContextProvider({ children }: Props) {
   const [dialog, setDialog] = useState<FormDialogProps>({
     isOpen: false,
     onConfirm: () => {},
+    title: "",
     content: () => <div></div>,
   });
 
@@ -31,6 +32,7 @@ export function FormDialogContextProvider({ children }: Props) {
     <FormDialogContext.Provider value={{ open }}>
       <FormDialog
         isOpen={dialog.isOpen}
+        title={dialog.title}
         content={dialog.content}
         onConfirm={() => {
           dialog.onConfirm();

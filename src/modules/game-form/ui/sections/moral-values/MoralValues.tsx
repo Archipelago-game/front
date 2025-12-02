@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import SectionTitle from "../../components/SectionTitle.tsx";
 
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../types/form/form.type.ts";
@@ -36,17 +35,17 @@ const moralValueItems: MoralValuesItem[] = [
 
 export default function MoralValues() {
   return (
-    <Box sx={{}}>
-      <SectionTitle title="Ценности" />
+    <Box
+      sx={{
+        maxHeight: "100vh",
+        overflowY: "hidden",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           gap: 2,
-          height: "calc(100vh - 32px)",
-          overflowY: "auto",
-          scrollBehavior: "smooth",
-          scrollbarWidth: "none",
         }}
       >
         {moralValueItems.map((item) => (
