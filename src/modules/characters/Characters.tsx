@@ -85,8 +85,8 @@ export default function Characters({
           <Input
             type="file"
             sx={{ display: "none" }} // прячем стандартный input
-            inputProps={{ accept: ".json,.csv,image/*" }} // опционально: какие файлы разрешены
             onChange={(e) => {
+              console.log("from characters");
               const file = (e.target as HTMLInputElement).files?.[0];
               importCharacter(file);
             }}

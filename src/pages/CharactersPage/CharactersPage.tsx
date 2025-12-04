@@ -12,6 +12,10 @@ import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-sn
 import { useConfirmDialogContext } from "../../modules/confirm-dialog/use-confirm-dialog.hook.ts";
 import { prepareCharacterExport } from "./prepare-character-export.util.ts";
 import { downloadJSON } from "../../common/utils/downloadJSON.util.ts";
+import {
+  ERROR_CODE,
+  UnpackFileToCharacterForm,
+} from "./unpack-file-json.util.ts";
 
 export default function CharactersPage() {
   const { open } = useConfirmDialogContext();
@@ -53,9 +57,27 @@ export default function CharactersPage() {
   };
 
   const importCharacter = async (userId: string, file?: File) => {
+    console.log("importCharacter");
+
     if (!file) {
       showMessage({ message: "Ошибка: файл не найден" });
       return;
+    }
+
+    try {
+      const character = await UnpackFileToCharacterForm(file);
+      await api.addNewCharacter(userId, character);
+      await fetchCharacters(userId);
+    } catch (e: any) {
+      if (e.message === ERROR_CODE.wrongFile) {
+        showMessage({ message: "Неправильный файл" });
+      } else if (e.message === ERROR_CODE.wrongHash) {
+        showMessage({
+          message: "Обнаружено несанкционированное изменение файла",
+        });
+      } else {
+        throw e;
+      }
     }
   };
 

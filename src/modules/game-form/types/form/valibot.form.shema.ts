@@ -9,6 +9,7 @@ import {
   picklist,
   parse,
 } from "valibot";
+import type { FormType } from "./form.type.ts";
 
 // Вспомогательные схемы
 const TextItemSchema = object({ value: string() });
@@ -211,6 +212,6 @@ export const FormSchema = object({
 export type SchemaFormType = typeof FormSchema.type;
 
 // Функция валидации файла
-export const parseFormFile = async (json: string) => {
-  return parse(FormSchema, json);
+export const parseFormJSON = async (data: FormType) => {
+  return parse(FormSchema, data) as FormType;
 };

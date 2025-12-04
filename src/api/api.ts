@@ -4,14 +4,15 @@ import {
   FirebaseCharactersService,
 } from "./firebase-characters-service.ts";
 import type { FirebaseUserData } from "./firebase-types.ts";
+import type { FormType } from "../modules/game-form/types/form/form.type.ts";
 
 export const api = {
   async getCharacters(userId: string) {
     return await FirebaseCharactersService.getCharacters(userId);
   },
 
-  async addNewCharacter(userId: string) {
-    return await FirebaseCharactersService.createCharacter(userId);
+  async addNewCharacter(userId: string, data?: FormType) {
+    return await FirebaseCharactersService.createCharacter(userId, data);
   },
 
   async getCharacterForm(
