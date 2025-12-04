@@ -1,18 +1,22 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
+import FileDownload from "@mui/icons-material/FileDownload";
 
 interface Props {
   characters: CharacterDocument[];
   openCharacterForm: (characterId: string) => void;
   addCharacter: () => void;
   deleteCharacter: (characterId: string) => void;
+  exportCharacter: (characterId: string) => void;
 }
+
 export default function Characters({
   characters,
   openCharacterForm,
   addCharacter,
   deleteCharacter,
+  exportCharacter,
 }: Props) {
   return (
     <Box>
@@ -25,6 +29,11 @@ export default function Characters({
           <Box
             component="li"
             key={`${index}${character.data.name}${character.data.age}${index}`}
+            sx={{
+              display: "flex",
+              alignItems: "flex-end",
+              border: "1px solid green",
+            }}
           >
             <IconButton
               onClick={() =>
@@ -32,6 +41,21 @@ export default function Characters({
               }
             >
               <DeleteIcon color="error" />
+            </IconButton>
+
+            <IconButton
+              sx={{ position: "relative" }}
+              onClick={() =>
+                character.id ? exportCharacter(character.id) : () => {}
+              }
+            >
+              <FileDownload
+                color="primary"
+                sx={{
+                  position: "relative",
+                  top: "2px",
+                }}
+              />
             </IconButton>
 
             <Button

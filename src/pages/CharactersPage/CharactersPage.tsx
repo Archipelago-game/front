@@ -10,6 +10,8 @@ import { Box } from "@mui/system";
 import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import { useConfirmDialogContext } from "../../modules/confirm-dialog/use-confirm-dialog.hook.ts";
+import { prepareCharacterExport } from "./prepare-character-export.ts";
+import { downloadJSON } from "../../common/utils/downloadJSON.util.ts";
 
 export default function CharactersPage() {
   const { open } = useConfirmDialogContext();
@@ -25,7 +27,6 @@ export default function CharactersPage() {
 
   const addCharacter = async (userId: string) => {
     const characterId = await api.addNewCharacter(userId);
-    console.log("addCharacter characterId", characterId);
     navigate(`/game-form/${characterId}`);
   };
 
@@ -38,6 +39,17 @@ export default function CharactersPage() {
         showMessage({ message: "герой был удален" });
       },
     });
+  };
+
+  const exportCharacter = async (userId: string, characterId: string) => {
+    const character = await api.getCharacterForm(userId, characterId);
+    if (!character) {
+      showMessage({ message: "Ошибка: герой не найден" });
+      return;
+    }
+    const data = await prepareCharacterExport(character.data);
+    const fileName = `character-${characterId}-${new Date().toLocaleDateString("ru-RU")}`;
+    downloadJSON(data, fileName);
   };
 
   const openCharacterForm = async (characterId: string) => {
@@ -61,6 +73,9 @@ export default function CharactersPage() {
       addCharacter={() => addCharacter(userInfo.uid)}
       deleteCharacter={(characterId: string) =>
         deleteCharacter(userInfo.uid, characterId)
+      }
+      exportCharacter={(characterId: string) =>
+        exportCharacter(userInfo.uid, characterId)
       }
     />
   );
