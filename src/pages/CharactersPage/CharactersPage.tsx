@@ -10,7 +10,7 @@ import { Box } from "@mui/system";
 import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import { useConfirmDialogContext } from "../../modules/confirm-dialog/use-confirm-dialog.hook.ts";
-import { prepareCharacterExport } from "./prepare-character-export.ts";
+import { prepareCharacterExport } from "./prepare-character-export.util.ts";
 import { downloadJSON } from "../../common/utils/downloadJSON.util.ts";
 
 export default function CharactersPage() {
@@ -48,8 +48,15 @@ export default function CharactersPage() {
       return;
     }
     const data = await prepareCharacterExport(character.data);
-    const fileName = `character-${characterId}-${new Date().toLocaleDateString("ru-RU")}`;
+    const fileName = `character-${characterId}-${new Date().toLocaleDateString("ru-RU")}.archipelago`;
     downloadJSON(data, fileName);
+  };
+
+  const importCharacter = async (userId: string, file?: File) => {
+    if (!file) {
+      showMessage({ message: "Ошибка: файл не найден" });
+      return;
+    }
   };
 
   const openCharacterForm = async (characterId: string) => {
@@ -77,6 +84,7 @@ export default function CharactersPage() {
       exportCharacter={(characterId: string) =>
         exportCharacter(userInfo.uid, characterId)
       }
+      importCharacter={(file) => importCharacter(userInfo.uid, file)}
     />
   );
 }

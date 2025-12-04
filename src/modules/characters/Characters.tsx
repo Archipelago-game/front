@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Input, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
 import FileDownload from "@mui/icons-material/FileDownload";
@@ -9,7 +9,7 @@ interface Props {
   addCharacter: () => void;
   deleteCharacter: (characterId: string) => void;
   exportCharacter: (characterId: string) => void;
-  importCharacter: () => void;
+  importCharacter: (file?: File) => void;
 }
 
 export default function Characters({
@@ -79,7 +79,19 @@ export default function Characters({
         }}
       >
         <Button onClick={addCharacter}>Создать нового героя</Button>
-        <Button onClick={importCharacter}>Загрузить героя</Button>
+
+        <Button component="label">
+          Загрузить героя
+          <Input
+            type="file"
+            sx={{ display: "none" }} // прячем стандартный input
+            inputProps={{ accept: ".json,.csv,image/*" }} // опционально: какие файлы разрешены
+            onChange={(e) => {
+              const file = (e.target as HTMLInputElement).files?.[0];
+              importCharacter(file);
+            }}
+          />
+        </Button>
       </Box>
     </Box>
   );
