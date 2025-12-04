@@ -9,6 +9,7 @@ interface Props {
   addCharacter: () => void;
   deleteCharacter: (characterId: string) => void;
   exportCharacter: (characterId: string) => void;
+  importCharacter: () => void;
 }
 
 export default function Characters({
@@ -17,6 +18,7 @@ export default function Characters({
   addCharacter,
   deleteCharacter,
   exportCharacter,
+  importCharacter,
 }: Props) {
   return (
     <Box>
@@ -32,7 +34,6 @@ export default function Characters({
             sx={{
               display: "flex",
               alignItems: "flex-end",
-              border: "1px solid green",
             }}
           >
             <IconButton
@@ -69,7 +70,16 @@ export default function Characters({
             </Button>
           </Box>
         ))}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          columnGap: 2,
+        }}
+      >
         <Button onClick={addCharacter}>Создать нового героя</Button>
+        <Button onClick={importCharacter}>Загрузить героя</Button>
       </Box>
     </Box>
   );
