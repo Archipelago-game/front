@@ -51,6 +51,14 @@ export default function CharactersPage() {
       showMessage({ message: "Ошибка: герой не найден" });
       return;
     }
+
+    if ((character.data.immortal.experience.deferred as unknown) === "") {
+      character.data.immortal.experience.deferred = 0;
+    }
+
+    if ((character.data.immortal.experience.salted as unknown) === "") {
+      character.data.immortal.experience.salted = 0;
+    }
     const data = await prepareCharacterExport(character.data);
     const fileName = `character-${characterId}-${new Date().toLocaleDateString("ru-RU")}.archipelago`;
     downloadJSON(data, fileName);
