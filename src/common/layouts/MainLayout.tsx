@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../../modules/header/Header.tsx";
 import { useEffect } from "react";
 import { LocalStoragePatch } from "../../api/local-storage.ts";
+import ScreenSaver from "../../modules/screen-saver/ScreenSaver.tsx";
 
 export default function MainLayout() {
   useEffect(() => {
@@ -14,6 +15,7 @@ export default function MainLayout() {
       maxWidth={"xl"}
       sx={{ px: 2, paddingBottom: 2, height: "100vh" }}
     >
+      <ScreenSaver />
       <Box
         sx={{
           display: "grid",
