@@ -10,6 +10,12 @@ import { Box } from "@mui/system";
 import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import { useConfirmDialogContext } from "../../modules/confirm-dialog/use-confirm-dialog.hook.ts";
+import { prepareCharacterExport } from "./prepare-character-export.util.ts";
+import { downloadJSON } from "../../common/utils/downloadJSON.util.ts";
+import {
+  ERROR_CODE,
+  UnpackFileToCharacterForm,
+} from "./unpack-file-json.util.ts";
 
 export default function CharactersPage() {
   const { open } = useConfirmDialogContext();
@@ -25,7 +31,6 @@ export default function CharactersPage() {
 
   const addCharacter = async (userId: string) => {
     const characterId = await api.addNewCharacter(userId);
-    console.log("addCharacter characterId", characterId);
     navigate(`/game-form/${characterId}`);
   };
 
@@ -38,6 +43,44 @@ export default function CharactersPage() {
         showMessage({ message: "герой был удален" });
       },
     });
+  };
+
+  const exportCharacter = async (userId: string, characterId: string) => {
+    const character = await api.getCharacterForm(userId, characterId);
+    if (!character) {
+      showMessage({ message: "Ошибка: герой не найден" });
+      return;
+    }
+
+    const data = await prepareCharacterExport(character.data);
+    const fileName = `character-${characterId}-${new Date().toLocaleDateString("ru-RU")}.archipelago`;
+    downloadJSON(data, fileName);
+  };
+
+  const importCharacter = async (userId: string, file?: File) => {
+    console.log("importCharacter");
+
+    if (!file) {
+      showMessage({ message: "Ошибка: файл не найден" });
+      return;
+    }
+
+    try {
+      const character = await UnpackFileToCharacterForm(file);
+      await api.addNewCharacter(userId, character);
+      await fetchCharacters(userId);
+      //   eslint-disable-next-line
+    } catch (e: any) {
+      if (e.message === ERROR_CODE.wrongFile) {
+        showMessage({ message: "Неправильный файл" });
+      } else if (e.message === ERROR_CODE.wrongHash) {
+        showMessage({
+          message: "Обнаружено несанкционированное изменение файла",
+        });
+      } else {
+        throw e;
+      }
+    }
   };
 
   const openCharacterForm = async (characterId: string) => {
@@ -62,6 +105,10 @@ export default function CharactersPage() {
       deleteCharacter={(characterId: string) =>
         deleteCharacter(userInfo.uid, characterId)
       }
+      exportCharacter={(characterId: string) =>
+        exportCharacter(userInfo.uid, characterId)
+      }
+      importCharacter={(file) => importCharacter(userInfo.uid, file)}
     />
   );
 }

@@ -127,10 +127,13 @@ export class FirebaseCharactersService {
   /**
    * Создать нового персонажа
    */
-  static createCharacterDocument(userId: string): CharacterDocument {
+  static createCharacterDocument(
+    userId: string,
+    data?: FormType,
+  ): CharacterDocument {
     const now = new Date();
     return {
-      data: FORM_DEFAULT_VALUES,
+      data: data ?? FORM_DEFAULT_VALUES,
       userId,
       createdAt: now,
       updatedAt: now,
@@ -141,8 +144,8 @@ export class FirebaseCharactersService {
     };
   }
 
-  static async createCharacter(userId: string) {
-    const newCharacterDoc = this.createCharacterDocument(userId);
+  static async createCharacter(userId: string, data?: FormType) {
+    const newCharacterDoc = this.createCharacterDocument(userId, data);
     const charactersRef = this.getUserCharactersRef(userId);
     const docRef = doc(charactersRef);
 
