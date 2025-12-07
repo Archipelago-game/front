@@ -52,13 +52,6 @@ export default function CharactersPage() {
       return;
     }
 
-    if ((character.data.immortal.experience.deferred as unknown) === "") {
-      character.data.immortal.experience.deferred = 0;
-    }
-
-    if ((character.data.immortal.experience.salted as unknown) === "") {
-      character.data.immortal.experience.salted = 0;
-    }
     const data = await prepareCharacterExport(character.data);
     const fileName = `character-${characterId}-${new Date().toLocaleDateString("ru-RU")}.archipelago`;
     downloadJSON(data, fileName);
@@ -76,6 +69,7 @@ export default function CharactersPage() {
       const character = await UnpackFileToCharacterForm(file);
       await api.addNewCharacter(userId, character);
       await fetchCharacters(userId);
+      //   eslint-disable-next-line
     } catch (e: any) {
       if (e.message === ERROR_CODE.wrongFile) {
         showMessage({ message: "Неправильный файл" });
