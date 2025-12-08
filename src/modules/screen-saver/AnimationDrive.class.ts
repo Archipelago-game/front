@@ -20,6 +20,7 @@ export class AnimationDrive {
     this.animation.onfinish = () => {
       this.onFinish?.();
       callback?.();
+      this.animation = null;
     };
   }
 

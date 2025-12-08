@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
 import { useRef, useEffect } from "react";
-import "./animation.css";
+
 import { theme } from "../../common/styles/theme/custom-theme.ts";
 
-import "./animation.css";
 import { PATH_DATA } from "./path-data.const.ts";
 import { AnimationDrive } from "./AnimationDrive.class.ts";
 
