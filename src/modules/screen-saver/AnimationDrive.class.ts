@@ -15,9 +15,12 @@ export class AnimationDrive {
     this.onFinish = onFinish;
   }
 
-  run() {
+  run(callback?: () => void) {
     this.animation = this.factory();
-    this.animation.onfinish = () => this.onFinish?.();
+    this.animation.onfinish = () => {
+      this.onFinish?.();
+      callback?.();
+    };
   }
 
   stop() {

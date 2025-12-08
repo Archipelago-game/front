@@ -8,11 +8,11 @@ import { PATH_DATA } from "./path-data.const.ts";
 import { AnimationDrive } from "./AnimationDrive.class.ts";
 
 interface Props {
-  isStop: boolean;
+  isLoading: boolean;
   onFinish?: () => void;
 }
 
-export default function ScreenSaver({ isStop }: Props) {
+export default function ScreenSaver({ isLoading }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const primaryPath = useRef<SVGPathElement | null>(null);
   const secondaryPath = useRef<SVGPathElement | null>(null);
@@ -29,7 +29,14 @@ export default function ScreenSaver({ isStop }: Props) {
     contourRef.style.opacity = "1";
   }
 
-  function handleFinish() {}
+  function handleFinish() {
+    if (!containerRef.current) {
+      return;
+    }
+
+    const fadeOut = fadeOutScreenSaver(containerRef.current);
+    fadeOut.run(() => currentAnimationRef.current?.stop());
+  }
 
   function startAnimation() {
     if (
@@ -53,7 +60,7 @@ export default function ScreenSaver({ isStop }: Props) {
     const blink = blinkAnimation(secondaryPath.current);
     currentAnimationRef.current = blink;
     animation.onfinish = () => {
-      // blink.run();
+      blink.run();
     };
   }
 
@@ -110,7 +117,7 @@ export default function ScreenSaver({ isStop }: Props) {
 
     return new AnimationDrive({
       factory: () => {
-        return element.animate([{ opacity: 0 }, { opacity: 1 }], {
+        return element.animate([{ opacity: 1 }, { opacity: 0 }], {
           duration: 1000,
           easing: "ease-in-out",
           fill: "forwards",
@@ -122,16 +129,19 @@ export default function ScreenSaver({ isStop }: Props) {
   }
 
   useEffect(() => {
-    if (primaryPath.current && secondaryPath.current && containerRef.current) {
+    if (
+      isLoading &&
+      primaryPath.current &&
+      secondaryPath.current &&
+      containerRef.current
+    ) {
       startAnimation();
     }
-  }, [startAnimation]);
 
-  useEffect(() => {
-    if (isStop && currentAnimationRef.current) {
-      currentAnimationRef.current.stop();
+    if (!isLoading && currentAnimationRef.current) {
+      handleFinish();
     }
-  }, [isStop]);
+  }, [isLoading]);
 
   return (
     <Box
