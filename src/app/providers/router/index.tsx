@@ -1,10 +1,22 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../../../common/layouts/MainLayout.tsx";
-import HomePage from "../../../pages/home/HomePage.tsx";
-import CharacterPage from "../../../pages/CharacterPage/CharacterPage.tsx";
-import AuthDonePage from "../../../pages/AuthDonePage/AuthDonePage.tsx";
-import CharactersPage from "../../../pages/CharactersPage/CharactersPage.tsx";
+
+const HomePage = lazy(() => import("../../../pages/home/HomePage.tsx"));
+
+const AuthDonePage = lazy(
+  () => import("../../../pages/AuthDonePage/AuthDonePage.tsx"),
+);
+
 import AuthProtectedRoute from "../../../modules/auth-protected-route/AuthProtectedRoute.tsx";
+
+const CharacterPage = lazy(
+  () => import("../../../pages/CharacterPage/CharacterPage.tsx"),
+);
+
+const CharactersPage = lazy(
+  () => import("../../../pages/CharactersPage/CharactersPage.tsx"),
+);
 
 export const router = createBrowserRouter([
   {
