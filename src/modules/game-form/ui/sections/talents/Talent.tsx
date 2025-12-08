@@ -50,11 +50,11 @@ export default function Talent() {
     });
   };
 
-  const deleteTalent = (talentIndex: number, talentName: string) => {
+  const deleteTalent = (index: number, name: string) => {
     open({
-      message: `ты действительно хочешь удалить талант ${talentName}?`,
+      message: `ты действительно хочешь удалить талант ${name}?`,
       onConfirm: () => {
-        remove(talentIndex);
+        remove(index);
         onChange();
       },
     });
@@ -69,7 +69,7 @@ export default function Talent() {
   return (
     <Box width={"fit-content"}>
       <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
-        {fields.map((field, i) => (
+        {fields.map((field, index) => (
           <Box
             key={field.id}
             sx={{
@@ -85,7 +85,7 @@ export default function Talent() {
               }}
             >
               <IconButton
-                onClick={() => deleteTalent(i, field.name)}
+                onClick={() => deleteTalent(index, field.name)}
                 sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
               >
                 <Delete fontSize="small" />
@@ -94,7 +94,7 @@ export default function Talent() {
             <Grid container key={field.id} wrap={"wrap"}>
               <Grid size={{ xs: 12, md: 8 }}>
                 <BaseField
-                  fieldName={`talents.list.${i}.name`}
+                  fieldName={`talents.list.${index}.name`}
                   label={{
                     text: "Название",
                     ...LABEL_STYLES,
@@ -105,7 +105,7 @@ export default function Talent() {
               </Grid>
               <Grid size={{ xs: 8, md: 4 }}>
                 <BaseField
-                  fieldName={`talents.list.${i}.branch`}
+                  fieldName={`talents.list.${index}.branch`}
                   label={{
                     text: "Ветка",
                     color: "secondary",
@@ -118,7 +118,7 @@ export default function Talent() {
               <Grid size={{ xs: 12, md: 10 }} order={{ xs: 4, md: 3 }}>
                 <TooltipWrapper text={field.effect}>
                   <BaseField
-                    fieldName={`talents.list.${i}.effect`}
+                    fieldName={`talents.list.${index}.effect`}
                     label={{
                       text: "Эффект",
                       color: "secondary",
@@ -131,7 +131,7 @@ export default function Talent() {
               </Grid>
               <Grid size={{ xs: 4, md: 2 }} order={{ xs: 3, md: 4 }}>
                 <BaseField
-                  fieldName={`talents.list.${i}.rang`}
+                  fieldName={`talents.list.${index}.rang`}
                   label={{
                     text: "Ранг",
                     color: "secondary",
