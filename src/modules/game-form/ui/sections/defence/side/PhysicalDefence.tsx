@@ -7,19 +7,25 @@ import type { FormType } from "../../../../types/form/form.type.ts";
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
-import BaseField from "../../../components/BaseField.tsx";
+
+import { useOZCalc } from "../../attributes/skill-table/OZ-calc.hook.ts";
+import CalculatedValue from "../../../components/CalculatedValue.tsx";
 
 export default function PhysicalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
+
+  const OZValue = useOZCalc({
+    statValueName: "stats.strength.value",
+    expertiseFieldName: "stats.strength.endurance.expertise",
+  });
 
   const { fields, replace } = useFieldArray<FormType>({
     name: "defence.physical.health.list",
     control: methods.control,
   });
 
-  const { isDisabled } = useWatchCheckboxAmount({
-    defaultAmount: values?.defence?.mental?.resolve?.amount ?? 20,
-    amountName: "defence.physical.health.amount",
+  const isDisabled = useWatchCheckboxAmount({
+    amount: OZValue ?? 20,
     listName: "defence.physical.health.list",
   });
 
@@ -33,12 +39,9 @@ export default function PhysicalDefence() {
 
   return (
     <Box>
-      <BaseField
-        fieldName={"defence.physical.health.amount"}
-        label={{ text: "Физическая" }}
-        orientation="row"
-        sx={{ width: "100%" }}
-      />
+      <CustomLabel label={{ text: "Физическая" }} orientation="row">
+        <CalculatedValue value={OZValue} />
+      </CustomLabel>
 
       <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>
         <Box sx={{ ...gridStyle }}>

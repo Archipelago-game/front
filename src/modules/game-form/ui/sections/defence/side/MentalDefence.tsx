@@ -8,14 +8,20 @@ import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
 
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
-import BaseField from "../../../components/BaseField.tsx";
+
+import { useOZCalc } from "../../attributes/skill-table/OZ-calc.hook.ts";
+import CalculatedValue from "../../../components/CalculatedValue.tsx";
 
 export default function MentalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
 
-  const { isDisabled } = useWatchCheckboxAmount({
-    defaultAmount: values?.defence.mental.resolve.amount ?? 20,
-    amountName: "defence.mental.resolve.amount",
+  const OZValue = useOZCalc({
+    statValueName: "stats.willpower.value",
+    expertiseFieldName: "stats.willpower.discipline.expertise",
+  });
+
+  const isDisabled = useWatchCheckboxAmount({
+    amount: OZValue ?? 20,
     listName: "defence.mental.resolve.list",
   });
 
@@ -32,12 +38,9 @@ export default function MentalDefence() {
 
   return (
     <Box>
-      <BaseField
-        label={{ text: "Ментальная" }}
-        orientation="row"
-        sx={{ width: "100%" }}
-        fieldName="defence.mental.resolve.amount"
-      />
+      <CustomLabel label={{ text: "Ментальная" }} orientation="row">
+        <CalculatedValue value={OZValue} />
+      </CustomLabel>
 
       <CustomLabel label={{ text: "Решимость", color: "secondary" }}>
         <Box sx={{ ...gridStyle }}>
