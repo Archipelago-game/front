@@ -14,7 +14,7 @@ export default function MentalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
 
   const { isDisabled } = useWatchCheckboxAmount({
-    defaultAmount: values?.defence.mental.resolve.amount ?? 20,
+    amount: values?.defence.mental.resolve.amount ?? 20,
     amountName: "defence.mental.resolve.amount",
     listName: "defence.mental.resolve.list",
   });

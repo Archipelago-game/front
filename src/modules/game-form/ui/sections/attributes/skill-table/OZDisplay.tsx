@@ -1,7 +1,7 @@
+import { useOZCalc } from "./OZ-calc.hook.ts";
+
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
-import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
-import { type FieldPath, useWatch } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { type FieldPath } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 
 interface Props {
@@ -10,23 +10,7 @@ interface Props {
 }
 
 export default function OZDisplay(props: Props) {
-  const [value, setValue] = useState(0);
-  const { methods } = useCustomFormContext();
-
-  const statValue = useWatch({
-    control: methods.control,
-    name: props.statValueName,
-  });
-  const expertise = useWatch({
-    control: methods.control,
-    name: props.expertiseFieldName,
-  });
-
-  useEffect(() => {
-    const result = (Number(statValue) || 0) + (Number(expertise) || 0);
-
-    setValue(result);
-  }, [statValue, expertise]);
+  const { value } = useOZCalc(props);
 
   return <CalculatedValue value={value} />;
 }
