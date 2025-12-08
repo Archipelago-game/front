@@ -5,6 +5,7 @@ import { theme } from "../../common/styles/theme/custom-theme.ts";
 
 import "./animation.css";
 import { PATH_DATA } from "./path-data.const.ts";
+import { AnimationDrive } from "./AnimationDrive.class.ts";
 
 interface Props {
   isStop: boolean;
@@ -28,6 +29,8 @@ export default function ScreenSaver({ isStop }: Props) {
     contourRef.style.opacity = "1";
   }
 
+  function handleFinish() {}
+
   function startAnimation() {
     if (
       !primaryPath.current ||
@@ -50,7 +53,7 @@ export default function ScreenSaver({ isStop }: Props) {
     const blink = blinkAnimation(secondaryPath.current);
     currentAnimationRef.current = blink;
     animation.onfinish = () => {
-      blink.run();
+      // blink.run();
     };
   }
 
@@ -81,12 +84,11 @@ export default function ScreenSaver({ isStop }: Props) {
   }
 
   function blinkAnimation(path: SVGPathElement) {
-    let animation: Animation | null = null;
     path.style.fill = "url(#gradient1)";
 
-    return {
-      run() {
-        animation = path.animate(
+    return new AnimationDrive({
+      factory: () => {
+        return path.animate(
           [{ opacity: 1 }, { opacity: 0.5 }, { opacity: 1 }],
           {
             duration: 4000,
@@ -96,37 +98,28 @@ export default function ScreenSaver({ isStop }: Props) {
           },
         );
       },
-      stop() {
-        animation?.cancel();
-        animation = null;
+      onStop: () => {
         path.style.opacity = "0";
       },
-    };
+      onFinish: null,
+    });
   }
 
-  // function fadeInScreenSaver(element: HTMLDivElement) {
-  //   element.style.opacity = "0";
-  //   element.style.zIndex = "9999";
-  //   return element.animate([{ opacity: 0 }, { opacity: 1 }], {
-  //     duration: 1000,
-  //     easing: "ease-in-out",
-  //     fill: "forwards",
-  //   });
-  // }
+  function fadeOutScreenSaver(element: HTMLDivElement) {
+    element.style.opacity = "1";
 
-  // function fadeOutScreenSaver(element: HTMLDivElement) {
-  //   element.style.opacity = "1";
-  //
-  //   const animation = element.animate([{ opacity: 0 }, { opacity: 1 }], {
-  //     duration: 1000,
-  //     easing: "ease-in-out",
-  //     fill: "forwards",
-  //   });
-  //
-  //   animation.onfinish = () => {
-  //     element.style.zIndex = "-9999";
-  //   };
-  // }
+    return new AnimationDrive({
+      factory: () => {
+        return element.animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: 1000,
+          easing: "ease-in-out",
+          fill: "forwards",
+        });
+      },
+      onStop: null,
+      onFinish: () => (element.style.zIndex = "-9999"),
+    });
+  }
 
   useEffect(() => {
     if (primaryPath.current && secondaryPath.current && containerRef.current) {
