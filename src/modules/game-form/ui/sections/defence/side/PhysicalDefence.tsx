@@ -8,13 +8,13 @@ import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
-import DisplayValue from "./DisplayPropValue.tsx";
 import { useOZCalc } from "../../attributes/skill-table/OZ-calc.hook.ts";
+import CalculatedValue from "../../../components/CalculatedValue.tsx";
 
 export default function PhysicalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
 
-  const { value: OZValue } = useOZCalc({
+  const OZValue = useOZCalc({
     statValueName: "stats.strength.value",
     expertiseFieldName: "stats.strength.endurance.expertise",
   });
@@ -24,8 +24,8 @@ export default function PhysicalDefence() {
     control: methods.control,
   });
 
-  const { isDisabled } = useWatchCheckboxAmount({
-    amount: values?.stats.strength.value ?? 20,
+  const isDisabled = useWatchCheckboxAmount({
+    amount: OZValue ?? 20,
     listName: "defence.physical.health.list",
   });
 
@@ -40,7 +40,7 @@ export default function PhysicalDefence() {
   return (
     <Box>
       <CustomLabel label={{ text: "Физическая" }} orientation="row">
-        <DisplayValue value={OZValue} />
+        <CalculatedValue value={OZValue} />
       </CustomLabel>
 
       <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>

@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function OZDisplay(props: Props) {
-  const { value } = useOZCalc(props);
+  const value = useOZCalc(props);
 
   return <CalculatedValue value={value} />;
 }

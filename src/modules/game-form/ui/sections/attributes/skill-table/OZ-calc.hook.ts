@@ -15,7 +15,5 @@ export function useOZCalc({ statValueName, expertiseFieldName }: Props) {
     name: [statValueName, expertiseFieldName],
   });
 
-  const value = (Number(statValue) || 0) + (Number(expertiseValue) || 0);
-
-  return { value };
+  return (Number(statValue) || 0) + (Number(expertiseValue) || 0);
 }

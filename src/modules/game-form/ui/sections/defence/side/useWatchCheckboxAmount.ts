@@ -22,15 +22,13 @@ export function useWatchCheckboxAmount(props: Props) {
   const { amount, listName } = props;
   const { methods } = useCustomFormContext();
 
-  const amountValue = Number(amount);
-
   const list = useWatch({
     control: methods.control,
     name: listName,
     defaultValue: [],
   });
 
-  const isDisabled = (index: number) => index > amountValue - 1;
+  const isDisabled = (i: number) => i > amount - 1;
 
   function resetDisabledCheckboxes(amount: number, list: Checkbox[]): void {
     for (let i = amount; i < list.length - 1; i++) {
@@ -48,5 +46,5 @@ export function useWatchCheckboxAmount(props: Props) {
     }
   }, [amount]);
 
-  return { isDisabled };
+  return isDisabled;
 }
