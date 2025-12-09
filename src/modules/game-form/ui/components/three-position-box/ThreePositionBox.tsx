@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import DropIcon from "../../../../common/components/icons/DropIcon.tsx";
-import { type JSX, useState } from "react";
+import DropIcon from "../../../../../common/components/icons/DropIcon.tsx";
+import { type JSX } from "react";
 
 export type ThreePositionType = "empty" | "full" | "half";
 const POSITION_ORDER: ThreePositionType[] = ["empty", "full", "half"];
@@ -8,18 +8,24 @@ const POSITION_ORDER: ThreePositionType[] = ["empty", "full", "half"];
 const statementIconMap: Record<ThreePositionType, JSX.Element> = {
   full: <DropIcon color="#f44336" />,
   half: <DropIcon color="#2196f3" />,
-  empty: <DropIcon color="#eaeaea" />,
+  empty: <DropIcon color="#666" />,
 };
 
-export default function ThreePositionBox() {
-  const [state, setState] = useState<ThreePositionType>("empty");
+interface Props {
+  value: ThreePositionType;
+  onChange: (value: ThreePositionType) => void;
+}
+
+function cycleValue(value: ThreePositionType) {
+  return POSITION_ORDER[
+    (POSITION_ORDER.indexOf(value) + 1) % POSITION_ORDER.length
+  ];
+}
+
+export default function ThreePositionBox({ value, onChange }: Props) {
   const handleClick = () => {
-    setState(
-      (prev) =>
-        POSITION_ORDER[
-          (POSITION_ORDER.indexOf(prev) + 1) % POSITION_ORDER.length
-        ],
-    );
+    const newValue = cycleValue(value);
+    onChange(newValue);
   };
 
   return (
@@ -46,7 +52,7 @@ export default function ThreePositionBox() {
           height: "19px",
         }}
       >
-        {statementIconMap[state]}
+        {statementIconMap[value]}
       </Box>
     </Box>
   );
