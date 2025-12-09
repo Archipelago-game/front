@@ -1,4 +1,5 @@
 import type { Stats } from "./attributes.type.ts";
+import type { ThreePositionType } from "../../ui/components/ThreePositionBox.tsx";
 
 interface TextItem {
   value: string;
@@ -39,11 +40,17 @@ export interface Attack {
   methods: AttackMethods;
 }
 
+interface Wound {
+  value: ThreePositionType;
+}
+
 interface Defence {
   brave: number;
   physical: {
     health: CheckBoxList;
-    wounds: CheckBoxList;
+    wounds: {
+      list: Wound[];
+    };
   };
   mental: {
     resolve: CheckBoxList;

@@ -59,13 +59,12 @@ export const FORM_DEFAULT_VALUES: FormType = {
         ],
       },
       wounds: {
-        amount: 5,
         list: [
-          { checked: false },
-          { checked: false },
-          { checked: false },
-          { checked: false },
-          { checked: false },
+          { value: "empty" },
+          { value: "empty" },
+          { value: "empty" },
+          { value: "empty" },
+          { value: "empty" },
         ],
       },
     },
