@@ -4,7 +4,7 @@ import type {
 } from "../modules/game-form/types/form/form.type.ts";
 
 export const FirebasePatch = {
-  threeStatesWoundPatch(character: FormType, userId: number) {
+  threeStatesWound(character: FormType, userId: number) {
     const newList: Wound[] = character.defence.physical.wounds.list.map(
       (item) =>
         "checked" in item ? { value: item.checked ? "full" : "empty" } : item,
