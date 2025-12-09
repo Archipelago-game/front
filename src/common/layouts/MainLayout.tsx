@@ -17,8 +17,9 @@ export default function MainLayout() {
 
   return (
     <Container
+      className="container"
       maxWidth={"xl"}
-      sx={{ px: 2, paddingBottom: 2, height: "100vh" }}
+      sx={{ position: "relative", px: 2, paddingBottom: 2, height: "100vh" }}
     >
       <ScreenSaver isLoading={isLoading} />
       <Box
