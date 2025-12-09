@@ -158,7 +158,7 @@ export default function ScreenSaver({ isLoading }: Props) {
         pointerEvents: "none",
       }}
     >
-      <Box>
+      <Box className="screen-saver__inner">
         <svg
           className={"svg"}
           version="1.0"
