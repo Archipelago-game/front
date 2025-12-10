@@ -1,6 +1,6 @@
 import type { Stats } from "./attributes.type.ts";
 import type { ThreePositionType } from "../../ui/components/three-position-box/ThreePositionBox.tsx";
-import type { Migration } from "./migration.type.ts";
+import type { Migration } from "../../../../app/migrations/migration.type.ts";
 
 interface TextItem {
   value: string;
