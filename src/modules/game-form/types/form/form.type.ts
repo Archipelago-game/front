@@ -100,7 +100,7 @@ export interface Immortal {
 export type Talents = FormArrayFields<Talent>;
 
 export interface FormType {
-  _migration: Migration;
+  _migration?: Migration;
   name: string;
   age: number;
   homeland: string;
