@@ -8,6 +8,8 @@ import {
   type MigrationTechnicalInfo,
 } from "./migration.type.ts";
 
+// todo метод формирования MigrationState для нового персонажа
+
 export class MigrationUtils {
   public migrate(userId: number, character: FormType) {
     character._migration ??= { list: [], appliedVersion: 0 };
