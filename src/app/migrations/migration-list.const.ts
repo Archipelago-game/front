@@ -1,8 +1,10 @@
-import type { MigrationTechnicalInfo } from "./migration.type.ts";
+import type { MigrationDefinition } from "./migration.type.ts";
+import { FirebasePatch } from "./firebase-patch.ts";
 
-export const THREE_STATE_WOUND: MigrationTechnicalInfo = {
+export const THREE_STATE_WOUND: MigrationDefinition = {
   version: 1,
   name: "threeStatesWound",
+  apply: (character) => FirebasePatch.threeStatesWound(character),
 };
 
-export const MIGRATION_LIST: MigrationTechnicalInfo[] = [THREE_STATE_WOUND];
+export const MIGRATION_LIST: MigrationDefinition[] = [THREE_STATE_WOUND];

@@ -1,6 +1,6 @@
 import type { Stats } from "./attributes.type.ts";
 import type { ThreePositionType } from "../../ui/components/three-position-box/ThreePositionBox.tsx";
-import type { Migration } from "../../../../app/migrations/migration.type.ts";
+import type { MigrationState } from "../../../../app/migrations/migration.type.ts";
 
 interface TextItem {
   value: string;
@@ -100,7 +100,7 @@ export interface Immortal {
 export type Talents = FormArrayFields<Talent>;
 
 export interface FormType {
-  _migration?: Migration;
+  _migration?: MigrationState;
   name: string;
   age: number;
   homeland: string;

@@ -1,17 +1,16 @@
 import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
 import { MIGRATION_LIST } from "./migration-list.const.ts";
-import type {
-  Migration,
-  MigrationItem,
-  MigrationTechnicalInfo,
+import {
+  hasMigration,
+  type MigrationState,
+  type MigrationInfo,
+  type MigrationDefinition,
+  type MigrationTechnicalInfo,
 } from "./migration.type.ts";
-import { FirebasePatch } from "./firebase-patch.ts";
 
 export class MigrationUtils {
   public migrate(userId: number, character: FormType) {
-    if (!("_migration" in character)) {
-      character._migration = { list: [], currentVersion: 0 };
-    }
+    character._migration ??= { list: [], appliedVersion: 0 };
 
     if (this.isMigrationsUpToDate(character._migration)) {
       return;
@@ -21,31 +20,33 @@ export class MigrationUtils {
     this.runMigrations(userId, character, migrationsToRun);
   }
 
-  private getMigrationsToRun(migration: Migration) {
-    if (migration.list.length === 0) {
+  private getMigrationsToRun(migrationState: MigrationState) {
+    if (migrationState.list.length === 0) {
       return MIGRATION_LIST;
     }
-    const appliedMigration = migration.list[migration.list.length - 1];
-    const appliedVersion = appliedMigration.version;
+
+    const appliedVersion = migrationState.list.at(-1) ?? 0;
     const appliedMigrationIndex = MIGRATION_LIST.findIndex(
       (migration) => migration.version === appliedVersion,
     );
     return MIGRATION_LIST.slice(appliedMigrationIndex + 1);
   }
 
-  private isMigrationsUpToDate(migration: Migration) {
-    const actualMigration = this.actualMigrationInfo;
-    return migration.currentVersion >= actualMigration.version;
+  private isMigrationsUpToDate(migrationState: MigrationState) {
+    return migrationState.appliedVersion >= this.actualMigration.version;
   }
 
   private runMigrations(
     userId: number,
     character: FormType,
-    migrationList: MigrationTechnicalInfo[],
+    migrationList: MigrationDefinition[],
   ) {
     migrationList.forEach((migration) => {
-      FirebasePatch[migration.name](character);
-      this.setMigrationInfo(userId, character, migration);
+      migration.apply(character);
+      this.setMigrationInfo(userId, character, {
+        name: migration.name,
+        version: migration.version,
+      });
     });
   }
 
@@ -54,19 +55,23 @@ export class MigrationUtils {
     character: FormType,
     data: MigrationTechnicalInfo,
   ) {
-    const migration = this.migrationFactory(userId, data);
-    character._migration.list.push(migration);
-    character._migration.currentVersion = this.actualMigrationInfo.version;
+    const migrationInfo = this.migrationFactory(userId, data);
+    if (!hasMigration(character)) {
+      throw new Error(`Cannot set migration "_migration"`);
+    }
+
+    character._migration.list.push(migrationInfo);
+    character._migration.appliedVersion = this.actualMigration.version;
   }
 
-  private get actualMigrationInfo() {
+  private get actualMigration() {
     return MIGRATION_LIST[MIGRATION_LIST.length - 1];
   }
 
   private migrationFactory(
     userId: number,
     data: MigrationTechnicalInfo,
-  ): MigrationItem {
+  ): MigrationInfo {
     return {
       migratedAt: Date.now(),
       migratedBy: userId,
@@ -75,12 +80,4 @@ export class MigrationUtils {
   }
 }
 
-export function migrationUtilsFactory() {
-  let state: MigrationUtils | null;
-  return () => {
-    if (!state) {
-      state = new MigrationUtils();
-    }
-    return state;
-  };
-}
+export const migrationUtils = new MigrationUtils();
