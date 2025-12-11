@@ -21,6 +21,10 @@ import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-va
 import type { MigrationState } from "../app/migrations/migration.type.ts";
 import { migrationUtils } from "../app/migrations/migration-utils.class.ts";
 
+export interface Meta {
+  characterFormMigration: MigrationState;
+}
+
 // Интерфейс для персонажа в Firestore
 export interface CharacterDocument {
   id?: string;
@@ -32,14 +36,7 @@ export interface CharacterDocument {
   lastModifiedBy: string; // UID пользователя, который последний раз изменял
   deviceId?: string; // ID устройства для отслеживания
   deleted: boolean;
-  meta?: {
-    characterFormMigration: MigrationState;
-  };
-}
-
-// Интерфейс для локального персонажа с метаданными
-export interface LocalCharacter extends FormType {
-  id: string;
+  meta?: Meta;
 }
 
 // Интерфейс для ошибок Firebase

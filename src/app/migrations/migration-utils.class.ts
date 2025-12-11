@@ -1,4 +1,3 @@
-import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
 import { MIGRATION_LIST } from "./migration-list.const.ts";
 import {
   hasMigration,
@@ -8,19 +7,27 @@ import {
   type MigrationTechnicalInfo,
 } from "./migration.type.ts";
 
-import * as lodash from "lodash";
-// todo метод формирования MigrationState для нового персонажа
+import clonedeep from "lodash.clonedeep";
+import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
 
 export class MigrationUtils {
-  public migrate(userId: string, character: FormType) {
-    character._migration ??= { list: [], appliedVersion: 0 };
+  public migrate(userId: string, characterDoc: CharacterDocument) {
+    characterDoc.meta ??= {
+      characterFormMigration: {
+        appliedVersion: 0,
+        list: [],
+      },
+    };
 
-    if (this.isMigrationsUpToDate(character._migration)) {
+    if (this.isMigrationsUpToDate(characterDoc.meta.characterFormMigration)) {
       return;
     }
 
-    const migrationsToRun = this.getMigrationsToRun(character._migration);
-    return this.runMigrations(userId, character, migrationsToRun);
+    const migrationsToRun = this.getMigrationsToRun(
+      characterDoc.meta.characterFormMigration,
+    );
+
+    return this.runMigrations(userId, characterDoc, migrationsToRun);
   }
 
   public createDefaultMigration(userId: string): MigrationState {
@@ -42,7 +49,7 @@ export class MigrationUtils {
       return MIGRATION_LIST;
     }
 
-    const appliedVersion = migrationState.list.at(-1) ?? 0;
+    const appliedVersion = migrationState.list.at(-1)?.version ?? 0;
     const appliedMigrationIndex = MIGRATION_LIST.findIndex(
       (migration) => migration.version === appliedVersion,
     );
@@ -55,32 +62,34 @@ export class MigrationUtils {
 
   private runMigrations(
     userId: string,
-    character: FormType,
+    characterDoc: CharacterDocument,
     migrationList: MigrationDefinition[],
   ) {
-    const characterClone = lodash.cloneDeep(character);
+    const characterDocClone = clonedeep(characterDoc);
+
     migrationList.forEach((migration) => {
-      migration.apply(character);
-      this.setMigrationInfo(userId, characterClone, {
+      migration.apply(characterDocClone.data);
+      this.setMigrationInfo(userId, characterDocClone, {
         name: migration.name,
         version: migration.version,
       });
     });
-    return characterClone;
+    return characterDocClone;
   }
 
   private setMigrationInfo(
     userId: string,
-    character: FormType,
+    characterDoc: CharacterDocument,
     data: MigrationTechnicalInfo,
   ) {
     const migrationInfo = this.migrationFactory(userId, data);
-    if (!hasMigration(character)) {
-      throw new Error(`Cannot set migration "_migration"`);
+    if (!hasMigration(characterDoc)) {
+      throw new Error(`Cannot set migration "meta.characterFormMigration"`);
     }
 
-    character._migration.list.push(migrationInfo);
-    character._migration.appliedVersion = this.actualMigration.version;
+    characterDoc.meta.characterFormMigration.list.push(migrationInfo);
+    characterDoc.meta.characterFormMigration.appliedVersion =
+      this.actualMigration.version;
   }
 
   private get actualMigration() {

@@ -1,15 +1,20 @@
 import type { FirebasePatch } from "./firebase-patch.ts";
 import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
+import type {
+  CharacterDocument,
+  Meta,
+} from "../../api/firebase-characters-service.ts";
 
 export type MigrationKey = keyof typeof FirebasePatch;
 
-export interface MigrationDefinition {
+export interface MigrationTechnicalInfo {
   name: MigrationKey;
   version: number;
-  apply: (character: FormType) => void;
 }
 
-export type MigrationTechnicalInfo = Omit<MigrationDefinition, "apply">;
+export type MigrationDefinition = MigrationTechnicalInfo & {
+  apply: (character: FormType) => void;
+};
 
 export interface MigrationPersonalInfo {
   migratedAt: number;
@@ -25,7 +30,7 @@ export interface MigrationState {
 }
 
 export function hasMigration(
-  c: FormType,
-): c is FormType & { _migration: MigrationState } {
+  c: CharacterDocument,
+): c is CharacterDocument & { meta: Meta } {
   return "_migration" in c;
 }
