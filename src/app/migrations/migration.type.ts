@@ -13,7 +13,7 @@ export type MigrationTechnicalInfo = Omit<MigrationDefinition, "apply">;
 
 export interface MigrationPersonalInfo {
   migratedAt: number;
-  migratedBy: number;
+  migratedBy: string;
 }
 
 export type MigrationInfo = Omit<MigrationDefinition, "apply"> &

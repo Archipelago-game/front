@@ -8,10 +8,11 @@ import {
   type MigrationTechnicalInfo,
 } from "./migration.type.ts";
 
+import * as lodash from "lodash";
 // todo метод формирования MigrationState для нового персонажа
 
 export class MigrationUtils {
-  public migrate(userId: number, character: FormType) {
+  public migrate(userId: string, character: FormType) {
     character._migration ??= { list: [], appliedVersion: 0 };
 
     if (this.isMigrationsUpToDate(character._migration)) {
@@ -19,7 +20,21 @@ export class MigrationUtils {
     }
 
     const migrationsToRun = this.getMigrationsToRun(character._migration);
-    this.runMigrations(userId, character, migrationsToRun);
+    return this.runMigrations(userId, character, migrationsToRun);
+  }
+
+  public createDefaultMigration(userId: string): MigrationState {
+    const appliedVersion = MIGRATION_LIST.at(-1)?.version ?? 0;
+    const list = MIGRATION_LIST.map((m) =>
+      this.migrationFactory(userId, {
+        name: m.name,
+        version: m.version,
+      }),
+    );
+    return {
+      appliedVersion,
+      list,
+    };
   }
 
   private getMigrationsToRun(migrationState: MigrationState) {
@@ -39,21 +54,23 @@ export class MigrationUtils {
   }
 
   private runMigrations(
-    userId: number,
+    userId: string,
     character: FormType,
     migrationList: MigrationDefinition[],
   ) {
+    const characterClone = lodash.cloneDeep(character);
     migrationList.forEach((migration) => {
       migration.apply(character);
-      this.setMigrationInfo(userId, character, {
+      this.setMigrationInfo(userId, characterClone, {
         name: migration.name,
         version: migration.version,
       });
     });
+    return characterClone;
   }
 
   private setMigrationInfo(
-    userId: number,
+    userId: string,
     character: FormType,
     data: MigrationTechnicalInfo,
   ) {
@@ -71,7 +88,7 @@ export class MigrationUtils {
   }
 
   private migrationFactory(
-    userId: number,
+    userId: string,
     data: MigrationTechnicalInfo,
   ): MigrationInfo {
     return {

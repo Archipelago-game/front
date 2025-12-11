@@ -18,6 +18,8 @@ import { db } from "./firebase-config";
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
 
 import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-values.const.ts";
+import type { MigrationState } from "../app/migrations/migration.type.ts";
+import { migrationUtils } from "../app/migrations/migration-utils.class.ts";
 
 // Интерфейс для персонажа в Firestore
 export interface CharacterDocument {
@@ -30,6 +32,9 @@ export interface CharacterDocument {
   lastModifiedBy: string; // UID пользователя, который последний раз изменял
   deviceId?: string; // ID устройства для отслеживания
   deleted: boolean;
+  meta?: {
+    characterFormMigration: MigrationState;
+  };
 }
 
 // Интерфейс для локального персонажа с метаданными
@@ -141,6 +146,9 @@ export class FirebaseCharactersService {
       lastModifiedBy: userId,
       deviceId: this.getDeviceId(),
       deleted: false,
+      meta: {
+        characterFormMigration: migrationUtils.createDefaultMigration(userId),
+      },
     };
   }
 
