@@ -144,7 +144,7 @@ export class FirebaseCharactersService {
       deviceId: this.getDeviceId(),
       deleted: false,
       meta: {
-        characterFormMigration: migrationUtils.createDefaultMigration(userId),
+        characterFormMigration: migrationUtils.setDefaultMigrationState(userId),
       },
     };
   }
