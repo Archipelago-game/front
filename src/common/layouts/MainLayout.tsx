@@ -1,19 +1,14 @@
 import { Box, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import { lazy, useEffect } from "react";
+import { lazy } from "react";
 
 import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
-import { LocalStoragePatch } from "../../api/local-storage.ts";
 
 import ScreenSaver from "../../modules/screen-saver/ScreenSaver.tsx";
 const Header = lazy(() => import("../../modules/header/Header.tsx"));
 
 export default function MainLayout() {
   const { isLoading } = useAuthContext();
-
-  useEffect(() => {
-    LocalStoragePatch.convertObjToArray();
-  }, []);
 
   return (
     <Container

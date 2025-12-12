@@ -17,6 +17,7 @@ import type { CharacterDocument } from "../../../api/firebase-characters-service
 
 import debounce from "lodash.debounce";
 import type { OnChangeCallbackType } from "../types/on-change-callback.type.ts";
+import { migrationUtils } from "../../../app/migrations/migration-utils.class.ts";
 
 interface Props {
   children: ReactNode;
@@ -58,10 +59,12 @@ export function CustomFormContextProvider({ children }: Props) {
   );
 
   const fetchData = useCallback(async (userId: string, characterId: string) => {
-    const characterDoc = await api.getCharacterForm(userId, characterId);
-    if (characterDoc) {
-      setCharacterDoc(characterDoc);
+    let characterDoc = await api.getCharacterForm(userId, characterId);
+    if (!characterDoc) {
+      return;
     }
+    characterDoc = migrationUtils.migrate(userId, characterDoc);
+    setCharacterDoc(characterDoc);
   }, []);
 
   const value = useMemo(

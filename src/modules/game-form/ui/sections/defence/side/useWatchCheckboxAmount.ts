@@ -31,7 +31,7 @@ export function useWatchCheckboxAmount(props: Props) {
   const isDisabled = (i: number) => i > amount - 1;
 
   function resetDisabledCheckboxes(amount: number, list: Checkbox[]): void {
-    for (let i = amount; i < list.length - 1; i++) {
+    for (let i = amount; i < list.length; i++) {
       const path = `${listName}.${i}.checked` as FieldPath<FormType>;
       const currentValue = methods.getValues(path);
       if (currentValue !== "checked") {
