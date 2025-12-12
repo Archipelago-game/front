@@ -13,7 +13,10 @@ export class MigrationUtils {
   protected migrationList: MigrationDefinition<FormType>[] =
     CHARACTER_FORM_MIGRATION_LIST;
 
-  public migrate(userId: string, characterDoc: CharacterDocument) {
+  public migrate(
+    userId: string,
+    characterDoc: CharacterDocument,
+  ): CharacterDocument {
     characterDoc.meta ??= {
       characterFormMigration: {
         appliedVersion: 0,
@@ -22,7 +25,7 @@ export class MigrationUtils {
     };
 
     if (this.isMigrationsUpToDate(characterDoc.meta.characterFormMigration)) {
-      return;
+      return characterDoc;
     }
 
     const migrationsToRun = this.getMigrationsToRun(
