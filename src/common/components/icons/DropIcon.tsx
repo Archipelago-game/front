@@ -1,7 +1,5 @@
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 
-// #2196f3
-
 interface CustomIconProps {
   color?: string;
 }
