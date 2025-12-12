@@ -46,8 +46,6 @@ export default function ThreePositionBox({ value, onChange }: Props) {
           alignItems: "center",
 
           boxSizing: "border-box",
-          border: "2px solid gray",
-          borderRadius: "50%",
           width: "19px",
           height: "19px",
         }}
