@@ -1,28 +1,31 @@
 import { Box } from "@mui/material";
-import DropIcon from "../../../../../common/components/icons/DropIcon.tsx";
-import { type JSX } from "react";
 
-export type ThreePositionType = "empty" | "full" | "half";
-const POSITION_ORDER: ThreePositionType[] = ["empty", "full", "half"];
-
-const statementIconMap: Record<ThreePositionType, JSX.Element> = {
-  full: <DropIcon color="#f44336" />,
-  half: <DropIcon color="#2196f3" />,
-  empty: <DropIcon color="#666" />,
-};
+import type {
+  StatementColorMapping,
+  StatementSingleIcon,
+  ThreePositionType,
+} from "./three-position-box.type.ts";
+import { cycleValue } from "./cycle-value.util.ts";
+import { DEFAULT_ICON, DEFAULT_STATEMENT_COLOR_MAP } from "./default.const.ts";
 
 interface Props {
   value: ThreePositionType;
   onChange: (value: ThreePositionType) => void;
+  representation?: {
+    Icon: StatementSingleIcon;
+    colors: StatementColorMapping;
+  };
 }
 
-function cycleValue(value: ThreePositionType) {
-  return POSITION_ORDER[
-    (POSITION_ORDER.indexOf(value) + 1) % POSITION_ORDER.length
-  ];
-}
-
-export default function ThreePositionBox({ value, onChange }: Props) {
+export default function ThreePositionBox({
+  value,
+  onChange,
+  representation = {
+    Icon: DEFAULT_ICON,
+    colors: DEFAULT_STATEMENT_COLOR_MAP,
+  },
+}: Props) {
+  const { Icon, colors } = representation;
   const handleClick = () => {
     const newValue = cycleValue(value);
     onChange(newValue);
@@ -50,7 +53,7 @@ export default function ThreePositionBox({ value, onChange }: Props) {
           height: "19px",
         }}
       >
-        {statementIconMap[value]}
+        <Icon color={colors[value]} />
       </Box>
     </Box>
   );
