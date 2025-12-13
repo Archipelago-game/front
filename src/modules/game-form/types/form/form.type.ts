@@ -44,6 +44,10 @@ export interface Wound {
   value: ThreePositionType;
 }
 
+export interface Injures {
+  value: ThreePositionType;
+}
+
 interface Defence {
   brave: number;
   physical: {
@@ -54,7 +58,9 @@ interface Defence {
   };
   mental: {
     resolve: CheckBoxList;
-    injuries: CheckBoxList;
+    injuries: {
+      list: Injures[];
+    };
   };
   armor: {
     property: string;

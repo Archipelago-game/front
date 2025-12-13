@@ -13,19 +13,17 @@ interface Props {
   onChange: (value: ThreePositionType) => void;
   representation?: {
     Icon: StatementSingleIcon;
-    colors: StatementColorMapping;
+    colors?: StatementColorMapping;
   };
 }
 
 export default function ThreePositionBox({
   value,
   onChange,
-  representation = {
-    Icon: DEFAULT_ICON,
-    colors: DEFAULT_STATEMENT_COLOR_MAP,
-  },
+  representation,
 }: Props) {
-  const { Icon, colors } = representation;
+  const { Icon = DEFAULT_ICON, colors = DEFAULT_STATEMENT_COLOR_MAP } =
+    representation;
   const handleClick = () => {
     const newValue = cycleValue(value);
     onChange(newValue);
@@ -53,7 +51,7 @@ export default function ThreePositionBox({
           height: "19px",
         }}
       >
-        <Icon color={colors[value]} />
+        {colors && <Icon color={colors[value]} />}
       </Box>
     </Box>
   );
