@@ -7,7 +7,7 @@ import type { ApplyUtilFunc } from "./migration.type.ts";
 
 export type PatchUtil = Record<string, ApplyUtilFunc<FormType>>;
 
-export const FirebasePatch: PatchUtil = {
+export const CharacterFormPatch: PatchUtil = {
   threeStatesWound(character: FormType) {
     const newList: Wound[] = character.defence.physical.wounds.list.map(
       (item) =>
@@ -15,6 +15,15 @@ export const FirebasePatch: PatchUtil = {
     );
     const characterClone = clonedeep(character);
     characterClone.defence.physical.wounds = { list: newList };
+    return characterClone;
+  },
+  threeStateInjure(character: FormType) {
+    const newList: Wound[] = character.defence.mental.injuries.list.map(
+      (item) =>
+        "checked" in item ? { value: item.checked ? "full" : "empty" } : item,
+    );
+    const characterClone = clonedeep(character);
+    characterClone.defence.mental.injuries = { list: newList };
     return characterClone;
   },
 };
