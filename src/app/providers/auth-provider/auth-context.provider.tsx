@@ -5,8 +5,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import type { FirebaseUserData } from "../../../api/firebase-types.ts";
-import { FirebaseAuthService } from "../../../api/firebase-auth-service.ts";
+import type { FirebaseUserData } from "../../../services/auth/firebase-types.ts";
+import { FirebaseAuthService } from "../../../services/auth/firebase-auth-service.ts";
 
 import { AuthContext } from "./use-auth-context.hook.ts";
 

@@ -14,12 +14,12 @@ import {
   query,
 } from "firebase/firestore";
 import type { Unsubscribe } from "firebase/firestore";
-import { db } from "./firebase-config";
-import type { FormType } from "../modules/game-form/types/form/form.type.ts";
+import { db } from "../auth/firebase-config.ts";
+import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
 
-import { FORM_DEFAULT_VALUES } from "../modules/game-form/consts/form-default-values.const.ts";
-import type { MigrationState } from "../app/migrations/migration.type.ts";
-import { migrationUtils } from "../app/migrations/migration-utils.class.ts";
+import { FORM_DEFAULT_VALUES } from "../../modules/game-form/consts/form-default-values.const.ts";
+import type { MigrationState } from "../migrations/migration.type.ts";
+import { migrationUtils } from "../migrations/migration-utils.class.ts";
 
 export interface Meta {
   characterFormMigration: MigrationState;

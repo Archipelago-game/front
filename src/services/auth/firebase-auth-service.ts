@@ -1,13 +1,13 @@
 import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import type { User as FirebaseUser } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
-import { auth, googleProvider } from "./firebase-config";
-import { db } from "./firebase-config";
+import { auth, googleProvider } from "./firebase-config.ts";
+import { db } from "./firebase-config.ts";
 import type {
   FirebaseUserData,
   UserDocument,
   AuthError,
-} from "./firebase-types";
+} from "./firebase-types.ts";
 
 export class FirebaseAuthService {
   /**
