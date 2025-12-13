@@ -2,9 +2,9 @@ import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 
 const titleFontSize = {
-  xs: "2em",
+  xs: "1.9em",
   phablet: "2.1em",
-  sm: "2.4em",
+  sm: "2.2em",
   tables: "3em",
 };
 
