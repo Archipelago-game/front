@@ -43,9 +43,7 @@ export default function Injuries() {
                   field.onChange(newValue);
                   onChange();
                 }}
-                representation={{
-                  Icon: LotusIcon,
-                }}
+                Icon={LotusIcon}
               />
             )}
           />

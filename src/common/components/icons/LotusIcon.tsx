@@ -1,13 +1,14 @@
 import { Box } from "@mui/material";
 import type { CustomIconProps } from "./custom-icon-props.type.ts";
 
-export default function LotusIcon({ sx }: CustomIconProps) {
+export default function LotusIcon({ color, sx }: CustomIconProps) {
   return (
     <Box
       sx={{
         display: "inline-block",
-        width: "24px",
-        height: "24px",
+        width: "100%",
+        height: "100%",
+        color: color,
         ...sx,
       }}
     >
@@ -17,7 +18,7 @@ export default function LotusIcon({ sx }: CustomIconProps) {
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid meet"
         width="100%"
-        height="auto"
+        height="100%"
         fill="currentColor"
       >
         <g transform="translate(0,0) scale(0.122,0.16)" stroke="none">

@@ -11,19 +11,16 @@ import { DEFAULT_ICON, DEFAULT_STATEMENT_COLOR_MAP } from "./default.const.ts";
 interface Props {
   value: ThreePositionType;
   onChange: (value: ThreePositionType) => void;
-  representation?: {
-    Icon: StatementSingleIcon;
-    colors?: StatementColorMapping;
-  };
+  Icon?: StatementSingleIcon;
+  colors?: StatementColorMapping;
 }
 
 export default function ThreePositionBox({
   value,
   onChange,
-  representation,
+  Icon = DEFAULT_ICON,
+  colors = DEFAULT_STATEMENT_COLOR_MAP,
 }: Props) {
-  const { Icon = DEFAULT_ICON, colors = DEFAULT_STATEMENT_COLOR_MAP } =
-    representation;
   const handleClick = () => {
     const newValue = cycleValue(value);
     onChange(newValue);
