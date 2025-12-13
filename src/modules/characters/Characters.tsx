@@ -26,7 +26,7 @@ export default function Characters({
         Герои
       </Typography>
 
-      <Box component="ul">
+      <Box component="ul" pl={0}>
         {characters.map((character, index) => (
           <Box
             component="li"

@@ -13,7 +13,7 @@ export default function Header() {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "1fr auto 1fr",
+          gridTemplateColumns: "auto  1fr auto",
           alignItems: "center",
           width: "100%",
         }}
