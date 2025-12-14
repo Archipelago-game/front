@@ -95,13 +95,12 @@ export const FORM_DEFAULT_VALUES: FormType = {
         ],
       },
       injuries: {
-        amount: 5,
         list: [
-          { checked: false },
-          { checked: false },
-          { checked: false },
-          { checked: false },
-          { checked: false },
+          { value: "empty" },
+          { value: "empty" },
+          { value: "empty" },
+          { value: "empty" },
+          { value: "empty" },
         ],
       },
     },
