@@ -1,6 +1,6 @@
 import type { FieldArrayComponentProps } from "../types/field-array-component-props.type.ts";
 import { useFieldArray } from "react-hook-form";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export function useSyncFieldArray(props: FieldArrayComponentProps) {
   const { name, amount, formHook, defaultValue } = props;
@@ -11,10 +11,6 @@ export function useSyncFieldArray(props: FieldArrayComponentProps) {
   });
 
   const initialized = useRef(false);
-
-  const addItem = useCallback(() => {
-    append(defaultValue);
-  }, [append]);
 
   useEffect(() => {
     if (!initialized.current) {
