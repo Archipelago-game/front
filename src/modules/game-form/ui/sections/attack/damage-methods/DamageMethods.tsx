@@ -1,22 +1,47 @@
-import type { FieldArrayComponentShortProps } from "../../../../types/field-array-component-props.type.ts";
-import { useSyncFieldArray } from "../../../../hooks/use-sync-field-array.hook.ts";
-
 import DamageMethodItem from "./DamageMethodItem.tsx";
-import type { FormType } from "../../../../types/form/form.type.ts";
-import { Box } from "@mui/material";
+
+import { Box, Button, IconButton } from "@mui/material";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
+import { useFieldArray } from "react-hook-form";
+import { defaultAttackMethod } from "../../../../consts/attack-default.const.ts";
+import { useConfirmDialogContext } from "../../../../../confirm-dialog/use-confirm-dialog.hook.ts";
+import { buttonDeleteStyles } from "../../../../../../common/styles/button-delete-styles.css.ts";
+import { Delete } from "@mui/icons-material";
+import { useEffect } from "react";
 
-interface Props extends FieldArrayComponentShortProps {
-  values: FormType;
-}
+export default function DamageMethods() {
+  const { methods, values, onChange } = useCustomFormContext();
+  const { open } = useConfirmDialogContext();
 
-export default function DamageMethods(props: Props) {
-  const { methods, onChange } = useCustomFormContext();
-  const fields = useSyncFieldArray({
-    ...props,
-    formHook: methods,
-    onChange,
+  const { fields, append, remove, replace } = useFieldArray({
+    name: "attack.methods.list",
+    control: methods.control,
   });
+
+  const addItem = () => {
+    append(defaultAttackMethod);
+    onChange();
+  };
+
+  const deleteItem = (index: number, name: string) => {
+    open({
+      message: `ты действительно хочешь удалить  ${name}?`,
+      onConfirm: () => {
+        remove(index);
+        onChange();
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (values) {
+      replace(values.attack.methods.list);
+    }
+  }, [values?.attack.methods.list, replace]);
+
+  if (values === null) {
+    return null;
+  }
 
   return (
     <Box
@@ -26,9 +51,40 @@ export default function DamageMethods(props: Props) {
         gap: "8px",
       }}
     >
-      {fields.map((_, i) => (
-        <DamageMethodItem key={i} index={i} values={props.values} />
+      {fields.map((field, index) => (
+        <Box
+          key={index}
+          sx={{
+            position: "relative",
+            paddingLeft: "25px",
+          }}
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: -2,
+              left: 1,
+            }}
+          >
+            <IconButton
+              onClick={() => deleteItem(index, field.name)}
+              sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </Box>
+
+          <DamageMethodItem index={index} values={values} />
+        </Box>
       ))}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button onClick={addItem}>Добавить</Button>
+      </Box>
     </Box>
   );
 }

@@ -1,6 +1,6 @@
 import type { Attack, AttackMethod } from "../types/form/form.type.ts";
 
-const defaultAttackMethod: AttackMethod = {
+export const defaultAttackMethod: AttackMethod = {
   name: "",
   distance: 0,
   half: 0,

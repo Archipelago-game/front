@@ -42,7 +42,7 @@ export default function CharacterForm() {
             },
           }}
         >
-          <Attack values={values} />
+          <Attack />
           <Defence />
           <Inventory />
         </Box>
