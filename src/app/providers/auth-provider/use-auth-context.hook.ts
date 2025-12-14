@@ -4,7 +4,7 @@ import {
   type SetStateAction,
   useContext,
 } from "react";
-import type { FirebaseUserData } from "../../../api/firebase-types.ts";
+import type { FirebaseUserData } from "../../../services/auth/firebase-types.ts";
 
 interface AuthContextType {
   isAuthorized: boolean;

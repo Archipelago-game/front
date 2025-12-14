@@ -1,11 +1,11 @@
-import type { FirebasePatch } from "./firebase-patch.ts";
+import type { CharacterFormPatch } from "./character-form-patch.ts";
 
 import type {
   CharacterDocument,
   Meta,
-} from "../../api/firebase-characters-service.ts";
+} from "../character/firebase-characters-service.ts";
 
-export type MigrationKey = keyof typeof FirebasePatch;
+export type MigrationKey = keyof typeof CharacterFormPatch;
 
 export interface MigrationTechnicalInfo {
   name: MigrationKey;

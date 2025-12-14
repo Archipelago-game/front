@@ -1,9 +1,9 @@
-import { FirebaseAuthService } from "./firebase-auth-service.ts";
+import { FirebaseAuthService } from "../services/auth/firebase-auth-service.ts";
 import {
   type CharacterDocument,
   FirebaseCharactersService,
-} from "./firebase-characters-service.ts";
-import type { FirebaseUserData } from "./firebase-types.ts";
+} from "../services/character/firebase-characters-service.ts";
+import type { FirebaseUserData } from "../services/auth/firebase-types.ts";
 import type { FormType } from "../modules/game-form/types/form/form.type.ts";
 
 export const api = {

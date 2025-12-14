@@ -6,7 +6,7 @@ import {
 } from "./migration.type.ts";
 
 import clonedeep from "lodash.clonedeep";
-import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
+import type { CharacterDocument } from "../character/firebase-characters-service.ts";
 import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
 
 export class MigrationUtils {

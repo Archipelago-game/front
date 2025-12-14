@@ -7,7 +7,7 @@ import { api } from "../../api/api.ts";
 import Characters from "../../modules/characters/Characters.tsx";
 import { Box } from "@mui/system";
 
-import type { CharacterDocument } from "../../api/firebase-characters-service.ts";
+import type { CharacterDocument } from "../../services/character/firebase-characters-service.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import { useConfirmDialogContext } from "../../modules/confirm-dialog/use-confirm-dialog.hook.ts";
 import { prepareCharacterExport } from "./prepare-character-export.util.ts";

@@ -1,9 +1,11 @@
 import { Controller, useFieldArray } from "react-hook-form";
-import { Box, Checkbox } from "@mui/material";
+import { Box } from "@mui/material";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
+import ThreePositionBox from "../../../components/three-position-box/ThreePositionBox.tsx";
+import LotusIcon from "../../../../../../common/components/icons/LotusIcon.tsx";
 
 export default function Injuries() {
   const { methods, onChange, values } = useCustomFormContext();
@@ -32,15 +34,16 @@ export default function Injuries() {
         {fields.map((field, index) => (
           <Controller
             key={field.id}
-            name={`defence.mental.injuries.list.${index}.checked`}
+            name={`defence.mental.injuries.list.${index}.value`}
             control={methods.control}
             render={({ field }) => (
-              <Checkbox
-                size={"medium"}
-                sx={{ padding: 0 }}
-                {...field}
-                checked={field.value}
-                onChange={(e) => onChange(field, e)}
+              <ThreePositionBox
+                value={field.value}
+                onChange={(newValue) => {
+                  field.onChange(newValue);
+                  onChange();
+                }}
+                Icon={LotusIcon}
               />
             )}
           />

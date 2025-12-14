@@ -1,5 +1,5 @@
 import type { Stats } from "./attributes.type.ts";
-import type { ThreePositionType } from "../../ui/components/three-position-box/ThreePositionBox.tsx";
+import type { ThreePositionType } from "../../ui/components/three-position-box/three-position-box.type.ts";
 
 interface TextItem {
   value: string;
@@ -44,6 +44,10 @@ export interface Wound {
   value: ThreePositionType;
 }
 
+export interface Injures {
+  value: ThreePositionType;
+}
+
 interface Defence {
   brave: number;
   physical: {
@@ -54,7 +58,9 @@ interface Defence {
   };
   mental: {
     resolve: CheckBoxList;
-    injuries: CheckBoxList;
+    injuries: {
+      list: Injures[];
+    };
   };
   armor: {
     property: string;
