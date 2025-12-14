@@ -13,11 +13,11 @@ import { useForm } from "react-hook-form";
 import { api } from "../../../api/api.ts";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../../app/providers/auth-provider/use-auth-context.hook.ts";
-import type { CharacterDocument } from "../../../api/firebase-characters-service.ts";
+import type { CharacterDocument } from "../../../services/character/firebase-characters-service.ts";
 
 import debounce from "lodash.debounce";
 import type { OnChangeCallbackType } from "../types/on-change-callback.type.ts";
-import { migrationUtils } from "../../../app/migrations/migration-utils.class.ts";
+import { migrationUtils } from "../../../services/migrations/migration-utils.class.ts";
 
 interface Props {
   children: ReactNode;

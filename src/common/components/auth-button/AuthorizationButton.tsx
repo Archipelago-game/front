@@ -1,6 +1,6 @@
 import { Box, Button, type ButtonProps } from "@mui/material";
 import { useState } from "react";
-import { FirebaseAuthService } from "../../../api/firebase-auth-service";
+import { FirebaseAuthService } from "../../../services/auth/firebase-auth-service.ts";
 import { useSnackbarContext } from "../../../app/providers/snackbar-provider/use-snackbar-context.hook";
 
 interface Props {
