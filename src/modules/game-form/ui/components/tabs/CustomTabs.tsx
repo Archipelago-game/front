@@ -13,12 +13,12 @@ interface Props {
   tabs: TabItem[];
 }
 
-function handleSwitchTabs({ tabs }: Props) {}
-export default function CustomTabs() {
+function handleSwitchTabs() {}
+export default function CustomTabs({ tabs }: Props) {
   return (
     <Box>
       <Tabs value={currentTabIndex} onChange={handleSwitchTabs} sx={{ mb: 2 }}>
-        {TABS.map((tab, index) => (
+        {tabs.map((tab, index) => (
           <Tab key={tab.name} label={tab.name} value={index} />
         ))}
       </Tabs>
