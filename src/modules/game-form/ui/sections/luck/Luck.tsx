@@ -1,10 +1,12 @@
 import CustomLabel from "../../components/CustomLabel.tsx";
 
-import { Box, Checkbox, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
 import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
+
+import CheckIconBox from "../../components/check-icon-box/CheckIconBox.tsx";
 
 export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
@@ -38,12 +40,12 @@ export default function Luck() {
             name={`luck.list.${index}.checked`}
             control={methods.control}
             render={({ field }) => (
-              <Checkbox
-                size={"medium"}
-                sx={{ padding: 0 }}
-                {...field}
-                checked={field.value}
-                onChange={(e) => onChange(field, e)}
+              // note для отображения иконки вместо checkbox, добавить пропу Icon c требуемой иконкой
+              <CheckIconBox
+                field={field}
+                onChange={(e) => {
+                  onChange(field, e);
+                }}
               />
             )}
           />
