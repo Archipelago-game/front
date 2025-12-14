@@ -7,11 +7,10 @@ import Attack from "./ui/sections/attack/Attack.tsx";
 import Defence from "./ui/sections/defence/Defence.tsx";
 import { useCustomFormContext } from "./providers/use-custom-context-form.hook.ts";
 
-import Attributes from "./ui/sections/attributes/Attributes.tsx";
 import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
-import Talents from "./ui/sections/talents/Talents.tsx";
 import DraggableFab from "../draggable-fab/DraggableSpeedDial.tsx";
+import AttributesAndTalentsPanel from "./ui/sections/attrubutes-talents-tabs/AttributesAndTalentsPanel.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -68,10 +67,7 @@ export default function CharacterForm() {
             </Grid>
 
             <Grid size={12}>
-              <Attributes />
-            </Grid>
-            <Grid size={12}>
-              <Talents />
+              <AttributesAndTalentsPanel />
             </Grid>
           </Grid>
         </Box>
