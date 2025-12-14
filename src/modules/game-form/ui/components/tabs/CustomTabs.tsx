@@ -1,20 +1,21 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import type { ComponentType } from "react";
+import { useCampTabs } from "./useTabs.ts";
 
-interface TabItem {
+export interface TabDescription {
   name: string;
   path: string;
   component: ComponentType;
 }
 
-const currentTabIndex = 1;
-
 interface Props {
-  tabs: TabItem[];
+  tabs: TabDescription[];
 }
 
-function handleSwitchTabs() {}
 export default function CustomTabs({ tabs }: Props) {
+  const { currentTabIndex, handleSwitchTabs } = useCampTabs();
+  const CurrentComponent = tabs[currentTabIndex].component;
+
   return (
     <Box>
       <Tabs value={currentTabIndex} onChange={handleSwitchTabs} sx={{ mb: 2 }}>
