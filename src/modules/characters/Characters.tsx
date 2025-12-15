@@ -1,7 +1,8 @@
-import { Box, Button, IconButton, Input, Typography } from "@mui/material";
+import { Box, Button, IconButton, Input, Typography, Paper } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { CharacterDocument } from "../../services/character/firebase-characters-service.ts";
 import FileDownload from "@mui/icons-material/FileDownload";
+import { buttonDeleteStyles } from "../../common/styles/button-delete-styles.css.ts";
 
 interface Props {
   characters: CharacterDocument[];
@@ -26,51 +27,115 @@ export default function Characters({
         Герои
       </Typography>
 
-      <Box component="ul" pl={0}>
+      <Box component="ul" sx={{ listStyle: "none", padding: 0, mt: 2 }}>
         {characters.map((character, index) => (
-          <Box
+          <Paper
             component="li"
-            key={`${index}${character.data.name}${character.data.age}${index}`}
+            key={character.id || `character-${index}`}
             sx={{
+              mb: 2,
+              p: 2,
               display: "flex",
-              alignItems: "flex-end",
+              flexDirection: { xs: "column", md: "row" },
+              alignItems: { xs: "stretch", md: "center" },
+              gap: 2,
+              cursor: "pointer",
+              transition: "all 0.2s",
+              "&:hover": {
+                backgroundColor: "action.hover",
+                transform: "translateX(4px)",
+              },
             }}
+            onClick={() =>
+              character.id ? openCharacterForm(character.id) : undefined
+            }
           >
-            <IconButton
-              onClick={() =>
-                character.id ? deleteCharacter(character.id) : () => {}
-              }
-            >
-              <DeleteIcon color="error" />
-            </IconButton>
+            {/* Основная информация */}
+            <Box sx={{ flex: 1 }}>
+              <Typography variant="h6" component="div">
+                {character.data.name === ""
+                  ? "Безымянный герой"
+                  : character.data.name}
+              </Typography>
 
-            <IconButton
-              sx={{ position: "relative" }}
-              onClick={() =>
-                character.id ? exportCharacter(character.id) : () => {}
-              }
-            >
-              <FileDownload
-                color="primary"
+              <Box
                 sx={{
-                  position: "relative",
-                  top: "2px",
+                  display: "flex",
+                  gap: 2,
+                  mt: 1,
+                  flexWrap: "wrap",
                 }}
-              />
-            </IconButton>
+              >
+                <Typography variant="body2" color="text.secondary">
+                  Возраст: {character.data.age}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Родина: {character.data.homeland || "Неизвестно"}
+                </Typography>
+              </Box>
+            </Box>
 
-            <Button
-              onClick={() =>
-                character.id ? openCharacterForm(character.id) : () => {}
-              }
+            {/* Характеристики */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 3,
+                alignItems: "center",
+              }}
             >
-              {character.data.name === ""
-                ? "Безымянный герой"
-                : character.data.name}
-            </Button>
-          </Box>
+              <Box sx={{ textAlign: "center" }}>
+                <Typography variant="caption" color="text.secondary">
+                  Сила
+                </Typography>
+                <Typography variant="h6">
+                  {character.data.stats?.strength?.value ?? 0}
+                </Typography>
+              </Box>
+
+              <Box sx={{ textAlign: "center" }}>
+                <Typography variant="caption" color="text.secondary">
+                  Воля
+                </Typography>
+                <Typography variant="h6">
+                  {character.data.stats?.willpower?.value ?? 0}
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* Действия */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                justifyContent: { xs: "flex-end", md: "center" },
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <IconButton
+                size="small"
+                onClick={() =>
+                  character.id ? exportCharacter(character.id) : undefined
+                }
+                aria-label="Экспорт персонажа"
+              >
+                <FileDownload />
+              </IconButton>
+
+              <IconButton
+                size="small"
+                onClick={() =>
+                  character.id ? deleteCharacter(character.id) : undefined
+                }
+                sx={buttonDeleteStyles}
+                aria-label="Удалить персонажа"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          </Paper>
         ))}
       </Box>
+
       <Box
         sx={{
           display: "flex",
@@ -84,7 +149,7 @@ export default function Characters({
           Загрузить героя
           <Input
             type="file"
-            sx={{ display: "none" }} // прячем стандартный input
+            sx={{ display: "none" }}
             onChange={(e) => {
               console.log("from characters");
               const file = (e.target as HTMLInputElement).files?.[0];
