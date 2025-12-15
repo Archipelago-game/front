@@ -1,4 +1,11 @@
-import { Box, Button, IconButton, Input, Typography, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Input,
+  Typography,
+  Paper,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { CharacterDocument } from "../../services/character/firebase-characters-service.ts";
 import FileDownload from "@mui/icons-material/FileDownload";
