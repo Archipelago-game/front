@@ -10,6 +10,7 @@ export default function LotusIcon({ color, sx }: CustomIconProps) {
         height: "100%",
         color: color,
         ...sx,
+        transition: "color .3s ease",
       }}
     >
       <svg

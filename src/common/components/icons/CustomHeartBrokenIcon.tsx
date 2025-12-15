@@ -5,5 +5,7 @@ export default function CustomHeartBrokenIcon({
   color = "#f44336",
   sx,
 }: CustomIconProps) {
-  return <HeartBrokenIcon sx={{ color, ...sx }} />;
+  return (
+    <HeartBrokenIcon sx={{ color, transition: "color .3s ease", ...sx }} />
+  );
 }
