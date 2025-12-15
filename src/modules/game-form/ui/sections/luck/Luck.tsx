@@ -44,6 +44,7 @@ export default function Luck() {
             control={methods.control}
             render={({ field }) => (
               // note для отображения иконки вместо checkbox, добавить пропу Icon c требуемой иконкой
+              // todo addIcon
               <CheckIconBox
                 field={field}
                 onChange={(e) => {

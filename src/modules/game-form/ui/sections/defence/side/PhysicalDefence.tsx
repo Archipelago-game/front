@@ -1,4 +1,4 @@
-import { Box, Checkbox } from "@mui/material";
+import { Box } from "@mui/material";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { Controller, useFieldArray } from "react-hook-form";
@@ -10,6 +10,7 @@ import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
 import { useOZCalc } from "../../attributes/skill-table/OZ-calc.hook.ts";
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
+import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
 
 export default function PhysicalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
@@ -44,20 +45,21 @@ export default function PhysicalDefence() {
       </CustomLabel>
 
       <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>
-        <Box sx={{ ...gridStyle }}>
+        <Box sx={{ marginBottom: "4px", ...gridStyle }}>
           {fields.map((field, i) => (
             <Controller
               key={field.id}
               name={`defence.physical.health.list.${i}.checked`}
               control={methods.control}
               render={({ field }) => (
-                <Checkbox
-                  size="medium"
-                  sx={{ padding: 0 }}
-                  {...field}
+                // note для отображения иконки вместо checkbox, добавить пропу Icon c требуемой иконкой
+                // todo addIcon
+                <CheckIconBox
+                  field={field}
+                  onChange={(e) => {
+                    onChange(field, e);
+                  }}
                   disabled={isDisabled(i)}
-                  checked={field.value}
-                  onChange={(e) => onChange(field, e)}
                 />
               )}
             />

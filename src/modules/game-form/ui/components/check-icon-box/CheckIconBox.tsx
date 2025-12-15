@@ -2,7 +2,13 @@ import type { ControllerRenderProps, FieldPath } from "react-hook-form";
 
 import type { FormType } from "../../../types/form/form.type.ts";
 import type { ChangeEvent } from "react";
-import { Box, Checkbox, FormControlLabel, type SxProps } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  type CheckboxProps,
+  FormControlLabel,
+  type SxProps,
+} from "@mui/material";
 
 import { DEFAULT_STATEMENT_COLOR_MAP } from "./check-icon-box-default.const.ts";
 import type {
@@ -13,7 +19,7 @@ import { hideStyles } from "./check-icon-box.styles.ts";
 
 type FormBooleanField = FieldPath<FormType> & `${string}.checked`;
 
-interface Props {
+interface Props extends CheckboxProps {
   field: ControllerRenderProps<FormType, FormBooleanField>;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   Icon?: ComponentIcon;
@@ -26,8 +32,10 @@ export default function CheckIconBox({
   Icon,
   colors = DEFAULT_STATEMENT_COLOR_MAP,
   sx,
+  ...args
 }: Props) {
   const currentStyles = () => (Icon ? hideStyles : { padding: 0 });
+
   return (
     <FormControlLabel
       className="form-label"
@@ -36,14 +44,11 @@ export default function CheckIconBox({
         verticalAlign: "top",
         margin: 0,
         color: colors.get(field.value),
-        width: "24px",
-        height: "24px",
-        padding: "2px",
-        boxSizing: "border-box",
         ...sx,
       }}
       control={
         <Checkbox
+          {...args}
           size={"medium"}
           sx={currentStyles()}
           {...field}
@@ -56,8 +61,10 @@ export default function CheckIconBox({
           <Box
             sx={{
               display: "inline-block",
-              width: "19px",
-              height: "19px",
+              width: "24px",
+              height: "24px",
+              padding: "2px",
+              boxSizing: "border-box",
             }}
           >
             <Icon />
