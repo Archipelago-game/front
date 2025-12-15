@@ -1,4 +1,5 @@
 import type { JSX } from "react";
 
 export type StatementColorMapping = Map<boolean, string>;
-export type ComponentIcon = () => JSX.Element;
+// eslint-disable-next-line
+export type ComponentIcon = (...args: any) => JSX.Element;

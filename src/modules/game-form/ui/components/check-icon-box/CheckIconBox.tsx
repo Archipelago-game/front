@@ -2,7 +2,7 @@ import type { ControllerRenderProps, FieldPath } from "react-hook-form";
 
 import type { FormType } from "../../../types/form/form.type.ts";
 import type { ChangeEvent } from "react";
-import { Checkbox, FormControlLabel, type SxProps } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, type SxProps } from "@mui/material";
 
 import { DEFAULT_STATEMENT_COLOR_MAP } from "./check-icon-box-default.const.ts";
 import type {
@@ -30,11 +30,16 @@ export default function CheckIconBox({
   const currentStyles = () => (Icon ? hideStyles : { padding: 0 });
   return (
     <FormControlLabel
+      className="form-label"
       sx={{
         display: "inline-block",
         verticalAlign: "top",
         margin: 0,
         color: colors.get(field.value),
+        width: "24px",
+        height: "24px",
+        padding: "2px",
+        boxSizing: "border-box",
         ...sx,
       }}
       control={
@@ -46,7 +51,21 @@ export default function CheckIconBox({
           onChange={onChange}
         />
       }
-      label={Icon ? <Icon /> : ""}
+      label={
+        Icon ? (
+          <Box
+            sx={{
+              display: "inline-block",
+              width: "19px",
+              height: "19px",
+            }}
+          >
+            <Icon />
+          </Box>
+        ) : (
+          ""
+        )
+      }
     />
   );
 }

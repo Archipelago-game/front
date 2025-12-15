@@ -1,5 +1,5 @@
 export const hideStyles = {
   position: "absolute",
-  top: -9999,
+  opacity: "0",
   zIndex: -9999,
 };

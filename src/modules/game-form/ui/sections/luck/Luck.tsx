@@ -7,6 +7,7 @@ import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
 import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
 
 import CheckIconBox from "../../components/check-icon-box/CheckIconBox.tsx";
+import LotusIcon from "../../../../../common/components/icons/LotusIcon.tsx";
 
 export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
@@ -29,11 +30,15 @@ export default function Luck() {
 
   return (
     <Box
+      className="luck"
       sx={{
         width: isBelow560 ? "100%" : "fit-content",
       }}
     >
-      <CustomLabel label={{ text: "Удача/Решимость" }} sx={{ flex: "1 1 1px" }}>
+      <CustomLabel
+        label={{ text: "Удача/Решимость" }}
+        sx={{ flex: "1 1 1px", justifyContent: "space-between" }}
+      >
         {fields.map((field, index) => (
           <Controller
             key={field.id}
