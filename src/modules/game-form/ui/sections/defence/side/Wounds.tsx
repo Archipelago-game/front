@@ -23,34 +23,32 @@ export default function Wounds() {
   }, [values?.defence.physical.wounds.list, replace]);
 
   return (
-    <>
-      <CustomLabel
-        label={{
-          text: "Раны",
-          color: "secondary",
-          size: "h6",
-        }}
-        orientation="column"
-      >
-        <Box sx={gridStyle}>
-          {fields.map((field, index) => (
-            <Controller
-              key={field.id}
-              name={`defence.physical.wounds.list.${index}.value`}
-              control={methods.control}
-              render={({ field }) => (
-                <ThreePositionBox
-                  value={field.value}
-                  onChange={(newValue) => {
-                    field.onChange(newValue);
-                    onChange();
-                  }}
-                />
-              )}
-            />
-          ))}
-        </Box>
-      </CustomLabel>
-    </>
+    <CustomLabel
+      label={{
+        text: "Раны",
+        color: "secondary",
+        size: "h6",
+      }}
+      orientation="column"
+    >
+      <Box sx={gridStyle}>
+        {fields.map((field, index) => (
+          <Controller
+            key={field.id}
+            name={`defence.physical.wounds.list.${index}.value`}
+            control={methods.control}
+            render={({ field }) => (
+              <ThreePositionBox
+                value={field.value}
+                onChange={(newValue) => {
+                  field.onChange(newValue);
+                  onChange();
+                }}
+              />
+            )}
+          />
+        ))}
+      </Box>
+    </CustomLabel>
   );
 }

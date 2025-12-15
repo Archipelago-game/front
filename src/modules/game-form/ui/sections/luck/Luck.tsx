@@ -1,13 +1,11 @@
-import CustomLabel from "../../components/CustomLabel.tsx";
-
-import { Box, useMediaQuery } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
 import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
 
+import { Box, useMediaQuery } from "@mui/material";
+import CustomLabel from "../../components/CustomLabel.tsx";
 import CheckIconBox from "../../components/check-icon-box/CheckIconBox.tsx";
-import LotusIcon from "../../../../../common/components/icons/LotusIcon.tsx";
 
 export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
