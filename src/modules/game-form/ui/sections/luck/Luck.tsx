@@ -4,8 +4,10 @@ import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
 import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
 
 import { Box, useMediaQuery } from "@mui/material";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import CheckIconBox from "../../components/check-icon-box/CheckIconBox.tsx";
+import { LUCK_STATEMENT_COLOR_MAP } from "./luck-colors.const.ts";
 
 export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
@@ -43,13 +45,13 @@ export default function Luck() {
             name={`luck.list.${index}.checked`}
             control={methods.control}
             render={({ field }) => (
-              // note для отображения иконки вместо checkbox, добавить пропу Icon c требуемой иконкой
-              // todo addIcon
               <CheckIconBox
                 field={field}
                 onChange={(e) => {
                   onChange(field, e);
                 }}
+                Icon={WorkspacePremiumIcon}
+                colors={LUCK_STATEMENT_COLOR_MAP}
               />
             )}
           />
