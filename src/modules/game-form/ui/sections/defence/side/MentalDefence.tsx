@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import PsychologyIcon from "@mui/icons-material/Psychology";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 
 import { Controller, useFieldArray } from "react-hook-form";
@@ -6,7 +7,7 @@ import { useCustomFormContext } from "../../../../providers/use-custom-context-f
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
-
+import { MENTAL_RESOLVE_STATEMENT_COLOR_MAP } from "./mental-resolve-colors.const.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
 import { useOZCalc } from "../../attributes/skill-table/OZ-calc.hook.ts";
@@ -51,13 +52,13 @@ export default function MentalDefence() {
               name={`defence.mental.resolve.list.${i}.checked`}
               control={methods.control}
               render={({ field }) => (
-                // note для отображения иконки вместо checkbox, добавить пропу Icon c требуемой иконкой
-                // todo addIcon
                 <CheckIconBox
                   field={field}
                   onChange={(e) => {
                     onChange(field, e);
                   }}
+                  Icon={PsychologyIcon}
+                  colors={MENTAL_RESOLVE_STATEMENT_COLOR_MAP}
                   disabled={isDisabled(i)}
                 />
               )}
