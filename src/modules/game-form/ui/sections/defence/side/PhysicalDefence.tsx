@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { Controller, useFieldArray } from "react-hook-form";
@@ -59,6 +60,7 @@ export default function PhysicalDefence() {
                   onChange={(e) => {
                     onChange(field, e);
                   }}
+                  Icon={WaterDropIcon}
                   disabled={isDisabled(i)}
                 />
               )}
