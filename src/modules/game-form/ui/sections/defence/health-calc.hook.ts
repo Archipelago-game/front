@@ -7,7 +7,10 @@ interface Props {
   focusFieldNames: FieldPath<FormType>[];
 }
 
-export function useHealthCalc({ statValueName, focusFieldNames }: Props) {
+export function useHealthCalc({
+  statValueName,
+  focusFieldNames,
+}: Props): number {
   const { methods } = useCustomFormContext();
 
   const watchedValues = useWatch({
@@ -19,8 +22,8 @@ export function useHealthCalc({ statValueName, focusFieldNames }: Props) {
 
   const maxFocus = focusValues.reduce((max, value) => {
     const num = Number(value) || 0;
-    return Math.max(max, num);
+    return Math.max(Number(max), num);
   }, 0);
 
-  return (Number(statValue) || 0) + maxFocus;
+  return (Number(statValue) || 0) + Number(maxFocus);
 }
