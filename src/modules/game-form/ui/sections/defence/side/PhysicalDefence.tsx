@@ -8,6 +8,7 @@ import type { FormType } from "../../../../types/form/form.type.ts";
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
+import { HEALTH_STATEMENT_COLOR_MAP } from "./health-colors.const.ts";
 
 import { useOZCalc } from "../../attributes/skill-table/OZ-calc.hook.ts";
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
@@ -61,6 +62,7 @@ export default function PhysicalDefence() {
                     onChange(field, e);
                   }}
                   Icon={WaterDropIcon}
+                  colors={HEALTH_STATEMENT_COLOR_MAP}
                   disabled={isDisabled(i)}
                 />
               )}
