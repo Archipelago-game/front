@@ -12,7 +12,6 @@ export const FORM_DEFAULT_VALUES: FormType = {
     checked: false,
     experience: {
       salted: 0,
-      deferred: 0,
     },
   },
   luck: {

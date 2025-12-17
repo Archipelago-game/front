@@ -1,8 +1,10 @@
 import CustomLabel from "../../components/CustomLabel.tsx";
 
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, Typography } from "@mui/material";
+import { useWatch } from "react-hook-form";
 import BaseField from "../../components/BaseField.tsx";
 import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
+import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 
 const styles = {
   display: "flex",
@@ -14,6 +16,23 @@ export default function Experience() {
   const isBelow560 = useMediaQuery("(max-width: 560px)");
 
   const isImmortal = useWatchImmortal();
+  const { methods } = useCustomFormContext();
+
+  // Отслеживаем изменения полей для вычисления оставшегося опыта
+  const total = useWatch({
+    control: methods.control,
+    name: "experience.total",
+    defaultValue: 0,
+  });
+
+  const used = useWatch({
+    control: methods.control,
+    name: "experience.used",
+    defaultValue: 0,
+  });
+
+  // Вычисляем оставшийся опыт
+  const remaining = total - used;
 
   return (
     <Box
@@ -60,26 +79,32 @@ export default function Experience() {
             orientation="row"
           />
 
-          {isImmortal && (
-            <>
-              <BaseField
-                fieldName="immortal.experience.salted"
-                label={{
-                  color: "secondary",
-                  text: "Засоленный",
-                }}
-                orientation="row"
-              />
+          {/* Оставшийся опыт - для всех персонажей */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: "0.5em" }}>
+            <Typography variant="body2" color="text.secondary">
+              Оставшийся:
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: 500,
+                color: remaining < 0 ? "error.main" : "text.primary",
+              }}
+            >
+              {remaining}
+            </Typography>
+          </Box>
 
-              <BaseField
-                fieldName="immortal.experience.deferred"
-                label={{
-                  color: "secondary",
-                  text: "Отложенный",
-                }}
-                orientation="row"
-              />
-            </>
+          {/* Засоленный опыт - только для бессмертных */}
+          {isImmortal && (
+            <BaseField
+              fieldName="immortal.experience.salted"
+              label={{
+                color: "secondary",
+                text: "Засоленный",
+              }}
+              orientation="row"
+            />
           )}
         </Box>
       </CustomLabel>

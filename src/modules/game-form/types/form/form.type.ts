@@ -98,7 +98,6 @@ export interface Immortal {
   checked: boolean;
   experience: {
     salted: number;
-    deferred: number;
   };
 }
 
