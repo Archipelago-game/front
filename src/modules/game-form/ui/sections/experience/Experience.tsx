@@ -37,7 +37,7 @@ export default function Experience() {
   return (
     <Box
       sx={{
-        width: isBelow560 ? "100%" : isImmortal ? "100%" : "300px",
+        width: isBelow560 ? "100%" : isImmortal ? "100%" : "420px",
         ["@media (max-width: 868px)"]: {
           order: -1,
         },
@@ -61,6 +61,18 @@ export default function Experience() {
             ...styles,
           }}
         >
+          {/* Засоленный опыт - только для бессмертных */}
+          {isImmortal && (
+            <BaseField
+              fieldName="immortal.experience.salted"
+              label={{
+                color: "secondary",
+                text: "Засоленный",
+              }}
+              orientation="row"
+            />
+          )}
+
           <BaseField
             fieldName="experience.total"
             label={{
@@ -94,18 +106,6 @@ export default function Experience() {
               {remaining}
             </Typography>
           </Box>
-
-          {/* Засоленный опыт - только для бессмертных */}
-          {isImmortal && (
-            <BaseField
-              fieldName="immortal.experience.salted"
-              label={{
-                color: "secondary",
-                text: "Засоленный",
-              }}
-              orientation="row"
-            />
-          )}
         </Box>
       </CustomLabel>
     </Box>
