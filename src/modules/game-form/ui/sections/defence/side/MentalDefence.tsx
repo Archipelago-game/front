@@ -10,20 +10,24 @@ import { gridStyle } from "./styles/side-defence.styles.ts";
 import { MENTAL_RESOLVE_STATEMENT_COLOR_MAP } from "./mental-resolve-colors.const.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
-import { useOZCalc } from "../../attributes/skill-table/OZ-calc.hook.ts";
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
 import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
+import { useHealthCalc } from "../health-calc.hook.ts";
 
 export default function MentalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
 
-  const OZValue = useOZCalc({
+  const healthValue = useHealthCalc({
     statValueName: "stats.willpower.value",
-    expertiseFieldName: "stats.willpower.discipline.expertise",
+    focusFieldNames: [
+      "stats.willpower.discipline.skills.order.focus",
+      "stats.willpower.discipline.skills.navigation.focus",
+      "stats.willpower.discipline.skills.faith.focus",
+    ],
   });
 
   const isDisabled = useWatchCheckboxAmount({
-    amount: OZValue ?? 20,
+    amount: healthValue ?? 20,
     listName: "defence.mental.resolve.list",
   });
 
@@ -41,7 +45,7 @@ export default function MentalDefence() {
   return (
     <Box>
       <CustomLabel label={{ text: "Ментальная" }} orientation="row">
-        <CalculatedValue value={OZValue} />
+        <CalculatedValue value={healthValue} />
       </CustomLabel>
 
       <CustomLabel label={{ text: "Решимость", color: "secondary" }}>
