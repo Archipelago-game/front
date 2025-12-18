@@ -1,75 +1,15 @@
-import { Grid } from "@mui/material";
-import {
-  type TalentGuideType,
-  talentsGuide,
-} from "../../../../../data/talents-guide.ts";
-import TalentsGuideLine from "./TalentsGuideLine.tsx";
-import { Box } from "@mui/system";
-import { useRef, useState } from "react";
-
-import TalentsFilterForm, {
-  type TalentsFilterFormValues,
-} from "./TalentsFilterForm.tsx";
-
-import { TALENTS_FILTER_FORM_DEFAULT_VALUES } from "./filter-form-default-values.const.ts";
-
-function filterByBranch(talents: TalentGuideType[], branch: string) {
-  if (branch === "allBranches") {
-    return talents;
-  }
-  return talents.filter((talent) => talent.branch === branch);
-}
-
-function filterByContent(talents: TalentGuideType[], value: string) {
-  if (value === "") {
-    return talents;
-  }
-  return talents.filter(
-    (talent) =>
-      talent.name.toLowerCase().includes(value.toLowerCase()) ||
-      talent.description.toLowerCase().includes(value.toLowerCase()),
-  );
-}
+import { talentsGuide } from "../../../../../data/talents-guide.ts";
+import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
+import TalentsFilteredList from "./TalentsFilteredList.tsx";
 
 interface Props {
   onChoose: (talent: TalentGuideType) => void;
 }
 
+/**
+ * Справочник талантов с фильтрацией
+ * Тонкая обертка над TalentsFilteredList для работы с глобальным справочником
+ */
 export default function TalentsGuide({ onChoose }: Props) {
-  const [talents, setTalents] = useState<TalentGuideType[]>(talentsGuide);
-  const filterValues = useRef<TalentsFilterFormValues>(
-    TALENTS_FILTER_FORM_DEFAULT_VALUES,
-  );
-
-  const onFilterFormChange = (values: TalentsFilterFormValues) => {
-    let talentsFiltered: TalentGuideType[] = [];
-    talentsFiltered = filterByBranch(talentsGuide, values.branch);
-    talentsFiltered = filterByContent(talentsFiltered, values.search);
-    setTalents(talentsFiltered);
-    filterValues.current = values;
-  };
-
-  return (
-    <>
-      <TalentsFilterForm onFormChange={onFilterFormChange} />
-      <Box
-        sx={{
-          overflowY: "auto",
-          scrollBehavior: "smooth",
-          scrollbarWidth: "none",
-          paddingBottom: "30px",
-        }}
-      >
-        <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
-          {talents.map((talent) => (
-            <TalentsGuideLine
-              key={`${talent.branch}${talent.rang}`}
-              talent={talent}
-              onChange={onChoose}
-            />
-          ))}
-        </Grid>
-      </Box>
-    </>
-  );
+  return <TalentsFilteredList talents={talentsGuide} onChoose={onChoose} />;
 }
