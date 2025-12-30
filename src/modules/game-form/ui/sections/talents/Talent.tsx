@@ -62,14 +62,16 @@ export default function Talent() {
   };
 
   useEffect(() => {
-    setFilteredTalents(adaptTalentFieldsToGuides(fields));
-  }, [fields]);
+    if (values) {
+      console.log(values.talents.list);
+    }
+  }, [values]);
 
   useEffect(() => {
     if (values) {
       replace(values.talents.list);
     }
-  }, [values?.talents.list]);
+  }, []);
 
   return (
     <Box width={"fit-content"}>
@@ -77,7 +79,7 @@ export default function Talent() {
         talents={adaptTalentFieldsToGuides(fields)}
         onFormChange={handleFilterChange}
       />
-      <TalentsView fields={filteredTalents} onDelete={deleteTalent} />
+      <TalentsView fields={fields} onDelete={deleteTalent} />
       <Box
         sx={{
           display: "flex",
