@@ -7,10 +7,10 @@ import type { TalentsFilterFormValues } from "./TalentsGuideFilterForm.tsx";
  * @param branch - название ветки или "allBranches" для всех веток
  * @returns отфильтрованный массив талантов
  */
-export function filterByBranch(
-  talents: TalentGuideType[],
+export function filterByBranch<T extends TalentGuideType>(
+  talents: T[],
   branch: string,
-): TalentGuideType[] {
+): T[] {
   if (branch === "allBranches") {
     return talents;
   }
@@ -24,10 +24,10 @@ export function filterByBranch(
  * @param searchValue - строка для поиска
  * @returns отфильтрованный массив талантов
  */
-export function filterByContent(
-  talents: TalentGuideType[],
+export function filterByContent<T extends TalentGuideType>(
+  talents: T[],
   searchValue: string,
-): TalentGuideType[] {
+): T[] {
   if (searchValue === "") {
     return talents;
   }
@@ -48,10 +48,10 @@ export function filterByContent(
  * @param filters - значения фильтров из формы
  * @returns отфильтрованный массив талантов
  */
-export function applyTalentsFilters(
-  talents: TalentGuideType[],
+export function applyTalentsFilters<T extends TalentGuideType>(
+  talents: T[],
   filters: TalentsFilterFormValues,
-): TalentGuideType[] {
+): T[] {
   let filtered = filterByBranch(talents, filters.branch);
   filtered = filterByContent(filtered, filters.search);
   return filtered;

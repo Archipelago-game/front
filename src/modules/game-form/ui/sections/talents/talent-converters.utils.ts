@@ -1,5 +1,5 @@
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
-import type { Talent } from "../../../types/form/form.type.ts";
+import type { Talent, TalentField } from "../../../types/form/form.type.ts";
 
 /**
  * Преобразует Talent (форма персонажа) в TalentGuideType (для фильтров)
@@ -38,4 +38,13 @@ export function talentGuideToTalent(guide: TalentGuideType): Talent {
  */
 export function talentsToGuides(talents: Talent[]): TalentGuideType[] {
   return talents.map(talentToGuide);
+}
+
+export function adaptTalentFieldsToGuides(
+  fields: TalentField[],
+): (TalentField & { description: string })[] {
+  return fields.map((field) => ({
+    description: field.effect,
+    ...field,
+  }));
 }

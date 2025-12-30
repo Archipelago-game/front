@@ -1,5 +1,6 @@
 import type { Stats } from "./attributes.type.ts";
 import type { ThreePositionType } from "../../ui/components/three-position-box/three-position-box.type.ts";
+import type { FieldArrayWithId } from "react-hook-form";
 
 interface TextItem {
   value: string;
@@ -102,6 +103,8 @@ export interface Immortal {
 }
 
 export type Talents = FormArrayFields<Talent>;
+
+export type TalentField = FieldArrayWithId<FormType, "talents.list", "id">;
 
 export interface FormType {
   name: string;

@@ -6,15 +6,14 @@ import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/Too
 
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 
-import type { FormType } from "../../../types/form/form.type.ts";
-import { type FieldArrayWithId } from "react-hook-form";
+import type { TalentField } from "../../../types/form/form.type.ts";
 
 const LABEL_STYLES = {
   sx: { width: "4rem" },
 };
 
 interface Props {
-  fields: FieldArrayWithId<FormType, "talents.list", "id">[];
+  fields: TalentField[];
   onDelete: (index: number, name: string) => void;
 }
 

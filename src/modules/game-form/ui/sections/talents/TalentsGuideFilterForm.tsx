@@ -17,8 +17,8 @@ export interface TalentsFilterFormValues {
   search: string;
 }
 
-interface Props {
-  talents: TalentGuideType[];
+interface Props<T extends TalentGuideType> {
+  talents: T[];
   defaultValues?: TalentsFilterFormValues;
   onFormChange: (values: TalentsFilterFormValues) => void;
 }
@@ -52,7 +52,9 @@ const styles = {
  * The consumer is responsible for applying the filtering logic
  * and managing the presentation of the filtered results.
  */
-export default function TalentsGuideFilterForm(props: Props) {
+export default function TalentsGuideFilterForm<T extends TalentGuideType>(
+  props: Props<T>,
+) {
   const { talents, defaultValues = TALENTS_FILTER_FORM_DEFAULT_VALUES } = props;
   const { control, getValues } = useForm<TalentsFilterFormValues>({
     defaultValues,
