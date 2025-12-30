@@ -1,6 +1,6 @@
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
 import type { Talent } from "../../../types/form/form.type.ts";
-import TalentsFilteredList from "./TalentsFilteredList.tsx";
+import TalentsGuideFilteredList from "./TalentsGuideFilteredList.tsx";
 import { talentsToGuides } from "./talent-converters.utils.ts";
 
 export interface CharacterTalentsFilteredProps {
@@ -24,15 +24,12 @@ export interface CharacterTalentsFilteredProps {
  */
 export default function CharacterTalentsFiltered({
   talents,
-  onChoose
+  onChoose,
 }: CharacterTalentsFilteredProps) {
   // Преобразуем таланты персонажа в формат для фильтров
   const talentsForFilter = talentsToGuides(talents);
 
   return (
-    <TalentsFilteredList
-      talents={talentsForFilter}
-      onChoose={onChoose}
-    />
+    <TalentsGuideFilteredList talents={talentsForFilter} onChoose={onChoose} />
   );
 }

@@ -1,6 +1,6 @@
 import { talentsGuide } from "../../../../../data/talents-guide.ts";
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
-import TalentsFilteredList from "./TalentsFilteredList.tsx";
+import TalentsGuideFilteredList from "./TalentsGuideFilteredList.tsx";
 
 interface Props {
   onChoose: (talent: TalentGuideType) => void;
@@ -11,5 +11,7 @@ interface Props {
  * Тонкая обертка над TalentsFilteredList для работы с глобальным справочником
  */
 export default function TalentsGuide({ onChoose }: Props) {
-  return <TalentsFilteredList talents={talentsGuide} onChoose={onChoose} />;
+  return (
+    <TalentsGuideFilteredList talents={talentsGuide} onChoose={onChoose} />
+  );
 }

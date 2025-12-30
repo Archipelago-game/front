@@ -38,10 +38,6 @@ export default function Talent() {
     });
   };
 
-  const handleTalentClick = () => {
-    // Ничего не делаем - только отображение
-  };
-
   useEffect(() => {
     if (values) {
       replace(values.talents.list);
@@ -50,7 +46,7 @@ export default function Talent() {
 
   return (
     <Box width={"fit-content"}>
-      <CharacterTalentsFiltered talents={fields} onChoose={handleTalentClick} />
+      <CharacterTalentsFiltered talents={fields} onChoose={() => {}} />
       <Box
         sx={{
           display: "flex",
