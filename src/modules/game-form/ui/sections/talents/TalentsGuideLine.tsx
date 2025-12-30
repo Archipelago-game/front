@@ -2,12 +2,15 @@ import { Checkbox, Grid } from "@mui/material";
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
 import type { ChangeEvent } from "react";
 
-interface Props {
-  talent: TalentGuideType;
-  onChange: (values: TalentGuideType) => void;
+interface Props<T extends TalentGuideType> {
+  talent: T;
+  onChange: (values: T) => void;
 }
 
-export default function TalentsGuideLine({ talent, onChange }: Props) {
+export default function TalentsGuideLine<T extends TalentGuideType>({
+  talent,
+  onChange,
+}: Props<T>) {
   const { branch, name, rang, description } = talent;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

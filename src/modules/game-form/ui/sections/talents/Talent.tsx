@@ -14,21 +14,25 @@ import {
   adaptTalentFieldsToGuides,
   talentGuideToTalent,
 } from "./talent-converters.utils.ts";
-import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
+import {
+  type TalentGuideType,
+  talentsGuide,
+} from "../../../../../data/talents-guide.ts";
+import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 
 // todo обновлять при добавлении таланта
 export default function Talent() {
   const { methods, values, onChange } = useCustomFormContext();
   const { openModal, closeModal } = useModal();
+  const { open } = useConfirmDialogContext();
 
   const { fields, replace, append, remove } = useFieldArray({
     name: "talents.list",
     control: methods.control,
   });
 
-  const { filteredTalents, handleFilterChange } = useTalentsGuideFilter(
-    adaptTalentFieldsToGuides(fields),
-  );
+  const { filteredTalents, setFilteredTalents, handleFilterChange } =
+    useTalentsGuideFilter(adaptTalentFieldsToGuides(fields));
 
   const onChoose = (talent: TalentGuideType) => {
     append({ ...talentGuideToTalent(talent) });
@@ -37,7 +41,7 @@ export default function Talent() {
   };
 
   const content = () => {
-    return <TalentsGuide onChoose={onChoose} />;
+    return <TalentsGuide onChoose={onChoose} talents={talentsGuide} />;
   };
 
   const addTalent = () => {
@@ -48,13 +52,14 @@ export default function Talent() {
     });
   };
 
-  const onDelete = (index: number, name: string) => {
-    openModal({
-      content,
-      title: "Таланты",
-      showConfirmButton: false,
+  const deleteTalent = (index: number, name: string) => {
+    open({
+      message: `ты действительно хочешь удалить талант ${name}?`,
+      onConfirm: () => {
+        remove(index);
+        onChange();
+      },
     });
-    remove(index);
   };
 
   useEffect(() => {
@@ -69,7 +74,7 @@ export default function Talent() {
         talents={adaptTalentFieldsToGuides(fields)}
         onFormChange={handleFilterChange}
       />
-      <TalentsView fields={filteredTalents} onDelete={onDelete} />
+      <TalentsView fields={filteredTalents} onDelete={deleteTalent} />
       <Box
         sx={{
           display: "flex",

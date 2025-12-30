@@ -6,16 +6,16 @@ import TalentsGuideLine from "./TalentsGuideLine.tsx";
 
 import { useTalentsGuideFilter } from "./use-talents-filter.hook.ts";
 
-export interface TalentsFilteredListProps {
+export interface TalentsFilteredListProps<T extends TalentGuideType> {
   /**
    * Полный список талантов для фильтрации
    */
-  talents: TalentGuideType[];
+  talents: T[];
 
   /**
    * Callback при выборе таланта из списка
    */
-  onChoose: (talent: TalentGuideType) => void;
+  onChoose: (talent: T) => void;
 }
 
 /**
@@ -23,10 +23,10 @@ export interface TalentsFilteredListProps {
  * Управляет состоянием фильтров и отфильтрованного списка
  * Использует debounce для оптимизации производительности
  */
-export default function TalentsGuideFilteredList({
+export default function TalentsGuideFilteredList<T extends TalentGuideType>({
   talents,
   onChoose,
-}: TalentsFilteredListProps) {
+}: TalentsFilteredListProps<T>) {
   const { filteredTalents, handleFilterChange } =
     useTalentsGuideFilter(talents);
 

@@ -19,5 +19,5 @@ export function useTalentsGuideFilter<T extends TalentGuideType>(talents: T[]) {
     filterValues.current = values;
   };
 
-  return { filteredTalents, handleFilterChange };
+  return { filteredTalents, setFilteredTalents, handleFilterChange };
 }
