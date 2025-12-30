@@ -19,6 +19,7 @@ export interface TalentsFilterFormValues {
 
 interface Props {
   talents: TalentGuideType[];
+  defaultValues?: TalentsFilterFormValues;
   onFormChange: (values: TalentsFilterFormValues) => void;
 }
 
@@ -33,17 +34,37 @@ const styles = {
   },
 };
 
+/**
+ * Properties for the TalentsFilterForm component.
+ *
+ * @property talents
+ * A collection of talent entities used exclusively to derive
+ * filter options (for example, available branches).
+ * The component does not mutate or filter this data.
+ *
+ * @property defaultValues
+ * Initial values of the filter form fields.
+ * If omitted, predefined default values are applied.
+ *
+ * @property onFormChange
+ * Callback invoked when the filter form state changes.
+ * Receives the complete set of current filter values.
+ * The consumer is responsible for applying the filtering logic
+ * and managing the presentation of the filtered results.
+ */
 export default function TalentsFilterForm(props: Props) {
+  const { talents, defaultValues = TALENTS_FILTER_FORM_DEFAULT_VALUES } = props;
   const { control, getValues } = useForm<TalentsFilterFormValues>({
-    defaultValues: TALENTS_FILTER_FORM_DEFAULT_VALUES,
+    defaultValues,
   });
 
   const branchOptions = useMemo(
-    () => getUniqueTalentBranches(props.talents).map((branch) => ({
-      value: branch,
-      label: branch,
-    })),
-    [props.talents]
+    () =>
+      getUniqueTalentBranches(talents).map((branch) => ({
+        value: branch,
+        label: branch,
+      })),
+    [props.talents],
   );
 
   const onFormChange = useMemo(

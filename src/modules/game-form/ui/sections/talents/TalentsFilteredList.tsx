@@ -30,7 +30,8 @@ export default function TalentsFilteredList({
   onChoose,
 }: TalentsFilteredListProps) {
   // Состояние отфильтрованного списка (изначально показываем все)
-  const [filteredTalents, setFilteredTalents] = useState<TalentGuideType[]>(talents);
+  const [filteredTalents, setFilteredTalents] =
+    useState<TalentGuideType[]>(talents);
 
   // Ref для хранения текущих значений фильтров
   const filterValues = useRef<TalentsFilterFormValues>(
@@ -50,10 +51,7 @@ export default function TalentsFilteredList({
   return (
     <>
       {/* Форма фильтрации (sticky позиция) */}
-      <TalentsFilterForm
-        talents={talents}
-        onFormChange={handleFilterChange}
-      />
+      <TalentsFilterForm talents={talents} onFormChange={handleFilterChange} />
 
       {/* Прокручиваемый список результатов */}
       <Box
