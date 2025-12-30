@@ -1,12 +1,10 @@
 import { Grid, Box } from "@mui/material";
-import { useState, useRef } from "react";
+
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
-import TalentsFilterForm, {
-  type TalentsFilterFormValues,
-} from "./TalentsFilterForm.tsx";
+import TalentsFilterForm from "./TalentsFilterForm.tsx";
 import TalentsGuideLine from "./TalentsGuideLine.tsx";
-import { TALENTS_FILTER_FORM_DEFAULT_VALUES } from "./filter-form-default-values.const.ts";
-import { applyTalentsFilters } from "./talents-filter.utils.ts";
+
+import { useTalentsGuideFilter } from "./use-talents-filter.hook.ts";
 
 export interface TalentsFilteredListProps {
   /**
@@ -29,24 +27,8 @@ export default function TalentsFilteredList({
   talents,
   onChoose,
 }: TalentsFilteredListProps) {
-  // Состояние отфильтрованного списка (изначально показываем все)
-  const [filteredTalents, setFilteredTalents] =
-    useState<TalentGuideType[]>(talents);
-
-  // Ref для хранения текущих значений фильтров
-  const filterValues = useRef<TalentsFilterFormValues>(
-    TALENTS_FILTER_FORM_DEFAULT_VALUES,
-  );
-
-  /**
-   * Обработчик изменения значений фильтров
-   * Вызывается из TalentsFilterForm с debounce 500ms
-   */
-  const handleFilterChange = (values: TalentsFilterFormValues) => {
-    const filtered = applyTalentsFilters(talents, values);
-    setFilteredTalents(filtered);
-    filterValues.current = values;
-  };
+  const { filteredTalents, handleFilterChange } =
+    useTalentsGuideFilter(talents);
 
   return (
     <>
