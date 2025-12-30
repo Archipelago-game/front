@@ -8,6 +8,7 @@ import { useModal } from "../../../../../app/providers/global-modal/use-modal.ho
 import TalentsGuide from "./TalentsGuide.tsx";
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
 import CharacterTalentsFiltered from "./CharacterTalentsFiltered.tsx";
+import { adaptTalentGuideToTalent } from "./TalentGuideToTalentAdapter.util.ts";
 
 export default function Talent() {
   const { methods, values, onChange } = useCustomFormContext();
@@ -19,12 +20,7 @@ export default function Talent() {
   });
 
   const onChoose = (talent: TalentGuideType) => {
-    append({
-      name: talent.name,
-      branch: talent.branch,
-      effect: talent.description,
-      rang: talent.rang,
-    });
+    append({ ...adaptTalentGuideToTalent(talent) });
     onChange();
     closeModal();
   };
@@ -53,10 +49,7 @@ export default function Talent() {
 
   return (
     <Box width={"fit-content"}>
-      <CharacterTalentsFiltered
-        talents={fields}
-        onChoose={handleTalentClick}
-      />
+      <CharacterTalentsFiltered talents={fields} onChoose={handleTalentClick} />
       <Box
         sx={{
           display: "flex",
