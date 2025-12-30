@@ -20,7 +20,6 @@ import {
 } from "../../../../../data/talents-guide.ts";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 
-// todo обновлять при добавлении таланта
 export default function Talent() {
   const { methods, values, onChange } = useCustomFormContext();
   const { openModal, closeModal } = useModal();
@@ -61,6 +60,10 @@ export default function Talent() {
       },
     });
   };
+
+  useEffect(() => {
+    setFilteredTalents(adaptTalentFieldsToGuides(fields));
+  }, [fields]);
 
   useEffect(() => {
     if (values) {
