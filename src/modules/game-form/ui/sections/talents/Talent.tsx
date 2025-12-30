@@ -8,8 +8,9 @@ import { useModal } from "../../../../../app/providers/global-modal/use-modal.ho
 import TalentsGuide from "./TalentsGuide.tsx";
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
 import CharacterTalentsFiltered from "./CharacterTalentsFiltered.tsx";
-import { adaptTalentGuideToTalent } from "./TalentGuideToTalentAdapter.util.ts";
+import { talentGuideToTalent } from "./talent-converters.utils.ts";
 
+// todo обновлять при добавлении таланта
 export default function Talent() {
   const { methods, values, onChange } = useCustomFormContext();
   const { openModal, closeModal } = useModal();
@@ -20,7 +21,7 @@ export default function Talent() {
   });
 
   const onChoose = (talent: TalentGuideType) => {
-    append({ ...adaptTalentGuideToTalent(talent) });
+    append({ ...talentGuideToTalent(talent) });
     onChange();
     closeModal();
   };

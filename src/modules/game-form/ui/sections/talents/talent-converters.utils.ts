@@ -12,7 +12,7 @@ export function talentToGuide(talent: Talent): TalentGuideType {
   return {
     name: talent.name,
     branch: talent.branch,
-    description: talent.effect,  // effect → description
+    description: talent.effect, // effect → description
     rang: talent.rang,
   };
 }
@@ -28,7 +28,7 @@ export function talentGuideToTalent(guide: TalentGuideType): Talent {
   return {
     name: guide.name,
     branch: guide.branch,
-    effect: guide.description,  // description → effect
+    effect: guide.description, // description → effect
     rang: guide.rang,
   };
 }
