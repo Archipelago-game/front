@@ -1,21 +1,15 @@
-import { Box, Button, Grid, IconButton } from "@mui/material";
-import BaseField from "../../components/BaseField.tsx";
+import { Box, Button } from "@mui/material";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useFieldArray } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
-import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/TooltipWrapper.tsx";
-import { Delete } from "@mui/icons-material";
-import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 import { useModal } from "../../../../../app/providers/global-modal/use-modal.hook.ts";
 import TalentsGuide from "./TalentsGuide.tsx";
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
-
-const LABEL_STYLES = {
-  sx: { width: "4rem" },
-};
+import { groupTalentsByBranch } from "./group-talents-by-branch.utils.ts";
+import TalentGroup from "./TalentGroup.tsx";
 
 export default function Talent() {
   const { methods, values, onChange } = useCustomFormContext();
@@ -26,6 +20,11 @@ export default function Talent() {
     name: "talents.list",
     control: methods.control,
   });
+
+  const groups = useMemo(
+    () => groupTalentsByBranch(fields),
+    [fields]
+  );
 
   const onChoose = (talent: TalentGuideType) => {
     append({
@@ -68,81 +67,13 @@ export default function Talent() {
 
   return (
     <Box width={"fit-content"}>
-      <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
-        {fields.map((field, index) => (
-          <Box
-            key={field.id}
-            sx={{
-              position: "relative",
-              paddingLeft: "25px",
-            }}
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                top: -2,
-                left: 1,
-              }}
-            >
-              <IconButton
-                onClick={() => deleteTalent(index, field.name)}
-                sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
-              >
-                <Delete fontSize="small" />
-              </IconButton>
-            </Box>
-            <Grid container key={field.id} wrap={"wrap"}>
-              <Grid size={{ xs: 12, md: 8 }}>
-                <BaseField
-                  fieldName={`talents.list.${index}.name`}
-                  label={{
-                    text: "Название",
-                    ...LABEL_STYLES,
-                  }}
-                  orientation="row"
-                  fieldType="text"
-                />
-              </Grid>
-              <Grid size={{ xs: 8, md: 4 }}>
-                <BaseField
-                  fieldName={`talents.list.${index}.branch`}
-                  label={{
-                    text: "Ветка",
-                    color: "secondary",
-                    ...LABEL_STYLES,
-                  }}
-                  orientation="row"
-                  fieldType="text"
-                />
-              </Grid>
-              <Grid size={{ xs: 12, md: 10 }} order={{ xs: 4, md: 3 }}>
-                <TooltipWrapper text={field.effect}>
-                  <BaseField
-                    fieldName={`talents.list.${index}.effect`}
-                    label={{
-                      text: "Эффект",
-                      color: "secondary",
-                      ...LABEL_STYLES,
-                    }}
-                    orientation="row"
-                    fieldType="text"
-                  />
-                </TooltipWrapper>
-              </Grid>
-              <Grid size={{ xs: 4, md: 2 }} order={{ xs: 3, md: 4 }}>
-                <BaseField
-                  fieldName={`talents.list.${index}.rang`}
-                  label={{
-                    text: "Ранг",
-                    color: "secondary",
-                  }}
-                  orientation="row"
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        ))}
-      </Grid>
+      {groups.map((group) => (
+        <TalentGroup
+          key={group.branch}
+          group={group}
+          onDelete={deleteTalent}
+        />
+      ))}
       <Box
         sx={{
           display: "flex",
