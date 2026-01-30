@@ -19,6 +19,8 @@ export interface CustomLabelProps {
 export default function CustomLabel(props: CustomLabelProps) {
   const theme = useTheme();
   const { label, orientation, children, sx } = props;
+  const hasLabel = Boolean(label?.text);
+
   return (
     <Box
       sx={{
@@ -29,29 +31,31 @@ export default function CustomLabel(props: CustomLabelProps) {
       }}
     >
       {/* todo выделить в отдельный компонент */}
-      <Box
-        sx={{
-          width: children ? "unset" : "100%",
-          display: "flex",
-          fontSize: {
-            xs: ".8em", // <600px
-            sm: ".9em",
-            md: "0.9em", // ≥960px
-          },
-          ...defaultLabelTextStyles(theme, label?.color),
-          ...label?.sx,
-        }}
-      >
-        <Typography
+      {hasLabel && (
+        <Box
           sx={{
-            textAlign: "center",
-            fontSize: "inherit",
+            width: children ? "unset" : "100%",
+            display: "flex",
+            fontSize: {
+              xs: ".8em", // <600px
+              sm: ".9em",
+              md: "0.9em", // ≥960px
+            },
+            ...defaultLabelTextStyles(theme, label?.color),
+            ...label?.sx,
           }}
-          variant={label?.size ?? "h6"}
         >
-          {label?.text}
-        </Typography>
-      </Box>
+          <Typography
+            sx={{
+              textAlign: "center",
+              fontSize: "inherit",
+            }}
+            variant={label?.size ?? "h6"}
+          >
+            {label?.text}
+          </Typography>
+        </Box>
+      )}
       {children && <Box sx={{ flex: 1 }}>{children}</Box>}
     </Box>
   );
