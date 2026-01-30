@@ -60,10 +60,6 @@ export default function TalentGroup({ group, onDelete }: Props) {
               <Grid size={{ xs: 12, md: 8 }}>
                 <BaseField
                   fieldName={`talents.list.${index}.name`}
-                  label={{
-                    text: "Название",
-                    ...LABEL_STYLES,
-                  }}
                   orientation="row"
                   fieldType="text"
                 />
@@ -84,13 +80,9 @@ export default function TalentGroup({ group, onDelete }: Props) {
                 <TooltipWrapper text={talent.effect}>
                   <BaseField
                     fieldName={`talents.list.${index}.effect`}
-                    label={{
-                      text: "Эффект",
-                      color: "secondary",
-                      ...LABEL_STYLES,
-                    }}
                     orientation="row"
                     fieldType="text"
+                    multiline={{ isMultiline: true, rows: 5 }}
                   />
                 </TooltipWrapper>
               </Grid>
