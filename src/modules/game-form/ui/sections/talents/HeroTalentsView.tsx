@@ -6,18 +6,18 @@ import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/Too
 
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 
-import type { TalentField } from "../../../types/form/form.type.ts";
+import type { AdaptedTalentField } from "../../../types/form/form.type.ts";
 
 const LABEL_STYLES = {
   sx: { width: "4rem" },
 };
 
 interface Props {
-  fields: TalentField[];
+  fields: AdaptedTalentField[];
   onDelete: (index: number, name: string) => void;
 }
 
-export default function TalentsView({ fields, onDelete }: Props) {
+export default function HeroTalentsView({ fields, onDelete }: Props) {
   return (
     <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
       {fields.map((field, index) => (
@@ -36,7 +36,7 @@ export default function TalentsView({ fields, onDelete }: Props) {
             }}
           >
             <IconButton
-              onClick={() => onDelete(index, field.name)}
+              onClick={() => onDelete(field.fieldIndex, field.name)}
               sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
             >
               <Delete fontSize="small" />

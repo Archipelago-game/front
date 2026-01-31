@@ -6,12 +6,12 @@ import { useModal } from "../../../../../app/providers/global-modal/use-modal.ho
 import { useTalentsGuideFilter } from "./use-talents-filter.hook.ts";
 
 import { Box, Button } from "@mui/material";
-import TalentsView from "./TalentView.tsx";
+import HeroTalentsView from "./HeroTalentsView.tsx";
 import TalentsGuideFilterForm from "./TalentsGuideFilterForm.tsx";
 import TalentsGuide from "./TalentsGuide.tsx";
 
 import {
-  adaptTalentFieldsToGuides,
+  adaptTalentFields,
   talentGuideToTalent,
 } from "./talent-converters.utils.ts";
 import {
@@ -19,6 +19,8 @@ import {
   talentsGuide,
 } from "../../../../../data/talents-guide.ts";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
+
+// todo перед сохрананением очистить от description
 
 export default function Talent() {
   const { methods, values, onChange } = useCustomFormContext();
@@ -31,7 +33,7 @@ export default function Talent() {
   });
 
   const { filteredTalents, handleFilterChange } = useTalentsGuideFilter(
-    adaptTalentFieldsToGuides(fields),
+    adaptTalentFields(fields),
   );
 
   const onChoose = (talent: TalentGuideType) => {
@@ -77,10 +79,10 @@ export default function Talent() {
   return (
     <Box width={"fit-content"}>
       <TalentsGuideFilterForm
-        talents={adaptTalentFieldsToGuides(fields)}
+        talents={adaptTalentFields(fields)}
         onFormChange={handleFilterChange}
       />
-      <TalentsView fields={fields} onDelete={deleteTalent} />
+      <HeroTalentsView fields={filteredTalents} onDelete={deleteTalent} />
       <Box
         sx={{
           display: "flex",

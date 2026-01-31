@@ -1,13 +1,17 @@
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
-import type { Talent, TalentField } from "../../../types/form/form.type.ts";
+import type {
+  AdaptedTalentField,
+  IndexedTalentField,
+  Talent,
+  TalentField,
+} from "../../../types/form/form.type.ts";
 
 /**
- * Преобразует Talent (форма персонажа) в TalentGuideType (для фильтров)
- *
- * Маппинг полей:
- * - effect → description
- * - остальные поля совпадают
+ * Преобразует массив талантов персонажа в формат для фильтров
  */
+export function talentsToGuides(talents: Talent[]): TalentGuideType[] {
+  return talents.map(talentToGuide);
+}
 export function talentToGuide(talent: Talent): TalentGuideType {
   return {
     name: talent.name,
@@ -15,6 +19,21 @@ export function talentToGuide(talent: Talent): TalentGuideType {
     description: talent.effect, // effect → description
     rang: talent.rang,
   };
+}
+
+/**
+ * Адаптирует для работы с TalentsGuideFilter и отображением в HeroTalents
+ *
+ *
+ */
+export function adaptTalentFields(
+  talents: TalentField[],
+): AdaptedTalentField[] {
+  return talents.map((talent, index) => ({
+    description: talent.effect,
+    ...talent,
+    fieldIndex: index,
+  }));
 }
 
 /**
@@ -33,18 +52,20 @@ export function talentGuideToTalent(guide: TalentGuideType): Talent {
   };
 }
 
-/**
- * Преобразует массив талантов персонажа в формат для фильтров
- */
-export function talentsToGuides(talents: Talent[]): TalentGuideType[] {
-  return talents.map(talentToGuide);
-}
-
 export function adaptTalentFieldsToGuides(
   fields: TalentField[],
 ): (TalentField & { description: string })[] {
   return fields.map((field) => ({
     description: field.effect,
     ...field,
+  }));
+}
+
+export function mapTalentFieldsWithIndex(
+  fields: TalentField[],
+): IndexedTalentField[] {
+  return fields.map((field, index) => ({
+    ...field,
+    fieldIndex: index,
   }));
 }

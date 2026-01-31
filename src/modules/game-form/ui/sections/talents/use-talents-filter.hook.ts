@@ -14,7 +14,7 @@ export function useTalentsGuideFilter<T extends TalentGuideType>(talents: T[]) {
   };
 
   const filteredTalents = useMemo(() => {
-    console.log(talents);
+    console.log(applyTalentsFilters(talents, filterValues));
     return applyTalentsFilters(talents, filterValues);
   }, [talents, filterValues]);
 
