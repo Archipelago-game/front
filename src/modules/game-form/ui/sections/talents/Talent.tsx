@@ -6,7 +6,7 @@ import { useModal } from "../../../../../app/providers/global-modal/use-modal.ho
 import { useTalentsGuideFilter } from "./use-talents-filter.hook.ts";
 
 import { Box, Button } from "@mui/material";
-import TalentsView from "./TalentLayout.tsx";
+import TalentsView from "./TalentView.tsx";
 import TalentsGuideFilterForm from "./TalentsGuideFilterForm.tsx";
 import TalentsGuide from "./TalentsGuide.tsx";
 
@@ -30,8 +30,9 @@ export default function Talent() {
     control: methods.control,
   });
 
-  const { filteredTalents, setFilteredTalents, handleFilterChange } =
-    useTalentsGuideFilter(adaptTalentFieldsToGuides(fields));
+  const { filteredTalents, handleFilterChange } = useTalentsGuideFilter(
+    adaptTalentFieldsToGuides(fields),
+  );
 
   const onChoose = (talent: TalentGuideType) => {
     append({ ...talentGuideToTalent(talent) });
