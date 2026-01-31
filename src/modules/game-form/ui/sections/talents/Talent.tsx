@@ -66,12 +66,6 @@ export default function Talent() {
 
   useEffect(() => {
     if (values) {
-      console.log(values.talents.list);
-    }
-  }, [values]);
-
-  useEffect(() => {
-    if (values) {
       replace(values.talents.list);
     }
   }, []);

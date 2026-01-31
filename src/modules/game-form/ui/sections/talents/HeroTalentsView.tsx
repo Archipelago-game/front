@@ -18,11 +18,12 @@ interface Props {
 }
 
 export default function HeroTalentsView({ fields, onDelete }: Props) {
+  console.log(fields);
   return (
     <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
-      {fields.map((field, index) => (
+      {fields.map((field) => (
         <Box
-          key={field.id}
+          key={field.name}
           sx={{
             position: "relative",
             paddingLeft: "25px",
@@ -42,10 +43,10 @@ export default function HeroTalentsView({ fields, onDelete }: Props) {
               <Delete fontSize="small" />
             </IconButton>
           </Box>
-          <Grid container key={field.id} wrap={"wrap"}>
+          <Grid container wrap={"wrap"}>
             <Grid size={{ xs: 12, md: 8 }}>
               <BaseField
-                fieldName={`talents.list.${index}.name`}
+                fieldName={`talents.list.${field.fieldIndex}.name`}
                 label={{
                   text: "Название",
                   ...LABEL_STYLES,
@@ -56,7 +57,7 @@ export default function HeroTalentsView({ fields, onDelete }: Props) {
             </Grid>
             <Grid size={{ xs: 8, md: 4 }}>
               <BaseField
-                fieldName={`talents.list.${index}.branch`}
+                fieldName={`talents.list.${field.fieldIndex}.branch`}
                 label={{
                   text: "Ветка",
                   color: "secondary",
@@ -69,7 +70,7 @@ export default function HeroTalentsView({ fields, onDelete }: Props) {
             <Grid size={{ xs: 12, md: 10 }} order={{ xs: 4, md: 3 }}>
               <TooltipWrapper text={field.effect}>
                 <BaseField
-                  fieldName={`talents.list.${index}.effect`}
+                  fieldName={`talents.list.${field.fieldIndex}.effect`}
                   label={{
                     text: "Эффект",
                     color: "secondary",
@@ -82,7 +83,7 @@ export default function HeroTalentsView({ fields, onDelete }: Props) {
             </Grid>
             <Grid size={{ xs: 4, md: 2 }} order={{ xs: 3, md: 4 }}>
               <BaseField
-                fieldName={`talents.list.${index}.rang`}
+                fieldName={`talents.list.${field.fieldIndex}.rang`}
                 label={{
                   text: "Ранг",
                   color: "secondary",
