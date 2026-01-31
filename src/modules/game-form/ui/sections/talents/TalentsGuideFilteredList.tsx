@@ -1,7 +1,7 @@
 import { Grid, Box } from "@mui/material";
 
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
-import TalentsGuideFilterForm from "./TalentsGuideFilterForm.tsx";
+import TalentsFilterForm from "./TalentsFilterForm.tsx";
 import TalentsGuideLine from "./TalentsGuideLine.tsx";
 
 import { useTalentsGuideFilter } from "./use-talents-filter.hook.ts";
@@ -33,10 +33,7 @@ export default function TalentsGuideFilteredList<T extends TalentGuideType>({
   return (
     <>
       {/* Форма фильтрации (sticky позиция) */}
-      <TalentsGuideFilterForm
-        talents={talents}
-        onFormChange={handleFilterChange}
-      />
+      <TalentsFilterForm talents={talents} onFormChange={handleFilterChange} />
 
       {/* Прокручиваемый список результатов */}
       <Box

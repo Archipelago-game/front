@@ -158,7 +158,6 @@ export default function Characters({
             type="file"
             sx={{ display: "none" }}
             onChange={(e) => {
-              console.log("from characters");
               const file = (e.target as HTMLInputElement).files?.[0];
               importCharacter(file);
             }}

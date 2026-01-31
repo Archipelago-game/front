@@ -27,7 +27,7 @@ export const db = initializeFirestore(app, {
     tabManager: persistentMultipleTabManager(),
   }),
 });
-console.log("🔥 Firestore initialized with persistence");
+console.info("🔥 Firestore initialized with persistence");
 
 window.addEventListener("unhandledrejection", (e) => {
   console.error("Unhandled rejection:", e.reason);

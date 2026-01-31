@@ -52,7 +52,7 @@ const styles = {
  * The consumer is responsible for applying the filtering logic
  * and managing the presentation of the filtered results.
  */
-export default function TalentsGuideFilterForm<T extends TalentGuideType>(
+export default function TalentsFilterForm<T extends TalentGuideType>(
   props: Props<T>,
 ) {
   const { talents, defaultValues = TALENTS_FILTER_FORM_DEFAULT_VALUES } = props;

@@ -44,7 +44,7 @@ export function CustomFormContextProvider({ children }: Props) {
       }
 
       if (characterId === null || userInfo === null || characterDoc === null) {
-        console.log(
+        console.warn(
           `нет одного из следующих свойств: characterId: ${characterId}, userInfo: ${userInfo},  characterDoc: ${characterDoc}`,
         );
         return;

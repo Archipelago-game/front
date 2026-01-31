@@ -7,7 +7,7 @@ import { useTalentsGuideFilter } from "./use-talents-filter.hook.ts";
 
 import { Box, Button } from "@mui/material";
 import HeroTalentsView from "./HeroTalentsView.tsx";
-import TalentsGuideFilterForm from "./TalentsGuideFilterForm.tsx";
+import TalentsFilterForm from "./TalentsFilterForm.tsx";
 import TalentsGuide from "./TalentsGuide.tsx";
 
 import {
@@ -20,9 +20,7 @@ import {
 } from "../../../../../data/talents-guide.ts";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 
-// todo перед сохрананением очистить от description
-
-export default function Talent() {
+export default function HeroTalents() {
   const { methods, values, onChange } = useCustomFormContext();
   const { openModal, closeModal } = useModal();
   const { open } = useConfirmDialogContext();
@@ -72,7 +70,7 @@ export default function Talent() {
 
   return (
     <Box width={"fit-content"}>
-      <TalentsGuideFilterForm
+      <TalentsFilterForm
         talents={adaptTalentFields(fields)}
         onFormChange={handleFilterChange}
       />

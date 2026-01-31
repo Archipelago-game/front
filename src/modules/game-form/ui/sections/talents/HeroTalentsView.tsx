@@ -18,7 +18,6 @@ interface Props {
 }
 
 export default function HeroTalentsView({ fields, onDelete }: Props) {
-  console.log(fields);
   return (
     <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
       {fields.map((field) => (

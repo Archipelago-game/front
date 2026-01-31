@@ -105,7 +105,6 @@ export interface Immortal {
 export type Talents = FormArrayFields<Talent>;
 
 export type TalentField = FieldArrayWithId<FormType, "talents.list", "id">;
-export type IndexedTalentField = TalentField & { fieldIndex: number };
 export type AdaptedTalentField = TalentField & {
   fieldIndex: number;
   description: string;

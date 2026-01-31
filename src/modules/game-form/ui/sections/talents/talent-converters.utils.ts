@@ -1,7 +1,6 @@
 import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
 import type {
   AdaptedTalentField,
-  IndexedTalentField,
   Talent,
   TalentField,
 } from "../../../types/form/form.type.ts";
@@ -50,22 +49,4 @@ export function talentGuideToTalent(guide: TalentGuideType): Talent {
     effect: guide.description, // description → effect
     rang: guide.rang,
   };
-}
-
-export function adaptTalentFieldsToGuides(
-  fields: TalentField[],
-): (TalentField & { description: string })[] {
-  return fields.map((field) => ({
-    description: field.effect,
-    ...field,
-  }));
-}
-
-export function mapTalentFieldsWithIndex(
-  fields: TalentField[],
-): IndexedTalentField[] {
-  return fields.map((field, index) => ({
-    ...field,
-    fieldIndex: index,
-  }));
 }
