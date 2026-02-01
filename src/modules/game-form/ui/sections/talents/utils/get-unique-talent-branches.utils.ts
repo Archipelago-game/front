@@ -1,4 +1,4 @@
-import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
+import type { TalentGuideType } from "../../../../../../data/talents-guide.ts";
 
 export function getUniqueTalentBranches(talents: TalentGuideType[]) {
   const branches = new Set<string>();

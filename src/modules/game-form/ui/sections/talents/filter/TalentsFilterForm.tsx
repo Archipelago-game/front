@@ -1,16 +1,16 @@
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Box, Typography } from "@mui/material";
-import CustomSelect from "../../../../../common/components/custom-select/CustomSelect.tsx";
+import CustomSelect from "../../../../../../common/components/custom-select/CustomSelect.tsx";
 
 import debounce from "lodash.debounce";
-import { getUniqueTalentBranches } from "./get-unique-talent-branches.utils.ts";
+import { getUniqueTalentBranches } from "../utils/get-unique-talent-branches.utils.ts";
 
-import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
+import type { TalentGuideType } from "../../../../../../data/talents-guide.ts";
 import { useMemo } from "react";
 import {
   EMPTY_BRANCH_OPTION,
   TALENTS_FILTER_FORM_DEFAULT_VALUES,
-} from "./filter-form-default-values.const.ts";
+} from "../filter-form-default-values.const.ts";
 
 export interface TalentsFilterFormValues {
   branch: string;

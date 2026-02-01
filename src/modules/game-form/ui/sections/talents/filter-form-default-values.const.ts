@@ -1,4 +1,4 @@
-import type { TalentsFilterFormValues } from "./TalentsFilterForm.tsx";
+import type { TalentsFilterFormValues } from "./filter/TalentsFilterForm.tsx";
 
 const EMPTY_BRANCH_VALUE = "allBranches";
 const EMPTY_BRANCH_LABEL = "Все ветки";

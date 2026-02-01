@@ -1,10 +1,10 @@
 import { Grid, Box } from "@mui/material";
 
-import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
-import TalentsFilterForm from "./TalentsFilterForm.tsx";
+import type { TalentGuideType } from "../../../../../../data/talents-guide.ts";
+import TalentsFilterForm from "../filter/TalentsFilterForm.tsx";
 import TalentsGuideLine from "./TalentsGuideLine.tsx";
 
-import { useTalentsGuideFilter } from "./use-talents-filter.hook.ts";
+import { useTalentsGuideFilter } from "../filter/use-talents-filter.hook.ts";
 
 export interface TalentsFilteredListProps<T extends TalentGuideType> {
   /**

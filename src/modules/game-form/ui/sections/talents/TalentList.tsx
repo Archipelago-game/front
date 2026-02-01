@@ -1,26 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useFieldArray } from "react-hook-form";
 import { useModal } from "../../../../../app/providers/global-modal/use-modal.hook.ts";
-import { useTalentsGuideFilter } from "./use-talents-filter.hook.ts";
+import { useTalentsGuideFilter } from "./filter/use-talents-filter.hook.ts";
 
 import { Box, Button } from "@mui/material";
-import HeroTalentsView from "./HeroTalentsView.tsx";
-import TalentsFilterForm from "./TalentsFilterForm.tsx";
-import TalentsGuide from "./TalentsGuide.tsx";
+
+import TalentsFilterForm from "./filter/TalentsFilterForm.tsx";
+import TalentsGuide from "./talents-guide/TalentsGuide.tsx";
 
 import {
   adaptTalentFields,
   talentGuideToTalent,
-} from "./talent-converters.utils.ts";
+} from "./utils/talent-converters.utils.ts";
 import {
   type TalentGuideType,
   talentsGuide,
 } from "../../../../../data/talents-guide.ts";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
+import { groupTalentsByBranch } from "./utils/group-talents-by-branch.utils.ts";
+import TalentGroupView from "./TalentGroupView.tsx";
 
-export default function HeroTalents() {
+export default function TalentList() {
   const { methods, values, onChange } = useCustomFormContext();
   const { openModal, closeModal } = useModal();
   const { open } = useConfirmDialogContext();
@@ -32,6 +34,11 @@ export default function HeroTalents() {
 
   const { filteredTalents, handleFilterChange } = useTalentsGuideFilter(
     adaptTalentFields(fields),
+  );
+
+  const groups = useMemo(
+    () => groupTalentsByBranch(filteredTalents),
+    [filteredTalents],
   );
 
   const onChoose = (talent: TalentGuideType) => {
@@ -66,7 +73,7 @@ export default function HeroTalents() {
     if (values) {
       replace(values.talents.list);
     }
-  }, []);
+  }, [values?.talents.list]);
 
   return (
     <Box width={"fit-content"}>
@@ -74,7 +81,13 @@ export default function HeroTalents() {
         talents={adaptTalentFields(fields)}
         onFormChange={handleFilterChange}
       />
-      <HeroTalentsView fields={filteredTalents} onDelete={deleteTalent} />
+      {groups.map((group) => (
+        <TalentGroupView
+          key={group.branch}
+          group={group}
+          onDelete={deleteTalent}
+        />
+      ))}
       <Box
         sx={{
           display: "flex",

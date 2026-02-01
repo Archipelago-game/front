@@ -15,6 +15,7 @@ import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { Fragment } from "react";
 import OZDisplay from "./OZDisplay.tsx";
+import { type AttributeType } from "./OZ-calc.hook.ts";
 
 export interface SkillItem<T extends string> extends BaseSkill<T> {
   fieldName: FieldPath<FormType>;
@@ -31,6 +32,34 @@ export interface SkillGroup<T extends string> {
 interface Props<T extends string> {
   statValueName: FieldPath<FormType>;
   skillGroups: SkillGroup<T>[];
+}
+
+/**
+ * Определяет тип характеристики по имени поля
+ * @param statValueName - имя поля характеристики
+ * @returns тип характеристики (physical или mental)
+ */
+function getAttributeType(statValueName: string): AttributeType {
+  // Физические характеристики
+  if (
+    statValueName.includes('strength') ||
+    statValueName.includes('dexterity') ||
+    statValueName.includes('coordination')
+  ) {
+    return 'physical';
+  }
+
+  // Ментальные характеристики
+  if (
+    statValueName.includes('intelligence') ||
+    statValueName.includes('insight') ||
+    statValueName.includes('willpower')
+  ) {
+    return 'mental';
+  }
+
+  // Дефолт (не должно случиться, но для безопасности)
+  return 'physical';
 }
 
 export default function SkillsTable<T extends string>({
@@ -134,6 +163,7 @@ export default function SkillsTable<T extends string>({
                       <OZDisplay
                         statValueName={statValueName}
                         expertiseFieldName={group.expertiseFieldName}
+                        attributeType={getAttributeType(statValueName)}
                       />
                     </TableCell>
                   )}

@@ -1,5 +1,5 @@
 import { Checkbox, Grid } from "@mui/material";
-import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
+import type { TalentGuideType } from "../../../../../../data/talents-guide.ts";
 import type { ChangeEvent } from "react";
 
 interface Props<T extends TalentGuideType> {

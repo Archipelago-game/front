@@ -1,9 +1,9 @@
-import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
+import type { TalentGuideType } from "../../../../../../data/talents-guide.ts";
 import type {
   AdaptedTalentField,
   Talent,
   TalentField,
-} from "../../../types/form/form.type.ts";
+} from "../../../../types/form/form.type.ts";
 
 /**
  * Преобразует массив талантов персонажа в формат для фильтров

@@ -1,4 +1,4 @@
-import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
+import type { TalentGuideType } from "../../../../../../data/talents-guide.ts";
 import TalentsGuideFilteredList from "./TalentsGuideFilteredList.tsx";
 
 interface Props<T extends TalentGuideType> {

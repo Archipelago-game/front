@@ -1,4 +1,4 @@
-import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
+import type { TalentGuideType } from "../../../../../../data/talents-guide.ts";
 import type { TalentsFilterFormValues } from "./TalentsFilterForm.tsx";
 
 /**
