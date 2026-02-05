@@ -42,13 +42,18 @@ export default function TalentsFilterForm(props: Props) {
     defaultValues: TALENTS_FILTER_FORM_DEFAULT_VALUES,
   });
 
-  const onFormChange = useMemo(
+  const onFormChangeDebounced = useMemo(
     () => debounce(props.onFormChange, 500),
     [props.onFormChange],
   );
 
-  const handleFormChange = () => {
-    onFormChange(getValues());
+  const handleFormChange = (partial?: Partial<TalentsFilterFormValues>) => {
+    const values = { ...getValues(), ...partial };
+    if (partial?.branch !== undefined) {
+      props.onFormChange(values);
+    } else {
+      onFormChangeDebounced(values);
+    }
   };
 
   return (
@@ -64,7 +69,6 @@ export default function TalentsFilterForm(props: Props) {
     >
       <Controller
         name="branch"
-        defaultValue=""
         control={control}
         render={({ field }) => (
           <CustomSelect<string>
@@ -85,8 +89,9 @@ export default function TalentsFilterForm(props: Props) {
             displayEmpty={true}
             emptyOption={EMPTY_BRANCH_OPTION}
             onChange={(e) => {
-              field.onChange(e.target.value);
-              handleFormChange();
+              const newBranch = e.target.value;
+              field.onChange(newBranch);
+              handleFormChange({ branch: newBranch });
             }}
           />
         )}
@@ -116,7 +121,7 @@ export default function TalentsFilterForm(props: Props) {
               {...field}
               onChange={(e) => {
                 field.onChange(e);
-                handleFormChange();
+                handleFormChange({ search: e.target.value });
               }}
             />
           </Box>
