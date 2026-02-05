@@ -8,6 +8,7 @@ export const FORM_DEFAULT_VALUES: FormType = {
   age: 0,
   homeland: "",
   languages: "",
+  race: "human",
   immortal: {
     checked: false,
     experience: {
