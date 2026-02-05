@@ -143,7 +143,7 @@ function parseRows(rawRows) {
     const focusRaw = (r[fi] ?? "").toString().trim();
 
     const rang = rangRaw ? parseInt(rangRaw, 10) : 0;
-    const focus = focusRaw ? parseInt(rangRaw, 10) : 0;
+    const focus = focusRaw ? parseInt(focusRaw, 10) : 0;
     if (!branch && !name && !description && !rang) continue;
     rows.push({
       branch,
