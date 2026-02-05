@@ -3,7 +3,7 @@ import { type FieldPath, useWatch } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { type Wound, type Injures } from "../../../../types/form/form.type.ts";
 
-export type AttributeType = 'physical' | 'mental';
+export type AttributeType = "physical" | "mental";
 
 export interface OZCalculation {
   value: number;
@@ -29,7 +29,7 @@ function countActiveWounds(list: Wound[] | Injures[]): number {
 export function useOZCalc({
   statValueName,
   expertiseFieldName,
-  attributeType
+  attributeType,
 }: Props): OZCalculation {
   const { methods } = useCustomFormContext();
 
@@ -40,7 +40,7 @@ export function useOZCalc({
       statValueName,
       expertiseFieldName,
       "defence.physical.wounds.list",
-      "defence.mental.injuries.list"
+      "defence.mental.injuries.list",
     ],
   });
 
@@ -50,10 +50,10 @@ export function useOZCalc({
   // Подсчитываем штраф в зависимости от типа характеристики
   let penalty = 0;
 
-  if (attributeType === 'physical') {
+  if (attributeType === "physical") {
     // Физические характеристики страдают от физических ран
     penalty = countActiveWounds(wounds as Wound[]);
-  } else if (attributeType === 'mental') {
+  } else if (attributeType === "mental") {
     // Ментальные характеристики страдают от ментальных травм
     penalty = countActiveWounds(injuries as Injures[]);
   }
@@ -63,6 +63,6 @@ export function useOZCalc({
 
   return {
     value: finalOZ,
-    isReduced: penalty > 0
+    isReduced: penalty > 0,
   };
 }

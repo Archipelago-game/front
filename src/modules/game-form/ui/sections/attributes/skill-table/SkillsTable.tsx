@@ -42,24 +42,24 @@ interface Props<T extends string> {
 function getAttributeType(statValueName: string): AttributeType {
   // Физические характеристики
   if (
-    statValueName.includes('strength') ||
-    statValueName.includes('dexterity') ||
-    statValueName.includes('coordination')
+    statValueName.includes("strength") ||
+    statValueName.includes("dexterity") ||
+    statValueName.includes("coordination")
   ) {
-    return 'physical';
+    return "physical";
   }
 
   // Ментальные характеристики
   if (
-    statValueName.includes('intelligence') ||
-    statValueName.includes('insight') ||
-    statValueName.includes('willpower')
+    statValueName.includes("intelligence") ||
+    statValueName.includes("insight") ||
+    statValueName.includes("willpower")
   ) {
-    return 'mental';
+    return "mental";
   }
 
   // Дефолт (не должно случиться, но для безопасности)
-  return 'physical';
+  return "physical";
 }
 
 export default function SkillsTable<T extends string>({

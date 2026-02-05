@@ -36,6 +36,7 @@ function buildTsFile(rows) {
     `  name: string;`,
     `  description: string;`,
     `  rang: number;`,
+    `  focus: number;`,
     `}`,
     ``,
     `export const talentsGuide: TalentGuideType[] = [`,
@@ -46,6 +47,7 @@ function buildTsFile(rows) {
     const name = tsEscape(row.name);
     const description = tsEscape(row.description);
     const rang = row.rang;
+    const focus = row.focus;
     const descOneLine = description.replace(/\n/g, " ");
 
     lines.push(`  {`);
@@ -58,6 +60,7 @@ function buildTsFile(rows) {
       lines.push(`    description: "${descOneLine}",`);
     }
     lines.push(`    rang: ${rang},`);
+    lines.push(`    focus: ${focus},`);
     lines.push(`  },`);
   }
 
@@ -123,11 +126,13 @@ function parseRows(rawRows) {
   const rangIdx = header.findIndex((c) => /ранг|rank/i.test(String(c).trim()));
   const nameIdx = header.findIndex((c) => /название|name/i.test(String(c).trim()));
   const descIdx = header.findIndex((c) => /описание|description/i.test(String(c).trim()));
+  const focusIdx = header.findIndex((c) => /фокус|focus/i.test(String(c).trim()));
 
   const bi = branchIdx >= 0 ? branchIdx : 0;
-  const ri = rangIdx >= 0 ? rangIdx : 1;
-  const ni = nameIdx >= 0 ? nameIdx : 2;
-  const di = descIdx >= 0 ? descIdx : 3;
+  const fi = focusIdx >= 0 ? focusIdx : 1;
+  const ri = rangIdx >= 0 ? rangIdx : 2;
+  const ni = nameIdx >= 0 ? nameIdx : 3;
+  const di = descIdx >= 0 ? descIdx : 4;
 
   for (let i = 1; i < rawRows.length; i++) {
     const r = rawRows[i];
@@ -135,9 +140,18 @@ function parseRows(rawRows) {
     const name = (r[ni] ?? "").toString().trim();
     const description = (r[di] ?? "").toString().trim();
     const rangRaw = (r[ri] ?? "").toString().trim();
+    const focusRaw = (r[fi] ?? "").toString().trim();
+
     const rang = rangRaw ? parseInt(rangRaw, 10) : 0;
+    const focus = focusRaw ? parseInt(rangRaw, 10) : 0;
     if (!branch && !name && !description && !rang) continue;
-    rows.push({ branch, name, description, rang: Number.isNaN(rang) ? 0 : rang });
+    rows.push({
+      branch,
+      name,
+      description,
+      rang: Number.isNaN(rang) ? 0 : rang,
+      focus: Number.isNaN(focus) ? 0 : focus,
+    });
   }
 
   return rows;
