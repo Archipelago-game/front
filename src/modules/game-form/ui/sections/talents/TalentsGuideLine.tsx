@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function TalentsGuideLine({ talent, onChange }: Props) {
-  const { branch, name, rang, description } = talent;
+  const { branch, name, rang, focus, description } = talent;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -31,8 +31,8 @@ export default function TalentsGuideLine({ talent, onChange }: Props) {
       </Grid>
 
       <Grid size={3}>
-        {/*  Уровень */}
-        ур. {rang}
+        {/*  Уровень и фокус */}
+        ур. {rang} · фокус {focus}
       </Grid>
 
       <Grid size={1}>
