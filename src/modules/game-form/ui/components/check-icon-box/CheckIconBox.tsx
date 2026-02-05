@@ -1,4 +1,4 @@
-import type { ControllerRenderProps, FieldPath } from "react-hook-form";
+import type { ControllerRenderProps } from "react-hook-form";
 
 import type { FormType } from "../../../types/form/form.type.ts";
 import type { ChangeEvent } from "react";
@@ -16,8 +16,7 @@ import type {
   StatementColorMapping,
 } from "./check-icon-box.type.ts";
 import { hideStyles } from "./check-icon-box.styles.ts";
-
-type FormBooleanField = FieldPath<FormType> & `${string}.checked`;
+import type { FormBooleanField } from "../../../types/field-utils.type.ts";
 
 interface Props extends CheckboxProps {
   field: ControllerRenderProps<FormType, FormBooleanField>;

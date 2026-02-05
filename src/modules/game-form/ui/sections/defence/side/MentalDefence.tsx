@@ -13,6 +13,7 @@ import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
 import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
 import { useHealthCalc } from "../health-calc.hook.ts";
+import BaseCheckbox from "../../../components/BaseCheckbox.tsx";
 
 export default function MentalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
@@ -47,6 +48,17 @@ export default function MentalDefence() {
       <CustomLabel label={{ text: "Ментальная" }} orientation="row">
         <CalculatedValue value={healthValue} />
       </CustomLabel>
+
+      <BaseCheckbox
+        fieldName={`defence.mental.despair.checked`}
+        label={{
+          label: {
+            text: "Отчаяние",
+            color: "secondary",
+          },
+          orientation: "row",
+        }}
+      />
 
       <CustomLabel label={{ text: "Решимость", color: "secondary" }}>
         <Box sx={{ marginBottom: "4px", ...gridStyle }}>

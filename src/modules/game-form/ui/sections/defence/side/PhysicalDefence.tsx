@@ -13,6 +13,7 @@ import { HEALTH_STATEMENT_COLOR_MAP } from "./health-colors.const.ts";
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
 import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
 import { useHealthCalc } from "../health-calc.hook.ts";
+import BaseCheckbox from "../../../components/BaseCheckbox.tsx";
 
 export default function PhysicalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
@@ -48,6 +49,17 @@ export default function PhysicalDefence() {
       <CustomLabel label={{ text: "Физическая" }} orientation="row">
         <CalculatedValue value={healthValue} />
       </CustomLabel>
+
+      <BaseCheckbox
+        fieldName={`defence.physical.tiredness.checked`}
+        label={{
+          label: {
+            text: "Усталость",
+            color: "secondary",
+          },
+          orientation: "row",
+        }}
+      />
 
       <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>
         <Box sx={{ marginBottom: "4px", ...gridStyle }}>
