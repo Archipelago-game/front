@@ -21,10 +21,7 @@ export default function Talent() {
     control: methods.control,
   });
 
-  const groups = useMemo(
-    () => groupTalentsByBranch(fields),
-    [fields]
-  );
+  const groups = useMemo(() => groupTalentsByBranch(fields), [fields]);
 
   const onChoose = (talent: TalentGuideType) => {
     append({
@@ -68,11 +65,7 @@ export default function Talent() {
   return (
     <Box width={"fit-content"}>
       {groups.map((group) => (
-        <TalentGroup
-          key={group.branch}
-          group={group}
-          onDelete={deleteTalent}
-        />
+        <TalentGroup key={group.branch} group={group} onDelete={deleteTalent} />
       ))}
       <Box
         sx={{
