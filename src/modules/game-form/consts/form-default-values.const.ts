@@ -32,6 +32,7 @@ export const FORM_DEFAULT_VALUES: FormType = {
   defence: {
     brave: 0,
     physical: {
+      tiredness: false,
       health: {
         amount: 20,
         list: [
@@ -68,6 +69,7 @@ export const FORM_DEFAULT_VALUES: FormType = {
       },
     },
     mental: {
+      despair: false,
       resolve: {
         amount: 20,
         list: [
