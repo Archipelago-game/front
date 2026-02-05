@@ -63,7 +63,7 @@ export default function TalentsGuide({ onChoose }: Props) {
         <Grid container gap={2} justifyContent={"flex-end"} mb={1}>
           {talents.map((talent) => (
             <TalentsGuideLine
-              key={`${talent.branch}${talent.rang}`}
+              key={`${talent.branch}-${talent.name}-${talent.rang}`}
               talent={talent}
               onChange={onChoose}
             />
