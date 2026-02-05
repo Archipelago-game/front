@@ -51,14 +51,14 @@ export interface Injures {
 interface Defence {
   brave: number;
   physical: {
-    tiredness: boolean;
+    tiredness: { checked: boolean };
     health: CheckBoxList;
     wounds: {
       list: Wound[];
     };
   };
   mental: {
-    despair: boolean;
+    despair: { checked: boolean };
     resolve: CheckBoxList;
     injuries: {
       list: Injures[];
