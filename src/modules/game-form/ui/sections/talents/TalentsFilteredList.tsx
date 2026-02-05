@@ -50,7 +50,10 @@ export default function TalentsFilteredList({
   return (
     <>
       {/* Форма фильтрации (sticky позиция) */}
-      <TalentsFilterForm onFormChange={handleFilterChange} />
+      <TalentsFilterForm
+        talents={talents}
+        onFormChange={handleFilterChange}
+      />
 
       {/* Прокручиваемый список результатов */}
       <Box

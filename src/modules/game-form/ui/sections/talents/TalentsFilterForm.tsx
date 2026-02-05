@@ -5,7 +5,7 @@ import CustomSelect from "../../../../../common/components/custom-select/CustomS
 import debounce from "lodash.debounce";
 import { getUniqueTalentBranches } from "./get-unique-talent-branches.utils.ts";
 
-import { talentsGuide } from "../../../../../data/talents-guide.ts";
+import type { TalentGuideType } from "../../../../../data/talents-guide.ts";
 import { useMemo } from "react";
 import {
   EMPTY_BRANCH_OPTION,
@@ -18,13 +18,9 @@ export interface TalentsFilterFormValues {
 }
 
 interface Props {
+  talents: TalentGuideType[];
   onFormChange: (values: TalentsFilterFormValues) => void;
 }
-
-const branchOptions = getUniqueTalentBranches(talentsGuide).map((branch) => ({
-  value: branch,
-  label: branch,
-}));
 
 const styles = {
   width: {
@@ -41,6 +37,14 @@ export default function TalentsFilterForm(props: Props) {
   const { control, getValues } = useForm<TalentsFilterFormValues>({
     defaultValues: TALENTS_FILTER_FORM_DEFAULT_VALUES,
   });
+
+  const branchOptions = useMemo(
+    () => getUniqueTalentBranches(props.talents).map((branch) => ({
+      value: branch,
+      label: branch,
+    })),
+    [props.talents]
+  );
 
   const onFormChange = useMemo(
     () => debounce(props.onFormChange, 500),
