@@ -31,8 +31,8 @@ export default function TalentsGuideLine({ talent, onChange }: Props) {
       </Grid>
 
       <Grid size={3}>
-        {/*  Уровень и фокус */}
-        ур. {rang} · фокус {focus}
+        {/*  Фокус и уровень */}
+        🎯 фокус {focus} · ⭐ ур. {rang}
       </Grid>
 
       <Grid size={1}>
