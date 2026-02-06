@@ -6,7 +6,6 @@ import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-
 import type { OnChangeCallbackType } from "../../../types/on-change-callback.type.ts";
 
 import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 export default function Immortal() {
   const { methods, onChange } = useCustomFormContext();
@@ -34,71 +33,38 @@ export default function Immortal() {
   };
 
   return (
-    <>
-      <CustomLabel label={{ text: "Раса" }} orientation={"row"}>
-        <Controller
-          name="race"
-          control={methods.control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              labelId="age-label"
-              label="Возраст"
-              onChange={(e) => {
-                field.onChange(e);
-                onChange();
-              }}
-              size="small"
-              sx={{
-                minWidth: "200px",
-                width: "100%",
-                "& .MuiSelect-select": {
-                  padding: "4px",
-                  fontSize: "12px",
-                },
-              }}
-            >
-              <MenuItem value="human">Человек</MenuItem>
-              <MenuItem value="immortal">Бессмертный</MenuItem>
-              <MenuItem value="cat">Кот</MenuItem>
-            </Select>
-          )}
-        />
-      </CustomLabel>
-
+    <Box
+      display="flex"
+      sx={{ backgroundColor: theme.palette.label.background.primary }}
+      position="relative"
+    >
       <Box
-        display="flex"
-        sx={{ backgroundColor: theme.palette.label.background.primary }}
-        position="relative"
-      >
-        <Box
-          sx={{
-            position: "absolute",
+        sx={{
+          position: "absolute",
 
-            width: "25px",
-            height: "25px",
-            top: "5px",
-            right: "5px",
-            background: "white",
-          }}
-        />
-        <CustomLabel orientation="row" label={{ text: "Бессмертный" }} />
+          width: "25px",
+          height: "25px",
+          top: "5px",
+          right: "5px",
+          background: "white",
+        }}
+      />
+      <CustomLabel orientation="row" label={{ text: "Бессмертный" }} />
 
-        <Controller
-          name={`immortal.checked`}
-          control={methods.control}
-          render={({ field }) => (
-            <Checkbox
-              size={"large"}
-              slotProps={{}}
-              sx={{ padding: 0 }}
-              {...field}
-              checked={field.value}
-              onChange={(e) => handleOnChange(field, e)}
-            />
-          )}
-        />
-      </Box>
-    </>
+      <Controller
+        name={`immortal.checked`}
+        control={methods.control}
+        render={({ field }) => (
+          <Checkbox
+            size={"large"}
+            slotProps={{}}
+            sx={{ padding: 0 }}
+            {...field}
+            checked={field.value}
+            onChange={(e) => handleOnChange(field, e)}
+          />
+        )}
+      />
+    </Box>
   );
 }
