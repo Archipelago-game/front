@@ -11,6 +11,26 @@ declare module "@mui/material/styles/createPalette" {
 
 declare module "@mui/material/styles" {
   interface Palette {
+    base: {
+      background: string;
+      surfaceBase: string;
+      surfaceAccent: string;
+      surfaceLowered: string;
+      accent: string;
+
+      divider: string;
+      outline: string;
+      outlineStrong: string;
+      outlineSubtle: string;
+
+      text: {
+        primary: string;
+        secondary: string;
+        onDark: string;
+        onDarkStrong: string;
+      };
+    };
+
     label: {
       text: {
         primary: string;
@@ -24,6 +44,26 @@ declare module "@mui/material/styles" {
   }
 
   interface PaletteOptions {
+    base: {
+      background: string;
+      surfaceBase: string;
+      surfaceAccent: string;
+      surfaceLowered: string;
+      accent: string;
+
+      divider: string;
+      outline: string;
+      outlineStrong: string;
+      outlineSubtle: string;
+
+      text: {
+        primary: string;
+        secondary: string;
+        onDark: string;
+        onDarkStrong: string;
+      };
+    };
+
     label: {
       text: {
         primary: string;

@@ -8,7 +8,7 @@ export const getTheme = (mode: "light" | "dark") =>
       ...(mode === "light"
         ? {
             background: {
-              default: "#777060",
+              default: "#ffffff",
               paper: "#ffffff",
             },
             text: {
@@ -28,6 +28,53 @@ export const getTheme = (mode: "light" | "dark") =>
             },
             divider: "#2a2a2a",
           }),
+
+      base:
+        mode === "light"
+          ? {
+              background: "#786f61",
+              surfaceBase: "#d8cfc5",
+              surfaceAccent: "#d6cec3",
+              surfaceLowered: "#342f2e",
+              accent: "#707442",
+
+              divider: "#6f6659", // базовый divider (≈ 12–16% темнее основного paper)
+
+              // Более гранулярно (рекомендую добавить эти кастомные ключи)
+              outline: "#80786f", // основной divider (между surfaceBase и другими элементами)
+              outlineStrong: "#5c544a", // более заметный — между surfaceBase и surfaceLowered
+              outlineSubtle: "#b8b0a5", // очень мягкий — между surfaceBase и surfaceAccent
+
+              // Текст (контраст проверен примерно на WCAG AA)
+              text: {
+                primary: "#000000", // основной текст на surfaceBase / surfaceAccent
+                secondary: "#707442", // акцентированный текст (класс, уровень, HP и т.д.)
+                onDark: "#c0bbac", // обычный текст на surfaceLowered
+                onDarkStrong: "#f3ece1", // выделенный / заголовки на тёмном
+              },
+            }
+          : {
+              background: "#786f61",
+              surfaceBase: "#d8cfc5",
+              surfaceAccent: "#d6cec3",
+              surfaceLowered: "#342f2e",
+              accent: "#707442",
+
+              divider: "#6f6659", // базовый divider (≈ 12–16% темнее основного paper)
+
+              // Более гранулярно (рекомендую добавить эти кастомные ключи)
+              outline: "#80786f", // основной divider (между surfaceBase и другими элементами)
+              outlineStrong: "#5c544a", // более заметный — между surfaceBase и surfaceLowered
+              outlineSubtle: "#b8b0a5", // очень мягкий — между surfaceBase и surfaceAccent
+
+              // Текст (контраст проверен примерно на WCAG AA)
+              text: {
+                primary: "#000000", // основной текст на surfaceBase / surfaceAccent
+                secondary: "#707442", // акцентированный текст (класс, уровень, HP и т.д.)
+                onDark: "#c0bbac", // обычный текст на surfaceLowered
+                onDarkStrong: "#f3ece1", // выделенный / заголовки на тёмном
+              },
+            },
 
       // твоя кастомная палитра label
       label: {
@@ -64,3 +111,22 @@ export const getTheme = (mode: "light" | "dark") =>
       },
     },
   });
+
+/**
+ * background страницы: #786f61
+ * основной background карточки: #d8cfc5
+ * background карточки для акцента: #d6cec3
+ * divider внутри карточки с основным background: ?
+ * divider внутри карточки с акцентным background: ?
+ * цвет текста в карточке: #000
+ * цвет текста в карточке для акцента: #707442
+ *
+ * темный background: #342f2e
+ * нормальный цвет текста на темный background: #c0bbac
+ * акцентированный цвет текста на темный background: #f3ece1
+ * divider внутри компонента с темный background: ?
+ * divider внутри компонента с темный background: ?
+ *
+ *
+ *
+ */
