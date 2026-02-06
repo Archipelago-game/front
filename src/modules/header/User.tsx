@@ -2,17 +2,17 @@ import { Box, Button, IconButton, CircularProgress } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { useLocation } from "react-router-dom";
 
-import { theme } from "../../common/styles/theme/custom-theme.ts";
-
 import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 import { useEffect, useState } from "react";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import AuthorizationButton from "../../common/components/auth-button/AuthorizationButton.tsx";
 import OnlineStatus from "../../common/components/sync-status/OnlineStatus.tsx";
+import { useTheme } from "@mui/material/styles";
 
 const AUTH_PAGE_PATH = "/auth-done";
 
 export default function User() {
+  const theme = useTheme();
   const [isAutPage, setIsAutPage] = useState(false);
   const location = useLocation();
   const { userInfo, removeUserInfo, isLoading } = useAuthContext();

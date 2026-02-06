@@ -9,8 +9,9 @@ import Intelligence from "./intelligence/Intelligence.tsx";
 
 import { Box } from "@mui/system";
 import { useState, type ReactNode, useEffect } from "react";
-import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
+
 import SectionTitle from "../../components/SectionTitle.tsx";
+import { useTheme } from "@mui/material/styles";
 
 type AttributeMapKey = "1" | "2" | "3" | "4" | "5" | "6";
 
@@ -47,6 +48,7 @@ const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
 };
 
 export default function Attributes() {
+  const theme = useTheme();
   const [currentMedia, setCurrentMedia] = useState<AttributeOrderKey>("lg");
   const isLg = useMediaQuery(theme.breakpoints.up("lg"));
   const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));

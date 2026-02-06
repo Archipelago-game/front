@@ -1,10 +1,9 @@
 import { Box } from "@mui/material";
 import { useRef, useEffect } from "react";
 
-import { theme } from "../../common/styles/theme/custom-theme.ts";
-
 import { PATH_DATA } from "./path-data.const.ts";
 import { AnimationDrive } from "./AnimationDrive.class.ts";
+import { useTheme } from "@mui/material/styles";
 
 interface Props {
   isLoading: boolean;
@@ -12,6 +11,8 @@ interface Props {
 }
 
 export default function ScreenSaver({ isLoading }: Props) {
+  const theme = useTheme();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const primaryPath = useRef<SVGPathElement | null>(null);
   const secondaryPath = useRef<SVGPathElement | null>(null);

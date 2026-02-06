@@ -1,15 +1,17 @@
 import { Box, Typography } from "@mui/material";
 import { defaultLabelTextStyles } from "../../components/styles/label.styles.ts";
-import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
+
 import TextFieldController, {
   type DefaultFieldControllerProps,
 } from "../../components/controllers/TextFieldController.tsx";
+import { useTheme } from "@mui/material/styles";
 
 interface Props extends DefaultFieldControllerProps {
   title: string;
 }
 
 export default function AttributeTitle({ fieldName, title }: Props) {
+  const theme = useTheme();
   return (
     <Box
       sx={{

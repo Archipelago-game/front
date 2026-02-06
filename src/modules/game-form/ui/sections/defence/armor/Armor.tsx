@@ -7,7 +7,7 @@ import RightLeg from "./LeftLeg.tsx";
 import Body from "./Body.tsx";
 import { fitContentStyle } from "../side/styles/side-defence.styles.ts";
 import { defaultLabelTextStyles } from "../../../components/styles/label.styles.ts";
-import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
+import { useTheme } from "@mui/material/styles";
 
 const handStyles = {
   gridRow: "1 / 3",
@@ -16,6 +16,7 @@ const handStyles = {
 };
 
 export default function Armor() {
+  const theme = useTheme();
   return (
     <Box>
       <Typography

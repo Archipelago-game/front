@@ -9,13 +9,14 @@ import {
 } from "@mui/material";
 
 import TextFieldController from "../../../components/controllers/TextFieldController.tsx";
-import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
+
 import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { Fragment } from "react";
 import OZDisplay from "./OZDisplay.tsx";
 import { type AttributeType } from "./OZ-calc.hook.ts";
+import { useTheme } from "@mui/material/styles";
 
 export interface SkillItem<T extends string> extends BaseSkill<T> {
   fieldName: FieldPath<FormType>;
@@ -66,6 +67,7 @@ export default function SkillsTable<T extends string>({
   statValueName,
   skillGroups,
 }: Props<T>) {
+  const theme = useTheme();
   return (
     <TableContainer component={Paper}>
       <Table sx={{ "& .MuiTableCell-root": { padding: "2px" } }}>
