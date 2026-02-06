@@ -1,9 +1,9 @@
 import { Box, Grid } from "@mui/material";
 import CustomLabel from "../../components/CustomLabel.tsx";
 
+import Race from "./Race.tsx";
 import BaseField from "../../components/BaseField.tsx";
 import SectionTitle from "../../components/SectionTitle.tsx";
-import Immortal from "./Immortal.tsx";
 
 export default function BaseInfo() {
   return (
@@ -19,7 +19,7 @@ export default function BaseInfo() {
             }}
             fieldType="text"
           />
-          <Immortal />
+          <Race />
         </Grid>
         <Grid size={{ xs: 12, md: 8 }}>
           <CustomLabel>

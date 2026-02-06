@@ -14,7 +14,14 @@ export const THREE_STATE_INJURE: MigrationDefinition<FormType> = {
   apply: (character) => CharacterFormPatch.threeStateInjure(character),
 };
 
+export const REPLACE_IMMORTAL_WITH_RACE: MigrationDefinition<FormType> = {
+  version: 3,
+  name: "replaceImmortalWithRace",
+  apply: (character) => CharacterFormPatch.replaceImmortalWithRace(character),
+};
+
 export const CHARACTER_FORM_MIGRATION_LIST: MigrationDefinition<FormType>[] = [
   THREE_STATE_WOUND,
   THREE_STATE_INJURE,
+  REPLACE_IMMORTAL_WITH_RACE,
 ];

@@ -105,12 +105,15 @@ export interface Immortal {
 
 export type Talents = FormArrayFields<Talent>;
 
+export type Race = "human" | "cat" | "immortal";
+
 export interface FormType {
   name: string;
   age: number;
   homeland: string;
   languages: string;
   immortal: Immortal;
+  race: Race;
   luck: CheckBoxList;
   experience: {
     total: number;

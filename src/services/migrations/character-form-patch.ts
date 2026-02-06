@@ -17,6 +17,7 @@ export const CharacterFormPatch: PatchUtil = {
     characterClone.defence.physical.wounds = { list: newList };
     return characterClone;
   },
+
   threeStateInjure(character: FormType) {
     const newList: Wound[] = character.defence.mental.injuries.list.map(
       (item) =>
@@ -24,6 +25,12 @@ export const CharacterFormPatch: PatchUtil = {
     );
     const characterClone = clonedeep(character);
     characterClone.defence.mental.injuries = { list: newList };
+    return characterClone;
+  },
+
+  replaceImmortalWithRace(character: FormType) {
+    const characterClone = clonedeep(character);
+    characterClone.race = character.immortal.checked ? "immortal" : "human";
     return characterClone;
   },
 };

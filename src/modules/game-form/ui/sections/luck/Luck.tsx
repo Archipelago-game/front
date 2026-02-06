@@ -1,18 +1,20 @@
 import { Controller } from "react-hook-form";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
-import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
 
 import { Box, useMediaQuery } from "@mui/material";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import CheckIconBox from "../../components/check-icon-box/CheckIconBox.tsx";
 import { LUCK_STATEMENT_COLOR_MAP } from "./luck-colors.const.ts";
+import { useWatchRace } from "../base-info/use-watch-race.ts";
+
+// note в ui называется Решимость
 
 export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
 
-  const isImmortal = useWatchImmortal();
+  const race = useWatchRace();
 
   const isBelow560 = useMediaQuery("(max-width: 560px)");
 
@@ -24,7 +26,7 @@ export default function Luck() {
     onChange: onChange,
   });
 
-  if (isImmortal) {
+  if (race !== "human") {
     return null;
   }
 
@@ -36,7 +38,7 @@ export default function Luck() {
       }}
     >
       <CustomLabel
-        label={{ text: "Удача/Решимость" }}
+        label={{ text: "Решимость" }}
         sx={{ flex: "1 1 1px", justifyContent: "space-between" }}
       >
         {fields.map((field, index) => (
