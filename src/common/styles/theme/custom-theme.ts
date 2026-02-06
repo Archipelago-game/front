@@ -49,8 +49,8 @@ export const getTheme = (mode: "light" | "dark") =>
               text: {
                 primary: "#000000", // основной текст на surfaceBase / surfaceAccent
                 secondary: "#707442", // акцентированный текст (класс, уровень, HP и т.д.)
-                onDark: "#c0bbac", // обычный текст на surfaceLowered
-                onDarkStrong: "#f3ece1", // выделенный / заголовки на тёмном
+                onLowered: "#c0bbac", // обычный текст на surfaceLowered
+                onLoweredStrong: "#f3ece1", // выделенный / заголовки на тёмном
               },
             }
           : {
@@ -71,8 +71,8 @@ export const getTheme = (mode: "light" | "dark") =>
               text: {
                 primary: "#000000", // основной текст на surfaceBase / surfaceAccent
                 secondary: "#707442", // акцентированный текст (класс, уровень, HP и т.д.)
-                onDark: "#c0bbac", // обычный текст на surfaceLowered
-                onDarkStrong: "#f3ece1", // выделенный / заголовки на тёмном
+                onLowered: "#c0bbac", // обычный текст на surfaceLowered
+                onLoweredStrong: "#f3ece1", // выделенный / заголовки на тёмном
               },
             },
 
