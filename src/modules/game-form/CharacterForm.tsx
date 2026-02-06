@@ -1,7 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 
-import Luck from "./ui/sections/luck/Luck.tsx";
+import Determination from "./ui/sections/luck/Determination.tsx";
 import Experience from "./ui/sections/experience/Experience.tsx";
 import Attack from "./ui/sections/attack/Attack.tsx";
 import Defence from "./ui/sections/defence/Defence.tsx";
@@ -61,7 +61,7 @@ export default function CharacterForm() {
                   gap: 1,
                 }}
               >
-                <Luck />
+                <Determination />
                 <Experience />
               </Box>
             </Grid>

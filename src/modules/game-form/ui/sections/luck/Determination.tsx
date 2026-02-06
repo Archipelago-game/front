@@ -9,7 +9,7 @@ import CustomLabel from "../../components/CustomLabel.tsx";
 import CheckIconBox from "../../components/check-icon-box/CheckIconBox.tsx";
 import { LUCK_STATEMENT_COLOR_MAP } from "./luck-colors.const.ts";
 
-export default function Luck() {
+export default function Determination() {
   const { methods, onChange, values } = useCustomFormContext();
 
   const isImmortal = useWatchImmortal();
@@ -36,7 +36,7 @@ export default function Luck() {
       }}
     >
       <CustomLabel
-        label={{ text: "Удача/Решимость" }}
+        label={{ text: "Решимость" }}
         sx={{ flex: "1 1 1px", justifyContent: "space-between" }}
       >
         {fields.map((field, index) => (
