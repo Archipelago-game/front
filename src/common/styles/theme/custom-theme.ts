@@ -8,7 +8,7 @@ export const getTheme = (mode: "light" | "dark") =>
       ...(mode === "light"
         ? {
             background: {
-              default: "#f5f7fa",
+              default: "#777060",
               paper: "#ffffff",
             },
             text: {
