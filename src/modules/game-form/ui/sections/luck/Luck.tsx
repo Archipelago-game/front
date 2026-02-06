@@ -9,7 +9,9 @@ import CustomLabel from "../../components/CustomLabel.tsx";
 import CheckIconBox from "../../components/check-icon-box/CheckIconBox.tsx";
 import { LUCK_STATEMENT_COLOR_MAP } from "./luck-colors.const.ts";
 
-export default function Determination() {
+// note в ui называется Решимость
+
+export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
 
   const isImmortal = useWatchImmortal();
