@@ -30,7 +30,7 @@ export const CharacterFormPatch: PatchUtil = {
 
   replaceImmortalWithRace(character: FormType) {
     const characterClone = clonedeep(character);
-    characterClone.race = character.immortal ? "immortal" : "human";
+    characterClone.race = character.immortal.checked ? "immortal" : "human";
     return characterClone;
   },
 };
