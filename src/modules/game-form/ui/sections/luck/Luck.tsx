@@ -1,7 +1,6 @@
 import { Controller } from "react-hook-form";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
-import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
 
 import { Box, useMediaQuery } from "@mui/material";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
