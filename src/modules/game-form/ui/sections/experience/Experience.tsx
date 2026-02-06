@@ -3,8 +3,9 @@ import CustomLabel from "../../components/CustomLabel.tsx";
 import { Box, useMediaQuery, Typography } from "@mui/material";
 import { useWatch } from "react-hook-form";
 import BaseField from "../../components/BaseField.tsx";
-import { useWatchImmortal } from "../base-info/use-watch-immortal.hook.ts";
+
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
+import { useWatchRace } from "../base-info/use-watch-race.ts";
 
 const styles = {
   display: "flex",
@@ -13,10 +14,10 @@ const styles = {
 };
 
 export default function Experience() {
-  const isBelow560 = useMediaQuery("(max-width: 560px)");
-
-  const isImmortal = useWatchImmortal();
   const { methods } = useCustomFormContext();
+  const isBelow560 = useMediaQuery("(max-width: 560px)");
+  const race = useWatchRace();
+  const isImmortal = race === "immortal";
 
   // Отслеживаем изменения полей для вычисления оставшегося опыта
   const total = useWatch({
