@@ -26,7 +26,8 @@ export default function TextFieldControllerNew(
   } = props;
 
   const theme = useTheme();
-  const defaultValue = fieldType === "number" ? 0 : "";
+  const isNumberType = fieldType === "number";
+  const defaultValue = isNumberType ? 0 : "";
 
   const formContext = useCustomFormContext();
   const { methods, onChange } = formContext;
@@ -52,7 +53,7 @@ export default function TextFieldControllerNew(
             },
           }}
           sx={{
-            width: "35px",
+            width: isNumberType ? "35px" : "100%",
             "& textarea": {
               resize: "vertical",
             },
@@ -67,7 +68,8 @@ export default function TextFieldControllerNew(
               textAlign: "center",
               padding: "2px",
               fontSize: "14px",
-              color: theme.palette.base.text.primary,
+              fontWeight: 900,
+              color: theme.palette.base.text.title,
             },
             "& .MuiInputBase-input.Mui-disabled": {
               textAlign: "center",

@@ -1,18 +1,26 @@
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 
-import DamageBonus from "./damage-bonus/DamageBonus.tsx";
-import DamageMethods from "./damage-methods/DamageMethods.tsx";
-
-import SectionTitle from "../../components/section/SectionTitle.tsx";
+import SectionCard from "../../components/section/SectionCard.tsx";
+import SubTitle from "../../components/section/SubTitle.tsx";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
+import DamageMethodsNew from "./damage-methods/DamageMethodsNew.tsx";
 
 export default function Attack() {
   return (
-    <Box>
-      <SectionTitle title="Атака" />
-      <Box mb={1}>
-        <DamageBonus />
-      </Box>
-      <DamageMethods />
-    </Box>
+    <SectionCard title="Атака">
+      <SubTitle title="Бонусы к урону" />
+      <Stack direction="row" columnGap={3} rowGap={1} mb={2}>
+        <CustomTextField
+          title="Физический"
+          textField={{ fieldName: "attack.damageBonus.physical" }}
+        />
+        <CustomTextField
+          title="Ментальный"
+          textField={{ fieldName: "attack.damageBonus.mental" }}
+        />
+      </Stack>
+
+      <DamageMethodsNew />
+    </SectionCard>
   );
 }

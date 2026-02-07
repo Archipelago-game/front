@@ -21,12 +21,10 @@ export default function SectionCard(props: Props) {
       }}
     >
       <CardContent sx={{ paddingTop: 1 }}>
-        {title && (
-          <SectionHeader
-            title={title}
-            dividerColor={theme.palette.base.outline}
-          />
-        )}
+        <SectionHeader
+          title={title}
+          dividerColor={theme.palette.base.outline}
+        />
         {children}
       </CardContent>
     </Card>

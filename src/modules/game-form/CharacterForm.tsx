@@ -1,4 +1,4 @@
-import { Box, Grid, Stack } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 
 import Luck from "./ui/sections/luck/Luck.tsx";
@@ -12,11 +12,6 @@ import Inventory from "./ui/sections/inventory/Inventory.tsx";
 import DraggableFab from "../draggable-fab/DraggableSpeedDial.tsx";
 import AttributesAndTalentsPanel from "./ui/sections/attrubutes-talents-tabs/AttributesAndTalentsPanel.tsx";
 import BaseInfoNew from "./ui/sections/base-info/BaseInfoNew.tsx";
-import SectionCard from "./ui/components/section/SectionCard.tsx";
-import SubTitle from "./ui/components/section/SubTitle.tsx";
-
-import TextField from "./ui/components/fields/TextField.tsx";
-import SubSection from "./ui/components/section/SubSection.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -29,20 +24,7 @@ export default function CharacterForm() {
   return (
     <>
       <BaseInfoNew />
-      <SectionCard title="Атака">
-        <SubTitle title="Бонусы к урону" />
-        <Stack direction="row" spacing={3}>
-          <TextField
-            title="Физический"
-            textField={{ fieldName: "attack.damageBonus.physical" }}
-          />
-          <TextField
-            title="Ментальный"
-            textField={{ fieldName: "attack.damageBonus.mental" }}
-          />
-        </Stack>
-        <SubSection />
-      </SectionCard>
+
       <DraggableFab />
       <Box
         sx={{
