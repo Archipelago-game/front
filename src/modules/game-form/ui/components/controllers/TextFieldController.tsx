@@ -14,6 +14,8 @@ export interface DefaultFieldControllerProps extends ControllerProps {
     rows?: number;
   };
   isShowChangeValueBtn?: boolean;
+  /** Показать стандартные кнопки +/- у number input (по умолчанию скрыты) */
+  showSpinButtons?: boolean;
 }
 
 export default function TextFieldController(
@@ -31,6 +33,7 @@ export default function TextFieldController(
       rows: 1,
     },
     isShowChangeValueBtn = false,
+    showSpinButtons = false,
   } = props;
   const defaultValue = fieldType === "number" ? 0 : "";
 
@@ -80,14 +83,16 @@ export default function TextFieldController(
             "& .MuiInputBase-input.Mui-disabled": {
               WebkitTextFillColor: "#000",
             },
-            "& input[type=number]::-webkit-outer-spin-button": {
-              WebkitAppearance: "none",
-              margin: 0,
-            },
-            "& input[type=number]::-webkit-inner-spin-button": {
-              WebkitAppearance: "none",
-              margin: 0,
-            },
+            ...(!showSpinButtons && {
+              "& input[type=number]::-webkit-outer-spin-button": {
+                WebkitAppearance: "none",
+                margin: 0,
+              },
+              "& input[type=number]::-webkit-inner-spin-button": {
+                WebkitAppearance: "none",
+                margin: 0,
+              },
+            }),
 
             ...sx,
           }}
