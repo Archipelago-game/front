@@ -41,9 +41,9 @@ export const getTheme = (mode: "light" | "dark") =>
               divider: "#6f6659", // базовый divider (≈ 12–16% темнее основного paper)
 
               // Более гранулярно (рекомендую добавить эти кастомные ключи)
-              outline: "#80786f", // основной divider (между surfaceBase и другими элементами)
+              outline: "#b8b0a5", // основной divider (между surfaceBase и другими элементами)
               outlineStrong: "#5c544a", // более заметный — между surfaceBase и surfaceLowered
-              outlineSubtle: "#b8b0a5", // очень мягкий — между surfaceBase и surfaceAccent
+              outlineSubtle: "#80786f", // очень мягкий — между surfaceBase и surfaceAccent
 
               // Текст (контраст проверен примерно на WCAG AA)
               text: {
