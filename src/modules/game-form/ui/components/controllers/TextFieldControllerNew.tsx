@@ -69,11 +69,11 @@ export default function TextFieldControllerNew(
               padding: "2px",
               fontSize: "14px",
               fontWeight: 900,
-              color: theme.palette.base.text.title,
+              color: theme.palette.base.text.primary,
             },
             "& .MuiInputBase-input.Mui-disabled": {
               textAlign: "center",
-              WebkitTextFillColor: "#000",
+              WebkitTextFillColor: theme.palette.base.text.primary,
             },
             "& input[type=number]::-webkit-outer-spin-button": {
               WebkitAppearance: "none",

@@ -26,6 +26,7 @@ declare module "@mui/material/styles" {
       text: {
         title: string;
         primary: string;
+        primaryLight: string;
         secondary: string;
         onLowered: string;
         onLoweredStrong: string;
@@ -60,6 +61,7 @@ declare module "@mui/material/styles" {
       text: {
         title: string;
         primary: string;
+        primaryLight: string;
         secondary: string;
         onLowered: string;
         onLoweredStrong: string;
