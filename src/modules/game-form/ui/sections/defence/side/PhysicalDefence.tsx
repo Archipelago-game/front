@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
-import { Controller, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray, useWatch } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 
 import { useEffect } from "react";
@@ -11,9 +11,9 @@ import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 import { HEALTH_STATEMENT_COLOR_MAP } from "./health-colors.const.ts";
 
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
-import CheckIconBox from "../../../components/fields/check-icon-box/CheckIconBox.tsx";
+import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
 import { useHealthCalc } from "../health-calc.hook.ts";
-import BaseCheckbox from "../../../components/fields/BaseCheckbox.tsx";
+import BaseField from "../../../components/BaseField.tsx";
 
 export default function PhysicalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
@@ -26,13 +26,21 @@ export default function PhysicalDefence() {
     ],
   });
 
+  const tirednessValue = useWatch({
+    control: methods.control,
+    name: "defence.physical.tiredness.value",
+    defaultValue: 0,
+  });
+  const tirednessNum = Number(tirednessValue) || 0;
+  const effectivePhysical = Math.max(0, (healthValue ?? 20) - tirednessNum);
+
   const { fields, replace } = useFieldArray<FormType>({
     name: "defence.physical.health.list",
     control: methods.control,
   });
 
   const isDisabled = useWatchCheckboxAmount({
-    amount: healthValue ?? 20,
+    amount: effectivePhysical,
     listName: "defence.physical.health.list",
   });
 
@@ -50,15 +58,14 @@ export default function PhysicalDefence() {
         <CalculatedValue value={healthValue} />
       </CustomLabel>
 
-      <BaseCheckbox
-        fieldName={`defence.physical.tiredness.checked`}
+      <BaseField
+        fieldName="defence.physical.tiredness.value"
         label={{
-          label: {
-            text: "Усталость",
-            color: "secondary",
-          },
-          orientation: "row",
+          text: "Усталость",
+          color: "secondary",
         }}
+        orientation="row"
+        showSpinButtons
       />
 
       <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>

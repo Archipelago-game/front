@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import PsychologyIcon from "@mui/icons-material/Psychology";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 
-import { Controller, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray, useWatch } from "react-hook-form";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { useEffect } from "react";
@@ -11,9 +11,9 @@ import { MENTAL_RESOLVE_STATEMENT_COLOR_MAP } from "./mental-resolve-colors.cons
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
-import CheckIconBox from "../../../components/fields/check-icon-box/CheckIconBox.tsx";
+import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
 import { useHealthCalc } from "../health-calc.hook.ts";
-import BaseCheckbox from "../../../components/fields/BaseCheckbox.tsx";
+import BaseField from "../../../components/BaseField.tsx";
 
 export default function MentalDefence() {
   const { values, methods, onChange } = useCustomFormContext();
@@ -27,8 +27,16 @@ export default function MentalDefence() {
     ],
   });
 
+  const despairValue = useWatch({
+    control: methods.control,
+    name: "defence.mental.despair.value",
+    defaultValue: 0,
+  });
+  const despairNum = Number(despairValue) || 0;
+  const effectiveMental = Math.max(0, (healthValue ?? 20) - despairNum);
+
   const isDisabled = useWatchCheckboxAmount({
-    amount: healthValue ?? 20,
+    amount: effectiveMental,
     listName: "defence.mental.resolve.list",
   });
 
@@ -49,15 +57,14 @@ export default function MentalDefence() {
         <CalculatedValue value={healthValue} />
       </CustomLabel>
 
-      <BaseCheckbox
-        fieldName={`defence.mental.despair.checked`}
+      <BaseField
+        fieldName="defence.mental.despair.value"
         label={{
-          label: {
-            text: "Отчаяние",
-            color: "secondary",
-          },
-          orientation: "row",
+          text: "Отчаяние",
+          color: "secondary",
         }}
+        orientation="row"
+        showSpinButtons
       />
 
       <CustomLabel label={{ text: "Решимость", color: "secondary" }}>
