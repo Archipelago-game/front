@@ -5,7 +5,7 @@ import type {
   FormType,
 } from "../../../../types/form/form.type.ts";
 import Loads from "./Loads.tsx";
-import BaseField from "../../../components/BaseField.tsx";
+import BaseField from "../../../components/fields/BaseField.tsx";
 
 interface Props {
   index: number;

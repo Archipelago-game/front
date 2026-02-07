@@ -1,10 +1,10 @@
 import { Box, Checkbox, type CheckboxProps } from "@mui/material";
-import CustomLabel, { type CustomLabelProps } from "./CustomLabel.tsx";
+import CustomLabel, { type CustomLabelProps } from "../CustomLabel.tsx";
 import { Controller } from "react-hook-form";
-import { useCustomFormContext } from "../../providers/use-custom-context-form.hook.ts";
-import type { OnChangeCallbackType } from "../../types/on-change-callback.type.ts";
+import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
+import type { OnChangeCallbackType } from "../../../types/on-change-callback.type.ts";
 
-import type { FormBooleanField } from "../../types/field-utils.type.ts";
+import type { FormBooleanField } from "../../../types/field-utils.type.ts";
 
 interface Props extends CheckboxProps {
   fieldName: FormBooleanField;

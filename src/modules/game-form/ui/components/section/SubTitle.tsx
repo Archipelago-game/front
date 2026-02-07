@@ -13,7 +13,7 @@ export default function SubTitle({ title }: Props) {
       component="h3"
       sx={{
         marginBottom: 1,
-        color: theme.palette.base.text.primary,
+        color: theme.palette.base.text.title,
         textAlign: "left",
         fontWeight: 200,
         fontSize: "1em",

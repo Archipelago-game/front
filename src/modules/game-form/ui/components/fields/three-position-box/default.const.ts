@@ -2,7 +2,7 @@ import type {
   StatementColorMapping,
   StatementSingleIcon,
 } from "./three-position-box.type.ts";
-import CustomHeartBrokenIcon from "../../../../../common/components/icons/CustomHeartBrokenIcon.tsx";
+import CustomHeartBrokenIcon from "../../../../../../common/components/icons/CustomHeartBrokenIcon.tsx";
 
 export const DEFAULT_STATEMENT_COLOR_MAP: StatementColorMapping = {
   full: "#f44336",

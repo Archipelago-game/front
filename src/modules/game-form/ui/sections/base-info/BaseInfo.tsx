@@ -2,7 +2,7 @@ import { Box, Grid } from "@mui/material";
 import CustomLabel from "../../components/CustomLabel.tsx";
 
 import Race from "./Race.tsx";
-import BaseField from "../../components/BaseField.tsx";
+import BaseField from "../../components/fields/BaseField.tsx";
 import SectionTitle from "../../components/section/SectionTitle.tsx";
 
 export default function BaseInfo() {

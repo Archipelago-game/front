@@ -1,4 +1,4 @@
-import BaseField from "../../components/BaseField.tsx";
+import BaseField from "../../components/fields/BaseField.tsx";
 import { slotStyles } from "../styles.ts";
 
 export default function Notes() {

@@ -1,6 +1,6 @@
 import CustomLabel from "../../../components/CustomLabel.tsx";
 
-import BaseField from "../../../components/BaseField.tsx";
+import BaseField from "../../../components/fields/BaseField.tsx";
 
 import type { DefaultFieldControllerProps } from "../../../components/controllers/TextFieldController.tsx";
 

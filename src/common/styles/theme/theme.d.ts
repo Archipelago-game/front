@@ -21,9 +21,10 @@ declare module "@mui/material/styles" {
       divider: string;
       outline: string;
       outlineStrong: string;
-      outlineSubtle: string;
+      outlineSubtitle: string;
 
       text: {
+        title: string;
         primary: string;
         secondary: string;
         onLowered: string;
@@ -54,9 +55,10 @@ declare module "@mui/material/styles" {
       divider: string;
       outline: string;
       outlineStrong: string;
-      outlineSubtle: string;
+      outlineSubtitle: string;
 
       text: {
+        title: string;
         primary: string;
         secondary: string;
         onLowered: string;

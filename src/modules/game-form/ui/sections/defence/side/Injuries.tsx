@@ -4,7 +4,7 @@ import CustomLabel from "../../../components/CustomLabel.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
-import ThreePositionBox from "../../../components/three-position-box/ThreePositionBox.tsx";
+import ThreePositionBox from "../../../components/fields/three-position-box/ThreePositionBox.tsx";
 import LotusIcon from "../../../../../../common/components/icons/LotusIcon.tsx";
 
 export default function Injuries() {

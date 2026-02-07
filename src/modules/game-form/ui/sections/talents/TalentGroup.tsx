@@ -1,6 +1,6 @@
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import BaseField from "../../components/BaseField.tsx";
+import BaseField from "../../components/fields/BaseField.tsx";
 import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/TooltipWrapper.tsx";
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import type { TalentGroup as TalentGroupType } from "./group-talents-by-branch.utils.ts";

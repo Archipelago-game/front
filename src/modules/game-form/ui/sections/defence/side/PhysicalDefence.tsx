@@ -11,9 +11,9 @@ import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 import { HEALTH_STATEMENT_COLOR_MAP } from "./health-colors.const.ts";
 
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
-import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
+import CheckIconBox from "../../../components/fields/check-icon-box/CheckIconBox.tsx";
 import { useHealthCalc } from "../health-calc.hook.ts";
-import BaseCheckbox from "../../../components/BaseCheckbox.tsx";
+import BaseCheckbox from "../../../components/fields/BaseCheckbox.tsx";
 
 export default function PhysicalDefence() {
   const { values, methods, onChange } = useCustomFormContext();

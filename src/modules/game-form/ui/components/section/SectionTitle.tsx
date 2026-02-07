@@ -10,9 +10,10 @@ export default function SectionTitle({ title }: Props) {
   return (
     <Typography
       variant="h2"
+      component="h2"
       sx={{
         marginBottom: 1,
-        color: theme.palette.base.text.primary,
+        color: theme.palette.base.text.title,
         textAlign: "left",
         fontSize: {
           md: "1.2em",

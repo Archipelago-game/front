@@ -2,7 +2,7 @@ import CustomLabel from "../../components/CustomLabel.tsx";
 
 import { Box, useMediaQuery, Typography } from "@mui/material";
 import { useWatch } from "react-hook-form";
-import BaseField from "../../components/BaseField.tsx";
+import BaseField from "../../components/fields/BaseField.tsx";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useWatchRace } from "../base-info/use-watch-race.ts";

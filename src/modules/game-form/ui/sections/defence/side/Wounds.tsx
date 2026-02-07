@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { gridStyle } from "./styles/side-defence.styles.ts";
 
-import ThreePositionBox from "../../../components/three-position-box/ThreePositionBox.tsx";
+import ThreePositionBox from "../../../components/fields/three-position-box/ThreePositionBox.tsx";
 
 export default function Wounds() {
   const { methods, onChange, values } = useCustomFormContext();

@@ -11,9 +11,9 @@ import { MENTAL_RESOLVE_STATEMENT_COLOR_MAP } from "./mental-resolve-colors.cons
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
-import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
+import CheckIconBox from "../../../components/fields/check-icon-box/CheckIconBox.tsx";
 import { useHealthCalc } from "../health-calc.hook.ts";
-import BaseCheckbox from "../../../components/BaseCheckbox.tsx";
+import BaseCheckbox from "../../../components/fields/BaseCheckbox.tsx";
 
 export default function MentalDefence() {
   const { values, methods, onChange } = useCustomFormContext();

@@ -5,7 +5,7 @@ import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
 import { Box, useMediaQuery } from "@mui/material";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import CustomLabel from "../../components/CustomLabel.tsx";
-import CheckIconBox from "../../components/check-icon-box/CheckIconBox.tsx";
+import CheckIconBox from "../../components/fields/check-icon-box/CheckIconBox.tsx";
 import { LUCK_STATEMENT_COLOR_MAP } from "./luck-colors.const.ts";
 import { useWatchRace } from "../base-info/use-watch-race.ts";
 

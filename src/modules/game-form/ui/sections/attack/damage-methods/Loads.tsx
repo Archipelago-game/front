@@ -5,7 +5,7 @@ import CelebrationIcon from "@mui/icons-material/Celebration";
 import CustomLabel from "../../../components/CustomLabel.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import type { FieldArrayComponentShortProps } from "../../../../types/field-array-component-props.type.ts";
-import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
+import CheckIconBox from "../../../components/fields/check-icon-box/CheckIconBox.tsx";
 import { LOADS_STATEMENT_COLOR_MAP } from "./loads-colors.const.ts";
 
 interface Props extends FieldArrayComponentShortProps {

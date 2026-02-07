@@ -1,7 +1,7 @@
 import CustomLabel from "../../../components/CustomLabel.tsx";
 import { Box } from "@mui/system";
 
-import BaseField from "../../../components/BaseField.tsx";
+import BaseField from "../../../components/fields/BaseField.tsx";
 
 export default function DamageBonus() {
   return (

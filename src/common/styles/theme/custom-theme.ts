@@ -43,11 +43,12 @@ export const getTheme = (mode: "light" | "dark") =>
               // Более гранулярно (рекомендую добавить эти кастомные ключи)
               outline: "#b8b0a5", // основной divider (между surfaceBase и другими элементами)
               outlineStrong: "#5c544a", // более заметный — между surfaceBase и surfaceLowered
-              outlineSubtle: "#80786f", // очень мягкий — между surfaceBase и surfaceAccent
+              outlineSubtitle: "#80786f", // очень мягкий — между surfaceBase и surfaceAccent
 
               // Текст (контраст проверен примерно на WCAG AA)
               text: {
-                primary: "#000000", // основной текст на surfaceBase / surfaceAccent
+                title: "#000000",
+                primary: "#333", // основной текст на surfaceBase / surfaceAccent
                 secondary: "#707442", // акцентированный текст (класс, уровень, HP и т.д.)
                 onLowered: "#c0bbac", // обычный текст на surfaceLowered
                 onLoweredStrong: "#f3ece1", // выделенный / заголовки на тёмном
@@ -65,11 +66,12 @@ export const getTheme = (mode: "light" | "dark") =>
               // Более гранулярно (рекомендую добавить эти кастомные ключи)
               outline: "#80786f", // основной divider (между surfaceBase и другими элементами)
               outlineStrong: "#5c544a", // более заметный — между surfaceBase и surfaceLowered
-              outlineSubtle: "#b8b0a5", // очень мягкий — между surfaceBase и surfaceAccent
+              outlineSubtitle: "#b8b0a5", // очень мягкий — между surfaceBase и surfaceAccent
 
               // Текст (контраст проверен примерно на WCAG AA)
               text: {
-                primary: "#000000", // основной текст на surfaceBase / surfaceAccent
+                title: "#000000",
+                primary: "#333", // основной текст на surfaceBase / surfaceAccent
                 secondary: "#707442", // акцентированный текст (класс, уровень, HP и т.д.)
                 onLowered: "#c0bbac", // обычный текст на surfaceLowered
                 onLoweredStrong: "#f3ece1", // выделенный / заголовки на тёмном

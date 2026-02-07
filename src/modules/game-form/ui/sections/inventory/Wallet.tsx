@@ -1,4 +1,4 @@
-import BaseField from "../../components/BaseField.tsx";
+import BaseField from "../../components/fields/BaseField.tsx";
 
 export default function Wallet() {
   return (

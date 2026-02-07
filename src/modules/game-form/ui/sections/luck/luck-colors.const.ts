@@ -1,4 +1,4 @@
-import type { StatementColorMapping } from "../../components/check-icon-box/check-icon-box.type.ts";
+import type { StatementColorMapping } from "../../components/fields/check-icon-box/check-icon-box.type.ts";
 
 /**
  * Цветовая схема для чекбоксов удачи/решимости
