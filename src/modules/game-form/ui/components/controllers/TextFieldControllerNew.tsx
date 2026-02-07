@@ -49,7 +49,7 @@ export default function TextFieldControllerNew(
             input: {
               sx: { ...sxSlotProps, padding: 0 },
               endAdornment:
-                isShowChangeValueBtn && fieldType === "number" ? (
+                isShowChangeValueBtn && isNumberType ? (
                   <AdornmentBlock field={field} onChange={onChange} />
                 ) : null,
             },
