@@ -4,7 +4,7 @@ import Armor from "./armor/Armor.tsx";
 import ArmorProperty from "./armor/ArmorProperty.tsx";
 import SideDefence from "./side/SideDefence.tsx";
 import { fitContentStyle } from "./side/styles/side-defence.styles.ts";
-import SectionTitle from "../../components/SectionTitle.tsx";
+import SectionTitle from "../../components/section/SectionTitle.tsx";
 
 export default function Defence() {
   return (

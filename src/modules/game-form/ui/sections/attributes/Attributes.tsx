@@ -10,7 +10,7 @@ import Intelligence from "./intelligence/Intelligence.tsx";
 import { Box } from "@mui/system";
 import { useState, type ReactNode, useEffect } from "react";
 
-import SectionTitle from "../../components/SectionTitle.tsx";
+import SectionTitle from "../../components/section/SectionTitle.tsx";
 import { useTheme } from "@mui/material/styles";
 
 type AttributeMapKey = "1" | "2" | "3" | "4" | "5" | "6";

@@ -12,7 +12,8 @@ import Inventory from "./ui/sections/inventory/Inventory.tsx";
 import DraggableFab from "../draggable-fab/DraggableSpeedDial.tsx";
 import AttributesAndTalentsPanel from "./ui/sections/attrubutes-talents-tabs/AttributesAndTalentsPanel.tsx";
 import BaseInfoNew from "./ui/sections/base-info/BaseInfoNew.tsx";
-import SectionCard from "./ui/components/SectionCard.tsx";
+import SectionCard from "./ui/components/section/SectionCard.tsx";
+import SubTitle from "./ui/components/section/SubTitle.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -26,6 +27,7 @@ export default function CharacterForm() {
     <>
       <BaseInfoNew />
       <SectionCard title="Атака">
+        <SubTitle title="Бонусы к урону" />
         <div>test</div>
       </SectionCard>
       <DraggableFab />

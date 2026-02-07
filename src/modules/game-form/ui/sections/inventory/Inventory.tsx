@@ -1,7 +1,7 @@
 import Equipment from "./Equipment.tsx";
 import { Box, Grid } from "@mui/material";
 import Wallet from "./Wallet.tsx";
-import SectionTitle from "../../components/SectionTitle.tsx";
+import SectionTitle from "../../components/section/SectionTitle.tsx";
 
 export default function Inventory() {
   return (

@@ -3,7 +3,7 @@ import CustomLabel from "../../components/CustomLabel.tsx";
 
 import Race from "./Race.tsx";
 import BaseField from "../../components/BaseField.tsx";
-import SectionTitle from "../../components/SectionTitle.tsx";
+import SectionTitle from "../../components/section/SectionTitle.tsx";
 
 export default function BaseInfo() {
   return (

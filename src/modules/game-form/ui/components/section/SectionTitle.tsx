@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+
 interface Props {
   title: string;
 }
