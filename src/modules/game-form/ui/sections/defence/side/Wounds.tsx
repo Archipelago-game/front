@@ -1,12 +1,12 @@
 import { Controller, useFieldArray } from "react-hook-form";
 
-import CustomLabel from "../../../components/CustomLabel.tsx";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { gridStyle } from "./styles/side-defence.styles.ts";
 
 import ThreePositionBox from "../../../components/fields/three-position-box/ThreePositionBox.tsx";
+import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
 
 export default function Wounds() {
   const { methods, onChange, values } = useCustomFormContext();
@@ -23,14 +23,9 @@ export default function Wounds() {
   }, [values?.defence.physical.wounds.list, replace]);
 
   return (
-    <CustomLabel
-      label={{
-        text: "Раны",
-        color: "secondary",
-        size: "h6",
-      }}
-      orientation="column"
-    >
+    <Box>
+      <CustomTextFieldLabel title="Раны" />
+
       <Box sx={gridStyle}>
         {fields.map((field, index) => (
           <Controller
@@ -49,6 +44,6 @@ export default function Wounds() {
           />
         ))}
       </Box>
-    </CustomLabel>
+    </Box>
   );
 }

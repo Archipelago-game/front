@@ -11,6 +11,7 @@ type NewControllerProps = Omit<ControllerProps, "orientation">;
 
 export interface DefaultFieldControllerProps extends NewControllerProps {
   isShowChangeValueBtn?: boolean;
+  showSpinButtons?: boolean;
 }
 
 export default function TextFieldControllerNew(
@@ -23,6 +24,7 @@ export default function TextFieldControllerNew(
     sxSlotProps = "",
     disabled = false,
     isShowChangeValueBtn = false,
+    showSpinButtons = false,
   } = props;
 
   const theme = useTheme();
@@ -75,14 +77,16 @@ export default function TextFieldControllerNew(
               textAlign: "center",
               WebkitTextFillColor: theme.palette.base.text.primary,
             },
-            "& input[type=number]::-webkit-outer-spin-button": {
-              WebkitAppearance: "none",
-              margin: 0,
-            },
-            "& input[type=number]::-webkit-inner-spin-button": {
-              WebkitAppearance: "none",
-              margin: 0,
-            },
+            ...(!showSpinButtons && {
+              "& input[type=number]::-webkit-outer-spin-button": {
+                WebkitAppearance: "none",
+                margin: 0,
+              },
+              "& input[type=number]::-webkit-inner-spin-button": {
+                WebkitAppearance: "none",
+                margin: 0,
+              },
+            }),
 
             ...sx,
           }}

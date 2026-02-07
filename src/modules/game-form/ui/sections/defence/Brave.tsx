@@ -1,17 +1,10 @@
-import BaseField from "../../components/fields/BaseField.tsx";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
 
 export default function Brave() {
   return (
-    <BaseField
-      fieldName="defence.brave"
-      label={{
-        color: "primary",
-        text: "Отвага",
-      }}
-      orientation="row"
-      sx={{
-        flex: "0 1 0",
-      }}
+    <CustomTextField
+      title="Отвага"
+      textField={{ fieldName: "defence.brave" }}
     />
   );
 }

@@ -1,6 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
-import CustomLabel from "../../../components/CustomLabel.tsx";
+
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { Controller, useFieldArray, useWatch } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
@@ -15,9 +15,15 @@ import CalculatedValue from "../../../components/CalculatedValue.tsx";
 import { useHealthCalc } from "../health-calc.hook.ts";
 
 import CheckIconBox from "../../../components/fields/check-icon-box/CheckIconBox.tsx";
-import BaseField from "../../../components/fields/BaseField.tsx";
+
+import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
+import CustomTextFieldWrapper from "../../../components/fields/custom-text-field/CustomTextFieldWrapper.tsx";
+
+import CustomTextField from "../../../components/fields/custom-text-field/CustomTextField.tsx";
+import { useTheme } from "@mui/material/styles";
 
 export default function PhysicalDefence() {
+  const theme = useTheme();
   const { values, methods, onChange } = useCustomFormContext();
 
   const healthValue = useHealthCalc({
@@ -56,44 +62,42 @@ export default function PhysicalDefence() {
 
   return (
     <Box>
-      <CustomLabel label={{ text: "Физическая" }} orientation="row">
+      <CustomTextFieldWrapper>
+        <CustomTextFieldLabel title="Физическая" />
         <CalculatedValue value={healthValue} />
-      </CustomLabel>
+      </CustomTextFieldWrapper>
 
-      <BaseField
-        fieldName="defence.physical.tiredness.value"
-        label={{
-          text: "Усталость",
-          color: "secondary",
+      <CustomTextField
+        title="Усталость"
+        textField={{
+          fieldName: "defence.physical.tiredness.value",
+          showSpinButtons: true,
         }}
-        orientation="row"
-        showSpinButtons
       />
 
-      <CustomLabel label={{ text: "Здоровье", color: "secondary" }}>
-        <Box sx={{ marginBottom: "4px", ...gridStyle }}>
-          {fields.map((field, i) => (
-            <Controller
-              key={field.id}
-              name={`defence.physical.health.list.${i}.checked`}
-              control={methods.control}
-              render={({ field }) => (
-                // note для отображения иконки вместо checkbox, добавить пропу Icon c требуемой иконкой
-                // todo addIcon
-                <CheckIconBox
-                  field={field}
-                  onChange={(e) => {
-                    onChange(field, e);
-                  }}
-                  Icon={WaterDropIcon}
-                  colors={HEALTH_STATEMENT_COLOR_MAP}
-                  disabled={isDisabled(i)}
-                />
-              )}
-            />
-          ))}
-        </Box>
-      </CustomLabel>
+      <Divider sx={{ borderColor: theme.palette.base.outline }} />
+      <CustomTextFieldLabel title="Здоровье" />
+
+      <Box sx={{ ...gridStyle }}>
+        {fields.map((field, i) => (
+          <Controller
+            key={field.id}
+            name={`defence.physical.health.list.${i}.checked`}
+            control={methods.control}
+            render={({ field }) => (
+              <CheckIconBox
+                field={field}
+                onChange={(e) => {
+                  onChange(field, e);
+                }}
+                Icon={WaterDropIcon}
+                colors={HEALTH_STATEMENT_COLOR_MAP}
+                disabled={isDisabled(i)}
+              />
+            )}
+          />
+        ))}
+      </Box>
     </Box>
   );
 }

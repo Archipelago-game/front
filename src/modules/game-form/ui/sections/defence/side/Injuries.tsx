@@ -1,11 +1,12 @@
 import { Controller, useFieldArray } from "react-hook-form";
 import { Box } from "@mui/material";
-import CustomLabel from "../../../components/CustomLabel.tsx";
+
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { useEffect } from "react";
 import { gridStyle } from "./styles/side-defence.styles.ts";
 import ThreePositionBox from "../../../components/fields/three-position-box/ThreePositionBox.tsx";
 import LotusIcon from "../../../../../../common/components/icons/LotusIcon.tsx";
+import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
 
 export default function Injuries() {
   const { methods, onChange, values } = useCustomFormContext();
@@ -22,14 +23,8 @@ export default function Injuries() {
   }, [values?.defence.mental.injuries.list, replace]);
 
   return (
-    <CustomLabel
-      label={{
-        text: "Травмы",
-        color: "secondary",
-        size: "h6",
-      }}
-      orientation="column"
-    >
+    <Box>
+      <CustomTextFieldLabel title="Травмы" />
       <Box sx={gridStyle}>
         {fields.map((field, index) => (
           <Controller
@@ -49,6 +44,6 @@ export default function Injuries() {
           />
         ))}
       </Box>
-    </CustomLabel>
+    </Box>
   );
 }

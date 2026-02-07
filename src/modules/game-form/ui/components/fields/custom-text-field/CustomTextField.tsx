@@ -1,10 +1,9 @@
-import { Stack } from "@mui/material";
-
 import TextFieldControllerNew, {
   type DefaultFieldControllerProps,
 } from "../../controllers/TextFieldControllerNew.tsx";
 
 import CustomTextFieldLabel from "./CustomTextFieldLabel.tsx";
+import CustomTextFieldWrapper from "./CustomTextFieldWrapper.tsx";
 
 interface Props {
   title: string;
@@ -13,9 +12,9 @@ interface Props {
 
 export default function CustomTextField({ title, textField }: Props) {
   return (
-    <Stack direction="row" spacing={1}>
+    <CustomTextFieldWrapper>
       <CustomTextFieldLabel title={title} />
       <TextFieldControllerNew {...textField} />
-    </Stack>
+    </CustomTextFieldWrapper>
   );
 }

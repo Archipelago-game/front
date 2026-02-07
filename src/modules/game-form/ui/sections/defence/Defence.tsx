@@ -3,21 +3,12 @@ import Brave from "./Brave.tsx";
 import Armor from "./armor/Armor.tsx";
 import ArmorProperty from "./armor/ArmorProperty.tsx";
 import SideDefence from "./side/SideDefence.tsx";
-import { fitContentStyle } from "./side/styles/side-defence.styles.ts";
-import SectionTitle from "../../components/section/SectionTitle.tsx";
+
+import SectionCard from "../../components/section/SectionCard.tsx";
 
 export default function Defence() {
   return (
-    <Box
-      sx={{
-        ...fitContentStyle,
-        ["@media (max-width: 730px)"]: {
-          width: "100%",
-        },
-      }}
-    >
-      <SectionTitle title="Защита" />
-
+    <SectionCard title="Защита">
       <Box
         sx={{
           display: "grid",
@@ -41,6 +32,14 @@ export default function Defence() {
         </Box>
         <SideDefence />
       </Box>
-    </Box>
+    </SectionCard>
   );
 }
+
+// todo разобраться нужны ли эти стили для SectionCard
+//      sx={{
+//         ...fitContentStyle,
+//         ["@media (max-width: 730px)"]: {
+//           width: "100%",
+//         },
+//       }}
