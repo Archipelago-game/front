@@ -34,7 +34,7 @@ export const getTheme = (mode: "light" | "dark") =>
           ? {
               background: "#786f61",
               surfaceBase: "#d8cfc5",
-              surfaceAccent: "#d6cec3",
+              surfaceAccent: "#e0d9cf",
               surfaceLowered: "#342f2e",
               accent: "#707442",
 
@@ -57,7 +57,7 @@ export const getTheme = (mode: "light" | "dark") =>
           : {
               background: "#786f61",
               surfaceBase: "#d8cfc5",
-              surfaceAccent: "#d6cec3",
+              surfaceAccent: "#e0d9cf",
               surfaceLowered: "#342f2e",
               accent: "#707442",
 

@@ -1,10 +1,10 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
-import SectionTitle from "./SectionTitle.tsx";
 import { useTheme } from "@mui/material/styles";
 import type { ReactNode } from "react";
-import { Box, Divider } from "@mui/material";
+
+import SectionHeader from "./SectionHeader.tsx";
 
 interface Props {
   title?: string;
@@ -22,10 +22,10 @@ export default function SectionCard(props: Props) {
     >
       <CardContent sx={{ paddingTop: 1 }}>
         {title && (
-          <Box>
-            <SectionTitle title={title} />
-            <Divider sx={{ borderColor: theme.palette.base.outline }} />
-          </Box>
+          <SectionHeader
+            title={title}
+            dividerColor={theme.palette.base.outline}
+          />
         )}
         {children}
       </CardContent>

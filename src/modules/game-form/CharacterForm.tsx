@@ -16,6 +16,7 @@ import SectionCard from "./ui/components/section/SectionCard.tsx";
 import SubTitle from "./ui/components/section/SubTitle.tsx";
 
 import TextField from "./ui/components/fields/TextField.tsx";
+import SubSection from "./ui/components/section/SubSection.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -40,6 +41,7 @@ export default function CharacterForm() {
             textField={{ fieldName: "attack.damageBonus.mental" }}
           />
         </Stack>
+        <SubSection />
       </SectionCard>
       <DraggableFab />
       <Box
