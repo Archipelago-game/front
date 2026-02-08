@@ -3,6 +3,7 @@ import Tab from "@mui/material/Tab";
 
 export const StyledTab = styled(Tab)(({ theme }) => ({
   textTransform: "none",
+  fontSize: "1.2em",
   minHeight: 40,
   padding: "8px 12px",
   borderTopLeftRadius: "4px",
@@ -10,6 +11,10 @@ export const StyledTab = styled(Tab)(({ theme }) => ({
   transition: theme.transitions.create(["background-color", "color"], {
     duration: theme.transitions.duration.short,
   }),
+
+  "&:first-child": {
+    borderTopLeftRadius: 0,
+  },
 
   /* ===== default (not selected) ===== */
   backgroundColor: theme.palette.base.surfaceLowered,
