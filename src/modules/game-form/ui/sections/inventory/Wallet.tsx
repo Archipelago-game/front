@@ -1,13 +1,13 @@
-import BaseField from "../../components/fields/BaseField.tsx";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
 
 export default function Wallet() {
   return (
-    <BaseField
-      fieldName={"inventory.wallet"}
-      label={{
-        text: "Деньги",
+    <CustomTextField
+      title="Деньги"
+      textField={{
+        fieldName: "inventory.wallet",
+        isShowChangeValueBtn: true,
       }}
-      isShowChangeValueBtn={true}
     />
   );
 }
