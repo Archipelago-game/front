@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import Brave from "./Brave.tsx";
-import Armor from "./armor/Armor.tsx";
-import ArmorProperty from "./armor/ArmorProperty.tsx";
+
 import SideDefence from "./side/SideDefence.tsx";
 
 import SectionCard from "../../components/section/SectionCard.tsx";
+import ArmorSection from "./armor/ArmorSection.tsx";
 
 export default function Defence() {
   return (
@@ -27,8 +27,7 @@ export default function Defence() {
           }}
         >
           <Brave />
-          <Armor />
-          <ArmorProperty />
+          <ArmorSection />
         </Box>
         <SideDefence />
       </Box>

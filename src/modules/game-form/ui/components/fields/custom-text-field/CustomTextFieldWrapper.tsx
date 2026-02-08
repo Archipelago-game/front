@@ -2,11 +2,17 @@ import Stack from "@mui/material/Stack";
 import type { ReactNode } from "react";
 
 interface Props {
+  orientation?: "column" | "row";
   children: ReactNode;
 }
-export default function CustomTextFieldWrapper({ children }: Props) {
+export default function CustomTextFieldWrapper({
+  orientation = "row",
+  children,
+}: Props) {
+  const spacing = orientation === "row" ? 1 : 0;
+
   return (
-    <Stack direction="row" alignItems="center" spacing={1}>
+    <Stack direction={orientation} alignItems="center" spacing={spacing}>
       {children}
     </Stack>
   );

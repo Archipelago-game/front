@@ -8,11 +8,16 @@ import CustomTextFieldWrapper from "./CustomTextFieldWrapper.tsx";
 interface Props {
   title: string;
   textField: DefaultFieldControllerProps;
+  orientation?: "column" | "row";
 }
 
-export default function CustomTextField({ title, textField }: Props) {
+export default function CustomTextField({
+  title,
+  textField,
+  orientation = "row",
+}: Props) {
   return (
-    <CustomTextFieldWrapper>
+    <CustomTextFieldWrapper orientation={orientation}>
       <CustomTextFieldLabel title={title} />
       <TextFieldControllerNew {...textField} />
     </CustomTextFieldWrapper>
