@@ -1,73 +1,74 @@
-import { Box, Grid } from "@mui/material";
-import CustomLabel from "../../components/CustomLabel.tsx";
+import { Box, Divider, IconButton, Stack } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import EditIcon from "@mui/icons-material/Edit";
+import type { ReactNode } from "react";
+import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
+import { mapRace } from "../../../consts/map-race.const.ts";
 
-import Race from "./Race.tsx";
-import BaseField from "../../components/fields/BaseField.tsx";
-import SectionTitle from "../../components/section/SectionTitle.tsx";
+const HighlightSpan = (props: { children: ReactNode }) => {
+  const theme = useTheme();
+  return (
+    <Box
+      component={"span"}
+      sx={{ color: theme.palette.base.text.onLoweredStrong }}
+    >
+      {props.children}
+    </Box>
+  );
+};
 
 export default function BaseInfo() {
+  const theme = useTheme();
+  const { values } = useCustomFormContext();
+  const base = theme.palette.base;
+  if (!values) {
+    return null;
+  }
+
   return (
-    <>
-      <SectionTitle title="Персонаж" />
-
-      <Grid container spacing={1}>
-        <Grid size={{ xs: 12, md: 4 }}>
-          <BaseField
-            fieldName="name"
-            label={{
-              text: "Имя персонажа",
-            }}
-            fieldType="text"
-          />
-          <Race />
-        </Grid>
-        <Grid size={{ xs: 12, md: 8 }}>
-          <CustomLabel>
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "0.2em",
-              }}
-            >
-              <BaseField
-                fieldName="age"
-                label={{
-                  color: "secondary",
-                  text: "Возраст",
-                }}
-                orientation="row"
-              />
-
-              <BaseField
-                fieldName="homeland"
-                label={{
-                  color: "secondary",
-                  text: "Родина",
-                }}
-                orientation="row"
-                fieldType="text"
-              />
-
-              <Box
-                sx={{
-                  width: "100%",
-                }}
-              >
-                <BaseField
-                  fieldName="languages"
-                  label={{
-                    color: "secondary",
-                    text: "Языки",
-                  }}
-                  orientation="row"
-                  fieldType="text"
-                />
-              </Box>
-            </Box>
-          </CustomLabel>
-        </Grid>
-      </Grid>
-    </>
+    <Box
+      sx={{
+        position: "relative",
+        padding: 2,
+        borderRadius: 1,
+        background: base.surfaceLowered,
+        color: base.text.onLowered,
+      }}
+    >
+      <Stack direction="row" mb={1} pl={1} pr={1}>
+        <Box>
+          <HighlightSpan>
+            <b>{values.name}</b>
+          </HighlightSpan>
+        </Box>
+        <Stack direction="row" spacing={2} justifyContent="center" flexGrow={1}>
+          <Box>
+            Возраст:&nbsp;
+            <HighlightSpan>{values.age}</HighlightSpan>
+          </Box>
+          <Box>
+            Родина:&nbsp;
+            <HighlightSpan>{values.homeland}</HighlightSpan>
+          </Box>
+          <Box>Язык: {values.languages}</Box>
+          <Box>
+            Раса:&nbsp;
+            <HighlightSpan>{mapRace[values.race]}</HighlightSpan>
+          </Box>
+        </Stack>
+      </Stack>
+      <Divider sx={{ borderColor: base.outline }} />
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+        }}
+      >
+        <IconButton>
+          <EditIcon sx={{ color: base.text.onLowered }} />
+        </IconButton>
+      </Box>
+    </Box>
   );
 }

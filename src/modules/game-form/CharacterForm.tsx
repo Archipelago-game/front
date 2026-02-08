@@ -1,5 +1,4 @@
 import { Box, Grid } from "@mui/material";
-import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 
 import Luck from "./ui/sections/luck/Luck.tsx";
 import Experience from "./ui/sections/experience/Experience.tsx";
@@ -11,7 +10,7 @@ import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import DraggableFab from "../draggable-fab/DraggableSpeedDial.tsx";
 import AttributesAndTalentsPanel from "./ui/sections/attrubutes-talents-tabs/AttributesAndTalentsPanel.tsx";
-import BaseInfoNew from "./ui/sections/base-info/BaseInfoNew.tsx";
+import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -23,7 +22,7 @@ export default function CharacterForm() {
 
   return (
     <>
-      <BaseInfoNew />
+      <BaseInfo />
 
       <DraggableFab />
       <Box
@@ -52,9 +51,6 @@ export default function CharacterForm() {
 
         <Box>
           <Grid container spacing={1}>
-            <Grid size={12}>
-              <BaseInfo />
-            </Grid>
             <Grid size={12}>
               <Box
                 sx={{
