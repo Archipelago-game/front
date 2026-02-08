@@ -3,9 +3,9 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Paper,
+  Stack,
 } from "@mui/material";
 
 import TextFieldController from "../../../components/controllers/TextFieldController.tsx";
@@ -17,6 +17,11 @@ import { Fragment } from "react";
 import OZDisplay from "./OZDisplay.tsx";
 import { type AttributeType } from "./OZ-calc.hook.ts";
 import { useTheme } from "@mui/material/styles";
+import SubTitle from "../../../components/section/SubTitle.tsx";
+import CustomTextField from "../../../components/fields/custom-text-field/CustomTextField.tsx";
+
+import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
+import CustomTextFieldWrapper from "../../../components/fields/custom-text-field/CustomTextFieldWrapper.tsx";
 
 export interface SkillItem<T extends string> extends BaseSkill<T> {
   fieldName: FieldPath<FormType>;
@@ -34,6 +39,8 @@ interface Props<T extends string> {
   statValueName: FieldPath<FormType>;
   skillGroups: SkillGroup<T>[];
 }
+
+// Экс, Фок, О.З.
 
 /**
  * Определяет тип характеристики по имени поля
@@ -71,52 +78,26 @@ export default function SkillsTable<T extends string>({
   return (
     <TableContainer component={Paper}>
       <Table sx={{ "& .MuiTableCell-root": { padding: "2px" } }}>
-        <TableHead>
-          <TableRow
-            sx={{
-              backgroundColor: theme.palette.label.background.secondary,
-            }}
-          >
-            <TableCell
-              sx={{
-                width: "100%",
-                color: theme.palette.label.text.secondary,
-              }}
-            >
-              Навык
-            </TableCell>
-            <TableCell
-              sx={{
-                color: theme.palette.label.text.secondary,
-              }}
-              align={"center"}
-            >
-              Экс
-            </TableCell>
-            <TableCell
-              sx={{
-                color: theme.palette.label.text.secondary,
-              }}
-              align={"center"}
-            >
-              Фок
-            </TableCell>
-            <TableCell
-              sx={{
-                color: theme.palette.label.text.secondary,
-              }}
-              align={"center"}
-            >
-              О.З.
-            </TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
           {skillGroups.map((group) => (
             <Fragment key={group.expertiseFieldName}>
               <TableRow key={group.name}>
                 <TableCell sx={{ width: "100%" }} colSpan={4}>
-                  <strong>{group.name}</strong>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <SubTitle title={group.name} />
+                    <CustomTextField
+                      title="Экс"
+                      textField={{ fieldName: group.expertiseFieldName }}
+                    />
+                    <CustomTextFieldWrapper>
+                      <CustomTextFieldLabel title="О.З." />
+                      <OZDisplay
+                        statValueName={statValueName}
+                        expertiseFieldName={group.expertiseFieldName}
+                        attributeType={getAttributeType(statValueName)}
+                      />
+                    </CustomTextFieldWrapper>
+                  </Stack>
                 </TableCell>
               </TableRow>
 
@@ -132,7 +113,7 @@ export default function SkillsTable<T extends string>({
                         },
                       }}
                     >
-                      {skill.name}
+                      <SubTitle title={skill.name} />
                     </TableCell>
                   )}
                   {skill.name === "" && (
