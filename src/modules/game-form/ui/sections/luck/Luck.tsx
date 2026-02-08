@@ -2,12 +2,15 @@ import { Controller } from "react-hook-form";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useSyncFieldArray } from "../../../hooks/use-sync-field-array.hook.ts";
 
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Stack, useMediaQuery } from "@mui/material";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import CustomLabel from "../../components/CustomLabel.tsx";
 import CheckIconBox from "../../components/fields/check-icon-box/CheckIconBox.tsx";
 import { LUCK_STATEMENT_COLOR_MAP } from "./luck-colors.const.ts";
 import { useWatchRace } from "../base-info/use-watch-race.ts";
+import CustomTextFieldLabel from "../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
 // note в ui называется Решимость
 
@@ -31,34 +34,32 @@ export default function Luck() {
   }
 
   return (
-    <Box
-      className="luck"
-      sx={{
-        width: isBelow560 ? "100%" : "fit-content",
+    <BaseSectionCard
+      card={{
+        sx: {
+          width: "100%",
+        },
       }}
     >
-      <CustomLabel
-        label={{ text: "Решимость" }}
-        sx={{ flex: "1 1 1px", justifyContent: "space-between" }}
-      >
-        {fields.map((field, index) => (
-          <Controller
-            key={field.id}
-            name={`luck.list.${index}.checked`}
-            control={methods.control}
-            render={({ field }) => (
-              <CheckIconBox
-                field={field}
-                onChange={(e) => {
-                  onChange(field, e);
-                }}
-                Icon={WorkspacePremiumIcon}
-                colors={LUCK_STATEMENT_COLOR_MAP}
-              />
-            )}
-          />
-        ))}
-      </CustomLabel>
-    </Box>
+      <CustomTextFieldLabel title="Решимость" />
+
+      {fields.map((field, index) => (
+        <Controller
+          key={field.id}
+          name={`luck.list.${index}.checked`}
+          control={methods.control}
+          render={({ field }) => (
+            <CheckIconBox
+              field={field}
+              onChange={(e) => {
+                onChange(field, e);
+              }}
+              Icon={WorkspacePremiumIcon}
+              colors={LUCK_STATEMENT_COLOR_MAP}
+            />
+          )}
+        />
+      ))}
+    </BaseSectionCard>
   );
 }
