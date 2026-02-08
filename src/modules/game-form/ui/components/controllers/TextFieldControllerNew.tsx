@@ -67,14 +67,13 @@ export default function TextFieldControllerNew(
 
             "& .MuiInputBase-input": {
               // note стили полей ввода
-              textAlign: "center",
+              textAlign: isNumberType ? "center" : "left",
               padding: "2px",
               fontSize: "14px",
-              fontWeight: 900,
+              fontWeight: isNumberType ? 900 : 400,
               color: theme.palette.base.text.primary,
             },
             "& .MuiInputBase-input.Mui-disabled": {
-              textAlign: "center",
               WebkitTextFillColor: theme.palette.base.text.primary,
             },
             ...(!showSpinButtons && {

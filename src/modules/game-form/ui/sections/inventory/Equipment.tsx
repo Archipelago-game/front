@@ -1,13 +1,16 @@
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useFieldArray } from "react-hook-form";
 import { useEffect } from "react";
-import CustomLabel from "../../components/CustomLabel.tsx";
-import { Box, Button, IconButton } from "@mui/material";
 
-import TextFieldController from "../../components/controllers/TextFieldController.tsx";
+import { Box, Button, IconButton, Stack } from "@mui/material";
+
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import { Delete } from "@mui/icons-material";
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
+
+import TextFieldControllerNew from "../../components/controllers/TextFieldControllerNew.tsx";
+
+import CustomTextFieldLabel from "../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
 
 export default function Equipment() {
   const { methods, values, onChange } = useCustomFormContext();
@@ -40,51 +43,24 @@ export default function Equipment() {
 
   return (
     <Box>
-      <CustomLabel
-        label={{
-          text: "Личные вещи",
-          color: "primary",
-          size: "h6",
-        }}
-        orientation="column"
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            rowGap: "4px",
-          }}
-        >
-          {fields.map((field, index) => (
-            <Box
-              key={field.id}
-              sx={{
-                position: "relative",
-                paddingLeft: "25px",
-              }}
+      <CustomTextFieldLabel title="Личные вещи" />
+      <Stack rowGap="4px">
+        {fields.map((field, index) => (
+          <Stack key={field.id} direction="row" columnGap={1}>
+            <TextFieldControllerNew
+              fieldName={`inventory.equipment.list.${index}.value`}
+              fieldType="text"
+            />
+            <IconButton
+              onClick={() => deleteEquipment(index, field.value)}
+              sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
             >
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: -2,
-                  left: 1,
-                }}
-              >
-                <IconButton
-                  onClick={() => deleteEquipment(index, field.value)}
-                  sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
-                >
-                  <Delete fontSize="small" />
-                </IconButton>
-              </Box>
-              <TextFieldController
-                fieldName={`inventory.equipment.list.${index}.value`}
-                fieldType="text"
-              />
-            </Box>
-          ))}
-        </Box>
-      </CustomLabel>
+              <Delete fontSize="small" />
+            </IconButton>
+          </Stack>
+        ))}
+      </Stack>
+
       <Box
         sx={{
           display: "flex",
