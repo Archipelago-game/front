@@ -1,25 +1,14 @@
-import { Card, CardContent } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import SectionHeader from "./SectionHeader.tsx";
-import type { ReactNode } from "react";
+import BaseSectionCard, {
+  type DefaultSectionCardProps,
+} from "./BaseSectionCard.tsx";
 
-interface Props {
-  title?: string;
-  children?: ReactNode;
-}
-export default function SubSection({ title, children }: Props) {
+export default function SubSection(props: DefaultSectionCardProps) {
   const theme = useTheme();
   return (
-    <Card
-      sx={{
-        position: "relative",
-        background: theme.palette.base.surfaceAccent,
-      }}
-    >
-      <CardContent>
-        <SectionHeader title={title} />
-        {children}
-      </CardContent>
-    </Card>
+    <BaseSectionCard
+      {...props}
+      backgroundColor={theme.palette.base.surfaceAccent}
+    />
   );
 }

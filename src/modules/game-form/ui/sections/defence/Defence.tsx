@@ -3,12 +3,12 @@ import Brave from "./Brave.tsx";
 
 import SideDefence from "./side/SideDefence.tsx";
 
-import SectionCard from "../../components/section/SectionCard.tsx";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 import ArmorSection from "./armor/ArmorSection.tsx";
 
 export default function Defence() {
   return (
-    <SectionCard title="Защита">
+    <BaseSectionCard title="Защита">
       <Brave />
       <Box
         sx={{
@@ -31,7 +31,7 @@ export default function Defence() {
         </Box>
         <SideDefence />
       </Box>
-    </SectionCard>
+    </BaseSectionCard>
   );
 }
 

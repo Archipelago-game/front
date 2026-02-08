@@ -5,6 +5,8 @@ import type { ReactNode } from "react";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { mapRace } from "../../../consts/map-race.const.ts";
 
+import OppositeColorSectionCard from "../../components/section/OppositeColorSectionCard.tsx";
+
 const HighlightSpan = (props: { children: ReactNode }) => {
   const theme = useTheme();
   return (
@@ -26,15 +28,7 @@ export default function BaseInfo() {
   }
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        padding: 2,
-        borderRadius: 1,
-        background: base.surfaceLowered,
-        color: base.text.onLowered,
-      }}
-    >
+    <OppositeColorSectionCard>
       <Stack direction="row" mb={1} pl={1} pr={1}>
         <Box>
           <HighlightSpan>
@@ -69,6 +63,6 @@ export default function BaseInfo() {
           <EditIcon sx={{ color: base.text.onLowered }} />
         </IconButton>
       </Box>
-    </Box>
+    </OppositeColorSectionCard>
   );
 }
