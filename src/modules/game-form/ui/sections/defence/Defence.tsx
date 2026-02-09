@@ -16,8 +16,17 @@ export default function Defence() {
         sx={{
           display: "grid",
           gap: 1,
-          gridTemplateColumns: "1fr auto ",
-          ["@media (max-width: 390px)"]: {
+          gridTemplateColumns: "1fr auto",
+
+          ["@media (max-width: 959px)"]: {
+            gridTemplateColumns: "1fr",
+          },
+
+          ["@media (max-width: 730px)"]: {
+            gridTemplateColumns: "1fr auto",
+          },
+
+          ["@media (max-width: 550px)"]: {
             gridTemplateColumns: "1fr",
           },
         }}

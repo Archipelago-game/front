@@ -36,13 +36,23 @@ export default function CharacterForm() {
           gap: 2,
           gridTemplateColumns: "440px 1fr",
 
+          ["@media (max-width: 959px)"]: {
+            gridTemplateColumns: "auto auto",
+          },
+
           ["@media (max-width: 730px)"]: {
-            display: "grid",
             gridTemplateColumns: "1fr",
           },
         }}
       >
-        <Box sx={{ gridColumn: "span 2" }}>
+        <Box
+          sx={{
+            gridColumn: "span 2",
+            ["@media (max-width: 730px)"]: {
+              gridColumn: "span 1",
+            },
+          }}
+        >
           <BaseInfo />
         </Box>
         <Stack

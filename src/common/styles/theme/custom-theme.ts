@@ -145,7 +145,7 @@ export const getTheme = (mode: "light" | "dark") =>
       values: {
         xs: 0,
         phablet: 560,
-        sm: 600,
+        sm: 675,
         tablet: 730,
         md: 960,
         lgmd: 1045,

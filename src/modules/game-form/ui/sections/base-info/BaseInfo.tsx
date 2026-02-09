@@ -29,26 +29,54 @@ export default function BaseInfo() {
 
   return (
     <OppositeColorSectionCard>
-      <Stack direction="row" mb={1} pl={1} pr={1}>
+      <Stack
+        direction="row"
+        columnGap={2}
+        mb={1}
+        pl={1}
+        pr={3}
+        flexWrap="wrap"
+        justifyContent="space-between"
+      >
         <Box>
           <HighlightSpan>
             <b>{values.name}</b>
           </HighlightSpan>
         </Box>
-        <Stack direction="row" spacing={2} justifyContent="center" flexGrow={1}>
-          <Box>
-            Возраст:&nbsp;
-            <HighlightSpan>{values.age}</HighlightSpan>
-          </Box>
-          <Box>
-            Родина:&nbsp;
-            <HighlightSpan>{values.homeland}</HighlightSpan>
-          </Box>
-          <Box>Язык: {values.languages}</Box>
-          <Box>
-            Раса:&nbsp;
-            <HighlightSpan>{mapRace[values.race]}</HighlightSpan>
-          </Box>
+        <Stack
+          direction="row"
+          columnGap={2}
+          rowGap={0}
+          justifyContent="flex-start"
+          flexWrap="wrap"
+        >
+          <Stack
+            direction="row"
+            columnGap={2}
+            flexWrap="wrap"
+            justifyContent="flex-start"
+          >
+            <Box>
+              Возраст:&nbsp;
+              <HighlightSpan>{values.age}</HighlightSpan>
+            </Box>
+            <Box>
+              Родина:&nbsp;
+              <HighlightSpan>{values.homeland}</HighlightSpan>
+            </Box>
+          </Stack>
+          <Stack
+            direction="row"
+            columnGap={2}
+            flexWrap="wrap"
+            justifyContent="flex-start"
+          >
+            <Box>Язык: {values.languages}</Box>
+            <Box>
+              Раса:&nbsp;
+              <HighlightSpan>{mapRace[values.race]}</HighlightSpan>
+            </Box>
+          </Stack>
         </Stack>
       </Stack>
       <Divider sx={{ borderColor: base.outline }} />

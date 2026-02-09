@@ -11,8 +11,11 @@ export default function SideDefence() {
         display: "grid",
         gridTemplateColumns: "1fr",
         gap: 1,
-        ["@media (max-width: 390px)"]: {
+        ["@media (max-width: 550px)"]: {
           gridTemplateColumns: "1fr 1fr",
+        },
+        ["@media (max-width: 495px)"]: {
+          gridTemplateColumns: "1fr",
         },
       }}
     >
