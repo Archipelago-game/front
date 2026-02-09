@@ -22,7 +22,13 @@ export default function CharacterForm() {
   }
 
   return (
-    <Box sx={{ backgroundColor: theme.palette.base.background }}>
+    <Box
+      sx={{
+        backgroundColor: theme.palette.base.background,
+        marginInline: "-16px",
+        paddingInline: "16px",
+      }}
+    >
       <DraggableFab />
       <Box
         sx={{
