@@ -12,7 +12,7 @@ export default function SectionHeader({ title, color, dividerColor }: Props) {
     return null;
   }
   return (
-    <Box>
+    <Box mb={2}>
       <SectionTitle title={title} color={color} />
       {dividerColor && <Divider sx={{ borderColor: dividerColor }} />}
     </Box>

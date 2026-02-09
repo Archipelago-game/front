@@ -54,6 +54,21 @@ export const getTheme = (mode: "light" | "dark") =>
                 onLowered: "#c0bbac", // обычный текст на surfaceLowered
                 onLoweredStrong: "#f3ece1", // выделенный / заголовки на тёмном
               },
+              // Цветовой маркер атрибутов
+              conditions: {
+                physical: {
+                  primary: "#8B2E2E",
+                  background: "#F5EAEA",
+                  border: "#F5EAEA",
+                  hover: "#6F2323",
+                },
+                mental: {
+                  primary: "#2E4A7D",
+                  background: "#E9EEF6",
+                  border: "#4A6FB9",
+                  hover: "#233A5F",
+                },
+              },
             }
           : {
               background: "#786f61",
@@ -77,6 +92,22 @@ export const getTheme = (mode: "light" | "dark") =>
                 secondary: "#707442", // акцентированный текст (класс, уровень, HP и т.д.)
                 onLowered: "#c0bbac", // обычный текст на surfaceLowered
                 onLoweredStrong: "#f3ece1", // выделенный / заголовки на тёмном
+              },
+
+              // Цветовой маркер атрибутов
+              conditions: {
+                physical: {
+                  primary: "#8B2E2E",
+                  background: "#F5EAEA",
+                  border: "#F5EAEA",
+                  hover: "#6F2323",
+                },
+                mental: {
+                  primary: "#2E4A7D",
+                  background: "#E9EEF6",
+                  border: "#4A6FB9",
+                  hover: "#233A5F",
+                },
               },
             },
 

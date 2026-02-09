@@ -9,7 +9,9 @@ import ArmorSection from "./armor/ArmorSection.tsx";
 export default function Defence() {
   return (
     <BaseSectionCard title="Защита">
-      <Brave />
+      <Box mb={1}>
+        <Brave />
+      </Box>
       <Box
         sx={{
           display: "grid",

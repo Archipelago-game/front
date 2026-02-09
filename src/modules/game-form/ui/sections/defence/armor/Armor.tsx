@@ -3,10 +3,12 @@ import { Box } from "@mui/material";
 import Slot from "./Slot.tsx";
 import HeroSilhouette from "./HeroSilhouette.tsx";
 import SubSection from "../../../components/section/SubSection.tsx";
+import SectionTitle from "../../../components/section/SectionTitle.tsx";
 
 export default function Armor() {
   return (
-    <SubSection title="Броня">
+    <SubSection>
+      <SectionTitle title="Броня" />
       <Box
         sx={{
           position: "relative",

@@ -9,10 +9,12 @@ export default function CustomTextFieldWrapper({
   orientation = "row",
   children,
 }: Props) {
-  const spacing = orientation === "row" ? 1 : 0;
+  const isRow = orientation === "row";
+  const spacing = isRow ? 1 : 0;
+  const alignItems = isRow ? "center" : "flex-start";
 
   return (
-    <Stack direction={orientation} alignItems="center" spacing={spacing}>
+    <Stack direction={orientation} alignItems={alignItems} spacing={spacing}>
       {children}
     </Stack>
   );

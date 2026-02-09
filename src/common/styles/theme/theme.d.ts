@@ -31,6 +31,20 @@ declare module "@mui/material/styles" {
         onLowered: string;
         onLoweredStrong: string;
       };
+      conditions: {
+        physical: {
+          primary: string;
+          background: string;
+          border: string;
+          hover: string;
+        };
+        mental: {
+          primary: string;
+          background: string;
+          border: string;
+          hover: string;
+        };
+      };
     };
 
     label: {
@@ -65,6 +79,21 @@ declare module "@mui/material/styles" {
         secondary: string;
         onLowered: string;
         onLoweredStrong: string;
+      };
+
+      conditions: {
+        physical: {
+          primary: string;
+          background: string;
+          border: string;
+          hover: string;
+        };
+        mental: {
+          primary: string;
+          background: string;
+          border: string;
+          hover: string;
+        };
       };
     };
 
