@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { alpha, createTheme } from "@mui/material/styles";
 
 export const getTheme = (mode: "light" | "dark") =>
   createTheme({
@@ -58,15 +58,15 @@ export const getTheme = (mode: "light" | "dark") =>
               conditions: {
                 physical: {
                   primary: "#8B2E2E",
-                  background: "#F5EAEA",
-                  border: "#F5EAEA",
-                  hover: "#6F2323",
+                  background: alpha("#8B2E2E", 0.1),
+                  border: alpha("#8B2E2E", 0.3),
+                  hover: alpha("#8B2E2E", 0.4),
                 },
                 mental: {
                   primary: "#2E4A7D",
-                  background: "#E9EEF6",
-                  border: "#4A6FB9",
-                  hover: "#233A5F",
+                  background: alpha("#2E4A7D", 0.1),
+                  border: alpha("#2E4A7D", 0.2),
+                  hover: alpha("#2E4A7D", 0.3),
                 },
               },
             }

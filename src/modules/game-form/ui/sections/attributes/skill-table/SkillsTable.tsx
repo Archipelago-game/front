@@ -132,11 +132,22 @@ export default function SkillsTable<T extends string>({
                   <Stack
                     direction="row"
                     spacing={1}
-                    alignItems="center"
+                    alignItems="flex-start"
                     justifyContent="space-between"
                   >
                     <SectionTitle title={group.name} />
-                    <Stack direction="row" spacing={1}>
+                    <Stack
+                      direction="column"
+                      sx={{
+                        gap: "2px",
+                        padding: "4px",
+                        borderRadius: "4px",
+                        backgroundColor:
+                          theme.palette.base.conditions[
+                            getAttributeType(statValueName)
+                          ].background,
+                      }}
+                    >
                       <CustomTextFieldWrapper>
                         <CustomTextFieldLabel title="О.З." />
                         <OZDisplay
