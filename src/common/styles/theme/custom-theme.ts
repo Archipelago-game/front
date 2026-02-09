@@ -60,16 +60,18 @@ export const getTheme = (mode: "light" | "dark") =>
               // Цветовой маркер атрибутов
               conditions: {
                 physical: {
-                  primary: "#8B2E2E",
-                  background: alpha("#8B2E2E", 0.1),
-                  border: alpha("#8B2E2E", 0.4),
-                  hover: alpha("#8B2E2E", 0.4),
+                  primary: "#c62828", //"#8B2E2E",
+                  background: alpha("#c62828", 0.1),
+                  border: alpha("#c62828", 0.3),
+                  hover: alpha("#c62828", 0.4),
+                  primaryHalf: "#8B5A2E",
                 },
                 mental: {
-                  primary: "#2E4A7D",
-                  background: alpha("#2E4A7D", 0.1),
-                  border: alpha("#2E4A7D", 0.4),
-                  hover: alpha("#2E4A7D", 0.3),
+                  primary: "#7b1fa2",
+                  background: alpha("#7b1fa2", 0.1),
+                  border: alpha("#7b1fa2", 0.4),
+                  hover: alpha("#7b1fa2", 0.3),
+                  primaryHalf: "#3B2AD9",
                 },
               },
             }
