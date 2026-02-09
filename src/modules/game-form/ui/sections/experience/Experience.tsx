@@ -48,7 +48,7 @@ export default function Experience() {
           transition: "width 1s ease",
         }}
       >
-        <Stack columnGap={3} rowGap={1} direction="row">
+        <Stack columnGap={3} rowGap={1} direction="row" flexWrap="wrap">
           {/* Засоленный опыт - только для бессмертных */}
           {isImmortal && (
             <CustomTextField

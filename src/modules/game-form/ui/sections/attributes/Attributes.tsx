@@ -26,7 +26,7 @@ const attributeMap: AttributeMap = {
   "6": <Strength />,
 };
 
-type AttributeOrderKey = "lg" | "md" | "phablet" | "tablet" | "xs";
+type AttributeOrderKey = "lg" | "lgmd" | "md" | "phablet" | "tablet" | "xs";
 
 const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
   lg: [
@@ -34,10 +34,11 @@ const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
     ["2", "4"],
     ["3", "5"],
   ],
-  md: [
+  lgmd: [
     ["6", "1", "2"],
     ["4", "3", "5"],
   ],
+  md: [["6", "1", "2", "4", "3", "5"]],
 
   tablet: [["6", "1", "2", "4", "3", "5"]],
   phablet: [
@@ -51,7 +52,8 @@ export default function Attributes() {
   const theme = useTheme();
   const [currentMedia, setCurrentMedia] = useState<AttributeOrderKey>("lg");
   const isLg = useMediaQuery(theme.breakpoints.up("lg"));
-  const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
+  const isLgMd = useMediaQuery(theme.breakpoints.between("lgmd", "lg"));
+  const isMd = useMediaQuery(theme.breakpoints.between("md", "lgmd"));
   const isTablet = useMediaQuery(theme.breakpoints.between("tablet", "md"));
   const isPhablet = useMediaQuery(
     theme.breakpoints.between("phablet", "tablet"),
@@ -61,6 +63,8 @@ export default function Attributes() {
   useEffect(() => {
     if (isLg) {
       setCurrentMedia("lg");
+    } else if (isLgMd) {
+      setCurrentMedia("lgmd");
     } else if (isMd) {
       setCurrentMedia("md");
     } else if (isTablet) {
@@ -89,7 +93,8 @@ export default function Attributes() {
               xs: "1fr",
               phablet: "repeat(2, 1fr)",
               tablet: "1fr",
-              md: "repeat(2, 1fr)",
+              md: "repeat(1fr)",
+              lgmd: "repeat(2, 1fr)",
               lg: "repeat(3, 1fr)",
             },
           }}

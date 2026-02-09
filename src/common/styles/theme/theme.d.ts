@@ -117,6 +117,7 @@ declare module "@mui/material/styles" {
     xs: true;
     sm: true;
     md: true;
+    lgmd: true;
     lg: true;
     xl: true;
     tablet: true;
