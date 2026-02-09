@@ -71,7 +71,7 @@ export default function PhysicalDefence() {
         title="Усталость"
         textField={{
           fieldName: "defence.physical.tiredness.value",
-          showSpinButtons: true,
+          showChangeValueBtn: true,
         }}
       />
 

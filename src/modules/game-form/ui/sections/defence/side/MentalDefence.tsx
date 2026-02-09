@@ -67,7 +67,7 @@ export default function MentalDefence() {
         title="Отчаяние"
         textField={{
           fieldName: "defence.mental.despair.value",
-          showSpinButtons: true,
+          showChangeValueBtn: true,
         }}
       />
 

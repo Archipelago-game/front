@@ -6,7 +6,7 @@ export default function Wallet() {
       title="Деньги"
       textField={{
         fieldName: "inventory.wallet",
-        isShowChangeValueBtn: true,
+        showChangeValueBtn: true,
       }}
     />
   );
