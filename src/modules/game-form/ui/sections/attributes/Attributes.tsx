@@ -73,7 +73,13 @@ export default function Attributes() {
   }, [isLg, isMd, isXs, isPhablet, isTablet]);
 
   return (
-    <Box sx={{ backgroundColor: theme.palette.base.surfaceBase }}>
+    <Box
+      sx={{
+        backgroundColor: theme.palette.base.surfaceBase,
+        borderBottomLeftRadius: "4px",
+        borderBottomRightRadius: "4px",
+      }}
+    >
       <BaseSectionCard>
         <Box
           sx={{

@@ -34,8 +34,8 @@ const calcCellGradientBorderStyles = (
     position: "absolute",
     top: 0,
     left: 0,
-    right: 0,
-    bottom: -1,
+    right: "-35px",
+    bottom: 0,
     borderRadius: 0,
     borderBottom: "1px solid transparent",
     background: `
@@ -198,7 +198,7 @@ export default function SkillsTable<T extends string>({
                     sx={{
                       width: "1%",
                       whiteSpace: "nowrap",
-                      borderBottomColor: theme.palette.base.outline,
+                      border: "none",
                     }}
                   >
                     <TextFieldControllerNew fieldName={skill.fieldName} />
