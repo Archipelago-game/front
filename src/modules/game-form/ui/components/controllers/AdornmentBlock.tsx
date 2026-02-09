@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material/styles";
 const adornmentStyles = {
   wrapper: {
     display: "flex",
-    gap: "8px",
+    gap: "4px",
     paddingRight: "2px",
     paddingBottom: "1px",
   },
