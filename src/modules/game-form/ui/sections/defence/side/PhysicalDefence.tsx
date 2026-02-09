@@ -78,7 +78,9 @@ export default function PhysicalDefence() {
         }}
       />
 
-      <Divider sx={{ borderColor: theme.palette.base.outline }} />
+      <Divider
+        sx={{ borderColor: theme.palette.base.outline, borderWidth: "1px" }}
+      />
 
       <Box>
         <CustomTextFieldLabel title="Здоровье" />
@@ -105,7 +107,12 @@ export default function PhysicalDefence() {
         </Box>
       </Box>
 
-      <Divider sx={{ borderColor: theme.palette.base.outline }} />
+      <Divider
+        sx={{
+          borderColor: theme.palette.base.conditions.physical.border,
+          borderWidth: "1px",
+        }}
+      />
       <Wounds />
     </Stack>
   );

@@ -59,13 +59,13 @@ export const getTheme = (mode: "light" | "dark") =>
                 physical: {
                   primary: "#8B2E2E",
                   background: alpha("#8B2E2E", 0.1),
-                  border: alpha("#8B2E2E", 0.3),
+                  border: alpha("#8B2E2E", 0.4),
                   hover: alpha("#8B2E2E", 0.4),
                 },
                 mental: {
                   primary: "#2E4A7D",
                   background: alpha("#2E4A7D", 0.1),
-                  border: alpha("#2E4A7D", 0.2),
+                  border: alpha("#2E4A7D", 0.4),
                   hover: alpha("#2E4A7D", 0.3),
                 },
               },

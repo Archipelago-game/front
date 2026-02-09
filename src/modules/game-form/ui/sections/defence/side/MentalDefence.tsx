@@ -73,7 +73,9 @@ export default function MentalDefence() {
         }}
       />
 
-      <Divider sx={{ borderColor: theme.palette.base.outline }} />
+      <Divider
+        sx={{ borderColor: theme.palette.base.outline, borderWidth: "1px" }}
+      />
 
       <Box>
         <CustomTextFieldLabel title="Решимость" />
@@ -100,7 +102,12 @@ export default function MentalDefence() {
         </Box>
       </Box>
 
-      <Divider sx={{ borderColor: theme.palette.base.outline }} />
+      <Divider
+        sx={{
+          borderColor: theme.palette.base.conditions.mental.border,
+          borderWidth: "1px",
+        }}
+      />
       <Injuries />
     </Stack>
   );
