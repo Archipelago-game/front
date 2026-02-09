@@ -12,16 +12,18 @@ interface Props extends DefaultFieldControllerProps {
 export default function AttributeTitle({ fieldName, title }: Props) {
   const theme = useTheme();
   return (
-    <Box
-      sx={{
-        display: "flex",
-      }}
-    >
-      <Stack direction="row" spacing={1}>
-        <SubTitle title={title} />
+    <Box mb={2}>
+      <Stack
+        direction="row"
+        spacing={1}
+        mb={1}
+        justifyContent="space-between"
+        alignItems="flex-end"
+      >
+        <SubTitle title={title.toUpperCase()} />
         <TextFieldControllerNew fieldName={fieldName} />
       </Stack>
-      <Divider sx={{ backgroundColor: theme.palette.base.outlineStrong }} />
+      <Divider sx={{ borderColor: theme.palette.base.accent }} />
     </Box>
   );
 }

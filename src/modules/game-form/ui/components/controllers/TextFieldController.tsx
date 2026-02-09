@@ -6,7 +6,6 @@ import { useCustomFormContext } from "../../../providers/use-custom-context-form
 import type { ControllerProps } from "./controller-props.type.ts";
 
 import { calcDynamicRadius } from "./calc-dynamic-radius.util.ts";
-import AdornmentBlock from "./AdornmentBlock.tsx";
 
 export interface DefaultFieldControllerProps extends ControllerProps {
   multiline?: {
@@ -36,7 +35,7 @@ export default function TextFieldController(
     showSpinButtons = false,
   } = props;
   const defaultValue = fieldType === "number" ? 0 : "";
-
+  console.log(isShowChangeValueBtn);
   const formContext = useCustomFormContext();
   const { methods, onChange } = formContext;
 
@@ -57,10 +56,6 @@ export default function TextFieldController(
           slotProps={{
             input: {
               sx: { ...sxSlotProps, padding: 0 },
-              endAdornment:
-                isShowChangeValueBtn && fieldType === "number" ? (
-                  <AdornmentBlock field={field} onChange={onChange} />
-                ) : null,
             },
           }}
           sx={{

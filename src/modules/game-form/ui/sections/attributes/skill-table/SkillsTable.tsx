@@ -4,11 +4,8 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  Paper,
   Stack,
 } from "@mui/material";
-
-import TextFieldController from "../../../components/controllers/TextFieldController.tsx";
 
 import type { BaseSkill } from "../../../../types/form/attributes.type.ts";
 import type { FieldPath } from "react-hook-form";
@@ -22,6 +19,41 @@ import CustomTextField from "../../../components/fields/custom-text-field/Custom
 
 import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
 import CustomTextFieldWrapper from "../../../components/fields/custom-text-field/CustomTextFieldWrapper.tsx";
+import SectionTitle from "../../../components/section/SectionTitle.tsx";
+import TextFieldControllerNew from "../../../components/controllers/TextFieldControllerNew.tsx";
+
+const calcCellGradientBorderStyles = (
+  startColor: string,
+  endColor: string,
+) => ({
+  position: "relative",
+  border: "none", // убираем стандартную границу
+
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: -1,
+    borderRadius: 0,
+    borderBottom: "1px solid transparent",
+    background: `
+        linear-gradient(
+          45deg,
+          ${startColor},
+          ${endColor}
+        ) border-box
+      `,
+    WebkitMask: `
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0)
+      `,
+    WebkitMaskComposite: "xor",
+    maskComposite: "exclude",
+    pointerEvents: "none",
+  },
+});
 
 export interface SkillItem<T extends string> extends BaseSkill<T> {
   fieldName: FieldPath<FormType>;
@@ -75,33 +107,54 @@ export default function SkillsTable<T extends string>({
   skillGroups,
 }: Props<T>) {
   const theme = useTheme();
+
+  const cellGradientBorderStyles = calcCellGradientBorderStyles(
+    theme.palette.base.surfaceAccent,
+    theme.palette.base.outline,
+  );
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ "& .MuiTableCell-root": { padding: "2px" } }}>
-        <TableBody>
-          {skillGroups.map((group) => (
+    <TableContainer>
+      {skillGroups.map((group) => (
+        <Table
+          key={group.expertiseFieldName}
+          sx={{ "& .MuiTableCell-root": { padding: "2px" }, marginBottom: 2 }}
+        >
+          <TableBody>
             <Fragment key={group.expertiseFieldName}>
               <TableRow key={group.name}>
-                <TableCell sx={{ width: "100%" }} colSpan={4}>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <SubTitle title={group.name} />
-                    <CustomTextField
-                      title="Экс"
-                      textField={{ fieldName: group.expertiseFieldName }}
-                    />
-                    <CustomTextFieldWrapper>
-                      <CustomTextFieldLabel title="О.З." />
-                      <OZDisplay
-                        statValueName={statValueName}
-                        expertiseFieldName={group.expertiseFieldName}
-                        attributeType={getAttributeType(statValueName)}
+                <TableCell
+                  sx={{
+                    width: "100%",
+                    borderBottomColor: theme.palette.base.outline,
+                  }}
+                  colSpan={2}
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <SectionTitle title={group.name} />
+                    <Stack direction="row" spacing={1}>
+                      <CustomTextFieldWrapper>
+                        <CustomTextFieldLabel title="О.З." />
+                        <OZDisplay
+                          statValueName={statValueName}
+                          expertiseFieldName={group.expertiseFieldName}
+                          attributeType={getAttributeType(statValueName)}
+                        />
+                      </CustomTextFieldWrapper>
+                      <CustomTextField
+                        title="Экс"
+                        textField={{ fieldName: group.expertiseFieldName }}
                       />
-                    </CustomTextFieldWrapper>
+                    </Stack>
                   </Stack>
                 </TableCell>
               </TableRow>
 
-              {group.skills.map((skill, index) => (
+              {group.skills.map((skill) => (
                 <TableRow key={skill.id}>
                   {skill.name !== "" && (
                     <TableCell
@@ -111,15 +164,16 @@ export default function SkillsTable<T extends string>({
                           sm: ".8em",
                           md: "0.8em", // ≥960px
                         },
+                        ...cellGradientBorderStyles,
                       }}
                     >
                       <SubTitle title={skill.name} />
                     </TableCell>
                   )}
                   {skill.name === "" && (
-                    <TableCell>
+                    <TableCell sx={{ ...cellGradientBorderStyles }}>
                       {
-                        <TextFieldController
+                        <TextFieldControllerNew
                           fieldType="text"
                           fieldName={
                             `stats.intelligence.craft.skills.${skill.id}.name ` as FieldPath<FormType>
@@ -129,33 +183,21 @@ export default function SkillsTable<T extends string>({
                     </TableCell>
                   )}
 
-                  {index === 0 && (
-                    <TableCell rowSpan={group.skills.length} align="center">
-                      <TextFieldController
-                        fieldName={group.expertiseFieldName}
-                      />
-                    </TableCell>
-                  )}
-
-                  <TableCell>
-                    <TextFieldController fieldName={skill.fieldName} />
+                  <TableCell
+                    sx={{
+                      width: "1%",
+                      whiteSpace: "nowrap",
+                      borderBottomColor: theme.palette.base.outline,
+                    }}
+                  >
+                    <TextFieldControllerNew fieldName={skill.fieldName} />
                   </TableCell>
-
-                  {index === 0 && (
-                    <TableCell rowSpan={group.skills.length} align="center">
-                      <OZDisplay
-                        statValueName={statValueName}
-                        expertiseFieldName={group.expertiseFieldName}
-                        attributeType={getAttributeType(statValueName)}
-                      />
-                    </TableCell>
-                  )}
                 </TableRow>
               ))}
             </Fragment>
-          ))}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      ))}
     </TableContainer>
   );
 }

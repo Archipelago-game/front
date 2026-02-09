@@ -25,6 +25,7 @@ export default function BaseSectionCard(props: DefaultSectionCardProps) {
   const { sx: cardContentSx, ...restCardContent } = cardContent || {};
   return (
     <Card
+      className="card"
       sx={{
         position: "relative",
         backgroundColor: backgroundColor,
