@@ -11,6 +11,8 @@ export default function Armor() {
         sx={{
           position: "relative",
           width: "100%",
+          minWidth: "158px",
+          // note вполне возможно это ограничение будет мешать мобильной верстке
           maxWidth: "320px",
           margin: "0 auto",
         }}
@@ -19,7 +21,7 @@ export default function Armor() {
         <HeroSilhouette />
 
         {/* Голова */}
-        <Slot top="2%" left="70%" fieldName="defence.armor.slots.head" />
+        <Slot top="6%" left="71%" fieldName="defence.armor.slots.head" />
 
         {/* Тело */}
         <Slot top="28%" left="50%" fieldName="defence.armor.slots.body" />
