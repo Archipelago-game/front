@@ -63,7 +63,7 @@ export default function Talent() {
   }, [values?.talents.list]);
 
   return (
-    <Box width={"fit-content"}>
+    <Box>
       {groups.map((group) => (
         <TalentGroup key={group.branch} group={group} onDelete={deleteTalent} />
       ))}

@@ -10,8 +10,8 @@ import Intelligence from "./intelligence/Intelligence.tsx";
 import { Box } from "@mui/system";
 import { useState, type ReactNode, useEffect } from "react";
 
-import SectionTitle from "../../components/section/SectionTitle.tsx";
 import { useTheme } from "@mui/material/styles";
+import SectionCard from "../../components/section/SectionCard.tsx";
 
 type AttributeMapKey = "1" | "2" | "3" | "4" | "5" | "6";
 
@@ -73,8 +73,7 @@ export default function Attributes() {
   }, [isLg, isMd, isXs, isPhablet, isTablet]);
 
   return (
-    <Box>
-      <SectionTitle title="Атрибуты и Навыки" />
+    <SectionCard>
       <Box
         sx={{
           display: "grid",
@@ -107,6 +106,6 @@ export default function Attributes() {
           </Box>
         ))}
       </Box>
-    </Box>
+    </SectionCard>
   );
 }
