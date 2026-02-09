@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import { useState, type ReactNode, useEffect } from "react";
 
 import { useTheme } from "@mui/material/styles";
-import SectionCard from "../../components/section/SectionCard.tsx";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
 type AttributeMapKey = "1" | "2" | "3" | "4" | "5" | "6";
 
@@ -73,7 +73,7 @@ export default function Attributes() {
   }, [isLg, isMd, isXs, isPhablet, isTablet]);
 
   return (
-    <SectionCard>
+    <BaseSectionCard>
       <Box
         sx={{
           display: "grid",
@@ -106,6 +106,6 @@ export default function Attributes() {
           </Box>
         ))}
       </Box>
-    </SectionCard>
+    </BaseSectionCard>
   );
 }

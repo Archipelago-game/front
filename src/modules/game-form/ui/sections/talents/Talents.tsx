@@ -1,11 +1,10 @@
 import Talent from "./Talent.tsx";
-
-import SectionCard from "../../components/section/SectionCard.tsx";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
 export default function Talents() {
   return (
-    <SectionCard>
+    <BaseSectionCard>
       <Talent />
-    </SectionCard>
+    </BaseSectionCard>
   );
 }
