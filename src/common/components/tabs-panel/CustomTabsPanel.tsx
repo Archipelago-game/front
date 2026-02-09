@@ -26,6 +26,8 @@ export default function CustomTabsPanel({ tabs }: Props) {
         sx={{
           minHeight: "100%",
           backgroundColor: theme.palette.base.surfaceLowered,
+          borderTopLeftRadius: "4px",
+          borderTopRightRadius: "4px",
         }}
         slotProps={{ indicator: { sx: { display: "none" } } }}
       >

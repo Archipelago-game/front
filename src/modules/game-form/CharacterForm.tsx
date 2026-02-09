@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Stack, useTheme } from "@mui/material";
 
 import Luck from "./ui/sections/luck/Luck.tsx";
 import Experience from "./ui/sections/experience/Experience.tsx";
@@ -14,6 +14,7 @@ import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
+  const theme = useTheme();
   const { values } = formContext;
 
   if (!formContext || !values) {
@@ -21,9 +22,7 @@ export default function CharacterForm() {
   }
 
   return (
-    <>
-      <BaseInfo />
-
+    <Box sx={{ backgroundColor: theme.palette.base.background }}>
       <DraggableFab />
       <Box
         sx={{
@@ -37,7 +36,11 @@ export default function CharacterForm() {
           },
         }}
       >
-        <Box
+        <Box sx={{ gridColumn: "span 2" }}>
+          <BaseInfo />
+        </Box>
+        <Stack
+          spacing={2}
           sx={{
             ["@media (max-width: 730px)"]: {
               order: "2",
@@ -47,10 +50,10 @@ export default function CharacterForm() {
           <Attack />
           <Defence />
           <Inventory />
-        </Box>
+        </Stack>
 
         <Box>
-          <Grid container spacing={1}>
+          <Grid container spacing={2}>
             <Grid size={12}>
               <Box
                 sx={{
@@ -71,6 +74,6 @@ export default function CharacterForm() {
           </Grid>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }

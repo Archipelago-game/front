@@ -73,39 +73,41 @@ export default function Attributes() {
   }, [isLg, isMd, isXs, isPhablet, isTablet]);
 
   return (
-    <BaseSectionCard>
-      <Box
-        sx={{
-          display: "grid",
-          gap: 2,
-          gridTemplateColumns: {
-            xs: "1fr",
-            phablet: "repeat(2, 1fr)",
-            tablet: "1fr",
-            md: "repeat(2, 1fr)",
-            lg: "repeat(3, 1fr)",
-          },
-        }}
-      >
-        {attributesOrder[currentMedia].map((col, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              gap: 2,
-            }}
-          >
-            <>
-              {col.map((item) => (
-                <Box key={item}>{attributeMap[item]}</Box>
-              ))}
-            </>
-          </Box>
-        ))}
-      </Box>
-    </BaseSectionCard>
+    <Box sx={{ backgroundColor: theme.palette.base.surfaceBase }}>
+      <BaseSectionCard>
+        <Box
+          sx={{
+            display: "grid",
+            gap: 2,
+            gridTemplateColumns: {
+              xs: "1fr",
+              phablet: "repeat(2, 1fr)",
+              tablet: "1fr",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)",
+            },
+          }}
+        >
+          {attributesOrder[currentMedia].map((col, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                gap: 2,
+              }}
+            >
+              <>
+                {col.map((item) => (
+                  <Box key={item}>{attributeMap[item]}</Box>
+                ))}
+              </>
+            </Box>
+          ))}
+        </Box>
+      </BaseSectionCard>
+    </Box>
   );
 }
