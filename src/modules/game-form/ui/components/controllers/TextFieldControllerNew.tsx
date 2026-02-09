@@ -13,6 +13,10 @@ type NewControllerProps = Omit<ControllerProps, "orientation">;
 export interface DefaultFieldControllerProps extends NewControllerProps {
   showChangeValueBtn?: boolean;
   fullWidth?: boolean;
+  multiline?: {
+    isMultiline?: boolean;
+    rows?: number;
+  };
 }
 
 export default function TextFieldControllerNew(
@@ -26,6 +30,10 @@ export default function TextFieldControllerNew(
     disabled = false,
     showChangeValueBtn = false,
     fullWidth = false,
+    multiline = {
+      isMultiline: false,
+      rows: 1,
+    },
   } = props;
 
   const theme = useTheme();
@@ -70,9 +78,19 @@ export default function TextFieldControllerNew(
                   resize: "vertical",
                 },
                 "& .MuiOutlinedInput-root": {
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    border: "none",
+                  },
+
                   border: 1,
                   borderColor: theme.palette.base.outline,
                   borderWidth: "1px",
+                  transition: "border-color .4s ease",
+
+                  "&:hover": {
+                    borderColor: theme.palette.base.accent,
+                    outline: "none",
+                  },
                 },
 
                 "& .MuiInputBase-input": {
@@ -87,9 +105,20 @@ export default function TextFieldControllerNew(
                   WebkitTextFillColor: theme.palette.base.text.primary,
                 },
 
+                "& input[type=number]::-webkit-outer-spin-button": {
+                  WebkitAppearance: "none",
+                  margin: 0,
+                },
+                "& input[type=number]::-webkit-inner-spin-button": {
+                  WebkitAppearance: "none",
+                  margin: 0,
+                },
+
                 ...sx,
               }}
               disabled={disabled}
+              multiline={multiline.isMultiline}
+              rows={multiline.rows}
               fullWidth
               variant="outlined"
               size="small"

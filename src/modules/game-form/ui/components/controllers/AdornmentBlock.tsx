@@ -7,8 +7,9 @@ import type { FormType } from "../../../types/form/form.type.ts";
 
 import type { OnChangeCallbackType } from "../../../types/on-change-callback.type.ts";
 import type { ReactNode } from "react";
+import { useTheme } from "@mui/material/styles";
 
-const inputAdornmentStyles = {
+const adornmentStyles = {
   wrapper: {
     display: "flex",
     gap: "8px",
@@ -18,7 +19,7 @@ const inputAdornmentStyles = {
   input: {
     margin: 0,
   },
-  btn: { padding: "4px", border: "1px solid #000", borderRadius: "50%" },
+  btn: { padding: "4px", border: "2px solid #000", borderRadius: "50%" },
   icon: {
     fontSize: "12px",
   },
@@ -37,12 +38,15 @@ export default function AdornmentBlock({
   children,
   isShowButtons,
 }: Props) {
+  const theme = useTheme();
   const increaseValue = (field: ControllerRenderProps<FormType>) => {
-    if (typeof field.value !== "number") {
+    const value = Number(field.value);
+
+    if (Number.isNaN(value)) {
       return;
     }
 
-    field.onChange(field.value + 1);
+    field.onChange(value + 1);
     onChange();
   };
 
@@ -52,32 +56,35 @@ export default function AdornmentBlock({
     if (Number.isNaN(value)) {
       return;
     }
+
     const next = value > 0 ? value - 1 : field.value;
     field.onChange(next);
     onChange();
   };
 
+  const btnStyles = {
+    ...adornmentStyles.btn,
+    borderColor: theme.palette.base.outline,
+  };
+
   return (
-    <Box sx={inputAdornmentStyles.wrapper}>
+    <Box sx={adornmentStyles.wrapper}>
       {isShowButtons && (
-        <InputAdornment position="start" sx={inputAdornmentStyles.input}>
-          <IconButton
-            sx={inputAdornmentStyles.btn}
-            onClick={() => decreaseValue(field)}
-          >
-            <RemoveIcon sx={inputAdornmentStyles.icon} />
+        <InputAdornment position="start" sx={adornmentStyles.input}>
+          <IconButton sx={btnStyles} onClick={() => decreaseValue(field)}>
+            <RemoveIcon sx={adornmentStyles.icon} />
           </IconButton>
         </InputAdornment>
       )}
       {children}
       {isShowButtons && (
-        <InputAdornment position="end" sx={inputAdornmentStyles.input}>
+        <InputAdornment position="end" sx={adornmentStyles.input}>
           <IconButton
             size="small"
-            sx={inputAdornmentStyles.btn}
+            sx={btnStyles}
             onClick={() => increaseValue(field)}
           >
-            <AddIcon sx={inputAdornmentStyles.icon} />
+            <AddIcon sx={adornmentStyles.icon} />
           </IconButton>
         </InputAdornment>
       )}

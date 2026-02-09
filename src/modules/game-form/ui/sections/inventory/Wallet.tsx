@@ -7,6 +7,7 @@ export default function Wallet() {
       textField={{
         fieldName: "inventory.wallet",
         showChangeValueBtn: true,
+        fullWidth: true,
       }}
     />
   );
