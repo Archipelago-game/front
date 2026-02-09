@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
@@ -21,6 +21,9 @@ import CustomTextFieldWrapper from "../../../components/fields/custom-text-field
 
 import CustomTextField from "../../../components/fields/custom-text-field/CustomTextField.tsx";
 import { useTheme } from "@mui/material/styles";
+
+import SectionTitle from "../../../components/section/SectionTitle.tsx";
+import Wounds from "./Wounds.tsx";
 
 export default function PhysicalDefence() {
   const theme = useTheme();
@@ -61,9 +64,9 @@ export default function PhysicalDefence() {
   if (!values) return null;
 
   return (
-    <Box>
+    <Stack rowGap={1}>
       <CustomTextFieldWrapper>
-        <CustomTextFieldLabel title="Физическая" />
+        <SectionTitle title="Физическая" />
         <CalculatedValue value={healthValue} />
       </CustomTextFieldWrapper>
 
@@ -76,28 +79,34 @@ export default function PhysicalDefence() {
       />
 
       <Divider sx={{ borderColor: theme.palette.base.outline }} />
-      <CustomTextFieldLabel title="Здоровье" />
 
-      <Box sx={{ ...gridStyle }}>
-        {fields.map((field, i) => (
-          <Controller
-            key={field.id}
-            name={`defence.physical.health.list.${i}.checked`}
-            control={methods.control}
-            render={({ field }) => (
-              <CheckIconBox
-                field={field}
-                onChange={(e) => {
-                  onChange(field, e);
-                }}
-                Icon={WaterDropIcon}
-                colors={HEALTH_STATEMENT_COLOR_MAP}
-                disabled={isDisabled(i)}
-              />
-            )}
-          />
-        ))}
+      <Box>
+        <CustomTextFieldLabel title="Здоровье" />
+
+        <Box sx={{ ...gridStyle }}>
+          {fields.map((field, i) => (
+            <Controller
+              key={field.id}
+              name={`defence.physical.health.list.${i}.checked`}
+              control={methods.control}
+              render={({ field }) => (
+                <CheckIconBox
+                  field={field}
+                  onChange={(e) => {
+                    onChange(field, e);
+                  }}
+                  Icon={WaterDropIcon}
+                  colors={HEALTH_STATEMENT_COLOR_MAP}
+                  disabled={isDisabled(i)}
+                />
+              )}
+            />
+          ))}
+        </Box>
       </Box>
-    </Box>
+
+      <Divider sx={{ borderColor: theme.palette.base.outline }} />
+      <Wounds />
+    </Stack>
   );
 }

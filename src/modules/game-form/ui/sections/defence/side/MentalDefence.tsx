@@ -1,4 +1,4 @@
-import { Box, Divider, useTheme } from "@mui/material";
+import { Box, Divider, Stack, useTheme } from "@mui/material";
 import PsychologyIcon from "@mui/icons-material/Psychology";
 
 import { Controller, useFieldArray, useWatch } from "react-hook-form";
@@ -18,6 +18,8 @@ import CheckIconBox from "../../../components/fields/check-icon-box/CheckIconBox
 import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
 import CustomTextFieldWrapper from "../../../components/fields/custom-text-field/CustomTextFieldWrapper.tsx";
 import CustomTextField from "../../../components/fields/custom-text-field/CustomTextField.tsx";
+import SectionTitle from "../../../components/section/SectionTitle.tsx";
+import Injuries from "./Injuries.tsx";
 
 export default function MentalDefence() {
   const theme = useTheme();
@@ -57,9 +59,9 @@ export default function MentalDefence() {
   }, [values?.defence.mental.resolve.list, replace]);
 
   return (
-    <Box>
+    <Stack rowGap={1}>
       <CustomTextFieldWrapper>
-        <CustomTextFieldLabel title="Ментальная" />
+        <SectionTitle title="Ментальная" />
         <CalculatedValue value={healthValue} />
       </CustomTextFieldWrapper>
 
@@ -72,28 +74,34 @@ export default function MentalDefence() {
       />
 
       <Divider sx={{ borderColor: theme.palette.base.outline }} />
-      <CustomTextFieldLabel title="Решимость" />
 
-      <Box sx={{ ...gridStyle }}>
-        {fields.map((field, i) => (
-          <Controller
-            key={field.id}
-            name={`defence.mental.resolve.list.${i}.checked`}
-            control={methods.control}
-            render={({ field }) => (
-              <CheckIconBox
-                field={field}
-                onChange={(e) => {
-                  onChange(field, e);
-                }}
-                Icon={PsychologyIcon}
-                colors={MENTAL_RESOLVE_STATEMENT_COLOR_MAP}
-                disabled={isDisabled(i)}
-              />
-            )}
-          />
-        ))}
+      <Box>
+        <CustomTextFieldLabel title="Решимость" />
+
+        <Box sx={{ ...gridStyle }}>
+          {fields.map((field, i) => (
+            <Controller
+              key={field.id}
+              name={`defence.mental.resolve.list.${i}.checked`}
+              control={methods.control}
+              render={({ field }) => (
+                <CheckIconBox
+                  field={field}
+                  onChange={(e) => {
+                    onChange(field, e);
+                  }}
+                  Icon={PsychologyIcon}
+                  colors={MENTAL_RESOLVE_STATEMENT_COLOR_MAP}
+                  disabled={isDisabled(i)}
+                />
+              )}
+            />
+          ))}
+        </Box>
       </Box>
-    </Box>
+
+      <Divider sx={{ borderColor: theme.palette.base.outline }} />
+      <Injuries />
+    </Stack>
   );
 }
