@@ -5,9 +5,9 @@ import { defaultAttackMethod } from "../../../../consts/attack-default.const.ts"
 import { useConfirmDialogContext } from "../../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 
 import { useEffect } from "react";
-import DamageMethodItemNew from "./DamageMethodsItemNew.tsx";
+import DamageMethodItem from "./DamageMethodsItem.tsx";
 
-export default function DamageMethodsNew() {
+export default function DamageMethods() {
   const { methods, values, onChange } = useCustomFormContext();
   const { open } = useConfirmDialogContext();
 
@@ -50,7 +50,7 @@ export default function DamageMethodsNew() {
       }}
     >
       {fields.map((field, index) => (
-        <DamageMethodItemNew
+        <DamageMethodItem
           key={field.id}
           index={index}
           onDelete={() => deleteItem(index, field.name)}

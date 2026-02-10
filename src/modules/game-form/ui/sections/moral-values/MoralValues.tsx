@@ -33,6 +33,8 @@ const moralValueItems: MoralValuesItem[] = [
   },
 ];
 
+// todo поменять на CustomTextField
+
 export default function MoralValues() {
   return (
     <Box

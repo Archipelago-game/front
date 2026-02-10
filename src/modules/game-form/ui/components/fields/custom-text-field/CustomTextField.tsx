@@ -6,13 +6,13 @@ import CustomTextFieldLabel from "./CustomTextFieldLabel.tsx";
 import CustomTextFieldWrapper from "./CustomTextFieldWrapper.tsx";
 
 interface Props {
-  title: string;
+  title?: string;
   textField: DefaultFieldControllerProps;
   orientation?: "column" | "row";
 }
 
 export default function CustomTextField({
-  title,
+  title = "",
   textField,
   orientation = "row",
 }: Props) {

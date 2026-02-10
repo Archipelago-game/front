@@ -7,7 +7,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import BaseField from "../../components/fields/BaseField.tsx";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import type { TalentGroup as TalentGroupType } from "./group-talents-by-branch.utils.ts";
@@ -94,11 +94,13 @@ export default function TalentGroup({ group, onDelete }: Props) {
                   }}
                 />
               </Stack>
-              <BaseField
-                fieldName={`talents.list.${index}.effect`}
+              <CustomTextField
+                textField={{
+                  fieldName: `talents.list.${index}.effect`,
+                  fieldType: "text",
+                  multiline: { isMultiline: true, rows: 5 },
+                }}
                 orientation="row"
-                fieldType="text"
-                multiline={{ isMultiline: true, rows: 5 }}
               />
             </SubSection>
           </Collapse>

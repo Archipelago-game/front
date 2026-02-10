@@ -8,7 +8,7 @@ export default function CustomTextFieldLabel({ title }: Props) {
   const theme = useTheme();
   return (
     <Box component="span" color={theme.palette.base.text.primary}>
-      {title}:
+      {title}
     </Box>
   );
 }

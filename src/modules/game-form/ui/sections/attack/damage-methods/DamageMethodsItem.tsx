@@ -33,7 +33,7 @@ const fieldConfigList: FieldConfig[] = [
   },
 ];
 
-export default function DamageMethodItemNew({ index, onDelete }: Props) {
+export default function DamageMethodItem({ index, onDelete }: Props) {
   return (
     <SubSection key={index}>
       <Stack spacing={1}>
