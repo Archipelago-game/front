@@ -31,15 +31,7 @@ export default function Defence() {
           },
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 1,
-          }}
-        >
-          <ArmorSection />
-        </Box>
+        <ArmorSection />
         <SideDefence />
       </Box>
     </BaseSectionCard>
