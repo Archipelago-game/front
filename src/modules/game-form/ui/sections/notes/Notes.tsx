@@ -1,6 +1,7 @@
-import BaseField from "../../components/BaseField.tsx";
+import BaseField from "../../components/fields/BaseField.tsx";
 import { slotStyles } from "../styles.ts";
 
+// todo поменять на CustomTextField
 export default function Notes() {
   return (
     <BaseField

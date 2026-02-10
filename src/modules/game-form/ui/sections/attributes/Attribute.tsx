@@ -1,18 +1,10 @@
 import type { ReactNode } from "react";
-import { Box } from "@mui/system";
+
+import SubSection from "../../components/section/SubSection.tsx";
 
 interface Props {
   children: ReactNode;
 }
 export default function Attribute({ children }: Props) {
-  return (
-    <Box
-      sx={{
-        minWidth: "260px",
-        paddingInline: "2px",
-      }}
-    >
-      {children}
-    </Box>
-  );
+  return <SubSection>{children}</SubSection>;
 }

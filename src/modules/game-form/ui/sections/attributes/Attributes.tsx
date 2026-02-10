@@ -9,8 +9,9 @@ import Intelligence from "./intelligence/Intelligence.tsx";
 
 import { Box } from "@mui/system";
 import { useState, type ReactNode, useEffect } from "react";
-import { theme } from "../../../../../common/styles/theme/custom-theme.ts";
-import SectionTitle from "../../components/SectionTitle.tsx";
+
+import { useTheme } from "@mui/material/styles";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
 type AttributeMapKey = "1" | "2" | "3" | "4" | "5" | "6";
 
@@ -25,7 +26,7 @@ const attributeMap: AttributeMap = {
   "6": <Strength />,
 };
 
-type AttributeOrderKey = "lg" | "md" | "phablet" | "tablet" | "xs";
+type AttributeOrderKey = "lg" | "lgmd" | "md" | "phablet" | "tablet" | "xs";
 
 const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
   lg: [
@@ -33,10 +34,11 @@ const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
     ["2", "4"],
     ["3", "5"],
   ],
-  md: [
+  lgmd: [
     ["6", "1", "2"],
     ["4", "3", "5"],
   ],
+  md: [["6", "1", "2", "4", "3", "5"]],
 
   tablet: [["6", "1", "2", "4", "3", "5"]],
   phablet: [
@@ -47,9 +49,11 @@ const attributesOrder: Record<AttributeOrderKey, AttributeMapKey[][]> = {
 };
 
 export default function Attributes() {
+  const theme = useTheme();
   const [currentMedia, setCurrentMedia] = useState<AttributeOrderKey>("lg");
   const isLg = useMediaQuery(theme.breakpoints.up("lg"));
-  const isMd = useMediaQuery(theme.breakpoints.between("md", "lg"));
+  const isLgMd = useMediaQuery(theme.breakpoints.between("lgmd", "lg"));
+  const isMd = useMediaQuery(theme.breakpoints.between("md", "lgmd"));
   const isTablet = useMediaQuery(theme.breakpoints.between("tablet", "md"));
   const isPhablet = useMediaQuery(
     theme.breakpoints.between("phablet", "tablet"),
@@ -59,6 +63,8 @@ export default function Attributes() {
   useEffect(() => {
     if (isLg) {
       setCurrentMedia("lg");
+    } else if (isLgMd) {
+      setCurrentMedia("lgmd");
     } else if (isMd) {
       setCurrentMedia("md");
     } else if (isTablet) {
@@ -71,40 +77,49 @@ export default function Attributes() {
   }, [isLg, isMd, isXs, isPhablet, isTablet]);
 
   return (
-    <Box>
-      <SectionTitle title="Атрибуты и Навыки" />
-      <Box
-        sx={{
-          display: "grid",
-          gap: 2,
-          gridTemplateColumns: {
-            xs: "1fr",
-            phablet: "repeat(2, 1fr)",
-            tablet: "1fr",
-            md: "repeat(2, 1fr)",
-            lg: "repeat(3, 1fr)",
-          },
-        }}
-      >
-        {attributesOrder[currentMedia].map((col, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              gap: 2,
-            }}
-          >
-            <>
-              {col.map((item) => (
-                <Box key={item}>{attributeMap[item]}</Box>
-              ))}
-            </>
-          </Box>
-        ))}
-      </Box>
+    <Box
+      sx={{
+        backgroundColor: theme.palette.base.surfaceBase,
+        borderBottomLeftRadius: "4px",
+        borderBottomRightRadius: "4px",
+      }}
+    >
+      <BaseSectionCard>
+        <Box
+          sx={{
+            display: "grid",
+            gap: 2,
+            gridTemplateColumns: {
+              xs: "1fr",
+              phablet: "repeat(2, 1fr)",
+              tablet: "1fr",
+              md: "repeat(1fr)",
+              lgmd: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)",
+            },
+          }}
+        >
+          {attributesOrder[currentMedia].map((col, index) => (
+            <Box
+              className="wrapper"
+              key={index}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                alignItems: "stretch",
+                gap: 2,
+              }}
+            >
+              <>
+                {col.map((item) => (
+                  <Box key={item}>{attributeMap[item]}</Box>
+                ))}
+              </>
+            </Box>
+          ))}
+        </Box>
+      </BaseSectionCard>
     </Box>
   );
 }

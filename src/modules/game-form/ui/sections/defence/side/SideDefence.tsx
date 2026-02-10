@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import PhysicalDefence from "./PhysicalDefence.tsx";
 import MentalDefence from "./MentalDefence.tsx";
-import Wounds from "./Wounds.tsx";
-import Injuries from "./Injuries.tsx";
+
+import SubSection from "../../../components/section/SubSection.tsx";
 
 export default function SideDefence() {
   return (
@@ -11,19 +11,20 @@ export default function SideDefence() {
         display: "grid",
         gridTemplateColumns: "1fr",
         gap: 1,
-        ["@media (max-width: 390px)"]: {
+        ["@media (max-width: 550px)"]: {
           gridTemplateColumns: "1fr 1fr",
+        },
+        ["@media (max-width: 495px)"]: {
+          gridTemplateColumns: "1fr",
         },
       }}
     >
-      <Box>
+      <SubSection>
         <PhysicalDefence />
-        <Wounds />
-      </Box>
-      <Box>
+      </SubSection>
+      <SubSection>
         <MentalDefence />
-        <Injuries />
-      </Box>
+      </SubSection>
     </Box>
   );
 }

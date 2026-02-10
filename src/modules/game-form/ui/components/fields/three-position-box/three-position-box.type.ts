@@ -1,4 +1,4 @@
-import type { CustomIconProps } from "../../../../../common/components/icons/custom-icon-props.type.ts";
+import type { CustomIconProps } from "../../../../../../common/components/icons/custom-icon-props.type.ts";
 import type { JSX } from "react";
 
 export type ThreePositionType = "empty" | "full" | "half";

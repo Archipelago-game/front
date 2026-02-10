@@ -1,13 +1,21 @@
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Collapse,
+  IconButton,
+  Stack,
+  useTheme,
+} from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import BaseField from "../../components/BaseField.tsx";
-import TooltipWrapper from "../../../../../common/components/tooltip-wrapper/TooltipWrapper.tsx";
+
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import type { TalentGroup as TalentGroupType } from "./group-talents-by-branch.utils.ts";
 
-const LABEL_STYLES = {
-  sx: { width: "4rem" },
-};
+import SubTitle from "../../components/section/SubTitle.tsx";
+import SubSection from "../../components/section/SubSection.tsx";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
+import { useState } from "react";
+import AccordionHeader from "../../components/section/AccordionHeader.tsx";
 
 interface Props {
   group: TalentGroupType;
@@ -15,91 +23,83 @@ interface Props {
 }
 
 export default function TalentGroup({ group, onDelete }: Props) {
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
   return (
-    <Box sx={{ mb: 3 }}>
+    <Box sx={{ mb: 3 }} width="100%">
       {/* Заголовок группы */}
-      <Typography
-        variant="subtitle2"
-        sx={{
-          fontWeight: "bold",
-          mb: 1,
-          pb: 0.5,
-          borderBottom: "1px solid",
-          borderColor: "divider",
-        }}
-      >
-        {group.branch}
-      </Typography>
+      <Box mb={1} sx={{ position: "relative" }}>
+        <AccordionHeader onClick={() => setOpen((v) => !v)}>
+          <SubTitle title={group.branch} />
+        </AccordionHeader>
+        <Divider sx={{ borderColor: theme.palette.base.accent }} />
+      </Box>
 
       {/* Таланты группы */}
-      <Grid container gap={2}>
+
+      <Stack rowGap={1}>
         {group.talents.map(({ talent, index }) => (
-          <Box
-            key={talent.id}
-            sx={{
-              position: "relative",
-              paddingLeft: "25px",
-              width: "100%",
-            }}
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                top: -2,
-                left: 1,
-              }}
-            >
-              <IconButton
-                onClick={() => onDelete(index, talent.name)}
-                sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <SubSection>
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                }}
               >
-                <Delete fontSize="small" />
-              </IconButton>
-            </Box>
-            <Grid container wrap={"wrap"}>
-              <Grid size={{ xs: 12, md: 8 }}>
-                <BaseField
-                  fieldName={`talents.list.${index}.name`}
-                  orientation="row"
-                  fieldType="text"
-                />
-              </Grid>
-              <Grid size={{ xs: 8, md: 4 }}>
-                <BaseField
-                  fieldName={`talents.list.${index}.branch`}
-                  label={{
-                    text: "Ветка",
-                    color: "secondary",
-                    ...LABEL_STYLES,
+                <IconButton
+                  onClick={() => onDelete(index, talent.name)}
+                  sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
+                >
+                  <Delete fontSize="small" />
+                </IconButton>
+              </Box>
+
+              <Stack
+                direction="row"
+                columnGap={3}
+                rowGap="4px"
+                mb={1}
+                flexWrap="wrap"
+                className="stack"
+              >
+                <CustomTextField
+                  title="Название"
+                  textField={{
+                    fieldName: `talents.list.${index}.name`,
+                    fieldType: "text",
                   }}
-                  orientation="row"
-                  fieldType="text"
                 />
-              </Grid>
-              <Grid size={{ xs: 12, md: 10 }} order={{ xs: 4, md: 3 }}>
-                <TooltipWrapper text={talent.effect}>
-                  <BaseField
-                    fieldName={`talents.list.${index}.effect`}
-                    orientation="row"
-                    fieldType="text"
-                    multiline={{ isMultiline: true, rows: 5 }}
-                  />
-                </TooltipWrapper>
-              </Grid>
-              <Grid size={{ xs: 4, md: 2 }} order={{ xs: 3, md: 4 }}>
-                <BaseField
-                  fieldName={`talents.list.${index}.rang`}
-                  label={{
-                    text: "Ранг",
-                    color: "secondary",
+
+                <CustomTextField
+                  title="Ранг"
+                  textField={{
+                    fieldName: `talents.list.${index}.rang`,
                   }}
-                  orientation="row"
                 />
-              </Grid>
-            </Grid>
-          </Box>
+
+                <CustomTextField
+                  title="Ветка"
+                  textField={{
+                    fieldName: `talents.list.${index}.branch`,
+                    fieldType: "text",
+                  }}
+                />
+              </Stack>
+              <CustomTextField
+                textField={{
+                  fieldName: `talents.list.${index}.effect`,
+                  fieldType: "text",
+                  multiline: { isMultiline: true, rows: 5 },
+                }}
+                orientation="row"
+              />
+            </SubSection>
+          </Collapse>
         ))}
-      </Grid>
+      </Stack>
     </Box>
   );
 }

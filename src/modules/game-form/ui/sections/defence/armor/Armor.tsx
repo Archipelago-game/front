@@ -1,90 +1,45 @@
-import { Box, Typography } from "@mui/material";
-import Head from "./Head.tsx";
-import RightHand from "./RightHand.tsx";
-import LeftHand from "./LeftHand.tsx";
-import LeftLeg from "./LeftLeg.tsx";
-import RightLeg from "./LeftLeg.tsx";
-import Body from "./Body.tsx";
-import { fitContentStyle } from "../side/styles/side-defence.styles.ts";
-import { defaultLabelTextStyles } from "../../../components/styles/label.styles.ts";
-import { theme } from "../../../../../../common/styles/theme/custom-theme.ts";
+import { Box } from "@mui/material";
 
-const handStyles = {
-  gridRow: "1 / 3",
-  display: "flex",
-  alignItems: "center",
-};
+import Slot from "./Slot.tsx";
+import HeroSilhouette from "./HeroSilhouette.tsx";
+import SubSection from "../../../components/section/SubSection.tsx";
+import SectionTitle from "../../../components/section/SectionTitle.tsx";
 
 export default function Armor() {
   return (
-    <Box>
-      <Typography
-        sx={{
-          textAlign: "center",
-          fontSize: {
-            xs: ".8em", // <600px
-            sm: ".9em",
-            md: ".9em", // ≥960px
-          },
-          marginBottom: "4px",
-          ...defaultLabelTextStyles(theme, "primary"),
-        }}
-        variant={"h6"}
-      >
-        Броня
-      </Typography>
+    <SubSection>
+      <SectionTitle title="Броня" />
       <Box
         sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 70px)",
-          gridTemplateRows: "repeat(3, 1fr)",
-          gap: 1,
+          position: "relative",
+          width: "100%",
+          minWidth: "158px",
+          // note вполне возможно это ограничение будет мешать мобильной верстке
+          maxWidth: "320px",
           margin: "0 auto",
-          ...fitContentStyle,
         }}
       >
-        <Box
-          sx={{
-            gridColumn: "2 / 3",
-            gridRow: 1,
-          }}
-        >
-          <Head />
-        </Box>
+        {/* Силуэт */}
+        <HeroSilhouette />
 
-        <Box sx={{ ...handStyles }}>
-          <RightHand />
-        </Box>
-        <Box sx={{ ...handStyles }}>
-          <LeftHand />
-        </Box>
-        <Box
-          sx={{
-            gridColumn: "2 / 3",
-            gridRow: 2,
-          }}
-        >
-          <Body />
-        </Box>
-        <Box
-          sx={{
-            gridColumn: "1 / 2",
-            gridRow: 3,
-            transform: "translateX(50%)",
-          }}
-        >
-          <RightLeg />
-        </Box>
-        <Box
-          sx={{
-            gridColumn: "3 / 4",
-            gridRow: 3,
-            transform: "translateX(-50%)",
-          }}
-        >
-          <LeftLeg />
-        </Box>
+        {/* Голова */}
+        <Slot top="6%" left="71%" fieldName="defence.armor.slots.head" />
+
+        {/* Тело */}
+        <Slot top="28%" left="50%" fieldName="defence.armor.slots.body" />
+
+        {/* Правая рука */}
+        <Slot top="30%" left="92%" fieldName="defence.armor.slots.rightHand" />
+
+        {/* Левая рука */}
+        <Slot top="30%" left="8%" fieldName="defence.armor.slots.leftHand" />
+
+        {/* Правая нога */}
+        <Slot top="62%" left="80%" fieldName="defence.armor.slots.rightLeg" />
+
+        {/* Левая нога */}
+        <Slot top="62%" left="20%" fieldName="defence.armor.slots.leftLeg" />
       </Box>
-    </Box>
+    </SubSection>
   );
 }

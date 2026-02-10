@@ -1,13 +1,11 @@
-import DamageMethodItem from "./DamageMethodItem.tsx";
-
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { useFieldArray } from "react-hook-form";
 import { defaultAttackMethod } from "../../../../consts/attack-default.const.ts";
 import { useConfirmDialogContext } from "../../../../../confirm-dialog/use-confirm-dialog.hook.ts";
-import { buttonDeleteStyles } from "../../../../../../common/styles/button-delete-styles.css.ts";
-import { Delete } from "@mui/icons-material";
+
 import { useEffect } from "react";
+import DamageMethodItem from "./DamageMethodsItem.tsx";
 
 export default function DamageMethods() {
   const { methods, values, onChange } = useCustomFormContext();
@@ -52,30 +50,11 @@ export default function DamageMethods() {
       }}
     >
       {fields.map((field, index) => (
-        <Box
-          key={index}
-          sx={{
-            position: "relative",
-            paddingLeft: "25px",
-          }}
-        >
-          <Box
-            sx={{
-              position: "absolute",
-              top: -2,
-              left: 1,
-            }}
-          >
-            <IconButton
-              onClick={() => deleteItem(index, field.name)}
-              sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
-            >
-              <Delete fontSize="small" />
-            </IconButton>
-          </Box>
-
-          <DamageMethodItem index={index} values={values} />
-        </Box>
+        <DamageMethodItem
+          key={field.id}
+          index={index}
+          onDelete={() => deleteItem(index, field.name)}
+        />
       ))}
       <Box
         sx={{

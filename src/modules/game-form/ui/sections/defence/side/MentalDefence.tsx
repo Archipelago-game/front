@@ -1,21 +1,28 @@
-import { Box } from "@mui/material";
+import { Box, Divider, Stack, useTheme } from "@mui/material";
 import PsychologyIcon from "@mui/icons-material/Psychology";
-import CustomLabel from "../../../components/CustomLabel.tsx";
 
 import { Controller, useFieldArray, useWatch } from "react-hook-form";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { useEffect } from "react";
-import { gridStyle } from "./styles/side-defence.styles.ts";
+import { defenceGridStyle } from "./styles/side-defence.styles.ts";
 import { MENTAL_RESOLVE_STATEMENT_COLOR_MAP } from "./mental-resolve-colors.const.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
 import CalculatedValue from "../../../components/CalculatedValue.tsx";
-import CheckIconBox from "../../../components/check-icon-box/CheckIconBox.tsx";
+
 import { useHealthCalc } from "../health-calc.hook.ts";
-import BaseField from "../../../components/BaseField.tsx";
+
+import CheckIconBox from "../../../components/fields/check-icon-box/CheckIconBox.tsx";
+
+import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
+import CustomTextFieldWrapper from "../../../components/fields/custom-text-field/CustomTextFieldWrapper.tsx";
+import CustomTextField from "../../../components/fields/custom-text-field/CustomTextField.tsx";
+import SectionTitle from "../../../components/section/SectionTitle.tsx";
+import Injuries from "./Injuries.tsx";
 
 export default function MentalDefence() {
+  const theme = useTheme();
   const { values, methods, onChange } = useCustomFormContext();
 
   const healthValue = useHealthCalc({
@@ -52,23 +59,28 @@ export default function MentalDefence() {
   }, [values?.defence.mental.resolve.list, replace]);
 
   return (
-    <Box>
-      <CustomLabel label={{ text: "Ментальная" }} orientation="row">
+    <Stack rowGap={1}>
+      <CustomTextFieldWrapper>
+        <SectionTitle title="Ментальная" />
         <CalculatedValue value={healthValue} />
-      </CustomLabel>
+      </CustomTextFieldWrapper>
 
-      <BaseField
-        fieldName="defence.mental.despair.value"
-        label={{
-          text: "Отчаяние",
-          color: "secondary",
+      <CustomTextField
+        title="Отчаяние"
+        textField={{
+          fieldName: "defence.mental.despair.value",
+          showChangeValueBtn: true,
         }}
-        orientation="row"
-        showSpinButtons
       />
 
-      <CustomLabel label={{ text: "Решимость", color: "secondary" }}>
-        <Box sx={{ marginBottom: "4px", ...gridStyle }}>
+      <Divider
+        sx={{ borderColor: theme.palette.base.outline, borderWidth: "1px" }}
+      />
+
+      <Box>
+        <CustomTextFieldLabel title="Решимость" />
+
+        <Box sx={{ ...defenceGridStyle }}>
           {fields.map((field, i) => (
             <Controller
               key={field.id}
@@ -88,7 +100,15 @@ export default function MentalDefence() {
             />
           ))}
         </Box>
-      </CustomLabel>
-    </Box>
+      </Box>
+
+      <Divider
+        sx={{
+          borderColor: theme.palette.base.conditions.mental.border,
+          borderWidth: "1px",
+        }}
+      />
+      <Injuries />
+    </Stack>
   );
 }

@@ -6,18 +6,20 @@ import type { ControllerRenderProps } from "react-hook-form";
 import type { FormType } from "../../../types/form/form.type.ts";
 
 import type { OnChangeCallbackType } from "../../../types/on-change-callback.type.ts";
+import type { ReactNode } from "react";
+import { useTheme } from "@mui/material/styles";
 
-const inputAdornmentStyles = {
+const adornmentStyles = {
   wrapper: {
     display: "flex",
-    gap: "8px",
+    gap: "4px",
     paddingRight: "2px",
     paddingBottom: "1px",
   },
   input: {
     margin: 0,
   },
-  btn: { padding: "4px", border: "1px solid #000", borderRadius: "50%" },
+  btn: { padding: "4px", border: "2px solid #000", borderRadius: "50%" },
   icon: {
     fontSize: "12px",
   },
@@ -26,15 +28,25 @@ const inputAdornmentStyles = {
 interface Props {
   field: ControllerRenderProps<FormType>;
   onChange: OnChangeCallbackType;
+  children: ReactNode;
+  isShowButtons: boolean;
 }
 
-export default function AdornmentBlock({ field, onChange }: Props) {
+export default function AdornmentBlock({
+  field,
+  onChange,
+  children,
+  isShowButtons,
+}: Props) {
+  const theme = useTheme();
   const increaseValue = (field: ControllerRenderProps<FormType>) => {
-    if (typeof field.value !== "number") {
+    const value = Number(field.value);
+
+    if (Number.isNaN(value)) {
       return;
     }
 
-    field.onChange(field.value + 1);
+    field.onChange(value + 1);
     onChange();
   };
 
@@ -44,30 +56,38 @@ export default function AdornmentBlock({ field, onChange }: Props) {
     if (Number.isNaN(value)) {
       return;
     }
+
     const next = value > 0 ? value - 1 : field.value;
     field.onChange(next);
     onChange();
   };
 
+  const btnStyles = {
+    ...adornmentStyles.btn,
+    borderColor: theme.palette.base.outline,
+  };
+
   return (
-    <Box sx={inputAdornmentStyles.wrapper}>
-      <InputAdornment position="start" sx={inputAdornmentStyles.input}>
-        <IconButton
-          sx={inputAdornmentStyles.btn}
-          onClick={() => decreaseValue(field)}
-        >
-          <RemoveIcon sx={inputAdornmentStyles.icon} />
-        </IconButton>
-      </InputAdornment>
-      <InputAdornment position="end" sx={inputAdornmentStyles.input}>
-        <IconButton
-          size="small"
-          sx={inputAdornmentStyles.btn}
-          onClick={() => increaseValue(field)}
-        >
-          <AddIcon sx={inputAdornmentStyles.icon} />
-        </IconButton>
-      </InputAdornment>
+    <Box sx={adornmentStyles.wrapper}>
+      {isShowButtons && (
+        <InputAdornment position="start" sx={adornmentStyles.input}>
+          <IconButton sx={btnStyles} onClick={() => decreaseValue(field)}>
+            <RemoveIcon sx={adornmentStyles.icon} />
+          </IconButton>
+        </InputAdornment>
+      )}
+      {children}
+      {isShowButtons && (
+        <InputAdornment position="end" sx={adornmentStyles.input}>
+          <IconButton
+            size="small"
+            sx={btnStyles}
+            onClick={() => increaseValue(field)}
+          >
+            <AddIcon sx={adornmentStyles.icon} />
+          </IconButton>
+        </InputAdornment>
+      )}
     </Box>
   );
 }

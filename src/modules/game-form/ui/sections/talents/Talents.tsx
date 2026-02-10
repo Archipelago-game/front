@@ -1,11 +1,10 @@
 import Talent from "./Talent.tsx";
-import SectionTitle from "../../components/SectionTitle.tsx";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
 export default function Talents() {
   return (
-    <>
-      <SectionTitle title="Таланты" />
+    <BaseSectionCard>
       <Talent />
-    </>
+    </BaseSectionCard>
   );
 }

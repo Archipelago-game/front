@@ -1,21 +1,16 @@
-import CustomLabel from "../../components/CustomLabel.tsx";
-
-import { Box, useMediaQuery, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useWatch } from "react-hook-form";
-import BaseField from "../../components/BaseField.tsx";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useWatchRace } from "../base-info/use-watch-race.ts";
 
-const styles = {
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "0.2em",
-};
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
+import { useTheme } from "@mui/material/styles";
 
 export default function Experience() {
+  const theme = useTheme();
   const { methods } = useCustomFormContext();
-  const isBelow560 = useMediaQuery("(max-width: 560px)");
   const race = useWatchRace();
   const isImmortal = race === "immortal";
 
@@ -36,79 +31,76 @@ export default function Experience() {
   const remaining = total - used;
 
   return (
-    <Box
-      sx={{
-        width: isBelow560 ? "100%" : isImmortal ? "100%" : "420px",
-        ["@media (max-width: 868px)"]: {
-          order: -1,
+    <BaseSectionCard
+      title="Опыт"
+      card={{
+        sx: {
+          flexGrow: 1,
+          ["@media (max-width: 1028px)"]: {
+            order: -1,
+          },
+          ["@media (max-width: 730px)"]: {
+            order: 1,
+          },
+          ["@media (max-width: 560px)"]: {
+            order: -1,
+          },
+          transition: "width 1s ease",
         },
-        ["@media (max-width: 730px)"]: {
-          order: 1,
-        },
-        ["@media (max-width: 560px)"]: {
-          order: -1,
-        },
-        transition: "width 1s ease",
       }}
     >
-      <CustomLabel
-        label={{ text: "Опыт" }}
+      <Box
         sx={{
-          flex: "1 1 1px",
+          ["@media (max-width: 868px)"]: {
+            order: -1,
+          },
+          ["@media (max-width: 730px)"]: {
+            order: 1,
+          },
+          ["@media (max-width: 560px)"]: {
+            order: -1,
+          },
+          transition: "width 1s ease",
         }}
+        className="card"
       >
-        <Box
-          sx={{
-            ...styles,
-          }}
-        >
+        <Stack columnGap={3} rowGap={1} direction="row" flexWrap="wrap">
           {/* Засоленный опыт - только для бессмертных */}
           {isImmortal && (
-            <BaseField
-              fieldName="immortal.experience.salted"
-              label={{
-                color: "secondary",
-                text: "Засоленный",
-              }}
-              orientation="row"
+            <CustomTextField
+              title="Засоленный"
+              textField={{ fieldName: "immortal.experience.salted" }}
             />
           )}
 
-          <BaseField
-            fieldName="experience.total"
-            label={{
-              color: "secondary",
-              text: "Всего",
-            }}
-            orientation="row"
+          <CustomTextField
+            textField={{ fieldName: "experience.total" }}
+            title="Всего"
           />
 
-          <BaseField
-            fieldName="experience.used"
-            label={{
-              color: "secondary",
-              text: "Исп.",
-            }}
-            orientation="row"
+          <CustomTextField
+            textField={{ fieldName: "experience.used" }}
+            title="Исп."
           />
 
           {/* Оставшийся опыт - для всех персонажей */}
           <Box sx={{ display: "flex", alignItems: "center", gap: "0.5em" }}>
-            <Typography variant="body2" color="text.secondary">
+            <Box component="span" color={theme.palette.base.text.primary}>
               Оставшийся:
-            </Typography>
-            <Typography
-              variant="body1"
+            </Box>
+            <Box
+              component="span"
               sx={{
-                fontWeight: 500,
-                color: remaining < 0 ? "error.main" : "text.primary",
+                fontSize: "1.3em",
+                fontWeight: 600,
+                color: remaining < 0 ? "error.main" : theme.palette.base.accent,
               }}
             >
               {remaining}
-            </Typography>
+            </Box>
           </Box>
-        </Box>
-      </CustomLabel>
-    </Box>
+        </Stack>
+      </Box>
+    </BaseSectionCard>
   );
 }

@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../types/form/form.type.ts";
-import BaseField from "../../components/BaseField.tsx";
+import BaseField from "../../components/fields/BaseField.tsx";
 import { slotStyles } from "../styles.ts";
 
 interface MoralValuesItem {
@@ -32,6 +32,8 @@ const moralValueItems: MoralValuesItem[] = [
     fieldName: "moralValue.individualism",
   },
 ];
+
+// todo поменять на CustomTextField
 
 export default function MoralValues() {
   return (

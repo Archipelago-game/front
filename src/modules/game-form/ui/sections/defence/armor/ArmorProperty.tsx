@@ -1,13 +1,11 @@
-import BaseField from "../../../components/BaseField.tsx";
+import CustomTextField from "../../../components/fields/custom-text-field/CustomTextField.tsx";
 
 export default function ArmorProperty() {
   return (
-    <BaseField
-      label={{
-        text: "Свойства брони",
-      }}
-      fieldType="text"
-      fieldName="defence.armor.property"
+    <CustomTextField
+      title="Свойства брони"
+      orientation="column"
+      textField={{ fieldName: "defence.armor.property", fieldType: "text" }}
     />
   );
 }

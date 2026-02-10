@@ -1,41 +1,23 @@
-import CustomLabel from "../../../components/CustomLabel.tsx";
 import { Box } from "@mui/system";
 
-import BaseField from "../../../components/BaseField.tsx";
+import SubTitle from "../../../components/section/SubTitle.tsx";
+import { Stack } from "@mui/material";
+import CustomTextField from "../../../components/fields/custom-text-field/CustomTextField.tsx";
 
 export default function DamageBonus() {
   return (
-    <CustomLabel
-      label={{
-        text: "Бонусы к урону",
-        size: "h6",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "0.2em",
-        }}
-      >
-        <BaseField
-          fieldName="attack.damageBonus.physical"
-          label={{
-            color: "secondary",
-            text: "Физический",
-          }}
-          orientation="row"
+    <Box>
+      <SubTitle title="Бонусы к урону" />
+      <Stack direction="row" columnGap={3} rowGap={1} flexWrap="wrap">
+        <CustomTextField
+          title="Физический"
+          textField={{ fieldName: "attack.damageBonus.physical" }}
         />
-
-        <BaseField
-          fieldName="attack.damageBonus.mental"
-          label={{
-            color: "secondary",
-            text: "Ментальный",
-          }}
-          orientation="row"
+        <CustomTextField
+          title="Ментальный"
+          textField={{ fieldName: "attack.damageBonus.mental" }}
         />
-      </Box>
-    </CustomLabel>
+      </Stack>
+    </Box>
   );
 }

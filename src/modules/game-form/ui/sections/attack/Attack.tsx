@@ -1,18 +1,16 @@
-import { Box } from "@mui/material";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
-import DamageBonus from "./damage-bonus/DamageBonus.tsx";
 import DamageMethods from "./damage-methods/DamageMethods.tsx";
-
-import SectionTitle from "../../components/SectionTitle.tsx";
+import DamageBonus from "./damage-bonus/DamageBonus.tsx";
+import { Box } from "@mui/system";
 
 export default function Attack() {
   return (
-    <Box>
-      <SectionTitle title="Атака" />
-      <Box mb={1}>
+    <BaseSectionCard title="Атака">
+      <Box mb={2}>
         <DamageBonus />
       </Box>
       <DamageMethods />
-    </Box>
+    </BaseSectionCard>
   );
 }
