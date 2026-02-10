@@ -23,8 +23,9 @@ interface Props {
 }
 
 export default function TalentGroup({ group, onDelete }: Props) {
-  const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
   return (
     <Box sx={{ mb: 3 }} width="100%">
       {/* Заголовок группы */}

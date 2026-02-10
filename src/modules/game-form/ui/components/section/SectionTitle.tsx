@@ -20,11 +20,6 @@ export default function SectionTitle(props: Props) {
         textAlign: "left",
         fontSize: {
           xs: "1.2em",
-          // todo удалить или переделать
-          // xs: "1.9em",
-          // phablet: "2em",
-          // sm: "2.3em",
-          // tables: "2.9em",
         },
       }}
     >
