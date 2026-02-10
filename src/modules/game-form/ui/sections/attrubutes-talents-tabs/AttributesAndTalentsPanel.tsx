@@ -15,9 +15,5 @@ const TABS = [
 ];
 
 export default function AttributesAndTalentsPanel() {
-  return (
-    <Box>
-      <CustomTabsPanel tabs={TABS} />
-    </Box>
-  );
+  return <CustomTabsPanel tabs={TABS} />;
 }

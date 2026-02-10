@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { buttonDeleteStyles } from "../../../../../common/styles/button-delete-styles.css.ts";
 import type { TalentGroup as TalentGroupType } from "./group-talents-by-branch.utils.ts";
 
