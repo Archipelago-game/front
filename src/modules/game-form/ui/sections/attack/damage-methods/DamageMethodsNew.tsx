@@ -51,6 +51,7 @@ export default function DamageMethodsNew() {
     >
       {fields.map((field, index) => (
         <DamageMethodItemNew
+          key={field.id}
           index={index}
           onDelete={() => deleteItem(index, field.name)}
         />

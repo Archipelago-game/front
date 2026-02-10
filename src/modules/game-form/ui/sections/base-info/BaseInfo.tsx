@@ -25,6 +25,10 @@ const HighlightSpan = (props: { children: ReactNode }) => {
 export default function BaseInfo() {
   const theme = useTheme();
   const { methods } = useCustomFormContext();
+  const [name, age, homeland, languages, race] = useWatch({
+    control: methods.control,
+    name: ["name", "age", "homeland", "languages", "race"],
+  });
   const base = theme.palette.base;
 
   const { open } = useFormDialogContext();
@@ -37,11 +41,6 @@ export default function BaseInfo() {
       onConfirm: () => {},
     });
   };
-
-  const [name, age, homeland, languages, race] = useWatch({
-    control: methods.control,
-    name: ["name", "age", "homeland", "languages", "race"],
-  });
 
   return (
     <OppositeColorSectionCard>

@@ -12,10 +12,6 @@ export const StyledTab = styled(Tab)(({ theme }) => ({
     duration: theme.transitions.duration.short,
   }),
 
-  "&:first-child": {
-    borderTopLeftRadius: 0,
-  },
-
   /* ===== default (not selected) ===== */
   backgroundColor: theme.palette.base.surfaceLowered,
   color: theme.palette.base.text.onLowered,
