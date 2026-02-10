@@ -3,7 +3,7 @@ import { Controller, useFieldArray } from "react-hook-form";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import { useEffect } from "react";
 import { Box, useTheme } from "@mui/material";
-import { gridStyle } from "./styles/side-defence.styles.ts";
+import { defenceGridStyle } from "./styles/side-defence.styles.ts";
 
 import ThreePositionBox from "../../../components/fields/three-position-box/ThreePositionBox.tsx";
 import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
@@ -27,7 +27,7 @@ export default function Wounds() {
     <Box>
       <CustomTextFieldLabel title="Раны" />
 
-      <Box sx={gridStyle}>
+      <Box sx={defenceGridStyle}>
         {fields.map((field, index) => (
           <Controller
             key={field.id}

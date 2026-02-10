@@ -6,7 +6,7 @@ import { Controller, useFieldArray, useWatch } from "react-hook-form";
 import type { FormType } from "../../../../types/form/form.type.ts";
 
 import { useEffect } from "react";
-import { gridStyle } from "./styles/side-defence.styles.ts";
+import { defenceGridStyle } from "./styles/side-defence.styles.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 import { HEALTH_STATEMENT_COLOR_MAP } from "./health-colors.const.ts";
 
@@ -85,7 +85,7 @@ export default function PhysicalDefence() {
       <Box>
         <CustomTextFieldLabel title="Здоровье" />
 
-        <Box sx={{ ...gridStyle }}>
+        <Box sx={{ ...defenceGridStyle }}>
           {fields.map((field, i) => (
             <Controller
               key={field.id}

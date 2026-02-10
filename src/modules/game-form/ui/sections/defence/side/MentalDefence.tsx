@@ -5,7 +5,7 @@ import { Controller, useFieldArray, useWatch } from "react-hook-form";
 import { useCustomFormContext } from "../../../../providers/use-custom-context-form.hook.ts";
 import type { FormType } from "../../../../types/form/form.type.ts";
 import { useEffect } from "react";
-import { gridStyle } from "./styles/side-defence.styles.ts";
+import { defenceGridStyle } from "./styles/side-defence.styles.ts";
 import { MENTAL_RESOLVE_STATEMENT_COLOR_MAP } from "./mental-resolve-colors.const.ts";
 import { useWatchCheckboxAmount } from "./useWatchCheckboxAmount.ts";
 
@@ -80,7 +80,7 @@ export default function MentalDefence() {
       <Box>
         <CustomTextFieldLabel title="Решимость" />
 
-        <Box sx={{ ...gridStyle }}>
+        <Box sx={{ ...defenceGridStyle }}>
           {fields.map((field, i) => (
             <Controller
               key={field.id}

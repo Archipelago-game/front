@@ -37,11 +37,3 @@ export default function Defence() {
     </BaseSectionCard>
   );
 }
-
-// todo разобраться нужны ли эти стили для SectionCard
-//      sx={{
-//         ...fitContentStyle,
-//         ["@media (max-width: 730px)"]: {
-//           width: "100%",
-//         },
-//       }}
