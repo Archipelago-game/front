@@ -37,12 +37,14 @@ declare module "@mui/material/styles" {
           background: string;
           border: string;
           hover: string;
+          primaryHalf: string;
         };
         mental: {
           primary: string;
           background: string;
           border: string;
           hover: string;
+          primaryHalf: string;
         };
       };
     };
