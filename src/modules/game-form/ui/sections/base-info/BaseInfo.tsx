@@ -1,11 +1,14 @@
 import { Box, Divider, IconButton, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
-import type { ReactNode } from "react";
+import type { JSX, ReactNode } from "react";
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { mapRace } from "../../../consts/map-race.const.ts";
 
 import OppositeColorSectionCard from "../../components/section/OppositeColorSectionCard.tsx";
+import { useFormDialogContext } from "../../../../form-dialog/use-form-dialog.hook.ts";
+import FormBaseInfo from "./FormBaseInfo.tsx";
+import { useWatch } from "react-hook-form";
 
 const HighlightSpan = (props: { children: ReactNode }) => {
   const theme = useTheme();
@@ -21,11 +24,24 @@ const HighlightSpan = (props: { children: ReactNode }) => {
 
 export default function BaseInfo() {
   const theme = useTheme();
-  const { values } = useCustomFormContext();
+  const { methods } = useCustomFormContext();
   const base = theme.palette.base;
-  if (!values) {
-    return null;
-  }
+
+  const { open } = useFormDialogContext();
+
+  const callModal = (Content: () => JSX.Element) => {
+    const content = () => <Content />;
+    open({
+      title: "Герой",
+      content,
+      onConfirm: () => {},
+    });
+  };
+
+  const [name, age, homeland, languages, race] = useWatch({
+    control: methods.control,
+    name: ["name", "age", "homeland", "languages", "race"],
+  });
 
   return (
     <OppositeColorSectionCard>
@@ -40,7 +56,7 @@ export default function BaseInfo() {
       >
         <Box>
           <HighlightSpan>
-            <b>{values.name}</b>
+            <b>{name}</b>
           </HighlightSpan>
         </Box>
         <Stack
@@ -58,11 +74,11 @@ export default function BaseInfo() {
           >
             <Box>
               Возраст:&nbsp;
-              <HighlightSpan>{values.age}</HighlightSpan>
+              <HighlightSpan>{age}</HighlightSpan>
             </Box>
             <Box>
               Родина:&nbsp;
-              <HighlightSpan>{values.homeland}</HighlightSpan>
+              <HighlightSpan>{homeland}</HighlightSpan>
             </Box>
           </Stack>
           <Stack
@@ -71,10 +87,10 @@ export default function BaseInfo() {
             flexWrap="wrap"
             justifyContent="flex-start"
           >
-            <Box>Язык: {values.languages}</Box>
+            <Box>Язык: {languages}</Box>
             <Box>
               Раса:&nbsp;
-              <HighlightSpan>{mapRace[values.race]}</HighlightSpan>
+              <HighlightSpan>{mapRace[race]}</HighlightSpan>
             </Box>
           </Stack>
         </Stack>
@@ -87,8 +103,8 @@ export default function BaseInfo() {
           right: 0,
         }}
       >
-        <IconButton>
-          <EditIcon sx={{ color: base.text.onLowered }} />
+        <IconButton onClick={() => callModal(FormBaseInfo)}>
+          <EditIcon sx={{ color: base.text.onLowered }} fontSize="small" />
         </IconButton>
       </Box>
     </OppositeColorSectionCard>

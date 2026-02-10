@@ -25,8 +25,6 @@ export default function CharacterForm() {
     <Box
       sx={{
         backgroundColor: theme.palette.base.background,
-        marginInline: "-16px",
-        paddingInline: "16px",
       }}
     >
       <DraggableFab />

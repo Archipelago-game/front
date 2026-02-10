@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import type { ReactNode } from "react";
+import { useTheme } from "@mui/material/styles";
 
 export interface FormDialogProps {
   isOpen: boolean;
@@ -22,6 +23,7 @@ export function FormDialog({
   onConfirm,
   onCancel = () => {},
 }: FormDialogProps) {
+  const theme = useTheme();
   return (
     <Dialog
       open={isOpen}
@@ -30,7 +32,9 @@ export function FormDialog({
       aria-describedby="заполнение формы"
       fullWidth={true}
     >
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle sx={{ background: theme.palette.base.surfaceBase }}>
+        {title}
+      </DialogTitle>
       <DialogContent
         sx={{
           paddingTop: 1,
@@ -40,12 +44,13 @@ export function FormDialog({
           overflowY: "auto",
           scrollBehavior: "smooth",
           scrollbarWidth: "none",
+          background: theme.palette.base.surfaceBase,
         }}
       >
         {content()}
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onConfirm} color="inherit" size="small">
+      <DialogActions sx={{ background: theme.palette.base.surfaceBase }}>
+        <Button onClick={onConfirm} color="primary" size="small">
           Закрыть
         </Button>
       </DialogActions>
