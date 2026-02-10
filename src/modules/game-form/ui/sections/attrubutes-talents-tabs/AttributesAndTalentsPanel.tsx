@@ -1,5 +1,5 @@
 import CustomTabsPanel from "../../../../../common/components/tabs-panel/CustomTabsPanel.tsx";
-import { Box } from "@mui/material";
+
 import Attributes from "../attributes/Attributes.tsx";
 import Talents from "../talents/Talents.tsx";
 

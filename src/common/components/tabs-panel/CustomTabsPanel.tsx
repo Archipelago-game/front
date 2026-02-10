@@ -22,17 +22,22 @@ export default function CustomTabsPanel({ tabs }: Props) {
 
   return (
     <Box>
-      <AccordionHeader onClick={() => setOpen((prev) => !prev)}>
+      <AccordionHeader
+        sx={{
+          color: theme.palette.base.text.onLowered,
+          backgroundColor: theme.palette.base.surfaceLowered,
+          paddingRight: 2,
+        }}
+        onClick={() => setOpen((prev) => !prev)}
+      >
         <Tabs
           value={currentTabIndex}
           onChange={handleSwitchTabs}
           sx={{
             minHeight: "100%",
-            backgroundColor: theme.palette.base.surfaceLowered,
             borderTopLeftRadius: "4px",
             borderTopRightRadius: "4px",
             flexGrow: 1,
-            marginRight: "-40px",
           }}
           slotProps={{ indicator: { sx: { display: "none" } } }}
         >
