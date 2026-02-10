@@ -7,7 +7,6 @@ import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 
 import CheckIconBox from "../../components/fields/check-icon-box/CheckIconBox.tsx";
 import { LUCK_STATEMENT_COLOR_MAP } from "./luck-colors.const.ts";
-import { useWatchRace } from "../base-info/use-watch-race.ts";
 
 import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
@@ -15,8 +14,6 @@ import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
 export default function Luck() {
   const { methods, onChange, values } = useCustomFormContext();
-
-  const race = useWatchRace();
 
   const isBelow560 = useMediaQuery("(max-width: 560px)");
 
@@ -27,10 +24,6 @@ export default function Luck() {
     formHook: methods,
     onChange: onChange,
   });
-
-  if (race !== "human") {
-    return null;
-  }
 
   return (
     <BaseSectionCard

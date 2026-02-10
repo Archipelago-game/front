@@ -1,9 +1,11 @@
 import { Box } from "@mui/material";
 
 import Slot from "./Slot.tsx";
-import HeroSilhouette from "./HeroSilhouette.tsx";
+
 import SubSection from "../../../components/section/SubSection.tsx";
 import SectionTitle from "../../../components/section/SectionTitle.tsx";
+
+import CurrentSilhouette from "./siluets/CurrentSilhouette.tsx";
 
 export default function Armor() {
   return (
@@ -19,9 +21,7 @@ export default function Armor() {
           margin: "0 auto",
         }}
       >
-        {/* Силуэт */}
-        <HeroSilhouette />
-
+        <CurrentSilhouette />
         {/* Голова */}
         <Slot top="6%" left="71%" fieldName="defence.armor.slots.head" />
 
