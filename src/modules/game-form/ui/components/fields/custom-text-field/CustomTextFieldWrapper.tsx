@@ -14,7 +14,12 @@ export default function CustomTextFieldWrapper({
   const alignItems = isRow ? "center" : "flex-start";
 
   return (
-    <Stack direction={orientation} alignItems={alignItems} spacing={spacing}>
+    <Stack
+      direction={orientation}
+      alignItems={alignItems}
+      spacing={spacing}
+      m={0}
+    >
       {children}
     </Stack>
   );

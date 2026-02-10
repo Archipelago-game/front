@@ -63,7 +63,14 @@ export default function TalentGroup({ group, onDelete }: Props) {
                 </IconButton>
               </Box>
 
-              <Stack direction="row" spacing={3} mb={1}>
+              <Stack
+                direction="row"
+                columnGap={3}
+                rowGap="4px"
+                mb={1}
+                flexWrap="wrap"
+                className="stack"
+              >
                 <CustomTextField
                   title="Название"
                   textField={{
@@ -78,6 +85,7 @@ export default function TalentGroup({ group, onDelete }: Props) {
                     fieldName: `talents.list.${index}.rang`,
                   }}
                 />
+
                 <CustomTextField
                   title="Ветка"
                   textField={{

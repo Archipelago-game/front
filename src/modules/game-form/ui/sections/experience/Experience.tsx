@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useWatch } from "react-hook-form";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
@@ -11,7 +11,6 @@ import { useTheme } from "@mui/material/styles";
 export default function Experience() {
   const theme = useTheme();
   const { methods } = useCustomFormContext();
-  const isBelow560 = useMediaQuery("(max-width: 560px)");
   const race = useWatchRace();
   const isImmortal = race === "immortal";
 
@@ -32,10 +31,26 @@ export default function Experience() {
   const remaining = total - used;
 
   return (
-    <BaseSectionCard title="Опыт">
+    <BaseSectionCard
+      title="Опыт"
+      card={{
+        sx: {
+          flexGrow: 1,
+          ["@media (max-width: 1028px)"]: {
+            order: -1,
+          },
+          ["@media (max-width: 730px)"]: {
+            order: 1,
+          },
+          ["@media (max-width: 560px)"]: {
+            order: -1,
+          },
+          transition: "width 1s ease",
+        },
+      }}
+    >
       <Box
         sx={{
-          width: isBelow560 ? "100%" : isImmortal ? "100%" : "420px",
           ["@media (max-width: 868px)"]: {
             order: -1,
           },
@@ -47,6 +62,7 @@ export default function Experience() {
           },
           transition: "width 1s ease",
         }}
+        className="card"
       >
         <Stack columnGap={3} rowGap={1} direction="row" flexWrap="wrap">
           {/* Засоленный опыт - только для бессмертных */}

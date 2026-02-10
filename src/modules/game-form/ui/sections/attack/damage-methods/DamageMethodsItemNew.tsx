@@ -58,7 +58,7 @@ export default function DamageMethodItemNew({ index, onDelete }: Props) {
               onClick={onDelete}
               sx={{ padding: 0, margin: "0 auto", ...buttonDeleteStyles }}
             >
-              <Delete fontSize="medium" />
+              <Delete fontSize="small" />
             </IconButton>
           </Box>
         </Stack>

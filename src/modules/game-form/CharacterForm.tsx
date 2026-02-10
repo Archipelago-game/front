@@ -75,6 +75,7 @@ export default function CharacterForm() {
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
+                  alignItems: "stretch",
                   flexWrap: "wrap",
                   gap: 1,
                 }}
