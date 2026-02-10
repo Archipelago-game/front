@@ -2,9 +2,10 @@ import Card, { type CardProps } from "@mui/material/Card";
 import CardContent, { type CardContentProps } from "@mui/material/CardContent";
 
 import { useTheme } from "@mui/material/styles";
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 
 import SectionHeader from "./SectionHeader.tsx";
+import { Collapse } from "@mui/material";
 
 export interface DefaultSectionCardProps {
   title?: string;
@@ -17,6 +18,9 @@ export interface DefaultSectionCardProps {
 export default function BaseSectionCard(props: DefaultSectionCardProps) {
   const { title, children, card, cardContent } = props;
   const theme = useTheme();
+
+  const [open, setOpen] = useState(true);
+
   const backgroundColor = props.backgroundColor
     ? props.backgroundColor
     : theme.palette.base.surfaceBase;
@@ -40,8 +44,11 @@ export default function BaseSectionCard(props: DefaultSectionCardProps) {
         <SectionHeader
           title={title}
           dividerColor={theme.palette.base.outline}
+          onClick={() => setOpen((prev) => !prev)}
         />
-        {children}
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          {children}
+        </Collapse>
       </CardContent>
     </Card>
   );

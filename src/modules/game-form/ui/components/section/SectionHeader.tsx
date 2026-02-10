@@ -1,24 +1,32 @@
-import { Box, Divider, IconButton } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import SectionTitle from "./SectionTitle.tsx";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AccordionHeader from "./AccordionHeader.tsx";
 
 interface Props {
   title?: string;
   color?: string;
   dividerColor?: string;
+  onClick?: () => void;
 }
 
-export default function SectionHeader({ title, color, dividerColor }: Props) {
+export default function SectionHeader({
+  title,
+  color,
+  dividerColor,
+  onClick,
+}: Props) {
   if (!title) {
     return null;
   }
   return (
     <Box mb={2}>
-      <SectionTitle title={title} color={color} />
+      {onClick && (
+        <AccordionHeader onClick={onClick}>
+          <SectionTitle title={title} color={color} />
+        </AccordionHeader>
+      )}
 
-      <IconButton onClick={() => {}}>
-        <ExpandMoreIcon />
-      </IconButton>
+      {!onClick && <SectionTitle title={title} color={color} />}
 
       {dividerColor && <Divider sx={{ borderColor: dividerColor }} />}
     </Box>

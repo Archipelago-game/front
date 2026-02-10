@@ -16,6 +16,7 @@ import SubTitle from "../../components/section/SubTitle.tsx";
 import SubSection from "../../components/section/SubSection.tsx";
 import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
 import { useState } from "react";
+import AccordionHeader from "../../components/section/AccordionHeader.tsx";
 
 interface Props {
   group: TalentGroupType;
@@ -30,16 +31,9 @@ export default function TalentGroup({ group, onDelete }: Props) {
     <Box sx={{ mb: 3 }} width="100%">
       {/* Заголовок группы */}
       <Box mb={1} sx={{ position: "relative" }}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <AccordionHeader onClick={() => setOpen((v) => !v)}>
           <SubTitle title={group.branch} />
-          <IconButton onClick={() => setOpen((v) => !v)}>
-            <ExpandMoreIcon />
-          </IconButton>
-        </Stack>
+        </AccordionHeader>
         <Divider sx={{ borderColor: theme.palette.base.accent }} />
       </Box>
 
