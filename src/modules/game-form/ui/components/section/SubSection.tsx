@@ -5,12 +5,16 @@ import BaseSectionCard, {
 
 export default function SubSection(props: DefaultSectionCardProps) {
   const theme = useTheme();
+  const { card, ...rest } = props;
+  const { sx: cardSx, ...restCard } = card || {};
   return (
     <BaseSectionCard
-      {...props}
+      {...rest}
       card={{
+        ...restCard,
         sx: {
           paddingTop: "20px",
+          ...cardSx,
         },
       }}
       backgroundColor={theme.palette.base.surfaceAccent}
