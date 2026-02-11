@@ -88,7 +88,7 @@ export default function Attributes() {
         <Box
           sx={{
             display: "grid",
-            gap: 2,
+            gap: 1,
             gridTemplateColumns: {
               xs: "1fr",
               phablet: "repeat(2, 1fr)",
