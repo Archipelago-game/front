@@ -108,7 +108,7 @@ export default function Attributes() {
                 flexDirection: "column",
                 justifyContent: "flex-start",
                 alignItems: "stretch",
-                gap: 2,
+                gap: 1,
               }}
             >
               <>

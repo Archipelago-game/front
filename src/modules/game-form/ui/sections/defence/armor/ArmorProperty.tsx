@@ -4,7 +4,7 @@ export default function ArmorProperty() {
   return (
     <CustomTextField
       title="Свойства брони"
-      orientation="column"
+      wrapper={{ direction: "column" }}
       textField={{ fieldName: "defence.armor.property", fieldType: "text" }}
     />
   );
