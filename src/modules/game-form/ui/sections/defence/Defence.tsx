@@ -14,7 +14,7 @@ export default function Defence() {
       <Box mb={1}>
         <Brave />
       </Box>
-      <ContainerWrapper>
+      <ContainerWrapper name="defenceWrapper">
         <DefenceContainer>
           <ArmorSection />
           <SideDefence />

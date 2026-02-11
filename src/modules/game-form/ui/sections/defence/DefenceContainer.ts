@@ -3,9 +3,10 @@ import { Box } from "@mui/material";
 
 export const DefenceContainer = styled(Box)(() => ({
   display: "grid",
-  gridTemplatesColumns: "repeat(auto-fit, minmax(min(100%, 206px), 1fr))",
+  gridTemplateColumns: "1fr 206px",
+  gap: "8px",
 
-  "@container defenceWrapper (max-width: 600px)": {
-    gridTemplatesColumns: "1fr",
+  "@container defenceWrapper (max-width: 417px)": {
+    gridTemplateColumns: "1fr",
   },
 }));
