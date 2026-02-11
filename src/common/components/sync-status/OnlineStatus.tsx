@@ -28,7 +28,7 @@ export default function OnlineStatus() {
 
   const getStatusIcon = () => {
     if (!isOnline) return <CloudOff color="warning" />;
-    return <CloudOutlined color="success" />;
+    return <CloudOutlined color="secondary" />;
   };
 
   return (
