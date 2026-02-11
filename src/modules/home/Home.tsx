@@ -23,6 +23,7 @@ export default function Home() {
           to={"/characters"}
           size="large"
           variant="outlined"
+          color="primary"
         >
           Персонажи
         </Button>

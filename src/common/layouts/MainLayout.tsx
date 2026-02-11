@@ -5,16 +5,23 @@ import { lazy } from "react";
 import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 
 import ScreenSaver from "../../modules/screen-saver/ScreenSaver.tsx";
+import { useTheme } from "@mui/material/styles";
 const Header = lazy(() => import("../../modules/header/Header.tsx"));
 
 export default function MainLayout() {
   const { isLoading } = useAuthContext();
-
+  const theme = useTheme();
   return (
     <Container
       className="container"
       maxWidth={"xl"}
-      sx={{ position: "relative", px: 2, paddingBottom: 2, height: "100vh" }}
+      sx={{
+        position: "relative",
+        px: 2,
+        paddingBottom: 2,
+        height: "100vh",
+        backgroundColor: theme.palette.base.background,
+      }}
     >
       <ScreenSaver isLoading={isLoading} />
       <Box

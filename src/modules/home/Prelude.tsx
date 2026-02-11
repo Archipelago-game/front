@@ -1,6 +1,8 @@
 import { Box, Typography, Paper } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 export default function Prelude() {
+  const theme = useTheme();
   return (
     <Paper
       elevation={3}
@@ -9,7 +11,7 @@ export default function Prelude() {
         mb: 3,
         maxWidth: "800px",
         mx: "auto",
-        backgroundColor: "#f8f9fa",
+        backgroundColor: theme.palette.background.paper,
       }}
     >
       <Typography variant="h4" component="h1" gutterBottom align="center">
