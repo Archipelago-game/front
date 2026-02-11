@@ -7,29 +7,78 @@ export const getTheme = (mode: "light" | "dark") =>
 
       ...(mode === "light"
         ? {
+            error: {
+              main: "#A3473A", // тёплый кирпичный
+            },
+            warning: {
+              main: "#C59B3A", // латунь / золото
+            },
+            success: {
+              main: "#587A4A", // травяной
+            },
+            info: {
+              main: "#5C7A8C", // пыльно-синий металл
+            },
+
             primary: {
-              main: "#707442",
+              main: "#C9B79C", // тёплый бежево-кожаный
+              light: "#D8C9B3",
+              dark: "#A89578",
+              contrastText: "#2B2621",
+            },
+            secondary: {
+              main: "#4E5B3C", // тёмный оливково-лесной
+              light: "#66764F",
+              dark: "#39422B",
+              contrastText: "#F4F1EA",
             },
             background: {
-              default: "#ffffff",
-              paper: "#ffffff",
+              default: "#786f61",
+              paper: "#E3D8C8",
             },
             text: {
-              primary: "#1a1a1a",
-              secondary: "#555555",
+              primary: "#1F1B17",
+              secondary: "#3A342E",
+              disabled: "rgba(31, 27, 23, 0.4)",
             },
-            divider: "#e0e0e0",
+            divider: "rgba(0, 0, 0, 0.08)",
           }
         : {
+            error: {
+              main: "#A3473A", // тёплый кирпичный
+            },
+            warning: {
+              main: "#C59B3A", // латунь / золото
+            },
+            success: {
+              main: "#587A4A", // травяной
+            },
+            info: {
+              main: "#5C7A8C", // пыльно-синий металл
+            },
+
+            primary: {
+              main: "#C9B79C", // тёплый бежево-кожаный
+              light: "#D8C9B3",
+              dark: "#A89578",
+              contrastText: "#2B2621",
+            },
+            secondary: {
+              main: "#4E5B3C", // тёмный оливково-лесной
+              light: "#66764F",
+              dark: "#39422B",
+              contrastText: "#F4F1EA",
+            },
             background: {
-              default: "#121212",
-              paper: "#1e1e1e",
+              default: "#786f61",
+              paper: "#E3D8C8",
             },
             text: {
-              primary: "#ffffff",
-              secondary: "#b0b0b0",
+              primary: "#1F1B17",
+              secondary: "#3A342E",
+              disabled: "rgba(31, 27, 23, 0.4)",
             },
-            divider: "#2a2a2a",
+            divider: "rgba(0, 0, 0, 0.08)",
           }),
 
       base:
@@ -138,6 +187,118 @@ export const getTheme = (mode: "light" | "dark") =>
             padding: "4px 8px",
           },
         },
+      },
+
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: "none",
+            borderRadius: 8,
+          },
+        },
+        variants: [
+          {
+            props: { variant: "contained", color: "primary" },
+            style: {
+              backgroundColor: "#C9B79C",
+              color: "#2B2621",
+
+              "&:hover": {
+                backgroundColor: "#BDAA8C",
+                color: "#F4F1EA",
+              },
+              "&:active": {
+                backgroundColor: "#A89578",
+                boxShadow: "inset 0 2px 4px rgba(0,0,0,0.25)",
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#D9D0C4",
+                color: "rgba(43,38,33,0.4)",
+              },
+            },
+          },
+          {
+            props: { variant: "contained", color: "secondary" },
+            style: {
+              backgroundColor: "#4E5B3C",
+              color: "#F4F1EA",
+
+              "&:hover": {
+                backgroundColor: "#445033",
+                color: "#2B2621", // ← добавить
+              },
+              "&:active": {
+                backgroundColor: "#39422B",
+                boxShadow: "inset 0 2px 4px rgba(0,0,0,0.3)",
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#7A836B",
+                color: "rgba(244,241,234,0.5)",
+              },
+            },
+          },
+          {
+            props: { variant: "outlined", color: "primary" },
+            style: {
+              borderWidth: "1px",
+              borderStyle: "solid",
+              borderColor: "#C9B79C",
+              backgroundColor: "transparent",
+              color: "#2B2621",
+
+              "&:hover": {
+                borderColor: "#BDAA8C",
+                backgroundColor: "rgba(201,183,156,0.12)",
+                color: "#2B2621",
+              },
+
+              "&:active": {
+                borderColor: "#A89578",
+                backgroundColor: "rgba(201,183,156,0.2)",
+                color: "#1F1B16",
+              },
+
+              "&.Mui-focusVisible": {
+                borderColor: "#BDAA8C",
+                backgroundColor: "rgba(201,183,156,0.16)",
+                color: "#2B2621",
+                boxShadow: "0 0 0 3px rgba(201,183,156,0.35)",
+              },
+
+              "&.Mui-disabled": {
+                borderColor: "#D9D0C4",
+                backgroundColor: "transparent",
+                color: "rgba(43,38,33,0.4)",
+              },
+            },
+          },
+          {
+            props: { variant: "outlined", color: "secondary" },
+            style: {
+              borderWidth: "1px",
+              borderColor: "#4E5B3C",
+              color: "#4E5B3C",
+              backgroundColor: "transparent",
+
+              "&:hover": {
+                backgroundColor: "rgba(78,91,60,0.12)",
+                borderColor: "#445033",
+                color: "#445033",
+              },
+
+              "&:active": {
+                backgroundColor: "rgba(78,91,60,0.2)",
+                borderColor: "#39422B",
+                color: "#39422B",
+              },
+
+              "&.Mui-disabled": {
+                borderColor: "#7A836B",
+                color: "rgba(78,91,60,0.4)",
+              },
+            },
+          },
+        ],
       },
     },
 

@@ -32,7 +32,7 @@ export default function CharacterForm() {
         sx={{
           display: "grid",
           gap: 2,
-          gridTemplateColumns: "440px 1fr",
+          gridTemplateColumns: "450px 1fr",
 
           ["@media (max-width: 959px)"]: {
             gridTemplateColumns: "auto auto",

@@ -1,24 +1,27 @@
-import Stack from "@mui/material/Stack";
+import Stack, { type StackProps } from "@mui/material/Stack";
 import type { ReactNode } from "react";
 
 interface Props {
-  orientation?: "column" | "row";
+  stackProps?: StackProps;
   children: ReactNode;
 }
 export default function CustomTextFieldWrapper({
-  orientation = "row",
+  stackProps,
   children,
 }: Props) {
-  const isRow = orientation === "row";
-  const spacing = isRow ? 1 : 0;
+  const { direction: propDirection = "row", ...restStackProps } =
+    stackProps ?? {};
+
+  const isRow = propDirection === "row";
   const alignItems = isRow ? "center" : "flex-start";
 
   return (
     <Stack
-      direction={orientation}
-      alignItems={alignItems}
-      spacing={spacing}
+      direction={propDirection}
+      columnGap={1}
       m={0}
+      alignItems={alignItems}
+      {...restStackProps}
     >
       {children}
     </Stack>

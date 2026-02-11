@@ -5,6 +5,8 @@ import SideDefence from "./side/SideDefence.tsx";
 
 import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 import ArmorSection from "./armor/ArmorSection.tsx";
+import { ContainerWrapper } from "../../../../../common/components/container-wrapper/ContainerWrapper.ts";
+import { DefenceContainer } from "./DefenceContainer.ts";
 
 export default function Defence() {
   return (
@@ -12,28 +14,12 @@ export default function Defence() {
       <Box mb={1}>
         <Brave />
       </Box>
-      <Box
-        sx={{
-          display: "grid",
-          gap: 1,
-          gridTemplateColumns: "1fr auto",
-
-          ["@media (max-width: 959px)"]: {
-            gridTemplateColumns: "1fr",
-          },
-
-          ["@media (max-width: 730px)"]: {
-            gridTemplateColumns: "1fr auto",
-          },
-
-          ["@media (max-width: 550px)"]: {
-            gridTemplateColumns: "1fr",
-          },
-        }}
-      >
-        <ArmorSection />
-        <SideDefence />
-      </Box>
+      <ContainerWrapper name="defenceWrapper">
+        <DefenceContainer>
+          <ArmorSection />
+          <SideDefence />
+        </DefenceContainer>
+      </ContainerWrapper>
     </BaseSectionCard>
   );
 }

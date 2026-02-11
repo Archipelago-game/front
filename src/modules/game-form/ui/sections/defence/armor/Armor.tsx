@@ -12,13 +12,11 @@ export default function Armor() {
     <SubSection>
       <SectionTitle title="Броня" />
       <Box
+        className="armor"
         sx={{
           position: "relative",
           width: "100%",
           minWidth: "158px",
-          // note вполне возможно это ограничение будет мешать мобильной верстке
-          maxWidth: "320px",
-          margin: "0 auto",
         }}
       >
         <CurrentSilhouette />

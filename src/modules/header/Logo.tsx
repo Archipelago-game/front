@@ -30,6 +30,7 @@ export default function Logo() {
         align="center"
         sx={{
           fontSize: titleFontSize,
+          color: "primary.main",
         }}
       >
         рхипелаг

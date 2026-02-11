@@ -41,7 +41,7 @@ export default function TalentGroup({ group, onDelete }: Props) {
       <Stack rowGap={1}>
         {group.talents.map(({ talent, index }) => (
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <SubSection>
+            <SubSection card={{ sx: { paddingTop: "20px" } }}>
               <Box
                 sx={{
                   position: "absolute",
@@ -63,14 +63,13 @@ export default function TalentGroup({ group, onDelete }: Props) {
                 rowGap="4px"
                 mb={1}
                 flexWrap="wrap"
-                className="stack"
               >
                 <CustomTextField
-                  title="Название"
                   textField={{
                     fieldName: `talents.list.${index}.name`,
                     fieldType: "text",
                   }}
+                  wrapper={{ flexWrap: "wrap", width: "100%" }}
                 />
 
                 <CustomTextField
@@ -86,6 +85,7 @@ export default function TalentGroup({ group, onDelete }: Props) {
                     fieldName: `talents.list.${index}.branch`,
                     fieldType: "text",
                   }}
+                  wrapper={{ flexGrow: 1 }}
                 />
               </Stack>
               <CustomTextField
@@ -94,7 +94,7 @@ export default function TalentGroup({ group, onDelete }: Props) {
                   fieldType: "text",
                   multiline: { isMultiline: true, rows: 5 },
                 }}
-                orientation="row"
+                wrapper={{ flexGrow: 1 }}
               />
             </SubSection>
           </Collapse>

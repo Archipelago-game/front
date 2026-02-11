@@ -35,8 +35,8 @@ const fieldConfigList: FieldConfig[] = [
 
 export default function DamageMethodItem({ index, onDelete }: Props) {
   return (
-    <SubSection key={index}>
-      <Stack spacing={1}>
+    <SubSection key={index} card={{ sx: { paddingTop: "20px" } }}>
+      <Stack columnGap={1} rowGap={1}>
         <Stack direction="row" spacing={3}>
           <Box sx={{ flexGrow: 1, maxWidth: "calc(100% - 30px)" }}>
             <CustomTextField
