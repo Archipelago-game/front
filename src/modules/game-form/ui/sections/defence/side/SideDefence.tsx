@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import PhysicalDefence from "./PhysicalDefence.tsx";
 import MentalDefence from "./MentalDefence.tsx";
 
@@ -6,25 +6,13 @@ import SubSection from "../../../components/section/SubSection.tsx";
 
 export default function SideDefence() {
   return (
-    <Box
-      sx={{
-        display: "grid",
-        gridTemplateColumns: "1fr",
-        gap: 1,
-        ["@media (max-width: 550px)"]: {
-          gridTemplateColumns: "1fr 1fr",
-        },
-        ["@media (max-width: 495px)"]: {
-          gridTemplateColumns: "1fr",
-        },
-      }}
-    >
+    <Stack direction="row" flexWrap="wrap" rowGap={1} columnGap={1}>
       <SubSection>
         <PhysicalDefence />
       </SubSection>
       <SubSection>
         <MentalDefence />
       </SubSection>
-    </Box>
+    </Stack>
   );
 }
