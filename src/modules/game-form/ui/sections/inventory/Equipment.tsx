@@ -67,7 +67,9 @@ export default function Equipment() {
           justifyContent: "flex-end",
         }}
       >
-        <Button onClick={addEquipment}>Добавить</Button>
+        <Button color="secondary" onClick={addEquipment}>
+          Добавить
+        </Button>
       </Box>
     </Box>
   );
