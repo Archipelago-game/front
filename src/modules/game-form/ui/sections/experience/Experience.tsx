@@ -8,6 +8,8 @@ import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
 import { useTheme } from "@mui/material/styles";
 
+const FIELD_WIDTH = "64px";
+
 export default function Experience() {
   const theme = useTheme();
   const { methods } = useCustomFormContext();
@@ -69,17 +71,26 @@ export default function Experience() {
           {isImmortal && (
             <CustomTextField
               title="Засоленный"
-              textField={{ fieldName: "immortal.experience.salted" }}
+              textField={{
+                fieldName: "immortal.experience.salted",
+                wrapperWidth: FIELD_WIDTH,
+              }}
             />
           )}
 
           <CustomTextField
-            textField={{ fieldName: "experience.total" }}
+            textField={{
+              fieldName: "experience.total",
+              wrapperWidth: FIELD_WIDTH,
+            }}
             title="Всего"
           />
 
           <CustomTextField
-            textField={{ fieldName: "experience.used" }}
+            textField={{
+              fieldName: "experience.used",
+              wrapperWidth: FIELD_WIDTH,
+            }}
             title="Исп."
           />
 

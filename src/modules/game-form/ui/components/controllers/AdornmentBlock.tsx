@@ -68,7 +68,7 @@ export default function AdornmentBlock({
   };
 
   return (
-    <Box sx={adornmentStyles.wrapper}>
+    <Box sx={{ ...adornmentStyles.wrapper }} className={"addornment-wrapper"}>
       {isShowButtons && (
         <InputAdornment position="start" sx={adornmentStyles.input}>
           <IconButton sx={btnStyles} onClick={() => decreaseValue(field)}>
