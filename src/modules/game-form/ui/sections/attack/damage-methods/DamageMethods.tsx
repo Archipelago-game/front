@@ -62,7 +62,9 @@ export default function DamageMethods() {
           justifyContent: "flex-end",
         }}
       >
-        <Button onClick={addItem}>Добавить</Button>
+        <Button color="secondary" onClick={addItem}>
+          Добавить
+        </Button>
       </Box>
     </Box>
   );

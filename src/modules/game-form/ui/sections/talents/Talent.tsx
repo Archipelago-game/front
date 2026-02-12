@@ -73,7 +73,9 @@ export default function Talent() {
           justifyContent: "flex-end",
         }}
       >
-        <Button onClick={addTalent}>Добавить</Button>
+        <Button color="secondary" onClick={addTalent}>
+          Добавить
+        </Button>
       </Box>
     </Box>
   );

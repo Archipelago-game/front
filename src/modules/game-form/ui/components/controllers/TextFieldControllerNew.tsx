@@ -12,7 +12,8 @@ type NewControllerProps = Omit<ControllerProps, "orientation">;
 
 export interface DefaultFieldControllerProps extends NewControllerProps {
   showChangeValueBtn?: boolean;
-  fullWidth?: boolean;
+  wrapperWidth?: string | number;
+  fontSize?: string;
   multiline?: {
     isMultiline?: boolean;
     rows?: number;
@@ -29,11 +30,12 @@ export default function TextFieldControllerNew(
     sxSlotProps = "",
     disabled = false,
     showChangeValueBtn = false,
-    fullWidth = false,
     multiline = {
       isMultiline: false,
       rows: 1,
     },
+    wrapperWidth,
+    fontSize = "14px",
   } = props;
 
   const theme = useTheme();
@@ -43,11 +45,12 @@ export default function TextFieldControllerNew(
   const formContext = useCustomFormContext();
   const { methods, onChange } = formContext;
 
-  const componentWidth = calcWidth({
-    fullWidth,
-    isNumberType,
-    showChangeValueBtn,
-  });
+  const componentWidth =
+    wrapperWidth ??
+    calcWidth({
+      isNumberType,
+      showChangeValueBtn,
+    });
 
   if (!formContext) {
     return null;
@@ -59,19 +62,27 @@ export default function TextFieldControllerNew(
       control={methods.control}
       defaultValue={defaultValue}
       render={({ field }) => (
-        <Box width={componentWidth}>
+        <Box
+          className="text-field-controller-wrapper"
+          width={componentWidth}
+          sx={{
+            fontSize: fontSize,
+          }}
+        >
           <AdornmentBlock
             field={field}
             onChange={onChange}
             isShowButtons={isNumberType && showChangeValueBtn}
           >
             <TextField
+              className="text-field-controller"
               slotProps={{
                 input: {
-                  sx: { ...sxSlotProps, padding: 0 },
+                  sx: { ...sxSlotProps, padding: 0, fontSize: "inherit" },
                 },
               }}
               sx={{
+                fontSize: "inherit",
                 boxSizing: "border-box",
                 width: "100%",
                 "& textarea": {
@@ -97,7 +108,7 @@ export default function TextFieldControllerNew(
                   // note стили полей ввода
                   textAlign: isNumberType ? "center" : "left",
                   padding: "2px",
-                  fontSize: "14px",
+                  fontSize: "inherit", //"14px",
                   fontWeight: isNumberType ? 900 : 400,
                   color: theme.palette.base.text.primary,
                 },
@@ -119,7 +130,6 @@ export default function TextFieldControllerNew(
               disabled={disabled}
               multiline={multiline.isMultiline}
               rows={multiline.rows}
-              fullWidth
               variant="outlined"
               size="small"
               type={fieldType}

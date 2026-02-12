@@ -12,6 +12,12 @@ interface Props {
   wrapper?: StackProps;
 }
 
+/**
+ * @description
+ * ширина по умолчанию "кнопки" 54 + поле 35 = 89*
+ * Кастомное текстовое поле с интеграцией react-hook-form.
+ */
+
 export default function CustomTextField({ title, textField, wrapper }: Props) {
   return (
     <CustomTextFieldWrapper stackProps={wrapper}>
