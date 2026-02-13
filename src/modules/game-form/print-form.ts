@@ -7,13 +7,31 @@ export function printForm() {
   iframe.style.height = "0";
   iframe.style.border = "0";
 
+  iframe.srcdoc = createHTML(document);
+  document.body.appendChild(iframe);
+
+  iframe.onload = () => {
+    const win = iframe.contentWindow;
+    if (!win) {
+      return;
+    }
+    win.focus();
+    win.print();
+
+    win.onafterprint = () => {
+      document.body.removeChild(iframe);
+    };
+  };
+}
+
+function createHTML(doc: Document) {
   const styles = Array.from(
-    document.querySelectorAll("style, link[rel='stylesheet']"),
+    doc.querySelectorAll("style, link[rel='stylesheet']"),
   )
     .map((el) => el.outerHTML)
     .join("\n");
 
-  const html = `
+  return `
     <!DOCTYPE html>
     <html lang="ru">
       <head>
@@ -22,7 +40,7 @@ export function printForm() {
         <title>Character</title>
         ${styles}
         <style>
-          /* Общее переопределение для печати */
+
           @media print {
             @page {
               size: A4 landscape;
@@ -43,24 +61,8 @@ export function printForm() {
         </style>
       </head>
       <body>
-        ${document.body.innerHTML}
+        ${doc.body.innerHTML}
       </body>
     </html>
   `;
-
-  iframe.srcdoc = html;
-  document.body.appendChild(iframe);
-
-  iframe.onload = () => {
-    const win = iframe.contentWindow;
-    if (!win) {
-      return;
-    }
-    win.focus();
-    win.print();
-
-    win.onafterprint = () => {
-      document.body.removeChild(iframe);
-    };
-  };
 }
