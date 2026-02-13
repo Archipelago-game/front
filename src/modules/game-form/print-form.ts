@@ -44,8 +44,9 @@ function createHTML(doc: Document) {
           @media print {
             @page {
               size: A4 landscape;
-              margin: 0;
+              margin: 5mm 0;
             }
+
             #root {
               overflow: visible !important;
               height: auto !important;
@@ -53,9 +54,10 @@ function createHTML(doc: Document) {
               width: 100% !important;
             }
 
-            /* Пример: убрать кнопки и UI, которые не нужны на печати */
-            .no-print {
-              display: none !important;
+            .MuiTableCell-root {
+              color: black !important;
+              font-size: 12px !important; /* или подходящий размер */
+
             }
           }
         </style>

@@ -98,6 +98,7 @@ export default function DraggableSpeedDial() {
 
   return (
     <SpeedDial
+      className="no-print"
       ariaLabel="draggable-speed-dial"
       icon={<SpeedDialIcon />}
       direction="up"

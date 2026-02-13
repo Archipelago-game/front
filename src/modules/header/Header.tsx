@@ -6,6 +6,7 @@ import SidebarMenu from "./SidebarMenu.tsx";
 export default function Header() {
   return (
     <Box
+      className="no-print"
       sx={{
         paddingBlock: 2,
       }}

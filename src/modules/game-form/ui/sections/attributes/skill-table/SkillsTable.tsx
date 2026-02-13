@@ -175,6 +175,7 @@ export default function SkillsTable<T extends string>({
                           sm: ".8em",
                           md: "0.8em", // ≥960px
                         },
+
                         ...cellGradientBorderStyles,
                       }}
                     >
@@ -182,7 +183,11 @@ export default function SkillsTable<T extends string>({
                     </TableCell>
                   )}
                   {skill.name === "" && (
-                    <TableCell sx={{ ...cellGradientBorderStyles }}>
+                    <TableCell
+                      sx={{
+                        ...cellGradientBorderStyles,
+                      }}
+                    >
                       {
                         <TextFieldControllerNew
                           fieldType="text"

@@ -29,7 +29,7 @@ export default function BaseSectionCard(props: DefaultSectionCardProps) {
   const { sx: cardContentSx, ...restCardContent } = cardContent || {};
   return (
     <Card
-      className="card"
+      className="card print-solid-section"
       sx={{
         position: "relative",
         backgroundColor: backgroundColor,
