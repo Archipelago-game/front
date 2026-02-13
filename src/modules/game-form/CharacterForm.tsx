@@ -23,6 +23,7 @@ export default function CharacterForm() {
 
   return (
     <Box
+      className="character-form"
       sx={{
         backgroundColor: theme.palette.base.background,
       }}

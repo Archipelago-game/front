@@ -3,13 +3,15 @@ import {
   useRef,
   type MouseEvent as ReactMouseEvent,
   type TouchEvent as ReactTouchEvent,
-  type JSX,
+  type FC,
 } from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 import Notes from "../game-form/ui/sections/notes/Notes.tsx";
 
 import { useFormDialogContext } from "../form-dialog/use-form-dialog.hook.ts";
 import MoralValues from "../game-form/ui/sections/moral-values/MoralValues.tsx";
+
+import { printForm } from "../game-form/print-form.ts";
 
 type ReactDragEvent =
   | ReactMouseEvent<HTMLDivElement>
@@ -20,15 +22,8 @@ type DragEvent = MouseEvent | TouchEvent;
 type SpeedDialActionComponent = {
   icon: string;
   name: string;
-  title: string;
-  form: () => JSX.Element;
+  action: () => void;
 };
-
-// --- Actions ---
-const actions: SpeedDialActionComponent[] = [
-  { icon: "📝", name: "Заметки", title: "Заметки", form: Notes },
-  { icon: "💎", name: "Ценности", title: "Ценности", form: MoralValues },
-];
 
 export default function DraggableSpeedDial() {
   const dragRef = useRef<HTMLDivElement>(null);
@@ -78,14 +73,28 @@ export default function DraggableSpeedDial() {
 
   const { open } = useFormDialogContext();
 
-  const callModal = (title: string, Content: () => JSX.Element) => {
-    const content = () => <Content />;
+  const callModal = (title: string, Content: FC) => {
     open({
       title,
-      content: content,
+      content: () => <Content />,
       onConfirm: () => {},
     });
   };
+
+  // --- Actions ---
+  const actions: SpeedDialActionComponent[] = [
+    { icon: "📝", name: "Заметки", action: () => callModal("Заметки", Notes) },
+    {
+      icon: "💎",
+      name: "Ценности",
+      action: () => callModal("Ценности", MoralValues),
+    },
+    {
+      icon: "🖨️",
+      name: "Печать",
+      action: () => printForm(),
+    },
+  ];
 
   return (
     <SpeedDial
@@ -106,7 +115,7 @@ export default function DraggableSpeedDial() {
           key={action.name}
           icon={<span style={{ fontSize: 20 }}>{action.icon}</span>}
           title={action.name}
-          onClick={() => callModal(action.title, action.form)}
+          onClick={action.action}
         />
       ))}
     </SpeedDial>

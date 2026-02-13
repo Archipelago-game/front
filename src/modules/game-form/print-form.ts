@@ -1,0 +1,66 @@
+export function printForm() {
+  const iframe = document.createElement("iframe");
+  iframe.style.position = "fixed";
+  iframe.style.right = "0";
+  iframe.style.bottom = "0";
+  iframe.style.width = "0";
+  iframe.style.height = "0";
+  iframe.style.border = "0";
+
+  const styles = Array.from(
+    document.querySelectorAll("style, link[rel='stylesheet']"),
+  )
+    .map((el) => el.outerHTML)
+    .join("\n");
+
+  const html = `
+    <!DOCTYPE html>
+    <html lang="ru">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Character</title>
+        ${styles}
+        <style>
+          /* Общее переопределение для печати */
+          @media print {
+            @page {
+              size: A4 landscape;
+              margin: 0;
+            }
+            #root {
+              overflow: visible !important;
+              height: auto !important;
+              min-height: auto !important;
+              width: 100% !important;
+            }
+
+            /* Пример: убрать кнопки и UI, которые не нужны на печати */
+            .no-print {
+              display: none !important;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        ${document.body.innerHTML}
+      </body>
+    </html>
+  `;
+
+  iframe.srcdoc = html;
+  document.body.appendChild(iframe);
+
+  iframe.onload = () => {
+    const win = iframe.contentWindow;
+    if (!win) {
+      return;
+    }
+    win.focus();
+    win.print();
+
+    win.onafterprint = () => {
+      document.body.removeChild(iframe);
+    };
+  };
+}
