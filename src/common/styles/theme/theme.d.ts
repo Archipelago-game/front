@@ -20,6 +20,7 @@ declare module "@mui/material/styles" {
 
       divider: string;
       outline: string;
+      outlineSoft: string;
       outlineStrong: string;
       outlineSubtitle: string;
 
@@ -71,6 +72,7 @@ declare module "@mui/material/styles" {
 
       divider: string;
       outline: string;
+      outlineSoft: string;
       outlineStrong: string;
       outlineSubtitle: string;
 

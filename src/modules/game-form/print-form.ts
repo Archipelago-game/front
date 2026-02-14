@@ -15,12 +15,11 @@ export function printForm() {
     if (!win) {
       return;
     }
+
     win.focus();
     win.print();
 
-    win.onafterprint = () => {
-      document.body.removeChild(iframe);
-    };
+    win.onafterprint = () => iframe.remove();
   };
 }
 
@@ -35,16 +34,26 @@ function createHTML(doc: Document) {
     <!DOCTYPE html>
     <html lang="ru">
       <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Character</title>
+        <title>форма героя</title>
         ${styles}
         <style>
+          @page {
+            size: A4 landscape;
+            margin-top: 3mm;
+            margin-bottom: 3mm;
+          }
 
           @media print {
-            @page {
-              size: A4 landscape;
-              margin: 5mm 0;
+
+            html, body {
+              margin: 0;
+              padding: 0;
+              height: auto !important;
+              overflow: visible !important;
+              background: white !important;
+              color: black !important;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
             }
 
             #root {
@@ -52,18 +61,41 @@ function createHTML(doc: Document) {
               height: auto !important;
               min-height: auto !important;
               width: 100% !important;
+              padding-top: 15px !important;
             }
 
-            .MuiTableCell-root {
-              color: black !important;
-              font-size: 12px !important; /* или подходящий размер */
 
+            /* --- MUI TABLE FIX --- */
+
+            .MuiTable-root {
+              border-collapse: collapse !important;
+            }
+
+
+
+
+            /* чтобы контейнеры не обрезали таблицу */
+            .MuiTableContainer-root,
+            .MuiPaper-root {
+              overflow: visible !important;
+              height: auto !important;
+            }
+
+            /* скрываем UI элементы */
+            .no-print,
+            .MuiSpeedDial-root {
+              display: none !important;
+            }
+
+            /* сбрасываем ограничения размеров */
+            * {
+              max-height: none !important;
             }
           }
         </style>
       </head>
       <body>
-        ${doc.body.innerHTML}
+        ${document.querySelector("#root")?.outerHTML || ""}
       </body>
     </html>
   `;
