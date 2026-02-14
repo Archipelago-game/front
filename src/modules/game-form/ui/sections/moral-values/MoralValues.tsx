@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../types/form/form.type.ts";
@@ -36,13 +37,9 @@ const moralValueItems: MoralValuesItem[] = [
 // todo поменять на CustomTextField
 
 export default function MoralValues() {
+  const theme = useTheme();
   return (
-    <Box
-      sx={{
-        maxHeight: "100vh",
-        overflowY: "hidden",
-      }}
-    >
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -57,7 +54,10 @@ export default function MoralValues() {
             label={{
               text: item.label,
             }}
-            sxSlotProps={slotStyles}
+            sxSlotProps={{
+              ...slotStyles,
+              backgroundColor: theme.palette.base.surfaceBase,
+            }}
             fieldType="text"
             multiline={{ isMultiline: true, rows: 4 }}
           />
