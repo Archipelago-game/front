@@ -20,6 +20,5 @@ export default function CurrentSilhouette() {
   });
 
   const Silhouette = MAPPING_RACE_SILHOUETTE[race];
-  console.log(race);
   return <Silhouette />;
 }

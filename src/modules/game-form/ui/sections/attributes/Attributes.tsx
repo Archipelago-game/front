@@ -12,6 +12,8 @@ import { useState, type ReactNode, useEffect } from "react";
 
 import { useTheme } from "@mui/material/styles";
 import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
+import SectionHeader from "../../components/section/SectionHeader.tsx";
+import PrintOn from "../../../../../common/components/print/PrintOn.tsx";
 
 type AttributeMapKey = "1" | "2" | "3" | "4" | "5" | "6";
 
@@ -85,6 +87,12 @@ export default function Attributes() {
       }}
     >
       <BaseSectionCard>
+        <PrintOn>
+          <SectionHeader
+            title="Атрибуты"
+            dividerColor={theme.palette.base.outline}
+          />
+        </PrintOn>
         <Box
           sx={{
             display: "grid",

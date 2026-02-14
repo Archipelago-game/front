@@ -18,7 +18,7 @@ export default function AccordionHeader({ children, onClick, sx }: Props) {
       sx={sx}
     >
       {children}
-      <IconButton onClick={onClick} color="inherit">
+      <IconButton onClick={onClick} color="inherit" className="no-print">
         <ExpandMoreIcon />
       </IconButton>
     </Stack>
