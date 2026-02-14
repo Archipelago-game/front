@@ -8,7 +8,6 @@ import {
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
 
 import { useFormDialogContext } from "../form-dialog/use-form-dialog.hook.ts";
-import MoralValues from "../game-form/ui/sections/moral-values/MoralValues.tsx";
 
 type ReactDragEvent =
   | ReactMouseEvent<HTMLDivElement>
@@ -24,9 +23,7 @@ type SpeedDialActionComponent = {
 };
 
 // --- Actions ---
-const actions: SpeedDialActionComponent[] = [
-  { icon: "💎", name: "Ценности", title: "Ценности", form: MoralValues },
-];
+const actions: SpeedDialActionComponent[] = [];
 
 export default function DraggableSpeedDial() {
   const dragRef = useRef<HTMLDivElement>(null);
@@ -75,6 +72,10 @@ export default function DraggableSpeedDial() {
   };
 
   const { open } = useFormDialogContext();
+
+  if (actions.length === 0) {
+    return null;
+  }
 
   const callModal = (title: string, Content: () => JSX.Element) => {
     const content = () => <Content />;
