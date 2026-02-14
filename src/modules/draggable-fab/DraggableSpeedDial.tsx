@@ -6,7 +6,6 @@ import {
   type JSX,
 } from "react";
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
-import Notes from "../game-form/ui/sections/notes/Notes.tsx";
 
 import { useFormDialogContext } from "../form-dialog/use-form-dialog.hook.ts";
 import MoralValues from "../game-form/ui/sections/moral-values/MoralValues.tsx";
@@ -26,7 +25,6 @@ type SpeedDialActionComponent = {
 
 // --- Actions ---
 const actions: SpeedDialActionComponent[] = [
-  { icon: "📝", name: "Заметки", title: "Заметки", form: Notes },
   { icon: "💎", name: "Ценности", title: "Ценности", form: MoralValues },
 ];
 
