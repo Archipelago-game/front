@@ -2,6 +2,7 @@ import CustomTabsPanel from "../../../../../common/components/tabs-panel/CustomT
 
 import Attributes from "../attributes/Attributes.tsx";
 import Talents from "../talents/Talents.tsx";
+import Notes from "../notes/Notes.tsx";
 
 const TABS = [
   {
@@ -11,6 +12,10 @@ const TABS = [
   {
     name: "Таланты",
     component: Talents,
+  },
+  {
+    name: "Заметки",
+    component: Notes,
   },
 ];
 

@@ -6,12 +6,10 @@ export default function Notes() {
   return (
     <BaseField
       fieldName="notes.text"
-      label={{
-        text: "Заметки",
-      }}
+      label={{ text: "" }}
       fieldType="text"
-      sxSlotProps={slotStyles}
-      multiline={{ isMultiline: true, rows: 4 }}
+      sxSlotProps={{ ...slotStyles, backgroundColor: "white" }}
+      multiline={{ isMultiline: true, rows: 24 }}
     />
   );
 }
