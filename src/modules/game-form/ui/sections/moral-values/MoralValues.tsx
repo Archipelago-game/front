@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles";
 
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../types/form/form.type.ts";
-import BaseField from "../../components/fields/BaseField.tsx";
+
 import { slotStyles } from "../styles.ts";
 import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
 import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
