@@ -18,6 +18,10 @@ const CharactersPage = lazy(
   () => import("../../../pages/CharactersPage/CharactersPage.tsx"),
 );
 
+const CharacterRulesPage = lazy(
+  () => import("../../../pages/CharacterRulesPage/CharacterRulesPage.tsx"),
+);
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: "auth-done",
         element: <AuthDonePage />,
+      },
+      {
+        path: "character-rules/:id?",
+        element: <CharacterRulesPage />,
       },
     ],
   },
