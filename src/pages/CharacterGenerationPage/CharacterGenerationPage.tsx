@@ -112,6 +112,35 @@ export default function CharacterGenerationPage() {
           },
         };
         await api.saveCharacterForm(userInfo.uid, updated);
+        setCharacterDoc(updated);
+        setCurrentStepIndex(2);
+      } catch {
+        showMessage({ message: "Ошибка сохранения персонажа" });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    if (
+      currentStepIndex === 2 &&
+      characterId &&
+      characterDoc &&
+      payload?.homeland !== undefined
+    ) {
+      setLoading(true);
+      try {
+        const updated: CharacterDocument = {
+          ...characterDoc,
+          data: {
+            ...characterDoc.data,
+            homeland: payload.homeland,
+            languages: payload.languages ?? characterDoc.data.languages ?? "",
+            wizard: { lastCompletedStepIndex: 2 },
+          },
+        };
+        await api.saveCharacterForm(userInfo.uid, updated);
+        setCharacterDoc(updated);
         navigate(`/game-form/${characterId}`);
       } catch {
         showMessage({ message: "Ошибка сохранения персонажа" });

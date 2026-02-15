@@ -8,6 +8,8 @@ import type {
 export interface GenerationStepPayload {
   race?: Race;
   moralValue?: MoralValue;
+  homeland?: string;
+  languages?: string;
 }
 
 /** Пропсы компонента шага визарда */
