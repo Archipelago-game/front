@@ -136,4 +136,5 @@ export const FORM_DEFAULT_VALUES: FormType = {
     idealism: "",
     individualism: "",
   },
+  wizard: undefined,
 };

@@ -18,6 +18,13 @@ const CharactersPage = lazy(
   () => import("../../../pages/CharactersPage/CharactersPage.tsx"),
 );
 
+const CharacterGenerationPage = lazy(
+  () =>
+    import(
+      "../../../pages/CharacterGenerationPage/CharacterGenerationPage.tsx"
+    ),
+);
+
 const CharacterRulesPage = lazy(
   () => import("../../../pages/CharacterRulesPage/CharacterRulesPage.tsx"),
 );
@@ -43,6 +50,14 @@ export const router = createBrowserRouter([
           {
             path: "game-form/:characterId",
             element: <CharacterPage />,
+          },
+          {
+            path: "character-generation",
+            element: <CharacterGenerationPage />,
+          },
+          {
+            path: "character-generation/:characterId",
+            element: <CharacterGenerationPage />,
           },
         ],
       },
