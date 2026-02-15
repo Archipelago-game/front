@@ -65,6 +65,7 @@ export default function CharacterGenerationPage() {
 
   const handleStepComplete = async (payload?: GenerationStepPayload) => {
     if (!userInfo) return;
+
     if (currentStepIndex === 0 && payload?.race !== undefined) {
       setLoading(true);
       try {
@@ -76,7 +77,7 @@ export default function CharacterGenerationPage() {
             race: payload.race,
             wizard: { lastCompletedStepIndex: 0 },
           });
-          navigate(`/game-form/${id}`);
+          navigate(`/character-generation/${id}`);
         } else if (characterDoc) {
           const updated: CharacterDocument = {
             ...characterDoc,
@@ -88,10 +89,32 @@ export default function CharacterGenerationPage() {
             },
           };
           await api.saveCharacterForm(userInfo.uid, updated);
-          navigate(`/game-form/${characterId}`);
+          setCharacterDoc(updated);
+          setCurrentStepIndex(1);
         }
       } catch {
         showMessage({ message: "Ошибка создания персонажа" });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
+
+    if (currentStepIndex === 1 && characterId && characterDoc) {
+      setLoading(true);
+      try {
+        const updated: CharacterDocument = {
+          ...characterDoc,
+          data: {
+            ...characterDoc.data,
+            ...(payload?.moralValue && { moralValue: payload.moralValue }),
+            wizard: { lastCompletedStepIndex: 1 },
+          },
+        };
+        await api.saveCharacterForm(userInfo.uid, updated);
+        navigate(`/game-form/${characterId}`);
+      } catch {
+        showMessage({ message: "Ошибка сохранения персонажа" });
       } finally {
         setLoading(false);
       }

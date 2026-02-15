@@ -1,8 +1,13 @@
 import type { ComponentType } from "react";
-import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
+import type {
+  FormType,
+  MoralValue,
+  Race,
+} from "../../modules/game-form/types/form/form.type.ts";
 
 export interface GenerationStepPayload {
-  race?: import("../../modules/game-form/types/form/form.type.ts").Race;
+  race?: Race;
+  moralValue?: MoralValue;
 }
 
 /** Пропсы компонента шага визарда */
