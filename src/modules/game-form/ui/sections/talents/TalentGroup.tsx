@@ -24,7 +24,7 @@ interface Props {
 
 export default function TalentGroup({ group, onDelete }: Props) {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <Box sx={{ mb: 3 }} width="100%">
