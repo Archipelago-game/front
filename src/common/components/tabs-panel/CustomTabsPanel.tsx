@@ -30,6 +30,7 @@ export default function CustomTabsPanel({ tabs }: Props) {
           paddingRight: 2,
         }}
         onClick={() => setOpen((prev) => !prev)}
+        isExpanded={open}
       >
         <Tabs
           value={currentTabIndex}

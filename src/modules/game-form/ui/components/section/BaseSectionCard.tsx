@@ -45,6 +45,7 @@ export default function BaseSectionCard(props: DefaultSectionCardProps) {
           title={title}
           dividerColor={theme.palette.base.outline}
           onClick={() => setOpen((prev) => !prev)}
+          isExpanded={open}
         />
         <Collapse in={open} timeout="auto" unmountOnExit>
           {children}

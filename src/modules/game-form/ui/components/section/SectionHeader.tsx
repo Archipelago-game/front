@@ -7,6 +7,7 @@ interface Props {
   color?: string;
   dividerColor?: string;
   onClick?: () => void;
+  isExpanded?: boolean;
 }
 
 export default function SectionHeader({
@@ -14,14 +15,18 @@ export default function SectionHeader({
   color,
   dividerColor,
   onClick,
+  isExpanded,
 }: Props) {
   if (!title) {
     return null;
   }
+
+  console.log(isExpanded);
+
   return (
     <Box mb={2}>
-      {onClick && (
-        <AccordionHeader onClick={onClick}>
+      {onClick && isExpanded != undefined && (
+        <AccordionHeader onClick={onClick} isExpanded={isExpanded}>
           <SectionTitle title={title} color={color} />
         </AccordionHeader>
       )}

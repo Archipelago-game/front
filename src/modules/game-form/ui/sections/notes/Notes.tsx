@@ -1,21 +1,24 @@
 import { useTheme } from "@mui/material/styles";
 
-import BaseField from "../../components/fields/BaseField.tsx";
 import { slotStyles } from "../styles.ts";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
-// todo поменять на CustomTextField
 export default function Notes() {
   const theme = useTheme();
   return (
-    <BaseField
-      fieldName="notes.text"
-      label={{ text: "" }}
-      fieldType="text"
-      sxSlotProps={{
-        ...slotStyles,
-        backgroundColor: theme.palette.base.surfaceBase,
-      }}
-      multiline={{ isMultiline: true, rows: 24 }}
-    />
+    <BaseSectionCard>
+      <CustomTextField
+        textField={{
+          fieldName: "notes.text",
+          fieldType: "text",
+          multiline: { isMultiline: true, rows: 24 },
+          sxSlotProps: {
+            ...slotStyles,
+            backgroundColor: theme.palette.base.surfaceBase,
+          },
+        }}
+      />
+    </BaseSectionCard>
   );
 }
