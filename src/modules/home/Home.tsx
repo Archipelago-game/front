@@ -17,6 +17,16 @@ export default function Home() {
         gap: "20px",
       }}
     >
+      <Button
+        component={RouterLink}
+        to={"/character-rules"}
+        size="large"
+        variant="outlined"
+        color="primary"
+      >
+        Правила создания персонажа
+      </Button>
+
       {userInfo && (
         <Button
           component={RouterLink}
