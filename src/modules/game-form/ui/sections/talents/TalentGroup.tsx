@@ -30,7 +30,7 @@ export default function TalentGroup({ group, onDelete }: Props) {
     <Box sx={{ mb: 3 }} width="100%">
       {/* Заголовок группы */}
       <Box mb={1} sx={{ position: "relative" }}>
-        <AccordionHeader onClick={() => setOpen((v) => !v)}>
+        <AccordionHeader onClick={() => setOpen((v) => !v)} isExpanded={open}>
           <SubTitle title={group.branch} />
         </AccordionHeader>
         <Divider sx={{ borderColor: theme.palette.base.accent }} />
