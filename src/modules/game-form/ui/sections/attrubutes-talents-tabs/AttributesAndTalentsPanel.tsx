@@ -22,7 +22,7 @@ export default function AttributesAndTalentsPanel() {
   return (
     <>
       <PrintOn>
-        <Stack rowGap={1}>
+        <Stack rowGap={2}>
           <Attributes />
           <Talents />
         </Stack>
