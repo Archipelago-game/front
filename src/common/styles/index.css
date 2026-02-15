@@ -38,19 +38,6 @@ body {
   overflow: hidden;
 }
 
-@media print {
-  /*.print-solid-section {*/
-  /*  break-inside: avoid;*/
-  /*}*/
-
-  .no-print {
-    display: none !important;
-  }
-}
-
-
-
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

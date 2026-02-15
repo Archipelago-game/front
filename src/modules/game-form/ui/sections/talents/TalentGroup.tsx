@@ -27,7 +27,7 @@ export default function TalentGroup({ group, onDelete }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <Box sx={{ mb: 3 }} width="100%">
+    <Box sx={{ mb: 3 }} width="100%" className="print-solid-section">
       {/* Заголовок группы */}
       <Box mb={1} sx={{ position: "relative" }}>
         <AccordionHeader onClick={() => setOpen((v) => !v)}>
@@ -40,7 +40,7 @@ export default function TalentGroup({ group, onDelete }: Props) {
 
       <Stack rowGap={1}>
         {group.talents.map(({ talent, index }) => (
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={open} timeout="auto" className="print-open-collapse">
             <SubSection card={{ sx: { paddingTop: "20px" } }}>
               <Box
                 sx={{

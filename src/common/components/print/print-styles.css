@@ -1,0 +1,22 @@
+@media print {
+  .print-open-collapse {
+    height: auto !important;
+    overflow: visible !important;
+    visibility: visible !important;
+  }
+
+  .print-open-collapse .MuiCollapse-wrapper,
+  .print-open-collapse .MuiCollapse-wrapperInner {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .print-solid-section {
+    break-inside: avoid;
+    break-after: auto;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

@@ -18,7 +18,6 @@ export interface DefaultSectionCardProps {
 export default function BaseSectionCard(props: DefaultSectionCardProps) {
   const { title, children, card, cardContent } = props;
   const theme = useTheme();
-
   const [open, setOpen] = useState(true);
 
   const backgroundColor = props.backgroundColor
@@ -46,7 +45,8 @@ export default function BaseSectionCard(props: DefaultSectionCardProps) {
           dividerColor={theme.palette.base.outline}
           onClick={() => setOpen((prev) => !prev)}
         />
-        <Collapse in={open} timeout="auto" unmountOnExit>
+
+        <Collapse in={open} timeout="auto" className="print-open-collapse">
           {children}
         </Collapse>
       </CardContent>
