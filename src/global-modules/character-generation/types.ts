@@ -18,3 +18,14 @@ export interface GenerationStep {
   title: string;
   component: ComponentType<GenerationStepComponentProps>;
 }
+
+/** Параметры запроса броска для блока кубиков */
+export interface DiceRollRequest {
+  /** Число граней (d20 → 20, d6 → 6) */
+  sides: number;
+  /** Количество кубиков */
+  count: number;
+}
+
+/** Callback результата броска: массив значений по одному на каждый кубик */
+export type DiceRollResultCallback = (values: number[]) => void;
