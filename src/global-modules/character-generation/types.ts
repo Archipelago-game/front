@@ -4,12 +4,15 @@ import type {
   MoralValue,
   Race,
 } from "../../modules/game-form/types/form/form.type.ts";
+import type { Stats } from "../../modules/game-form/types/form/attributes.type.ts";
 
 export interface GenerationStepPayload {
   race?: Race;
   moralValue?: MoralValue;
   homeland?: string;
   languages?: string;
+  /** Значения атрибутов (только value); ключи — ключи Stats */
+  attributeValues?: Partial<Record<keyof Stats, number>>;
 }
 
 /** Пропсы компонента шага визарда */
