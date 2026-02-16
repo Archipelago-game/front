@@ -59,16 +59,15 @@ export const router = createBrowserRouter([
             path: "character-generation/:characterId",
             element: <CharacterGenerationPage />,
           },
+          {
+            path: "character-rules/:id?",
+            element: <CharacterRulesPage />,
+          },
         ],
       },
-
       {
         path: "auth-done",
         element: <AuthDonePage />,
-      },
-      {
-        path: "character-rules/:id?",
-        element: <CharacterRulesPage />,
       },
     ],
   },
