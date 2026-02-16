@@ -10,8 +10,8 @@ import type { CharacterDocument } from "../../services/character/firebase-charac
 import {
   CharacterGenerationWizard,
   GENERATION_STEPS,
-} from "../../global-modules/character-generation/index.ts";
-import type { GenerationStepPayload } from "../../global-modules/character-generation/types.ts";
+} from "../../global-modules/character-generation";
+import type { GenerationStepPayload } from "../../global-modules/character-generation";
 
 export default function CharacterGenerationPage() {
   const { characterId } = useParams<{ characterId?: string }>();
@@ -100,6 +100,10 @@ export default function CharacterGenerationPage() {
       return;
     }
 
+    function typedKeys<T extends object>(obj: T) {
+      return Object.keys(obj) as (keyof T)[];
+    }
+
     if (currentStepIndex === 1 && characterId && characterDoc) {
       setLoading(true);
       try {
@@ -159,14 +163,9 @@ export default function CharacterGenerationPage() {
       setLoading(true);
       try {
         const stats = { ...characterDoc.data.stats };
-        for (const key of Object.keys(
-          payload.attributeValues,
-        ) as (keyof typeof stats)[]) {
+        for (const key of typedKeys(stats)) {
           if (stats[key] && typeof payload.attributeValues[key] === "number") {
-            stats[key] = {
-              ...stats[key],
-              value: payload.attributeValues[key] as number,
-            };
+            stats[key].value = payload.attributeValues[key];
           }
         }
         const updated: CharacterDocument = {
