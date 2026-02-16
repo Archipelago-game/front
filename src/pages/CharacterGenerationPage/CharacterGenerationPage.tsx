@@ -12,6 +12,12 @@ import {
   GENERATION_STEPS,
 } from "../../global-modules/character-generation";
 import type { GenerationStepPayload } from "../../global-modules/character-generation";
+import clonedeep from "lodash.clonedeep";
+
+// todo перенести в подходящий раздел
+function typedKeys<T extends object>(obj: T) {
+  return Object.keys(obj) as (keyof T)[];
+}
 
 export default function CharacterGenerationPage() {
   const { characterId } = useParams<{ characterId?: string }>();
@@ -22,6 +28,7 @@ export default function CharacterGenerationPage() {
     null,
   );
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
   const [loading, setLoading] = useState(false);
   const [loadingCharacter, setLoadingCharacter] = useState(false);
 
@@ -36,6 +43,7 @@ export default function CharacterGenerationPage() {
       setCurrentStepIndex(0);
       return;
     }
+
     setLoadingCharacter(true);
     api
       .getCharacterForm(userInfo.uid, characterId)
@@ -100,10 +108,6 @@ export default function CharacterGenerationPage() {
       return;
     }
 
-    function typedKeys<T extends object>(obj: T) {
-      return Object.keys(obj) as (keyof T)[];
-    }
-
     if (currentStepIndex === 1 && characterId && characterDoc) {
       setLoading(true);
       try {
@@ -162,7 +166,7 @@ export default function CharacterGenerationPage() {
     ) {
       setLoading(true);
       try {
-        const stats = { ...characterDoc.data.stats };
+        const stats = clonedeep(characterDoc.data.stats);
         for (const key of typedKeys(stats)) {
           if (stats[key] && typeof payload.attributeValues[key] === "number") {
             stats[key].value = payload.attributeValues[key];
