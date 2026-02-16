@@ -24,13 +24,13 @@ interface Props {
 
 export default function TalentGroup({ group, onDelete }: Props) {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <Box sx={{ mb: 3 }} width="100%">
       {/* Заголовок группы */}
       <Box mb={1} sx={{ position: "relative" }}>
-        <AccordionHeader onClick={() => setOpen((v) => !v)}>
+        <AccordionHeader onClick={() => setOpen((v) => !v)} isExpanded={open}>
           <SubTitle title={group.branch} />
         </AccordionHeader>
         <Divider sx={{ borderColor: theme.palette.base.accent }} />
