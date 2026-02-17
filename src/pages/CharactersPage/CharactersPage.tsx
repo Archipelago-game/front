@@ -5,6 +5,7 @@ import { useAuthContext } from "../../app/providers/auth-provider/use-auth-conte
 import { api } from "../../api/api.ts";
 
 import Characters from "../../modules/characters/Characters.tsx";
+import { GENERATION_STEPS } from "../../global-modules/character-generation/index.ts";
 import { Box } from "@mui/system";
 
 import type { CharacterDocument } from "../../services/character/firebase-characters-service.ts";
@@ -102,6 +103,9 @@ export default function CharactersPage() {
       characters={characterDocs}
       openCharacterForm={openCharacterForm}
       addCharacter={() => addCharacter(userInfo.uid)}
+      addCharacterConstructor={() => navigate("/character-generation")}
+      onOpenWizard={(id) => navigate(`/character-generation/${id}`)}
+      wizardStepsCount={GENERATION_STEPS.length}
       deleteCharacter={(characterId: string) =>
         deleteCharacter(userInfo.uid, characterId)
       }

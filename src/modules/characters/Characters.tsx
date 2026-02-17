@@ -15,6 +15,9 @@ interface Props {
   characters: CharacterDocument[];
   openCharacterForm: (characterId: string) => void;
   addCharacter: () => void;
+  addCharacterConstructor?: () => void;
+  onOpenWizard?: (characterId: string) => void;
+  wizardStepsCount?: number;
   deleteCharacter: (characterId: string) => void;
   exportCharacter: (characterId: string) => void;
   importCharacter: (file?: File) => void;
@@ -24,6 +27,9 @@ export default function Characters({
   characters,
   openCharacterForm,
   addCharacter,
+  addCharacterConstructor,
+  onOpenWizard,
+  wizardStepsCount = 0,
   deleteCharacter,
   exportCharacter,
   importCharacter,
@@ -114,10 +120,24 @@ export default function Characters({
               sx={{
                 display: "flex",
                 gap: 1,
+                alignItems: "center",
                 justifyContent: { xs: "flex-end", md: "center" },
               }}
               onClick={(e) => e.stopPropagation()}
             >
+              {onOpenWizard &&
+                character.id &&
+                character.data.wizard != null &&
+                (character.data.wizard.lastCompletedStepIndex ?? -1) + 1 <
+                  wizardStepsCount && (
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => onOpenWizard(character.id!)}
+                  >
+                    Продолжить конструктор
+                  </Button>
+                )}
               <IconButton
                 size="small"
                 onClick={() =>
@@ -151,6 +171,12 @@ export default function Characters({
         }}
       >
         <Button onClick={addCharacter}>Создать нового героя</Button>
+
+        {addCharacterConstructor && (
+          <Button onClick={addCharacterConstructor}>
+            Создать персонажа через конструктор
+          </Button>
+        )}
 
         <Button component="label">
           Загрузить героя

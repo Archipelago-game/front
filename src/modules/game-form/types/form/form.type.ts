@@ -107,6 +107,12 @@ export type Talents = FormArrayFields<Talent>;
 
 export type Race = "human" | "cat" | "immortal";
 
+/** Прогресс визарда создания персонажа. Хранится в FormType. */
+export interface WizardProgress {
+  /** Индекс последнего завершённого шага (0-based). Шаги 0..lastCompletedStepIndex считаются пройденными. */
+  lastCompletedStepIndex: number;
+}
+
 export interface FormType {
   name: string;
   age: number;
@@ -129,4 +135,5 @@ export interface FormType {
   talents: Talents;
   notes: Notes;
   moralValue: MoralValue;
+  wizard?: WizardProgress;
 }
