@@ -100,9 +100,10 @@ export default function SkillsTable<T extends string>({
                   >
                     <SectionTitle title={group.name} />
                     <Stack
-                      direction="column"
+                      direction="row"
+                      alignItems="center"
                       sx={{
-                        gap: "2px",
+                        gap: 1,
                         padding: "4px",
                         borderRadius: "4px",
                         backgroundColor:
@@ -111,6 +112,10 @@ export default function SkillsTable<T extends string>({
                           ].background,
                       }}
                     >
+                      <CustomTextField
+                        title="Экс"
+                        textField={{ fieldName: group.expertiseFieldName }}
+                      />
                       <CustomTextFieldWrapper>
                         <CustomTextFieldLabel title="О.З." />
                         <OZDisplay
@@ -119,10 +124,6 @@ export default function SkillsTable<T extends string>({
                           attributeType={getAttributeType(statValueName)}
                         />
                       </CustomTextFieldWrapper>
-                      <CustomTextField
-                        title="Экс"
-                        textField={{ fieldName: group.expertiseFieldName }}
-                      />
                     </Stack>
                   </Stack>
                 </TableCell>

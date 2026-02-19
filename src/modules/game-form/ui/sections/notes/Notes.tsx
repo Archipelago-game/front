@@ -1,17 +1,24 @@
-import BaseField from "../../components/fields/BaseField.tsx";
-import { slotStyles } from "../styles.ts";
+import { useTheme } from "@mui/material/styles";
 
-// todo поменять на CustomTextField
+import { slotStyles } from "../styles.ts";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
+
 export default function Notes() {
+  const theme = useTheme();
   return (
-    <BaseField
-      fieldName="notes.text"
-      label={{
-        text: "Заметки",
-      }}
-      fieldType="text"
-      sxSlotProps={slotStyles}
-      multiline={{ isMultiline: true, rows: 4 }}
-    />
+    <BaseSectionCard>
+      <CustomTextField
+        textField={{
+          fieldName: "notes.text",
+          fieldType: "text",
+          multiline: { isMultiline: true, rows: 24 },
+          sxSlotProps: {
+            ...slotStyles,
+            backgroundColor: theme.palette.base.surfaceBase,
+          },
+        }}
+      />
+    </BaseSectionCard>
   );
 }

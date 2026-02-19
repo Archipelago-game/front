@@ -55,4 +55,9 @@ export const StyledTab = styled(Tab)(({ theme }) => ({
     opacity: 0.5,
     pointerEvents: "none",
   },
+
+  [theme.breakpoints.down("tablet")]: {
+    width: "100%",
+    boxSizing: "border-box",
+  },
 }));
