@@ -107,8 +107,13 @@ function createHTML(doc: Document) {
                 box-sizing: border-box;
             }
 
+            .no-breake {
+                page-break-inside: avoid;
+            }
+
             /* скрываем UI элементы */
             .no-print,
+            button,
             .MuiSpeedDial-root {
               display: none !important;
             }

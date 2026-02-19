@@ -38,7 +38,7 @@ export default function TalentGroup({ group, onDelete }: Props) {
 
       {/* Таланты группы */}
 
-      <Stack rowGap={1}>
+      <Stack rowGap={1} className="no-breake">
         {group.talents.map(({ talent, index }) => (
           <Collapse in={open} timeout="auto" unmountOnExit>
             <SubSection card={{ sx: { paddingTop: "20px" } }}>
