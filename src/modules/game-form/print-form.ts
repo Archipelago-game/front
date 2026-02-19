@@ -86,6 +86,27 @@ function createHTML(doc: Document) {
               height: auto !important;
             }
 
+            /* textarea*/
+            .text-field-controller-wrapper.multiline .MuiInputBase-root {
+                display: none;
+            }
+
+            .text-field-controller-wrapper.multiline {
+                position: relative;
+            }
+
+            .text-field-controller-wrapper.multiline::after {
+                content: attr(data-value);
+                white-space: pre-wrap;
+                width: 100%;
+                min-height: 60px;
+                padding: 8px;
+                display: block;
+                font: inherit;
+                line-height: 1.4;
+                box-sizing: border-box;
+            }
+
             /* скрываем UI элементы */
             .no-print,
             .MuiSpeedDial-root {
@@ -96,6 +117,7 @@ function createHTML(doc: Document) {
             * {
               max-height: none !important;
             }
+
           }
         </style>
       </head>
