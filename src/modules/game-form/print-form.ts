@@ -61,8 +61,10 @@ function createHTML(doc: Document) {
               min-height: auto !important;
               width: 100% !important;
               padding-top: 15px !important;
-              transform: scale(50%);
-              transform-origin: top left;
+              zoom: 0.5;
+              position: absolute;
+              top: 0;
+              left: 0;
             }
 
 

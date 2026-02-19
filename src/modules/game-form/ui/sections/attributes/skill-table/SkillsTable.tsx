@@ -94,9 +94,9 @@ export default function SkillsTable<T extends string>({
                 >
                   <Stack
                     direction="row"
-                    spacing={1}
                     alignItems="flex-start"
                     justifyContent="space-between"
+                    sx={{ columnGap: "8px" }}
                   >
                     <SectionTitle title={group.name} />
                     <Stack
