@@ -38,9 +38,8 @@ function createHTML(doc: Document) {
         ${styles}
         <style>
           @page {
-            size: A4 landscape;
-            margin-top: 3mm;
-            margin-bottom: 3mm;
+            size: auto;
+            margin: 3mm;
           }
 
           @media print {
@@ -62,6 +61,8 @@ function createHTML(doc: Document) {
               min-height: auto !important;
               width: 100% !important;
               padding-top: 15px !important;
+              transform: scale(50%);
+              transform-origin: top left;
             }
 
 
@@ -77,6 +78,8 @@ function createHTML(doc: Document) {
             /* чтобы контейнеры не обрезали таблицу */
             .MuiTableContainer-root,
             .MuiPaper-root {
+              width: 100% !important;
+              max-width: none !important;
               overflow: visible !important;
               height: auto !important;
             }
