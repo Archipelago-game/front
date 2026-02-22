@@ -34,7 +34,6 @@ export default function TabsPanel() {
       <PrintOn>
         <Stack rowGap={2}>
           <Attributes />
-          <Talents />
         </Stack>
       </PrintOn>
       <PrintOff>

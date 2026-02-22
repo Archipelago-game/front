@@ -67,15 +67,17 @@ function createHTML(doc: Document) {
               left: 0;
             }
 
+            .css-16r8mjx-MuiContainer-root,
+            .character-form {
+              background: #fff !important;
+            }
+
 
             /* --- MUI TABLE FIX --- */
 
             .MuiTable-root {
               border-collapse: collapse !important;
             }
-
-
-
 
             /* чтобы контейнеры не обрезали таблицу */
             .MuiTableContainer-root,
@@ -112,6 +114,13 @@ function createHTML(doc: Document) {
 
             .no-breake {
                 page-break-inside: avoid;
+            }
+
+            /* Talents */
+            .print-talents {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 8px;
             }
 
             /* скрываем UI элементы */

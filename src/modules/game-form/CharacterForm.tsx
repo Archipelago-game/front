@@ -15,6 +15,7 @@ import PrintOn from "../../common/components/print/PrintOn.tsx";
 import MoralValues from "./ui/sections/moral-values/MoralValues.tsx";
 import Notes from "./ui/sections/notes/Notes.tsx";
 import PrintOff from "../../common/components/print/PrintOff.tsx";
+import Talents from "./ui/sections/talents/Talents.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -108,6 +109,13 @@ export default function CharacterForm() {
                 gap: 2,
               }}
             >
+              <Box
+                sx={{
+                  gridColumn: "span 2",
+                }}
+              >
+                <Talents />
+              </Box>
               <Stack rowGap={2}>
                 <Inventory />
                 <Notes />
