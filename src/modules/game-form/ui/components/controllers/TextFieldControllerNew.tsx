@@ -63,11 +63,12 @@ export default function TextFieldControllerNew(
       defaultValue={defaultValue}
       render={({ field }) => (
         <Box
-          className="text-field-controller-wrapper"
+          className={`text-field-controller-wrapper ${multiline.isMultiline ? "multiline" : ""}`}
           width={componentWidth}
           sx={{
             fontSize: fontSize,
           }}
+          data-value={field.value || ""}
         >
           <AdornmentBlock
             field={field}
@@ -75,6 +76,7 @@ export default function TextFieldControllerNew(
             isShowButtons={isNumberType && showChangeValueBtn}
           >
             <TextField
+              data-value={field.value || ""}
               className="text-field-controller"
               slotProps={{
                 input: {
@@ -129,7 +131,7 @@ export default function TextFieldControllerNew(
               }}
               disabled={disabled}
               multiline={multiline.isMultiline}
-              rows={multiline.rows}
+              minRows={multiline.isMultiline ? 2 : undefined}
               variant="outlined"
               size="small"
               type={fieldType}

@@ -2,6 +2,8 @@ import CustomTabsPanel from "../../../../../common/components/tabs-panel/CustomT
 
 import Attributes from "../attributes/Attributes.tsx";
 import Talents from "../talents/Talents.tsx";
+import Notes from "../notes/Notes.tsx";
+import MoralValues from "../moral-values/MoralValues.tsx";
 
 import PrintOff from "../../../../../common/components/print/PrintOff.tsx";
 import PrintOn from "../../../../../common/components/print/PrintOn.tsx";
@@ -15,6 +17,14 @@ const TABS = [
   {
     name: "Таланты",
     component: Talents,
+  },
+  {
+    name: "Ценности",
+    component: MoralValues,
+  },
+  {
+    name: "Заметки",
+    component: Notes,
   },
 ];
 

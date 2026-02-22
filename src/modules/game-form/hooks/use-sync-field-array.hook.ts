@@ -1,12 +1,15 @@
 import type { FieldArrayComponentProps } from "../types/field-array-component-props.type.ts";
-import { useFieldArray } from "react-hook-form";
+import type { FormType } from "../types/form/form.type.ts";
+import { useFieldArray, type FieldArrayPath } from "react-hook-form";
 import { useEffect, useRef } from "react";
 
 export function useSyncFieldArray(props: FieldArrayComponentProps) {
   const { name, amount, formHook, defaultValue } = props;
 
+  const listPath = `${name}.list` as FieldArrayPath<FormType>;
+
   const { fields, append } = useFieldArray({
-    name: `${name}.list`,
+    name: listPath,
     control: formHook.control,
   });
 

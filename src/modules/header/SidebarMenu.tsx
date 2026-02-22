@@ -12,6 +12,10 @@ const menuItems = [
     name: "Персонажи",
     href: "/characters",
   },
+  {
+    name: "Правила",
+    href: "/character-rules",
+  },
 ];
 
 export default function SidebarMenu() {

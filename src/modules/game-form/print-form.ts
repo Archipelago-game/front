@@ -38,9 +38,8 @@ function createHTML(doc: Document) {
         ${styles}
         <style>
           @page {
-            size: A4 landscape;
-            margin-top: 3mm;
-            margin-bottom: 3mm;
+            size: auto;
+            margin: 3mm;
           }
 
           @media print {
@@ -62,6 +61,10 @@ function createHTML(doc: Document) {
               min-height: auto !important;
               width: 100% !important;
               padding-top: 15px !important;
+              zoom: 0.5;
+              position: absolute;
+              top: 0;
+              left: 0;
             }
 
 
@@ -77,12 +80,40 @@ function createHTML(doc: Document) {
             /* чтобы контейнеры не обрезали таблицу */
             .MuiTableContainer-root,
             .MuiPaper-root {
+              width: 100% !important;
+              max-width: none !important;
               overflow: visible !important;
               height: auto !important;
             }
 
+            /* textarea*/
+            .text-field-controller-wrapper.multiline .MuiInputBase-root {
+                display: none;
+            }
+
+            .text-field-controller-wrapper.multiline {
+                position: relative;
+            }
+
+            .text-field-controller-wrapper.multiline::after {
+                content: attr(data-value);
+                white-space: pre-wrap;
+                width: 100%;
+                min-height: 60px;
+                padding: 8px;
+                display: block;
+                font: inherit;
+                line-height: 1.4;
+                box-sizing: border-box;
+            }
+
+            .no-breake {
+                page-break-inside: avoid;
+            }
+
             /* скрываем UI элементы */
             .no-print,
+            button,
             .MuiSpeedDial-root {
               display: none !important;
             }
@@ -91,6 +122,7 @@ function createHTML(doc: Document) {
             * {
               max-height: none !important;
             }
+
           }
         </style>
       </head>

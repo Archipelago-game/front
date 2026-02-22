@@ -1,0 +1,99 @@
+import { useState, useMemo } from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import type { MoralValue } from "../../../modules/game-form/types/form/form.type.ts";
+import type { GenerationStepComponentProps } from "../types.ts";
+
+const MORAL_VALUE_PROMPTS: MoralValue = {
+  authority: "К тем, кто превосходит меня… мой персонаж относится…",
+  pride: "К тем, кто слабее меня… мой персонаж относится…",
+  rivalry: "К тем, кто равен мне… мой персонаж относится…",
+  idealism:
+    "Мой персонаж убеждён, что с течением времени он и мир вокруг него…",
+  individualism: "Глубоко внутри мой персонаж убеждён, что…",
+};
+
+const LABELS: { key: keyof MoralValue; label: string }[] = [
+  { key: "authority", label: "Авторитет" },
+  { key: "pride", label: "Гордыня" },
+  { key: "rivalry", label: "Соперничество" },
+  { key: "idealism", label: "Идеализм" },
+  { key: "individualism", label: "Личность" },
+];
+
+function getInitialValues(
+  characterData?: GenerationStepComponentProps["characterData"],
+): MoralValue {
+  const mv = characterData?.moralValue;
+  if (!mv) return { ...MORAL_VALUE_PROMPTS };
+  const empty = (v: string) => v == null || v.trim() === "";
+  if (Object.values(mv).every(empty)) return { ...MORAL_VALUE_PROMPTS };
+  return { ...MORAL_VALUE_PROMPTS, ...mv };
+}
+
+export default function StepValues({
+  characterData,
+  onComplete,
+  isSubmitting = false,
+}: GenerationStepComponentProps) {
+  const isCat = characterData?.race === "cat";
+  const initial = useMemo(
+    () => getInitialValues(characterData),
+    [characterData],
+  );
+  const [values, setValues] = useState<MoralValue>(initial);
+
+  const handleNext = () => {
+    if (isCat) {
+      onComplete?.({});
+    } else {
+      onComplete?.({ moralValue: values });
+    }
+  };
+
+  if (isCat) {
+    return (
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Typography>
+          Ценности недоступны вашему персонажу из-за природы.
+        </Typography>
+        <Typography>
+          <a
+            href="/character-rules/create-character"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Правила
+          </a>
+        </Typography>
+        <Button
+          variant="contained"
+          onClick={handleNext}
+          disabled={isSubmitting}
+        >
+          Далее
+        </Button>
+      </Box>
+    );
+  }
+
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Typography variant="h6">Ценности</Typography>
+      {LABELS.map(({ key, label }) => (
+        <TextField
+          key={key}
+          label={label}
+          multiline
+          rows={4}
+          value={values[key]}
+          onChange={(e) =>
+            setValues((prev) => ({ ...prev, [key]: e.target.value }))
+          }
+        />
+      ))}
+      <Button variant="contained" onClick={handleNext} disabled={isSubmitting}>
+        Далее
+      </Button>
+    </Box>
+  );
+}

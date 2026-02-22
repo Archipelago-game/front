@@ -1,9 +1,12 @@
 import { Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 import type { FieldPath } from "react-hook-form";
 import type { FormType } from "../../../types/form/form.type.ts";
-import BaseField from "../../components/fields/BaseField.tsx";
+
 import { slotStyles } from "../styles.ts";
+import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
+import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
 
 interface MoralValuesItem {
   label: string;
@@ -36,13 +39,9 @@ const moralValueItems: MoralValuesItem[] = [
 // todo поменять на CustomTextField
 
 export default function MoralValues() {
+  const theme = useTheme();
   return (
-    <Box
-      sx={{
-        maxHeight: "100vh",
-        overflowY: "hidden",
-      }}
-    >
+    <BaseSectionCard>
       <Box
         sx={{
           display: "flex",
@@ -51,18 +50,22 @@ export default function MoralValues() {
         }}
       >
         {moralValueItems.map((item) => (
-          <BaseField
+          <CustomTextField
             key={item.fieldName}
-            fieldName={item.fieldName}
-            label={{
-              text: item.label,
+            textField={{
+              fieldName: item.fieldName,
+              fieldType: "text",
+              multiline: { isMultiline: true, rows: 4 },
+              sxSlotProps: {
+                ...slotStyles,
+                backgroundColor: theme.palette.base.surfaceBase,
+              },
             }}
-            sxSlotProps={slotStyles}
-            fieldType="text"
-            multiline={{ isMultiline: true, rows: 4 }}
+            wrapper={{ direction: "column" }}
+            title={item.label}
           />
         ))}
       </Box>
-    </Box>
+    </BaseSectionCard>
   );
 }
