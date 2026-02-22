@@ -28,7 +28,7 @@ const TABS = [
   },
 ];
 
-export default function AttributesAndTalentsPanel() {
+export default function TabsPanel() {
   return (
     <>
       <PrintOn>

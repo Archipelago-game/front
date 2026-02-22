@@ -11,6 +11,7 @@ import { calcWidth } from "./calc-width.util.ts";
 type NewControllerProps = Omit<ControllerProps, "orientation">;
 
 export interface DefaultFieldControllerProps extends NewControllerProps {
+  additionalClassName?: string;
   showChangeValueBtn?: boolean;
   wrapperWidth?: string | number;
   fontSize?: string;
@@ -29,6 +30,7 @@ export default function TextFieldControllerNew(
     sx,
     sxSlotProps = "",
     disabled = false,
+    additionalClassName = "",
     showChangeValueBtn = false,
     multiline = {
       isMultiline: false,
@@ -63,7 +65,7 @@ export default function TextFieldControllerNew(
       defaultValue={defaultValue}
       render={({ field }) => (
         <Box
-          className={`text-field-controller-wrapper ${multiline.isMultiline ? "multiline" : ""}`}
+          className={`text-field-controller-wrapper ${multiline.isMultiline ? "multiline" : ""} ${additionalClassName}`}
           width={componentWidth}
           sx={{
             fontSize: fontSize,

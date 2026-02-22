@@ -9,8 +9,12 @@ import { useCustomFormContext } from "./providers/use-custom-context-form.hook.t
 import Inventory from "./ui/sections/inventory/Inventory.tsx";
 
 import DraggableFab from "../draggable-fab/DraggableSpeedDial.tsx";
-import AttributesAndTalentsPanel from "./ui/sections/attrubutes-talents-tabs/AttributesAndTalentsPanel.tsx";
+import TabsPanel from "./ui/sections/attrubutes-talents-tabs/TabsPanel.tsx";
 import BaseInfo from "./ui/sections/base-info/BaseInfo.tsx";
+import PrintOn from "../../common/components/print/PrintOn.tsx";
+import MoralValues from "./ui/sections/moral-values/MoralValues.tsx";
+import Notes from "./ui/sections/notes/Notes.tsx";
+import PrintOff from "../../common/components/print/PrintOff.tsx";
 
 export default function CharacterForm() {
   const formContext = useCustomFormContext();
@@ -32,8 +36,8 @@ export default function CharacterForm() {
       <Box
         sx={{
           display: "grid",
-          gap: 2,
           gridTemplateColumns: "450px 1fr",
+          gap: 2,
 
           ["@media (max-width: 959px)"]: {
             gridTemplateColumns: "auto auto",
@@ -64,7 +68,9 @@ export default function CharacterForm() {
         >
           <Attack />
           <Defence />
-          <Inventory />
+          <PrintOff>
+            <Inventory />
+          </PrintOff>
         </Stack>
 
         <Box>
@@ -85,9 +91,32 @@ export default function CharacterForm() {
             </Grid>
 
             <Grid size={12}>
-              <AttributesAndTalentsPanel />
+              <TabsPanel />
             </Grid>
           </Grid>
+        </Box>
+        <Box
+          sx={{
+            gridColumn: "span 2",
+          }}
+        >
+          <PrintOn>
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 2,
+              }}
+            >
+              <Stack rowGap={2}>
+                <Inventory />
+                <Notes />
+              </Stack>
+              <Box>
+                <MoralValues />
+              </Box>
+            </Box>
+          </PrintOn>
         </Box>
       </Box>
     </Box>

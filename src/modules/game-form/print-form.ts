@@ -106,6 +106,9 @@ function createHTML(doc: Document) {
                 line-height: 1.4;
                 box-sizing: border-box;
             }
+            .text-field-controller-wrapper.multiline.print-fillable::after {
+              min-height: 300px;
+            }
 
             .no-breake {
                 page-break-inside: avoid;
