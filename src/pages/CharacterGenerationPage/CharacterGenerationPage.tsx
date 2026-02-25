@@ -198,14 +198,16 @@ export default function CharacterGenerationPage() {
 
   if (characterId && loadingCharacter) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "center", pt: 4, pb: 4, pl: 0 }}
+      >
         <CircularProgress />
       </Box>
     );
   }
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box>
       <CharacterGenerationWizard
         currentStepIndex={currentStepIndex}
         characterData={characterDoc?.data}
