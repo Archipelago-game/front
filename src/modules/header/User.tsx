@@ -47,6 +47,7 @@ export default function User() {
         sx={{
           position: "relative",
           display: "inline-block",
+          paddingRight: "20px",
           "&:hover .dropdown": {
             zIndex: 10,
             opacity: 1,
@@ -60,8 +61,8 @@ export default function User() {
           <Box
             sx={{
               position: "absolute",
-              right: "5px",
-              transform: "translateX(100%)",
+              right: "0",
+              // transform: "translateX(100%)",
             }}
           >
             <OnlineStatus />

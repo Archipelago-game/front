@@ -22,39 +22,6 @@ import CustomTextFieldWrapper from "../../../components/fields/custom-text-field
 import SectionTitle from "../../../components/section/SectionTitle.tsx";
 import TextFieldControllerNew from "../../../components/controllers/TextFieldControllerNew.tsx";
 
-const calcCellGradientBorderStyles = (
-  startColor: string,
-  endColor: string,
-) => ({
-  position: "relative",
-  border: "none", // убираем стандартную границу
-
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: "-35px",
-    bottom: 0,
-    borderRadius: 0,
-    borderBottom: "1px solid transparent",
-    background: `
-        linear-gradient(
-          45deg,
-          ${startColor},
-          ${endColor}
-        ) border-box
-      `,
-    WebkitMask: `
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0)
-      `,
-    WebkitMaskComposite: "xor",
-    maskComposite: "exclude",
-    pointerEvents: "none",
-  },
-});
-
 export interface SkillItem<T extends string> extends BaseSkill<T> {
   fieldName: FieldPath<FormType>;
 }
@@ -108,10 +75,6 @@ export default function SkillsTable<T extends string>({
 }: Props<T>) {
   const theme = useTheme();
 
-  const cellGradientBorderStyles = calcCellGradientBorderStyles(
-    theme.palette.base.surfaceAccent,
-    theme.palette.base.outline,
-  );
   return (
     <TableContainer>
       {skillGroups.map((group) => (
@@ -131,9 +94,9 @@ export default function SkillsTable<T extends string>({
                 >
                   <Stack
                     direction="row"
-                    spacing={1}
                     alignItems="flex-start"
                     justifyContent="space-between"
+                    sx={{ columnGap: "8px" }}
                   >
                     <SectionTitle title={group.name} />
                     <Stack
@@ -176,14 +139,14 @@ export default function SkillsTable<T extends string>({
                           sm: ".8em",
                           md: "0.8em", // ≥960px
                         },
-                        ...cellGradientBorderStyles,
+                        borderBottomColor: theme.palette.base.outlineSoft,
                       }}
                     >
                       <SubTitle title={skill.name} />
                     </TableCell>
                   )}
                   {skill.name === "" && (
-                    <TableCell sx={{ ...cellGradientBorderStyles }}>
+                    <TableCell>
                       {
                         <TextFieldControllerNew
                           fieldType="text"
@@ -199,7 +162,7 @@ export default function SkillsTable<T extends string>({
                     sx={{
                       width: "1%",
                       whiteSpace: "nowrap",
-                      border: "none",
+                      borderBottomColor: theme.palette.base.outlineSoft,
                     }}
                   >
                     <TextFieldControllerNew fieldName={skill.fieldName} />

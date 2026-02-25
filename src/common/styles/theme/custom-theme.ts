@@ -94,6 +94,7 @@ export const getTheme = (mode: "light" | "dark") =>
 
               // Более гранулярно (рекомендую добавить эти кастомные ключи)
               outline: "#b8b0a5", // основной divider (между surfaceBase и другими элементами)
+              outlineSoft: alpha("#b8b0a5", 0.3),
               outlineStrong: "#5c544a", // более заметный — между surfaceBase и surfaceLowered
               outlineSubtitle: "#80786f", // очень мягкий — между surfaceBase и surfaceAccent
 
@@ -135,6 +136,7 @@ export const getTheme = (mode: "light" | "dark") =>
 
               // Более гранулярно (рекомендую добавить эти кастомные ключи)
               outline: "#80786f", // основной divider (между surfaceBase и другими элементами)
+              outlineSoft: alpha("#b8b0a5", 0.3),
               outlineStrong: "#5c544a", // более заметный — между surfaceBase и surfaceLowered
               outlineSubtitle: "#b8b0a5", // очень мягкий — между surfaceBase и surfaceAccent
 

@@ -7,6 +7,8 @@ import type { FormType } from "../../../types/form/form.type.ts";
 import { slotStyles } from "../styles.ts";
 import CustomTextField from "../../components/fields/custom-text-field/CustomTextField.tsx";
 import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
+import PrintOn from "../../../../../common/components/print/PrintOn.tsx";
+import SectionHeader from "../../components/section/SectionHeader.tsx";
 
 interface MoralValuesItem {
   label: string;
@@ -42,6 +44,12 @@ export default function MoralValues() {
   const theme = useTheme();
   return (
     <BaseSectionCard>
+      <PrintOn>
+        <SectionHeader
+          title="Ценности"
+          dividerColor={theme.palette.base.outline}
+        />
+      </PrintOn>
       <Box
         sx={{
           display: "flex",

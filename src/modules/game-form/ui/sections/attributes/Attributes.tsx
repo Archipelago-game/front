@@ -12,6 +12,9 @@ import { useState, type ReactNode, useEffect } from "react";
 
 import { useTheme } from "@mui/material/styles";
 import BaseSectionCard from "../../components/section/BaseSectionCard.tsx";
+import SectionHeader from "../../components/section/SectionHeader.tsx";
+import PrintOn from "../../../../../common/components/print/PrintOn.tsx";
+import PrintOff from "../../../../../common/components/print/PrintOff.tsx";
 
 type AttributeMapKey = "1" | "2" | "3" | "4" | "5" | "6";
 
@@ -85,40 +88,69 @@ export default function Attributes() {
       }}
     >
       <BaseSectionCard>
-        <Box
-          sx={{
-            display: "grid",
-            gap: 1,
-            gridTemplateColumns: {
-              xs: "1fr",
-              phablet: "repeat(2, 1fr)",
-              tablet: "1fr",
-              md: "repeat(1fr)",
-              lgmd: "repeat(2, 1fr)",
-              lg: "repeat(3, 1fr)",
-            },
-          }}
-        >
-          {attributesOrder[currentMedia].map((col, index) => (
-            <Box
-              className="wrapper"
-              key={index}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-                alignItems: "stretch",
-                gap: 1,
-              }}
-            >
-              <>
-                {col.map((item) => (
-                  <Box key={item}>{attributeMap[item]}</Box>
-                ))}
-              </>
+        <PrintOn>
+          <SectionHeader
+            title="Атрибуты"
+            dividerColor={theme.palette.base.outline}
+          />
+        </PrintOn>
+        <PrintOn>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+            }}
+          >
+            <Box>
+              <Strength />
+              <Dexterity />
             </Box>
-          ))}
-        </Box>
+            <Box>
+              <Coordination />
+              <Intelligence />
+            </Box>
+            <Box>
+              <Insight />
+              <WillPower />
+            </Box>
+          </Box>
+        </PrintOn>
+        <PrintOff>
+          <Box
+            sx={{
+              display: "grid",
+              gap: 1,
+              gridTemplateColumns: {
+                xs: "1fr",
+                phablet: "repeat(2, 1fr)",
+                tablet: "1fr",
+                md: "repeat(1fr)",
+                lgmd: "repeat(2, 1fr)",
+                lg: "repeat(3, 1fr)",
+              },
+            }}
+          >
+            {attributesOrder[currentMedia].map((col, index) => (
+              <Box
+                className="wrapper"
+                key={index}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  alignItems: "stretch",
+                  gap: 1,
+                }}
+              >
+                <>
+                  {col.map((item) => (
+                    <Box key={item}>{attributeMap[item]}</Box>
+                  ))}
+                </>
+              </Box>
+            ))}
+          </Box>
+        </PrintOff>
       </BaseSectionCard>
     </Box>
   );

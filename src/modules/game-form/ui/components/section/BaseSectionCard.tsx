@@ -18,7 +18,6 @@ export interface DefaultSectionCardProps {
 export default function BaseSectionCard(props: DefaultSectionCardProps) {
   const { title, children, card, cardContent } = props;
   const theme = useTheme();
-
   const [open, setOpen] = useState(true);
 
   const backgroundColor = props.backgroundColor
@@ -29,7 +28,7 @@ export default function BaseSectionCard(props: DefaultSectionCardProps) {
   const { sx: cardContentSx, ...restCardContent } = cardContent || {};
   return (
     <Card
-      className="card"
+      className="card print-solid-section"
       sx={{
         position: "relative",
         backgroundColor: backgroundColor,
@@ -47,7 +46,8 @@ export default function BaseSectionCard(props: DefaultSectionCardProps) {
           onClick={() => setOpen((prev) => !prev)}
           isExpanded={open}
         />
-        <Collapse in={open} timeout="auto" unmountOnExit>
+
+        <Collapse in={open} timeout="auto" className="print-open-collapse">
           {children}
         </Collapse>
       </CardContent>

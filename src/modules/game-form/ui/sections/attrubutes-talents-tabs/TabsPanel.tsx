@@ -5,6 +5,10 @@ import Talents from "../talents/Talents.tsx";
 import Notes from "../notes/Notes.tsx";
 import MoralValues from "../moral-values/MoralValues.tsx";
 
+import PrintOff from "../../../../../common/components/print/PrintOff.tsx";
+import PrintOn from "../../../../../common/components/print/PrintOn.tsx";
+import { Stack } from "@mui/material";
+
 const TABS = [
   {
     name: "Аттрибуты",
@@ -24,6 +28,17 @@ const TABS = [
   },
 ];
 
-export default function AttributesAndTalentsPanel() {
-  return <CustomTabsPanel tabs={TABS} />;
+export default function TabsPanel() {
+  return (
+    <>
+      <PrintOn>
+        <Stack rowGap={2}>
+          <Attributes />
+        </Stack>
+      </PrintOn>
+      <PrintOff>
+        <CustomTabsPanel tabs={TABS} />
+      </PrintOff>
+    </>
+  );
 }

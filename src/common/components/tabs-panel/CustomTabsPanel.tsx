@@ -60,7 +60,7 @@ export default function CustomTabsPanel({ tabs }: Props) {
           ))}
         </Tabs>
       </AccordionHeader>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={open} timeout="auto" className="print-open-collapse">
         <CurrentComponent />
       </Collapse>
     </Box>
