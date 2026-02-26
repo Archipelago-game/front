@@ -8,6 +8,7 @@ import type {
   DiceRollResultCallback,
   GenerationStepPayload,
 } from "../types.ts";
+import StepLayout from "../../../pages/CharacterGenerationPage/StepLayout.tsx";
 
 function getRaceByD20(value: number): Race {
   if (value === 4) return "immortal";
@@ -43,26 +44,25 @@ export default function StepNature({
   };
 
   return (
-    <Box>
-      <Typography variant="h6">Выберите природу персонажа</Typography>
-      <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
-        {RACES.map((race) => (
-          <Button
-            key={race}
-            variant={selected === race ? "contained" : "outlined"}
-            onClick={() => setSelected(race)}
-          >
-            {mapRace[race]}
-          </Button>
-        ))}
+    <StepLayout backward={() => {}} forward={handleNext}>
+      <Box>
+        <Typography variant="h6">Выберите природу персонажа</Typography>
+        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
+          {RACES.map((race) => (
+            <Button
+              key={race}
+              variant={selected === race ? "contained" : "outlined"}
+              onClick={() => setSelected(race)}
+            >
+              {mapRace[race]}
+            </Button>
+          ))}
+        </Box>
+        <DiceRollBlock
+          diceRequest={diceRequest}
+          onDiceResult={handleDiceResult}
+        />
       </Box>
-      <DiceRollBlock
-        diceRequest={diceRequest}
-        onDiceResult={handleDiceResult}
-      />
-      <Button variant="contained" onClick={handleNext} disabled={isSubmitting}>
-        Далее
-      </Button>
-    </Box>
+    </StepLayout>
   );
 }
