@@ -207,13 +207,11 @@ export default function CharacterGenerationPage() {
   }
 
   return (
-    <Box>
-      <CharacterGenerationWizard
-        currentStepIndex={currentStepIndex}
-        characterData={characterDoc?.data}
-        onStepComplete={handleStepComplete}
-        isSubmitting={loading}
-      />
-    </Box>
+    <CharacterGenerationWizard
+      currentStepIndex={currentStepIndex}
+      characterData={characterDoc?.data}
+      onStepComplete={handleStepComplete}
+      isSubmitting={loading}
+    />
   );
 }
