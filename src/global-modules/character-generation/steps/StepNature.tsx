@@ -29,6 +29,9 @@ export default function StepNature({
   onComplete,
   isSubmitting = false,
 }: StepNatureProps) {
+  // todo удалить
+  console.log(isSubmitting);
+
   const [selected, setSelected] = useState<Race>(
     characterData?.race ?? "human",
   );
