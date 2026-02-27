@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Button, Box, Typography } from "@mui/material";
 import { mapRace } from "../../../modules/game-form/consts/map-race.const.ts";
 import type { Race } from "../../../modules/game-form/types/form/form.type.ts";
@@ -6,9 +6,8 @@ import DiceRollBlock from "../DiceRollBlock.tsx";
 import type {
   DiceRollRequest,
   DiceRollResultCallback,
-  GenerationStepPayload,
+  GenerationStepComponentProps,
 } from "../types.ts";
-import StepLayout from "../../../pages/CharacterGenerationPage/StepLayout.tsx";
 
 function getRaceByD20(value: number): Race {
   if (value === 4) return "immortal";
@@ -16,56 +15,47 @@ function getRaceByD20(value: number): Race {
   return "human";
 }
 
-interface StepNatureProps {
-  characterData?: { race?: Race };
-  onComplete?: (payload?: GenerationStepPayload) => void;
-  isSubmitting?: boolean;
-}
-
 const RACES: Race[] = ["human", "immortal", "cat"];
+
+// todo перенести спинер на isSubmitting в GenerationWizard
 
 export default function StepNature({
   characterData,
-  onComplete,
   isSubmitting = false,
-}: StepNatureProps) {
+  currentValue,
+  setCurrentSelectValue,
+}: GenerationStepComponentProps) {
   // todo удалить
   console.log(isSubmitting);
 
-  const [selected, setSelected] = useState<Race>(
-    characterData?.race ?? "human",
-  );
-
-  const handleNext = () => {
-    onComplete?.({ race: selected });
-  };
+  useEffect(() => {
+    setCurrentSelectValue({ race: characterData?.race ?? "human" });
+  }, []);
 
   const diceRequest: DiceRollRequest = { sides: 20, count: 1 };
   const handleDiceResult: DiceRollResultCallback = (values) => {
     const race = getRaceByD20(values[0]);
-    setSelected(race);
+    setCurrentSelectValue({ race });
   };
 
   return (
-    <StepLayout backward={() => {}} forward={handleNext}>
-      <Box>
-        <Typography variant="h6">Выберите природу персонажа</Typography>
-        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
-          {RACES.map((race) => (
-            <Button
-              key={race}
-              variant={selected === race ? "contained" : "outlined"}
-              onClick={() => setSelected(race)}
-            >
-              {mapRace[race]}
-            </Button>
-          ))}
-        </Box>
-        <DiceRollBlock
-          diceRequest={diceRequest}
-          onDiceResult={handleDiceResult}
-        />
+    <Box>
+      <Typography variant="h6">Выберите природу персонажа</Typography>
+      <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
+        {RACES.map((race) => (
+          <Button
+            key={race}
+            variant={currentValue?.race === race ? "contained" : "outlined"}
+            onClick={() => setCurrentSelectValue({ race })}
+          >
+            {mapRace[race]}
+          </Button>
+        ))}
       </Box>
-    </StepLayout>
+      <DiceRollBlock
+        diceRequest={diceRequest}
+        onDiceResult={handleDiceResult}
+      />
+    </Box>
   );
 }

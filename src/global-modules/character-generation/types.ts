@@ -1,4 +1,4 @@
-import type { ComponentType } from "react";
+import type { ComponentType, Dispatch, SetStateAction } from "react";
 import type {
   FormType,
   MoralValue,
@@ -20,6 +20,8 @@ export interface GenerationStepComponentProps {
   characterData?: FormType;
   onComplete?: (payload?: GenerationStepPayload) => void;
   isSubmitting?: boolean;
+  currentValue: GenerationStepPayload | null;
+  setCurrentSelectValue: Dispatch<SetStateAction<GenerationStepPayload | null>>;
 }
 
 /** Описание шага визарда */
