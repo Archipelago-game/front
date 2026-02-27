@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Box,
   Button,
@@ -49,91 +49,97 @@ function getRemainingForStandard(
   return remaining.sort((a, b) => a - b);
 }
 
-function isStandardValid(
-  attributeValues: Partial<Record<keyof Stats, number>>,
-): boolean {
-  const values = ATTRIBUTE_ORDER.map((k) => attributeValues[k]).filter(
-    (v): v is number => typeof v === "number",
-  );
-  if (values.length !== 6) return false;
-  const sorted = [...values].sort((a, b) => a - b);
-  const expected = [...STANDARD_ATTRIBUTE_SET].sort((a, b) => a - b);
-  return sorted.every((v, i) => v === expected[i]);
-}
-
-function isPurchaseValid(
-  attributeValues: Partial<Record<keyof Stats, number>>,
-): boolean {
-  const values = ATTRIBUTE_ORDER.map(
-    (k) => attributeValues[k] ?? ATTRIBUTE_BASE_PURCHASE,
-  );
-  const spent = values.reduce((s, v) => s + (v - ATTRIBUTE_BASE_PURCHASE), 0);
-  if (spent !== ATTRIBUTE_POINTS_TOTAL) return false;
-  const inRange = values.every(
-    (v) => v >= ATTRIBUTE_BASE_PURCHASE && v <= ATTRIBUTE_MAX_MORTAL,
-  );
-  if (!inRange) return false;
-  const count6 = values.filter((v) => v === 6).length;
-  const count12 = values.filter((v) => v === 12).length;
-  return count6 <= 1 && count12 <= 1;
-}
+// function isStandardValid(
+//   attributeValues: Partial<Record<keyof Stats, number>>,
+// ): boolean {
+//   const values = ATTRIBUTE_ORDER.map((k) => attributeValues[k]).filter(
+//     (v): v is number => typeof v === "number",
+//   );
+//   if (values.length !== 6) return false;
+//   const sorted = [...values].sort((a, b) => a - b);
+//   const expected = [...STANDARD_ATTRIBUTE_SET].sort((a, b) => a - b);
+//   return sorted.every((v, i) => v === expected[i]);
+// }
+//
+// function isPurchaseValid(
+//   attributeValues: Partial<Record<keyof Stats, number>>,
+// ): boolean {
+//   const values = ATTRIBUTE_ORDER.map(
+//     (k) => attributeValues[k] ?? ATTRIBUTE_BASE_PURCHASE,
+//   );
+//   const spent = values.reduce((s, v) => s + (v - ATTRIBUTE_BASE_PURCHASE), 0);
+//   if (spent !== ATTRIBUTE_POINTS_TOTAL) return false;
+//   const inRange = values.every(
+//     (v) => v >= ATTRIBUTE_BASE_PURCHASE && v <= ATTRIBUTE_MAX_MORTAL,
+//   );
+//   if (!inRange) return false;
+//   const count6 = values.filter((v) => v === 6).length;
+//   const count12 = values.filter((v) => v === 12).length;
+//   return count6 <= 1 && count12 <= 1;
+// }
 
 export default function StepAttributes({
   characterData,
-  onComplete,
   isSubmitting = false,
+  currentValue,
+  setCurrentSelectValue,
 }: GenerationStepComponentProps) {
   const [method, setMethod] = useState<DistributionMethod>("standard");
-  const [attributeValues, setAttributeValues] = useState<
-    Partial<Record<keyof Stats, number>>
-  >({});
 
   const race = characterData?.race;
   const isImmortal = race === "immortal";
-  const maxAttr = ATTRIBUTE_MAX_MORTAL;
 
   const spentPoints = useMemo(() => {
     return ATTRIBUTE_ORDER.reduce(
       (sum, key) =>
         sum +
-        ((attributeValues[key] ?? ATTRIBUTE_BASE_PURCHASE) -
+        ((currentValue?.attributeValues?.[key] ?? ATTRIBUTE_BASE_PURCHASE) -
           ATTRIBUTE_BASE_PURCHASE),
       0,
     );
-  }, [attributeValues]);
+  }, [currentValue?.attributeValues]);
 
   const hasValueBelow6 = useMemo(() => {
     return ATTRIBUTE_ORDER.some((k) => {
-      const v = attributeValues[k];
+      const v = currentValue?.attributeValues?.[k];
       return typeof v === "number" && v < 6;
     });
-  }, [attributeValues]);
+  }, [currentValue?.attributeValues]);
 
-  function isValid(): boolean {
-    if (method === "standard") return isStandardValid(attributeValues);
-    if (method === "purchase") return isPurchaseValid(attributeValues);
-    if (method === "random")
-      return ATTRIBUTE_ORDER.every(
-        (k) => typeof attributeValues[k] === "number",
-      );
-    return false;
-  }
+  // todo придумать как пробросить валидацию
+  // note закоментил чтобы пройти проверку lint
+  // function isValid(): boolean {
+  //   if (method === "standard" && currentValue?.attributeValues) {
+  //     return isStandardValid(currentValue?.attributeValues);
+  //   }
+  //
+  //   if (method === "purchase" && currentValue?.attributeValues) {
+  //     return isPurchaseValid(currentValue?.attributeValues);
+  //   }
+  //
+  //   if (method === "random")
+  //     return ATTRIBUTE_ORDER.every(
+  //       (k) => typeof currentValue?.attributeValues?.[k] === "number",
+  //     );
+  //   return false;
+  // }
 
-  const handleNext = () => {
-    if (isValid() && attributeValues)
-      onComplete?.({
-        attributeValues: attributeValues as Partial<
-          Record<keyof Stats, number>
-        >,
-      });
-  };
+  // note оставил для примера
+  // const handleNext = () => {
+  //   if (isValid() && currentValue?.attributeValues)
+  //     onComplete?.({
+  //       attributeValues: currentValue?.attributeValues as Partial<
+  //         Record<keyof Stats, number>
+  //       >,
+  //     });
+  // };
 
   const handleStandardChange = (key: keyof Stats, value: number) => {
-    setAttributeValues((prev) => ({ ...prev, [key]: value }));
+    handleSelect({ [key]: value });
   };
 
   const handlePurchaseChange = (key: keyof Stats, value: number) => {
-    setAttributeValues((prev) => ({ ...prev, [key]: value }));
+    handleSelect({ [key]: value });
   };
 
   const diceRequest: DiceRollRequest = { sides: 6, count: 6 };
@@ -142,7 +148,7 @@ export default function StepAttributes({
     ATTRIBUTE_ORDER.forEach((key, i) => {
       next[key] = 8 + getAttributeBonusFromD6(values[i]);
     });
-    setAttributeValues(next);
+    handleSelect(next);
   };
 
   const resetForMethod = (newMethod: DistributionMethod) => {
@@ -152,10 +158,20 @@ export default function StepAttributes({
       ATTRIBUTE_ORDER.forEach((k) => {
         initial[k] = ATTRIBUTE_BASE_PURCHASE;
       });
-      setAttributeValues(initial);
+      handleSelect(initial);
     } else {
-      setAttributeValues({});
+      handleSelect({});
     }
+  };
+
+  useEffect(() => {
+    handleSelect({});
+  }, []);
+
+  const handleSelect = (selected: Partial<Record<keyof Stats, number>>) => {
+    setCurrentSelectValue((prev) => ({
+      attributeValues: { ...prev?.attributeValues, ...selected },
+    }));
   };
 
   return (
@@ -197,17 +213,21 @@ export default function StepAttributes({
             <FormControl key={key} size="small" sx={{ minWidth: 160 }}>
               <InputLabel>{ATTRIBUTE_NAMES[key]}</InputLabel>
               <Select
-                value={attributeValues[key] ?? ""}
+                value={currentValue?.attributeValues?.[key] ?? ""}
                 label={ATTRIBUTE_NAMES[key]}
                 onChange={(e: SelectChangeEvent<number>) =>
                   handleStandardChange(key, Number(e.target.value))
                 }
               >
-                {getRemainingForStandard(attributeValues, key).map((v, i) => (
-                  <MenuItem key={`${key}-${i}-${v}`} value={v}>
-                    {v}
-                  </MenuItem>
-                ))}
+                {currentValue?.attributeValues &&
+                  getRemainingForStandard(
+                    currentValue.attributeValues,
+                    key,
+                  ).map((v, i) => (
+                    <MenuItem key={`${key}-${i}-${v}`} value={v}>
+                      {v}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           ))}
@@ -218,18 +238,23 @@ export default function StepAttributes({
         <Box sx={{ mb: 2 }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
             База 6 для всех. Очков: {spentPoints} / {ATTRIBUTE_POINTS_TOTAL}.
-            Мин 6, макс {maxAttr}. Один атрибут может быть 6, один — 12.
+            Мин 6, макс {ATTRIBUTE_MAX_MORTAL}. Один атрибут может быть 6, один
+            — 12.
           </Typography>
           {ATTRIBUTE_ORDER.map((key) => (
             <Box key={key} sx={{ mb: 1 }}>
               <Typography variant="body2">
                 {ATTRIBUTE_NAMES[key]}:{" "}
-                {attributeValues[key] ?? ATTRIBUTE_BASE_PURCHASE}
+                {currentValue?.attributeValues?.[key] ??
+                  ATTRIBUTE_BASE_PURCHASE}
               </Typography>
               <Slider
-                value={attributeValues[key] ?? ATTRIBUTE_BASE_PURCHASE}
+                value={
+                  currentValue?.attributeValues?.[key] ??
+                  ATTRIBUTE_BASE_PURCHASE
+                }
                 min={ATTRIBUTE_BASE_PURCHASE}
-                max={maxAttr}
+                max={ATTRIBUTE_MAX_MORTAL}
                 step={1}
                 marks
                 valueLabelDisplay="auto"
@@ -255,15 +280,17 @@ export default function StepAttributes({
             onDiceResult={handleDiceResult}
             disabled={isSubmitting}
           />
-          {Object.keys(attributeValues).length > 0 && (
-            <Box sx={{ mt: 2 }}>
-              {ATTRIBUTE_ORDER.map((key) => (
-                <Typography key={key}>
-                  {ATTRIBUTE_NAMES[key]}: {attributeValues[key]}
-                </Typography>
-              ))}
-            </Box>
-          )}
+          {currentValue?.attributeValues &&
+            Object.keys(currentValue?.attributeValues).length > 0 && (
+              <Box sx={{ mt: 2 }}>
+                {ATTRIBUTE_ORDER.map((key) => (
+                  <Typography key={key}>
+                    {ATTRIBUTE_NAMES[key]}:{" "}
+                    {currentValue?.attributeValues?.[key]}
+                  </Typography>
+                ))}
+              </Box>
+            )}
         </>
       )}
 
@@ -272,14 +299,6 @@ export default function StepAttributes({
           Значение ниже 6 — заметный изъян по правилам.
         </Typography>
       )}
-
-      <Button
-        variant="contained"
-        onClick={handleNext}
-        disabled={isSubmitting || !isValid()}
-      >
-        Далее
-      </Button>
     </Box>
   );
 }
