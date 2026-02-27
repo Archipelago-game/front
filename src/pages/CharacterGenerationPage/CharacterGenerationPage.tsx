@@ -83,7 +83,7 @@ export default function CharacterGenerationPage() {
             ...FORM_DEFAULT_VALUES,
             name: defaultName,
             race: payload.race,
-            wizard: { lastCompletedStepIndex: 0 },
+            wizard: { lastCompletedStepIndex: currentStepIndex },
           });
           navigate(`/character-generation/${id}`);
         } else if (characterDoc) {
@@ -93,7 +93,7 @@ export default function CharacterGenerationPage() {
               ...characterDoc.data,
               name: characterDoc.data.name || defaultName,
               race: payload.race,
-              wizard: { lastCompletedStepIndex: 0 },
+              wizard: { lastCompletedStepIndex: currentStepIndex },
             },
           };
           await api.saveCharacterForm(userInfo.uid, updated);
@@ -116,7 +116,7 @@ export default function CharacterGenerationPage() {
           data: {
             ...characterDoc.data,
             ...(payload?.moralValue && { moralValue: payload.moralValue }),
-            wizard: { lastCompletedStepIndex: 1 },
+            wizard: { lastCompletedStepIndex: currentStepIndex },
           },
         };
         await api.saveCharacterForm(userInfo.uid, updated);
@@ -144,7 +144,7 @@ export default function CharacterGenerationPage() {
             ...characterDoc.data,
             homeland: payload.homeland,
             languages: payload.languages ?? characterDoc.data.languages ?? "",
-            wizard: { lastCompletedStepIndex: 2 },
+            wizard: { lastCompletedStepIndex: currentStepIndex },
           },
         };
         await api.saveCharacterForm(userInfo.uid, updated);
@@ -177,7 +177,7 @@ export default function CharacterGenerationPage() {
           data: {
             ...characterDoc.data,
             stats,
-            wizard: { lastCompletedStepIndex: 3 },
+            wizard: { lastCompletedStepIndex: currentStepIndex },
           },
         };
         await api.saveCharacterForm(userInfo.uid, updated);

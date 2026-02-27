@@ -29,7 +29,7 @@ function getInitialHomeland(characterData?: {
   return options.find((o) => o.displayName === characterData.homeland) ?? null;
 }
 
-export default function StepHemland({
+export default function StepHomeland({
   characterData,
   onComplete,
   isSubmitting = false,
