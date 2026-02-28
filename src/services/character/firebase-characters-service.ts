@@ -45,11 +45,26 @@ export interface FirebaseError {
   message: string;
 }
 
+function removeUndefined<T extends Record<string, unknown>>(obj: T): DocumentData {
+  const result: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value === undefined) continue;
+    result[key] =
+      value !== null &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      !(value instanceof Date) &&
+      !(value instanceof Timestamp)
+        ? removeUndefined(value as Record<string, unknown>)
+        : value;
+  }
+  return result as DocumentData;
+}
+
 const characterConverter: FirestoreDataConverter<CharacterDocument> = {
   toFirestore(character: CharacterDocument): DocumentData {
-    // eslint-disable-next-line
-    const { id, ...data } = character;
-    return data;
+    const { id, ...rest } = character;
+    return removeUndefined(rest as Record<string, unknown>);
   },
   fromFirestore(snapshot, options): CharacterDocument {
     const data = snapshot.data(options);
@@ -154,7 +169,7 @@ export class FirebaseCharactersService {
     const charactersRef = this.getUserCharactersRef(userId);
     const docRef = doc(charactersRef);
 
-    setDoc(docRef, newCharacterDoc);
+    await setDoc(docRef, newCharacterDoc);
 
     if (this.isOnline()) {
       await updateDoc(docRef, {

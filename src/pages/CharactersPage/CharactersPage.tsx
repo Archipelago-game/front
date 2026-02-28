@@ -31,8 +31,15 @@ export default function CharactersPage() {
   };
 
   const addCharacter = async (userId: string) => {
-    const characterId = await api.addNewCharacter(userId);
-    navigate(`/game-form/${characterId}`);
+    try {
+      const characterId = await api.addNewCharacter(userId);
+      navigate(`/game-form/${characterId}`);
+    } catch (error) {
+      const message =
+        (error as { message?: string })?.message ||
+        "Не удалось создать персонажа";
+      showMessage({ message });
+    }
   };
 
   const deleteCharacter = async (userId: string, characterId: string) => {
