@@ -35,6 +35,7 @@ export default function CharacterForm() {
     >
       <DraggableFab />
       <Box
+        className="character-form__grid"
         sx={{
           display: "grid",
           gridTemplateColumns: "450px 1fr",
@@ -50,10 +51,11 @@ export default function CharacterForm() {
         }}
       >
         <Box
+          className="baseinfo-wrapper"
           sx={{
             gridColumn: "span 2",
             ["@media (max-width: 730px)"]: {
-              gridColumn: "span 1",
+              gridColumn: "auto",
             },
           }}
         >
@@ -96,36 +98,35 @@ export default function CharacterForm() {
             </Grid>
           </Grid>
         </Box>
-        <Box
+
+        <PrintOn
           sx={{
             gridColumn: "span 2",
           }}
         >
-          <PrintOn>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 2,
+            }}
+          >
             <Box
               sx={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 2,
+                gridColumn: "span 2",
               }}
             >
-              <Box
-                sx={{
-                  gridColumn: "span 2",
-                }}
-              >
-                <Talents />
-              </Box>
-              <Stack rowGap={2}>
-                <Inventory />
-                <Notes />
-              </Stack>
-              <Box>
-                <MoralValues />
-              </Box>
+              <Talents />
             </Box>
-          </PrintOn>
-        </Box>
+            <Stack rowGap={2}>
+              <Inventory />
+              <Notes />
+            </Stack>
+            <Box>
+              <MoralValues />
+            </Box>
+          </Box>
+        </PrintOn>
       </Box>
     </Box>
   );
