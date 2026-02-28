@@ -29,7 +29,7 @@ export const HOMELAND_OPTIONS: HomelandOption[] = [
   {
     id: "suo",
     displayName: "Суо (внешние острова)",
-    language: "Соответственный",
+    language: "Язык Суо",
     talent: "Стойкость и Гармония",
   },
   {
@@ -59,7 +59,7 @@ export const HOMELAND_OPTIONS: HomelandOption[] = [
   {
     id: "shlyakhta",
     displayName: "Шляхта (срединные острова)",
-    language: "Соответственный",
+    language: "Шляхтсикй",
     talent: "Торговля и Ремесло",
   },
 ];
