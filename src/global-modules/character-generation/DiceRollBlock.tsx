@@ -34,7 +34,11 @@ export default function DiceRollBlock({
 
   return (
     <Box sx={{ mt: 2, mb: 2 }}>
-      <Button variant="outlined" onClick={handleRoll} disabled={disabled}>
+      <Button
+        variant="outlined"
+        onClick={handleRoll}
+        disabled={disabled || lastResult !== null}
+      >
         Бросить кубики
       </Button>
       {lastResult !== null && (
