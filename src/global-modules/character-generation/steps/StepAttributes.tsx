@@ -49,34 +49,34 @@ function getRemainingForStandard(
   return remaining.sort((a, b) => a - b);
 }
 
-// function isStandardValid(
-//   attributeValues: Partial<Record<keyof Stats, number>>,
-// ): boolean {
-//   const values = ATTRIBUTE_ORDER.map((k) => attributeValues[k]).filter(
-//     (v): v is number => typeof v === "number",
-//   );
-//   if (values.length !== 6) return false;
-//   const sorted = [...values].sort((a, b) => a - b);
-//   const expected = [...STANDARD_ATTRIBUTE_SET].sort((a, b) => a - b);
-//   return sorted.every((v, i) => v === expected[i]);
-// }
-//
-// function isPurchaseValid(
-//   attributeValues: Partial<Record<keyof Stats, number>>,
-// ): boolean {
-//   const values = ATTRIBUTE_ORDER.map(
-//     (k) => attributeValues[k] ?? ATTRIBUTE_BASE_PURCHASE,
-//   );
-//   const spent = values.reduce((s, v) => s + (v - ATTRIBUTE_BASE_PURCHASE), 0);
-//   if (spent !== ATTRIBUTE_POINTS_TOTAL) return false;
-//   const inRange = values.every(
-//     (v) => v >= ATTRIBUTE_BASE_PURCHASE && v <= ATTRIBUTE_MAX_MORTAL,
-//   );
-//   if (!inRange) return false;
-//   const count6 = values.filter((v) => v === 6).length;
-//   const count12 = values.filter((v) => v === 12).length;
-//   return count6 <= 1 && count12 <= 1;
-// }
+function isStandardValid(
+  attributeValues: Partial<Record<keyof Stats, number>>,
+): boolean {
+  const values = ATTRIBUTE_ORDER.map((k) => attributeValues[k]).filter(
+    (v): v is number => typeof v === "number",
+  );
+  if (values.length !== 6) return false;
+  const sorted = [...values].sort((a, b) => a - b);
+  const expected = [...STANDARD_ATTRIBUTE_SET].sort((a, b) => a - b);
+  return sorted.every((v, i) => v === expected[i]);
+}
+
+function isPurchaseValid(
+  attributeValues: Partial<Record<keyof Stats, number>>,
+): boolean {
+  const values = ATTRIBUTE_ORDER.map(
+    (k) => attributeValues[k] ?? ATTRIBUTE_BASE_PURCHASE,
+  );
+  const spent = values.reduce((s, v) => s + (v - ATTRIBUTE_BASE_PURCHASE), 0);
+  if (spent !== ATTRIBUTE_POINTS_TOTAL) return false;
+  const inRange = values.every(
+    (v) => v >= ATTRIBUTE_BASE_PURCHASE && v <= ATTRIBUTE_MAX_MORTAL,
+  );
+  if (!inRange) return false;
+  const count6 = values.filter((v) => v === 6).length;
+  const count12 = values.filter((v) => v === 12).length;
+  return count6 <= 1 && count12 <= 1;
+}
 
 export default function StepAttributes({
   characterData,
@@ -108,31 +108,31 @@ export default function StepAttributes({
 
   // todo придумать как пробросить валидацию
   // note закоментил чтобы пройти проверку lint
-  // function isValid(): boolean {
-  //   if (method === "standard" && currentValue?.attributeValues) {
-  //     return isStandardValid(currentValue?.attributeValues);
-  //   }
-  //
-  //   if (method === "purchase" && currentValue?.attributeValues) {
-  //     return isPurchaseValid(currentValue?.attributeValues);
-  //   }
-  //
-  //   if (method === "random")
-  //     return ATTRIBUTE_ORDER.every(
-  //       (k) => typeof currentValue?.attributeValues?.[k] === "number",
-  //     );
-  //   return false;
-  // }
+  function isValid(): boolean {
+    if (method === "standard" && currentValue?.attributeValues) {
+      return isStandardValid(currentValue?.attributeValues);
+    }
+
+    if (method === "purchase" && currentValue?.attributeValues) {
+      return isPurchaseValid(currentValue?.attributeValues);
+    }
+
+    if (method === "random")
+      return ATTRIBUTE_ORDER.every(
+        (k) => typeof currentValue?.attributeValues?.[k] === "number",
+      );
+    return false;
+  }
 
   // note оставил для примера
-  // const handleNext = () => {
-  //   if (isValid() && currentValue?.attributeValues)
-  //     onComplete?.({
-  //       attributeValues: currentValue?.attributeValues as Partial<
-  //         Record<keyof Stats, number>
-  //       >,
-  //     });
-  // };
+  const handleNext = () => {
+    if (isValid() && currentValue?.attributeValues)
+      onComplete?.({
+        attributeValues: currentValue?.attributeValues as Partial<
+          Record<keyof Stats, number>
+        >,
+      });
+  };
 
   const handleStandardChange = (key: keyof Stats, value: number) => {
     handleSelect({ [key]: value });
