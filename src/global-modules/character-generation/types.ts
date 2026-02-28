@@ -25,11 +25,11 @@ export interface GenerationStepComponentProps {
 }
 
 /** Описание шага визарда */
-export interface GenerationStep<TContext = unknown> {
+export interface GenerationStep {
   id: string;
   title: string;
   component: ComponentType<GenerationStepComponentProps>;
-  validate?: (payload: GenerationStepPayload, context: TContext) => boolean;
+  validate?: (payload: GenerationStepPayload, context: unknown) => boolean;
 }
 
 /** Параметры запроса броска для блока кубиков */

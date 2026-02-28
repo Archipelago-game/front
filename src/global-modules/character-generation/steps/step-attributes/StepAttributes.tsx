@@ -16,13 +16,13 @@ import DiceRollBlock from "../../DiceRollBlock.tsx";
 import {
   ATTRIBUTE_ORDER,
   ATTRIBUTE_MAX_MORTAL,
-  STANDARD_ATTRIBUTE_SET,
   ATTRIBUTE_POINTS_TOTAL,
   ATTRIBUTE_BASE_PURCHASE,
   getAttributeBonusFromD6,
 } from "../../consts/attribute-options.const.ts";
 import type { Stats } from "../../../../modules/game-form/types/form/attributes.type.ts";
 import type { DistributionMethod } from "./step-attributes.type.ts";
+import { getRemainingForStandard } from "./get-remaining-for-standard.ts";
 
 const ATTRIBUTE_NAMES: Record<keyof Stats, string> = {
   dexterity: "Ловкость",
@@ -32,21 +32,6 @@ const ATTRIBUTE_NAMES: Record<keyof Stats, string> = {
   intelligence: "Интеллект",
   willpower: "Воля",
 };
-
-function getRemainingForStandard(
-  attributeValues: Partial<Record<keyof Stats, number>>,
-  excludeKey: keyof Stats,
-): number[] {
-  const used = ATTRIBUTE_ORDER.filter((k) => k !== excludeKey)
-    .map((k) => attributeValues[k])
-    .filter((v): v is number => typeof v === "number");
-  const remaining = STANDARD_ATTRIBUTE_SET.slice();
-  for (const v of used) {
-    const idx = remaining.indexOf(v);
-    if (idx !== -1) remaining.splice(idx, 1);
-  }
-  return remaining.sort((a, b) => a - b);
-}
 
 export default function StepAttributes({
   characterData,
@@ -75,14 +60,6 @@ export default function StepAttributes({
       return typeof v === "number" && v < 6;
     });
   }, [currentValue?.attributeValues]);
-
-  const handleStandardChange = (key: keyof Stats, value: number) => {
-    handleSelect({ [key]: value });
-  };
-
-  const handlePurchaseChange = (key: keyof Stats, value: number) => {
-    handleSelect({ [key]: value });
-  };
 
   const diceRequest: DiceRollRequest = { sides: 6, count: 6 };
   const handleDiceResult: DiceRollResultCallback = (values) => {
@@ -158,7 +135,7 @@ export default function StepAttributes({
                 value={currentValue?.attributeValues?.[key] ?? ""}
                 label={ATTRIBUTE_NAMES[key]}
                 onChange={(e: SelectChangeEvent<number>) =>
-                  handleStandardChange(key, Number(e.target.value))
+                  handleSelect({ [key]: Number(e.target.value) })
                 }
               >
                 {currentValue?.attributeValues &&
@@ -201,10 +178,9 @@ export default function StepAttributes({
                 marks
                 valueLabelDisplay="auto"
                 onChange={(_, value) =>
-                  handlePurchaseChange(
-                    key,
-                    Array.isArray(value) ? value[0] : value,
-                  )
+                  handleSelect({
+                    [key]: Array.isArray(value) ? value[0] : value,
+                  })
                 }
               />
             </Box>

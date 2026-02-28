@@ -18,12 +18,13 @@ export const GENERATION_STEPS: GenerationStep[] = [
     id: "attributes",
     title: "Атрибуты",
     component: StepAttributes,
-    validate: (payload, context: StepAttributesContext) => {
+    validate: (payload, context) => {
+      const ctx = context as StepAttributesContext;
       if (!payload?.attributeValues) {
         return false;
       }
 
-      switch (context.method) {
+      switch (ctx.method) {
         case "purchase":
           return isPurchaseValid(payload.attributeValues);
 
