@@ -84,12 +84,16 @@ export default function StepValues({
           }}
           rows={4}
           value={currentValue?.moralValue?.[key]}
-          onChange={(e) =>
-            setCurrentSelectValue((prev) => ({
-              ...prev,
-              [key]: e.target.value,
-            }))
-          }
+          onChange={(e) => {
+            setCurrentSelectValue((prev) => {
+              return {
+                moralValue: {
+                  ...(prev?.moralValue ?? initial),
+                  [key]: e.target.value,
+                },
+              };
+            });
+          }}
         />
       ))}
     </Box>
