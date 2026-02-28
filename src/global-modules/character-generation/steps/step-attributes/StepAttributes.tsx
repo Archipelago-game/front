@@ -10,9 +10,9 @@ import {
   Slider,
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material/Select";
-import type { GenerationStepComponentProps } from "../types.ts";
-import type { DiceRollRequest, DiceRollResultCallback } from "../types.ts";
-import DiceRollBlock from "../DiceRollBlock.tsx";
+import type { GenerationStepComponentProps } from "../../types.ts";
+import type { DiceRollRequest, DiceRollResultCallback } from "../../types.ts";
+import DiceRollBlock from "../../DiceRollBlock.tsx";
 import {
   ATTRIBUTE_ORDER,
   ATTRIBUTE_MAX_MORTAL,
@@ -20,10 +20,9 @@ import {
   ATTRIBUTE_POINTS_TOTAL,
   ATTRIBUTE_BASE_PURCHASE,
   getAttributeBonusFromD6,
-} from "../consts/attribute-options.const.ts";
-import type { Stats } from "../../../modules/game-form/types/form/attributes.type.ts";
-
-type DistributionMethod = "standard" | "purchase" | "random";
+} from "../../consts/attribute-options.const.ts";
+import type { Stats } from "../../../../modules/game-form/types/form/attributes.type.ts";
+import type { DistributionMethod } from "./step-attributes.type.ts";
 
 const ATTRIBUTE_NAMES: Record<keyof Stats, string> = {
   dexterity: "Ловкость",
@@ -47,35 +46,6 @@ function getRemainingForStandard(
     if (idx !== -1) remaining.splice(idx, 1);
   }
   return remaining.sort((a, b) => a - b);
-}
-
-function isStandardValid(
-  attributeValues: Partial<Record<keyof Stats, number>>,
-): boolean {
-  const values = ATTRIBUTE_ORDER.map((k) => attributeValues[k]).filter(
-    (v): v is number => typeof v === "number",
-  );
-  if (values.length !== 6) return false;
-  const sorted = [...values].sort((a, b) => a - b);
-  const expected = [...STANDARD_ATTRIBUTE_SET].sort((a, b) => a - b);
-  return sorted.every((v, i) => v === expected[i]);
-}
-
-function isPurchaseValid(
-  attributeValues: Partial<Record<keyof Stats, number>>,
-): boolean {
-  const values = ATTRIBUTE_ORDER.map(
-    (k) => attributeValues[k] ?? ATTRIBUTE_BASE_PURCHASE,
-  );
-  const spent = values.reduce((s, v) => s + (v - ATTRIBUTE_BASE_PURCHASE), 0);
-  if (spent !== ATTRIBUTE_POINTS_TOTAL) return false;
-  const inRange = values.every(
-    (v) => v >= ATTRIBUTE_BASE_PURCHASE && v <= ATTRIBUTE_MAX_MORTAL,
-  );
-  if (!inRange) return false;
-  const count6 = values.filter((v) => v === 6).length;
-  const count12 = values.filter((v) => v === 12).length;
-  return count6 <= 1 && count12 <= 1;
 }
 
 export default function StepAttributes({
@@ -105,34 +75,6 @@ export default function StepAttributes({
       return typeof v === "number" && v < 6;
     });
   }, [currentValue?.attributeValues]);
-
-  // todo придумать как пробросить валидацию
-  // note закоментил чтобы пройти проверку lint
-  function isValid(): boolean {
-    if (method === "standard" && currentValue?.attributeValues) {
-      return isStandardValid(currentValue?.attributeValues);
-    }
-
-    if (method === "purchase" && currentValue?.attributeValues) {
-      return isPurchaseValid(currentValue?.attributeValues);
-    }
-
-    if (method === "random")
-      return ATTRIBUTE_ORDER.every(
-        (k) => typeof currentValue?.attributeValues?.[k] === "number",
-      );
-    return false;
-  }
-
-  // note оставил для примера
-  const handleNext = () => {
-    if (isValid() && currentValue?.attributeValues)
-      onComplete?.({
-        attributeValues: currentValue?.attributeValues as Partial<
-          Record<keyof Stats, number>
-        >,
-      });
-  };
 
   const handleStandardChange = (key: keyof Stats, value: number) => {
     handleSelect({ [key]: value });
