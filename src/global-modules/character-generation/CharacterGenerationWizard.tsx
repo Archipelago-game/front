@@ -23,8 +23,11 @@ export default function CharacterGenerationWizard({
   const [currentSelectValue, setCurrentSelectValue] =
     useState<GenerationStepPayload | null>(null);
 
+  const [context, setContext] = useState<unknown | null>(null);
+
   const step = GENERATION_STEPS[currentStepIndex];
   const StepComponent = step?.component;
+  const isStepValid = step?.validate?.(currentSelectValue, context);
 
   const handleForward = () => {
     if (currentSelectValue !== null) {
@@ -73,6 +76,8 @@ export default function CharacterGenerationWizard({
             isSubmitting={isSubmitting}
             currentValue={currentSelectValue}
             setCurrentSelectValue={setCurrentSelectValue}
+            context={context}
+            setContext={setContext}
           />
         )}
       </Box>
@@ -87,7 +92,11 @@ export default function CharacterGenerationWizard({
         <Button variant="contained" onClick={() => {}}>
           <ArrowBack fontSize="small" /> Назад
         </Button>
-        <Button variant="contained" onClick={handleForward}>
+        <Button
+          disabled={isSubmitting}
+          variant="contained"
+          onClick={handleForward}
+        >
           Далее
           <ArrowForward />
         </Button>

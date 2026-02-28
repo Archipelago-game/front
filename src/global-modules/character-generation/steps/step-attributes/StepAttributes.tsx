@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import {
   Box,
   Button,
@@ -21,7 +21,10 @@ import {
   getAttributeBonusFromD6,
 } from "../../consts/attribute-options.const.ts";
 import type { Stats } from "../../../../modules/game-form/types/form/attributes.type.ts";
-import type { DistributionMethod } from "./step-attributes.type.ts";
+import type {
+  DistributionMethod,
+  StepAttributesContext,
+} from "./step-attributes.type.ts";
 import { getRemainingForStandard } from "./get-remaining-for-standard.ts";
 
 const ATTRIBUTE_NAMES: Record<keyof Stats, string> = {
@@ -38,8 +41,13 @@ export default function StepAttributes({
   isSubmitting = false,
   currentValue,
   setCurrentSelectValue,
+  context,
+  setContext,
 }: GenerationStepComponentProps) {
-  const [method, setMethod] = useState<DistributionMethod>("standard");
+  const method = useMemo(() => {
+    const ctx = context as StepAttributesContext;
+    return ctx.method;
+  }, [context]);
 
   const race = characterData?.race;
   const isImmortal = race === "immortal";
@@ -71,7 +79,7 @@ export default function StepAttributes({
   };
 
   const resetForMethod = (newMethod: DistributionMethod) => {
-    setMethod(newMethod);
+    setContext({ method: newMethod });
     if (newMethod === "purchase") {
       const initial: Partial<Record<keyof Stats, number>> = {};
       ATTRIBUTE_ORDER.forEach((k) => {
