@@ -66,8 +66,6 @@ export default function CharactersPage() {
   };
 
   const importCharacter = async (userId: string, file?: File) => {
-    console.log("importCharacter");
-
     if (!file) {
       showMessage({ message: "Ошибка: файл не найден" });
       return;

@@ -3,7 +3,7 @@ import { GENERATION_STEPS } from "./generation-steps.config.ts";
 import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
 import type { GenerationStepPayload } from "./types.ts";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 interface CharacterGenerationWizardProps {
@@ -29,9 +29,12 @@ export default function CharacterGenerationWizard({
     step.getInitialContext(),
   );
 
+  useEffect(() => {
+    setContext(step.getInitialContext());
+  }, [currentStepIndex]);
+
   const StepComponent = step?.component;
   const isStepValid = step?.validate?.(currentSelectValue, context) ?? true;
-  console.log("isStepValid ", isStepValid);
 
   const handleForward = () => {
     if (currentSelectValue !== null) {

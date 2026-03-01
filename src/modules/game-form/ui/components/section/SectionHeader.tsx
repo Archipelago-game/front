@@ -21,8 +21,6 @@ export default function SectionHeader({
     return null;
   }
 
-  console.log(isExpanded);
-
   return (
     <Box mb={2}>
       {onClick && isExpanded != undefined && (

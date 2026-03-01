@@ -37,6 +37,22 @@ const ATTRIBUTE_NAMES: Record<keyof Stats, string> = {
   willpower: "Воля",
 };
 
+function isStepAttributesContext(
+  context: unknown,
+): context is StepAttributesContext {
+  if (typeof context !== "object" || context === null) {
+    return false;
+  }
+
+  if (!Object.hasOwn(context, "method")) {
+    return false;
+  }
+
+  const value = (context as Record<string, unknown>).method;
+
+  return value === "standard" || value === "purchase" || value === "random";
+}
+
 export default function StepAttributes({
   characterData,
   isSubmitting = false,
@@ -49,11 +65,6 @@ export default function StepAttributes({
 
   const race = characterData?.race;
   const isImmortal = race === "immortal";
-
-  const method = useMemo(() => {
-    const ctx = context as StepAttributesContext;
-    return ctx.method;
-  }, [context]);
 
   const spentPoints = useMemo(() => {
     return ATTRIBUTE_ORDER.reduce(
@@ -94,15 +105,21 @@ export default function StepAttributes({
     }
   };
 
-  useEffect(() => {
-    handleSelect({});
-  }, []);
-
   const handleSelect = (selected: Partial<Record<keyof Stats, number>>) => {
     setCurrentSelectValue((prev) => ({
       attributeValues: { ...prev?.attributeValues, ...selected },
     }));
   };
+
+  useEffect(() => {
+    handleSelect({});
+  }, []);
+
+  if (!isStepAttributesContext(context)) {
+    return null;
+  }
+
+  const method = context.method;
 
   return (
     <Box>

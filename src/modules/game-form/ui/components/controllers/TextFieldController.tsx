@@ -35,7 +35,7 @@ export default function TextFieldController(
     showSpinButtons = false,
   } = props;
   const defaultValue = fieldType === "number" ? 0 : "";
-  console.log(isShowChangeValueBtn);
+
   const formContext = useCustomFormContext();
   const { methods, onChange } = formContext;
 
