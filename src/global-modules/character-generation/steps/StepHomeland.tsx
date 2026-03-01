@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Button, Box, Typography } from "@mui/material";
 import DiceRollBlock from "../DiceRollBlock.tsx";
 import type {
@@ -22,42 +22,51 @@ function getInitialHomeland(characterData?: {
   race?: string;
   homeland?: string;
 }): HomelandOption | null {
-  const options = getVisibleOptions(characterData?.race);
-  if (characterData?.race === "cat" && !characterData?.homeland)
+  if (characterData?.race === "cat" && !characterData?.homeland) {
     return CAT_HOMELAND_OPTION;
-  if (!characterData?.homeland) return null;
+  }
+
+  const options = getVisibleOptions(characterData?.race);
+  if (!characterData?.homeland) {
+    return options[0];
+  }
   return options.find((o) => o.displayName === characterData.homeland) ?? null;
 }
 
-export default function StepHemland({
+export default function StepHomeland({
   characterData,
-  onComplete,
-  isSubmitting = false,
+  isSubmitting,
+  currentValue,
+  setCurrentSelectValue,
 }: GenerationStepComponentProps) {
   const isCat = characterData?.race === "cat";
   const visibleOptions = getVisibleOptions(characterData?.race);
-  const [selected, setSelected] = useState<HomelandOption | null>(
-    () => getInitialHomeland(characterData) ?? null,
-  );
-
-  const handleNext = () => {
-    if (selected)
-      onComplete?.({
-        homeland: selected.displayName,
-        languages: selected.language,
-      });
-  };
 
   const diceRequest: DiceRollRequest = { sides: 20, count: 1 };
   const handleDiceResult: DiceRollResultCallback = (values) => {
     const id = getHomelandByD20(values[0]);
     const option = visibleOptions.find((o) => o.id === id);
-    if (option) setSelected(option);
+    if (option) {
+      handleSelect(option);
+    }
+  };
+
+  useEffect(() => {
+    const initialValue = getInitialHomeland(characterData);
+    if (initialValue) {
+      handleSelect(initialValue);
+    }
+  }, []);
+
+  const handleSelect = (option: HomelandOption) => {
+    setCurrentSelectValue({
+      homeland: option.displayName,
+      languages: option.language,
+    });
   };
 
   return (
     <Box>
-      <Typography variant="h6">Родина</Typography>
       {isCat && (
         <Typography sx={{ mt: 1, mb: 1 }} color="text.secondary">
           Кошки родом с Островов Кошек. Вы можете выбрать родину для бэкстори;
@@ -68,8 +77,12 @@ export default function StepHemland({
         {visibleOptions.map((opt) => (
           <Button
             key={opt.id}
-            variant={selected?.id === opt.id ? "contained" : "outlined"}
-            onClick={() => setSelected(opt)}
+            variant={
+              currentValue?.homeland === opt.displayName
+                ? "contained"
+                : "outlined"
+            }
+            onClick={() => handleSelect(opt)}
           >
             {opt.displayName}
           </Button>
@@ -80,13 +93,6 @@ export default function StepHemland({
         onDiceResult={handleDiceResult}
         disabled={isSubmitting}
       />
-      <Button
-        variant="contained"
-        onClick={handleNext}
-        disabled={isSubmitting || !selected}
-      >
-        Далее
-      </Button>
     </Box>
   );
 }

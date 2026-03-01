@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { useMemo, useEffect } from "react";
+import { Box, TextField, Typography } from "@mui/material";
 import type { MoralValue } from "../../../modules/game-form/types/form/form.type.ts";
 import type { GenerationStepComponentProps } from "../types.ts";
 
@@ -24,31 +24,32 @@ function getInitialValues(
   characterData?: GenerationStepComponentProps["characterData"],
 ): MoralValue {
   const mv = characterData?.moralValue;
-  if (!mv) return { ...MORAL_VALUE_PROMPTS };
+  if (!mv) {
+    return { ...MORAL_VALUE_PROMPTS };
+  }
+
   const empty = (v: string) => v == null || v.trim() === "";
-  if (Object.values(mv).every(empty)) return { ...MORAL_VALUE_PROMPTS };
+  if (Object.values(mv).every(empty)) {
+    return { ...MORAL_VALUE_PROMPTS };
+  }
+
   return { ...MORAL_VALUE_PROMPTS, ...mv };
 }
 
 export default function StepValues({
   characterData,
-  onComplete,
-  isSubmitting = false,
+  currentValue,
+  setCurrentSelectValue,
 }: GenerationStepComponentProps) {
   const isCat = characterData?.race === "cat";
   const initial = useMemo(
     () => getInitialValues(characterData),
     [characterData],
   );
-  const [values, setValues] = useState<MoralValue>(initial);
 
-  const handleNext = () => {
-    if (isCat) {
-      onComplete?.({});
-    } else {
-      onComplete?.({ moralValue: values });
-    }
-  };
+  useEffect(() => {
+    setCurrentSelectValue({ moralValue: initial });
+  }, []);
 
   if (isCat) {
     return (
@@ -65,35 +66,37 @@ export default function StepValues({
             Правила
           </a>
         </Typography>
-        <Button
-          variant="contained"
-          onClick={handleNext}
-          disabled={isSubmitting}
-        >
-          Далее
-        </Button>
       </Box>
     );
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h6">Ценности</Typography>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", gap: 2, paddingTop: 1 }}
+    >
       {LABELS.map(({ key, label }) => (
         <TextField
           key={key}
           label={label}
           multiline
+          variant="outlined"
+          slotProps={{
+            inputLabel: { shrink: true },
+          }}
           rows={4}
-          value={values[key]}
-          onChange={(e) =>
-            setValues((prev) => ({ ...prev, [key]: e.target.value }))
-          }
+          value={currentValue?.moralValue?.[key]}
+          onChange={(e) => {
+            setCurrentSelectValue((prev) => {
+              return {
+                moralValue: {
+                  ...(prev?.moralValue ?? initial),
+                  [key]: e.target.value,
+                },
+              };
+            });
+          }}
         />
       ))}
-      <Button variant="contained" onClick={handleNext} disabled={isSubmitting}>
-        Далее
-      </Button>
     </Box>
   );
 }

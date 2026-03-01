@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import { api } from "../../api/api.ts";
@@ -83,7 +83,7 @@ export default function CharacterGenerationPage() {
             ...FORM_DEFAULT_VALUES,
             name: defaultName,
             race: payload.race,
-            wizard: { lastCompletedStepIndex: 0 },
+            wizard: { lastCompletedStepIndex: currentStepIndex },
           });
           navigate(`/character-generation/${id}`);
         } else if (characterDoc) {
@@ -93,7 +93,7 @@ export default function CharacterGenerationPage() {
               ...characterDoc.data,
               name: characterDoc.data.name || defaultName,
               race: payload.race,
-              wizard: { lastCompletedStepIndex: 0 },
+              wizard: { lastCompletedStepIndex: currentStepIndex },
             },
           };
           await api.saveCharacterForm(userInfo.uid, updated);
@@ -116,7 +116,7 @@ export default function CharacterGenerationPage() {
           data: {
             ...characterDoc.data,
             ...(payload?.moralValue && { moralValue: payload.moralValue }),
-            wizard: { lastCompletedStepIndex: 1 },
+            wizard: { lastCompletedStepIndex: currentStepIndex },
           },
         };
         await api.saveCharacterForm(userInfo.uid, updated);
@@ -144,7 +144,7 @@ export default function CharacterGenerationPage() {
             ...characterDoc.data,
             homeland: payload.homeland,
             languages: payload.languages ?? characterDoc.data.languages ?? "",
-            wizard: { lastCompletedStepIndex: 2 },
+            wizard: { lastCompletedStepIndex: currentStepIndex },
           },
         };
         await api.saveCharacterForm(userInfo.uid, updated);
@@ -177,7 +177,7 @@ export default function CharacterGenerationPage() {
           data: {
             ...characterDoc.data,
             stats,
-            wizard: { lastCompletedStepIndex: 3 },
+            wizard: { lastCompletedStepIndex: currentStepIndex },
           },
         };
         await api.saveCharacterForm(userInfo.uid, updated);
@@ -196,22 +196,13 @@ export default function CharacterGenerationPage() {
     return <Box>Персонажи не найдены</Box>;
   }
 
-  if (characterId && loadingCharacter) {
-    return (
-      <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
-
   return (
-    <Box sx={{ p: 2 }}>
-      <CharacterGenerationWizard
-        currentStepIndex={currentStepIndex}
-        characterData={characterDoc?.data}
-        onStepComplete={handleStepComplete}
-        isSubmitting={loading}
-      />
-    </Box>
+    <CharacterGenerationWizard
+      currentStepIndex={currentStepIndex}
+      setCurrentStepIndex={setCurrentStepIndex}
+      characterData={characterDoc?.data}
+      onStepComplete={handleStepComplete}
+      isSubmitting={loading || (!!characterId && loadingCharacter)}
+    />
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Box, Typography } from "@mui/material";
 import type { DiceRollRequest, DiceRollResultCallback } from "./types.ts";
+import CasinoIcon from "@mui/icons-material/Casino";
 
 interface DiceRollBlockProps {
   diceRequest: DiceRollRequest;
@@ -39,7 +40,7 @@ export default function DiceRollBlock({
         onClick={handleRoll}
         disabled={disabled || lastResult !== null}
       >
-        Бросить кубики
+        <CasinoIcon /> Бросить кубик
       </Button>
       {lastResult !== null && (
         <Typography sx={{ mt: 1 }}>

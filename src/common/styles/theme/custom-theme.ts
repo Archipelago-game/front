@@ -14,7 +14,8 @@ export const getTheme = (mode: "light" | "dark") =>
               main: "#C59B3A", // латунь / золото
             },
             success: {
-              main: "#587A4A", // травяной
+              main: "#1ED760",
+              // травяной 587A4A
             },
             info: {
               main: "#5C7A8C", // пыльно-синий металл
@@ -199,6 +200,29 @@ export const getTheme = (mode: "light" | "dark") =>
           },
         },
         variants: [
+          {
+            props: { variant: "text", color: "primary" },
+            style: {
+              backgroundColor: "transparent",
+              color: "#000",
+              transition: "color .3s ease",
+
+              "&:hover": {
+                color: "#F4F1EA",
+              },
+              "&:active": {
+                backgroundColor: "#A89578",
+                boxShadow: " 0 2px 4px rgba(0,0,0,0.25)",
+              },
+              "&:focus": {
+                boxShadow: " 0 2px 4px rgba(0,0,0,0.25)",
+              },
+              "&.Mui-disabled": {
+                backgroundColor: "#D9D0C4",
+                color: "rgba(43,38,33,0.4)",
+              },
+            },
+          },
           {
             props: { variant: "contained", color: "primary" },
             style: {

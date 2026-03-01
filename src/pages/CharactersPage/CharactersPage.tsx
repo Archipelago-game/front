@@ -5,7 +5,7 @@ import { useAuthContext } from "../../app/providers/auth-provider/use-auth-conte
 import { api } from "../../api/api.ts";
 
 import Characters from "../../modules/characters/Characters.tsx";
-import { GENERATION_STEPS } from "../../global-modules/character-generation/index.ts";
+import { GENERATION_STEPS } from "../../global-modules/character-generation";
 import { Box } from "@mui/system";
 
 import type { CharacterDocument } from "../../services/character/firebase-characters-service.ts";
@@ -66,8 +66,6 @@ export default function CharactersPage() {
   };
 
   const importCharacter = async (userId: string, file?: File) => {
-    console.log("importCharacter");
-
     if (!file) {
       showMessage({ message: "Ошибка: файл не найден" });
       return;
