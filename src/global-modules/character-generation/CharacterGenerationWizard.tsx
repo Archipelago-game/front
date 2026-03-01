@@ -3,11 +3,12 @@ import { GENERATION_STEPS } from "./generation-steps.config.ts";
 import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
 import type { GenerationStepPayload } from "./types.ts";
 
-import { useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
 interface CharacterGenerationWizardProps {
   currentStepIndex: number;
+  setCurrentStepIndex: Dispatch<SetStateAction<number>>;
   characterData?: FormType | null;
   onStepComplete: (payload?: GenerationStepPayload) => void;
   isSubmitting?: boolean;
@@ -15,6 +16,7 @@ interface CharacterGenerationWizardProps {
 
 export default function CharacterGenerationWizard({
   currentStepIndex,
+  setCurrentStepIndex,
   characterData,
   onStepComplete,
   isSubmitting = false,
@@ -96,7 +98,13 @@ export default function CharacterGenerationWizard({
           borderTop: `1px solid ${theme.palette.primary.main}`,
         }}
       >
-        <Button variant="contained" onClick={() => {}}>
+        <Button
+          disabled={currentStepIndex === 0}
+          variant="contained"
+          onClick={() =>
+            setCurrentStepIndex((prev) => (prev === 0 ? 0 : prev - 1))
+          }
+        >
           <ArrowBack fontSize="small" /> Назад
         </Button>
         <Button
