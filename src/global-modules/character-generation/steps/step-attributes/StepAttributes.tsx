@@ -162,9 +162,9 @@ export default function StepAttributes({
       )}
 
       {method === "purchase" && (
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ overflowX: "hidden" }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            База 6 для всех. Очков: {spentPoints} / {ATTRIBUTE_POINTS_TOTAL}.
+            Очков: {spentPoints} / {ATTRIBUTE_POINTS_TOTAL}. База 6 для всех.
             Мин 6, макс {ATTRIBUTE_MAX_MORTAL}. Один атрибут может быть 6, один
             — 12.
           </Typography>
@@ -175,22 +175,24 @@ export default function StepAttributes({
                 {currentValue?.attributeValues?.[key] ??
                   ATTRIBUTE_BASE_PURCHASE}
               </Typography>
-              <Slider
-                value={
-                  currentValue?.attributeValues?.[key] ??
-                  ATTRIBUTE_BASE_PURCHASE
-                }
-                min={ATTRIBUTE_BASE_PURCHASE}
-                max={ATTRIBUTE_MAX_MORTAL}
-                step={1}
-                marks
-                valueLabelDisplay="auto"
-                onChange={(_, value) =>
-                  handleSelect({
-                    [key]: Array.isArray(value) ? value[0] : value,
-                  })
-                }
-              />
+              <Box sx={{ paddingInline: "20px" }}>
+                <Slider
+                  value={
+                    currentValue?.attributeValues?.[key] ??
+                    ATTRIBUTE_BASE_PURCHASE
+                  }
+                  min={ATTRIBUTE_BASE_PURCHASE}
+                  max={ATTRIBUTE_MAX_MORTAL}
+                  step={1}
+                  marks
+                  valueLabelDisplay="auto"
+                  onChange={(_, value) =>
+                    handleSelect({
+                      [key]: Array.isArray(value) ? value[0] : value,
+                    })
+                  }
+                />
+              </Box>
             </Box>
           ))}
         </Box>
