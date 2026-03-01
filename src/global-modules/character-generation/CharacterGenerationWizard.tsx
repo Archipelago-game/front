@@ -1,10 +1,19 @@
-import { Box, Stepper, Step, StepLabel, Button, useTheme } from "@mui/material";
+import {
+  Box,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  useTheme,
+  CircularProgress,
+} from "@mui/material";
 import { GENERATION_STEPS } from "./generation-steps.config.ts";
 import type { FormType } from "../../modules/game-form/types/form/form.type.ts";
 import type { GenerationStepPayload } from "./types.ts";
 
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import { overflowYBaseStyles } from "../../common/styles/overflow-y-base.css.ts";
 
 interface CharacterGenerationWizardProps {
   currentStepIndex: number;
@@ -75,9 +84,27 @@ export default function CharacterGenerationWizard({
       </Stepper>
       <Box
         sx={{
-          overflowY: "auto",
+          position: "relative",
+          ...overflowYBaseStyles,
+          overflow: isSubmitting ? "hidden" : "auto",
         }}
       >
+        {isSubmitting && (
+          <Box
+            sx={{
+              position: "absolute",
+              inset: "0",
+              zIndex: "10000",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backdropFilter: "blur(2px)",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
+
         {StepComponent && (
           <StepComponent
             characterData={characterData ?? undefined}

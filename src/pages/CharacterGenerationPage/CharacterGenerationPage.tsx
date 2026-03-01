@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 import { useSnackbarContext } from "../../app/providers/snackbar-provider/use-snackbar-context.hook.ts";
 import { api } from "../../api/api.ts";
@@ -196,23 +196,13 @@ export default function CharacterGenerationPage() {
     return <Box>Персонажи не найдены</Box>;
   }
 
-  if (characterId && loadingCharacter) {
-    return (
-      <Box
-        sx={{ display: "flex", justifyContent: "center", pt: 4, pb: 4, pl: 0 }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-
   return (
     <CharacterGenerationWizard
       currentStepIndex={currentStepIndex}
       setCurrentStepIndex={setCurrentStepIndex}
       characterData={characterDoc?.data}
       onStepComplete={handleStepComplete}
-      isSubmitting={loading}
+      isSubmitting={loading || (!!characterId && loadingCharacter)}
     />
   );
 }

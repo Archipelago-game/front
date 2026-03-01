@@ -71,7 +71,9 @@ export default function StepValues({
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", gap: 2, paddingTop: 1 }}
+    >
       {LABELS.map(({ key, label }) => (
         <TextField
           key={key}
