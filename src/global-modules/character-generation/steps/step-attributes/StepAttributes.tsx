@@ -44,13 +44,13 @@ export default function StepAttributes({
   context,
   setContext,
 }: GenerationStepComponentProps) {
+  const race = characterData?.race;
+  const isImmortal = race === "immortal";
+
   const method = useMemo(() => {
     const ctx = context as StepAttributesContext;
     return ctx.method;
   }, [context]);
-
-  const race = characterData?.race;
-  const isImmortal = race === "immortal";
 
   const spentPoints = useMemo(() => {
     return ATTRIBUTE_ORDER.reduce(

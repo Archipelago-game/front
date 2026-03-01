@@ -35,6 +35,7 @@ export interface GenerationStep {
     payload: GenerationStepPayload | null,
     context: unknown,
   ) => boolean;
+  getInitialContext: () => unknown;
 }
 
 /** Параметры запроса броска для блока кубиков */

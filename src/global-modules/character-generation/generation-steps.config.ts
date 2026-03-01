@@ -3,7 +3,10 @@ import StepNature from "./steps/StepNature.tsx";
 import StepValues from "./steps/StepValues.tsx";
 import StepHomeland from "./steps/StepHomeland.tsx";
 import StepAttributes from "./steps/step-attributes/StepAttributes.tsx";
-import type { StepAttributesContext } from "./steps/step-attributes/step-attributes.type.ts";
+import type {
+  DistributionMethod,
+  StepAttributesContext,
+} from "./steps/step-attributes/step-attributes.type.ts";
 import {
   isPurchaseValid,
   isRandomValid,
@@ -11,16 +14,46 @@ import {
 } from "./steps/step-attributes/payload-validation.util.ts";
 
 export const GENERATION_STEPS: GenerationStep[] = [
-  { id: "nature", title: "Природа персонажа", component: StepNature },
-  { id: "values", title: "Ценности", component: StepValues },
-  { id: "homeland", title: "Родина", component: StepHomeland },
+  {
+    id: "nature",
+    title: "Природа персонажа",
+    component: StepNature,
+    getInitialContext() {
+      return null;
+    },
+  },
+  {
+    id: "values",
+    title: "Ценности",
+    component: StepValues,
+    getInitialContext() {
+      return null;
+    },
+  },
+  {
+    id: "homeland",
+    title: "Родина",
+    component: StepHomeland,
+    getInitialContext() {
+      return null;
+    },
+  },
   {
     id: "attributes",
     title: "Атрибуты",
     component: StepAttributes,
     validate: (payload, context) => {
-      const ctx = context as StepAttributesContext;
       if (!payload?.attributeValues) {
+        return false;
+      }
+
+      if (!context) {
+        return false;
+      }
+
+      const ctx = context as StepAttributesContext;
+
+      if (!ctx?.method) {
         return false;
       }
 
@@ -34,6 +67,9 @@ export const GENERATION_STEPS: GenerationStep[] = [
         case "random":
           return isRandomValid(payload.attributeValues);
       }
+    },
+    getInitialContext() {
+      return { method: "standard" } as { method: DistributionMethod };
     },
   },
 ];
