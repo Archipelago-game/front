@@ -26,6 +26,7 @@ import type {
   StepAttributesContext,
 } from "./step-attributes.type.ts";
 import { getRemainingForStandard } from "./get-remaining-for-standard.ts";
+import { useTheme } from "@mui/material/styles";
 
 const ATTRIBUTE_NAMES: Record<keyof Stats, string> = {
   dexterity: "Ловкость",
@@ -44,6 +45,8 @@ export default function StepAttributes({
   context,
   setContext,
 }: GenerationStepComponentProps) {
+  const theme = useTheme();
+
   const race = characterData?.race;
   const isImmortal = race === "immortal";
 
@@ -164,9 +167,19 @@ export default function StepAttributes({
       {method === "purchase" && (
         <Box sx={{ overflowX: "hidden" }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            Очков: {spentPoints} / {ATTRIBUTE_POINTS_TOTAL}. База 6 для всех.
-            Мин 6, макс {ATTRIBUTE_MAX_MORTAL}. Один атрибут может быть 6, один
-            — 12.
+            Очков:&nbsp;
+            <Box
+              component="span"
+              color={
+                spentPoints === ATTRIBUTE_POINTS_TOTAL
+                  ? theme.palette.success.main
+                  : theme.palette.error.main
+              }
+            >
+              <b>{spentPoints}</b>&nbsp;
+            </Box>
+            / <b>{ATTRIBUTE_POINTS_TOTAL}</b>. База 6 для всех. Мин 6, макс{" "}
+            {ATTRIBUTE_MAX_MORTAL}. Один атрибут может быть 6, один — 12.
           </Typography>
           {ATTRIBUTE_ORDER.map((key) => (
             <Box key={key} sx={{ mb: 1 }}>

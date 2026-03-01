@@ -14,7 +14,8 @@ export const getTheme = (mode: "light" | "dark") =>
               main: "#C59B3A", // латунь / золото
             },
             success: {
-              main: "#587A4A", // травяной
+              main: "#1ED760",
+              // травяной 587A4A
             },
             info: {
               main: "#5C7A8C", // пыльно-синий металл
