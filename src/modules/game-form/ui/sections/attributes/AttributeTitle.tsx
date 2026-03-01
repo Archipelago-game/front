@@ -1,9 +1,9 @@
 import { Box, Divider, Stack } from "@mui/material";
 
-import { type DefaultFieldControllerProps } from "../../components/controllers/TextFieldController.tsx";
 import { useTheme } from "@mui/material/styles";
 import SubTitle from "../../components/section/SubTitle.tsx";
 import TextFieldControllerNew from "../../components/controllers/TextFieldControllerNew.tsx";
+import type { DefaultFieldControllerProps } from "../../components/controllers/type.ts";
 
 interface Props extends DefaultFieldControllerProps {
   title: string;

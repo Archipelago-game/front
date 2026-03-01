@@ -45,7 +45,9 @@ export interface FirebaseError {
   message: string;
 }
 
-function removeUndefined<T extends Record<string, unknown>>(obj: T): DocumentData {
+function removeUndefined<T extends Record<string, unknown>>(
+  obj: T,
+): DocumentData {
   const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(obj)) {
     if (value === undefined) continue;
@@ -63,7 +65,8 @@ function removeUndefined<T extends Record<string, unknown>>(obj: T): DocumentDat
 
 const characterConverter: FirestoreDataConverter<CharacterDocument> = {
   toFirestore(character: CharacterDocument): DocumentData {
-    const { id, ...rest } = character;
+    // note удалил id по настоянию prettier
+    const { ...rest } = character;
     return removeUndefined(rest as Record<string, unknown>);
   },
   fromFirestore(snapshot, options): CharacterDocument {
