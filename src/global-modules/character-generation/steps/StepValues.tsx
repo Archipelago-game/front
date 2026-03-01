@@ -72,7 +72,6 @@ export default function StepValues({
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h6">Ценности</Typography>
       {LABELS.map(({ key, label }) => (
         <TextField
           key={key}

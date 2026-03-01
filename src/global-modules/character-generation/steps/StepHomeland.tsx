@@ -67,7 +67,6 @@ export default function StepHomeland({
 
   return (
     <Box>
-      <Typography variant="h6">Родина</Typography>
       {isCat && (
         <Typography sx={{ mt: 1, mb: 1 }} color="text.secondary">
           Кошки родом с Островов Кошек. Вы можете выбрать родину для бэкстори;

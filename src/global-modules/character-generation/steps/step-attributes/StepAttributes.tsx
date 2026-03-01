@@ -106,7 +106,6 @@ export default function StepAttributes({
 
   return (
     <Box>
-      <Typography variant="h6">Атрибуты</Typography>
       {isImmortal && (
         <Typography sx={{ mt: 1, mb: 1 }} color="text.secondary">
           На старте лимит 12; до 14 — только «засоленным» опытом после смерти.
