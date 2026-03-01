@@ -209,6 +209,7 @@ export default function CharacterGenerationPage() {
   return (
     <CharacterGenerationWizard
       currentStepIndex={currentStepIndex}
+      setCurrentStepIndex={setCurrentStepIndex}
       characterData={characterDoc?.data}
       onStepComplete={handleStepComplete}
       isSubmitting={loading}

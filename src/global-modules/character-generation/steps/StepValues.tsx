@@ -72,7 +72,6 @@ export default function StepValues({
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <Typography variant="h6">Ценности</Typography>
       {LABELS.map(({ key, label }) => (
         <TextField
           key={key}
@@ -84,12 +83,16 @@ export default function StepValues({
           }}
           rows={4}
           value={currentValue?.moralValue?.[key]}
-          onChange={(e) =>
-            setCurrentSelectValue((prev) => ({
-              ...prev,
-              [key]: e.target.value,
-            }))
-          }
+          onChange={(e) => {
+            setCurrentSelectValue((prev) => {
+              return {
+                moralValue: {
+                  ...(prev?.moralValue ?? initial),
+                  [key]: e.target.value,
+                },
+              };
+            });
+          }}
         />
       ))}
     </Box>

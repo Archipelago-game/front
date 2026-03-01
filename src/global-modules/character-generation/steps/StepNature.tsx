@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Button, Box, Typography } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { mapRace } from "../../../modules/game-form/consts/map-race.const.ts";
 import type { Race } from "../../../modules/game-form/types/form/form.type.ts";
 import DiceRollBlock from "../DiceRollBlock.tsx";
@@ -17,17 +17,11 @@ function getRaceByD20(value: number): Race {
 
 const RACES: Race[] = ["human", "immortal", "cat"];
 
-// todo перенести спинер на isSubmitting в GenerationWizard
-
 export default function StepNature({
   characterData,
-  isSubmitting = false,
   currentValue,
   setCurrentSelectValue,
 }: GenerationStepComponentProps) {
-  // todo удалить
-  console.log(isSubmitting);
-
   useEffect(() => {
     setCurrentSelectValue({ race: characterData?.race ?? "human" });
   }, []);
@@ -40,7 +34,6 @@ export default function StepNature({
 
   return (
     <Box>
-      <Typography variant="h6">Выберите природу персонажа</Typography>
       <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
         {RACES.map((race) => (
           <Button

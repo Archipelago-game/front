@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useMemo, useEffect } from "react";
 import {
   Box,
   Button,
@@ -10,20 +10,23 @@ import {
   Slider,
 } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material/Select";
-import type { GenerationStepComponentProps } from "../types.ts";
-import type { DiceRollRequest, DiceRollResultCallback } from "../types.ts";
-import DiceRollBlock from "../DiceRollBlock.tsx";
+import type { GenerationStepComponentProps } from "../../types.ts";
+import type { DiceRollRequest, DiceRollResultCallback } from "../../types.ts";
+import DiceRollBlock from "../../DiceRollBlock.tsx";
 import {
   ATTRIBUTE_ORDER,
   ATTRIBUTE_MAX_MORTAL,
-  STANDARD_ATTRIBUTE_SET,
   ATTRIBUTE_POINTS_TOTAL,
   ATTRIBUTE_BASE_PURCHASE,
   getAttributeBonusFromD6,
-} from "../consts/attribute-options.const.ts";
-import type { Stats } from "../../../modules/game-form/types/form/attributes.type.ts";
-
-type DistributionMethod = "standard" | "purchase" | "random";
+} from "../../consts/attribute-options.const.ts";
+import type { Stats } from "../../../../modules/game-form/types/form/attributes.type.ts";
+import type {
+  DistributionMethod,
+  StepAttributesContext,
+} from "./step-attributes.type.ts";
+import { getRemainingForStandard } from "./get-remaining-for-standard.ts";
+import { useTheme } from "@mui/material/styles";
 
 const ATTRIBUTE_NAMES: Record<keyof Stats, string> = {
   dexterity: "Ловкость",
@@ -34,57 +37,31 @@ const ATTRIBUTE_NAMES: Record<keyof Stats, string> = {
   willpower: "Воля",
 };
 
-function getRemainingForStandard(
-  attributeValues: Partial<Record<keyof Stats, number>>,
-  excludeKey: keyof Stats,
-): number[] {
-  const used = ATTRIBUTE_ORDER.filter((k) => k !== excludeKey)
-    .map((k) => attributeValues[k])
-    .filter((v): v is number => typeof v === "number");
-  const remaining = STANDARD_ATTRIBUTE_SET.slice();
-  for (const v of used) {
-    const idx = remaining.indexOf(v);
-    if (idx !== -1) remaining.splice(idx, 1);
+function isStepAttributesContext(
+  context: unknown,
+): context is StepAttributesContext {
+  if (typeof context !== "object" || context === null) {
+    return false;
   }
-  return remaining.sort((a, b) => a - b);
-}
 
-// function isStandardValid(
-//   attributeValues: Partial<Record<keyof Stats, number>>,
-// ): boolean {
-//   const values = ATTRIBUTE_ORDER.map((k) => attributeValues[k]).filter(
-//     (v): v is number => typeof v === "number",
-//   );
-//   if (values.length !== 6) return false;
-//   const sorted = [...values].sort((a, b) => a - b);
-//   const expected = [...STANDARD_ATTRIBUTE_SET].sort((a, b) => a - b);
-//   return sorted.every((v, i) => v === expected[i]);
-// }
-//
-// function isPurchaseValid(
-//   attributeValues: Partial<Record<keyof Stats, number>>,
-// ): boolean {
-//   const values = ATTRIBUTE_ORDER.map(
-//     (k) => attributeValues[k] ?? ATTRIBUTE_BASE_PURCHASE,
-//   );
-//   const spent = values.reduce((s, v) => s + (v - ATTRIBUTE_BASE_PURCHASE), 0);
-//   if (spent !== ATTRIBUTE_POINTS_TOTAL) return false;
-//   const inRange = values.every(
-//     (v) => v >= ATTRIBUTE_BASE_PURCHASE && v <= ATTRIBUTE_MAX_MORTAL,
-//   );
-//   if (!inRange) return false;
-//   const count6 = values.filter((v) => v === 6).length;
-//   const count12 = values.filter((v) => v === 12).length;
-//   return count6 <= 1 && count12 <= 1;
-// }
+  if (!Object.hasOwn(context, "method")) {
+    return false;
+  }
+
+  const value = (context as Record<string, unknown>).method;
+
+  return value === "standard" || value === "purchase" || value === "random";
+}
 
 export default function StepAttributes({
   characterData,
   isSubmitting = false,
   currentValue,
   setCurrentSelectValue,
+  context,
+  setContext,
 }: GenerationStepComponentProps) {
-  const [method, setMethod] = useState<DistributionMethod>("standard");
+  const theme = useTheme();
 
   const race = characterData?.race;
   const isImmortal = race === "immortal";
@@ -106,42 +83,6 @@ export default function StepAttributes({
     });
   }, [currentValue?.attributeValues]);
 
-  // todo придумать как пробросить валидацию
-  // note закоментил чтобы пройти проверку lint
-  // function isValid(): boolean {
-  //   if (method === "standard" && currentValue?.attributeValues) {
-  //     return isStandardValid(currentValue?.attributeValues);
-  //   }
-  //
-  //   if (method === "purchase" && currentValue?.attributeValues) {
-  //     return isPurchaseValid(currentValue?.attributeValues);
-  //   }
-  //
-  //   if (method === "random")
-  //     return ATTRIBUTE_ORDER.every(
-  //       (k) => typeof currentValue?.attributeValues?.[k] === "number",
-  //     );
-  //   return false;
-  // }
-
-  // note оставил для примера
-  // const handleNext = () => {
-  //   if (isValid() && currentValue?.attributeValues)
-  //     onComplete?.({
-  //       attributeValues: currentValue?.attributeValues as Partial<
-  //         Record<keyof Stats, number>
-  //       >,
-  //     });
-  // };
-
-  const handleStandardChange = (key: keyof Stats, value: number) => {
-    handleSelect({ [key]: value });
-  };
-
-  const handlePurchaseChange = (key: keyof Stats, value: number) => {
-    handleSelect({ [key]: value });
-  };
-
   const diceRequest: DiceRollRequest = { sides: 6, count: 6 };
   const handleDiceResult: DiceRollResultCallback = (values) => {
     const next: Partial<Record<keyof Stats, number>> = {};
@@ -152,7 +93,7 @@ export default function StepAttributes({
   };
 
   const resetForMethod = (newMethod: DistributionMethod) => {
-    setMethod(newMethod);
+    setContext({ method: newMethod });
     if (newMethod === "purchase") {
       const initial: Partial<Record<keyof Stats, number>> = {};
       ATTRIBUTE_ORDER.forEach((k) => {
@@ -164,19 +105,24 @@ export default function StepAttributes({
     }
   };
 
-  useEffect(() => {
-    handleSelect({});
-  }, []);
-
   const handleSelect = (selected: Partial<Record<keyof Stats, number>>) => {
     setCurrentSelectValue((prev) => ({
       attributeValues: { ...prev?.attributeValues, ...selected },
     }));
   };
 
+  useEffect(() => {
+    handleSelect({});
+  }, []);
+
+  if (!isStepAttributesContext(context)) {
+    return null;
+  }
+
+  const method = context.method;
+
   return (
     <Box>
-      <Typography variant="h6">Атрибуты</Typography>
       {isImmortal && (
         <Typography sx={{ mt: 1, mb: 1 }} color="text.secondary">
           На старте лимит 12; до 14 — только «засоленным» опытом после смерти.
@@ -216,7 +162,7 @@ export default function StepAttributes({
                 value={currentValue?.attributeValues?.[key] ?? ""}
                 label={ATTRIBUTE_NAMES[key]}
                 onChange={(e: SelectChangeEvent<number>) =>
-                  handleStandardChange(key, Number(e.target.value))
+                  handleSelect({ [key]: Number(e.target.value) })
                 }
               >
                 {currentValue?.attributeValues &&
@@ -235,11 +181,21 @@ export default function StepAttributes({
       )}
 
       {method === "purchase" && (
-        <Box sx={{ mb: 2 }}>
+        <Box sx={{ overflowX: "hidden" }}>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            База 6 для всех. Очков: {spentPoints} / {ATTRIBUTE_POINTS_TOTAL}.
-            Мин 6, макс {ATTRIBUTE_MAX_MORTAL}. Один атрибут может быть 6, один
-            — 12.
+            Очков:&nbsp;
+            <Box
+              component="span"
+              color={
+                spentPoints === ATTRIBUTE_POINTS_TOTAL
+                  ? theme.palette.success.main
+                  : theme.palette.error.main
+              }
+            >
+              <b>{spentPoints}</b>&nbsp;
+            </Box>
+            / <b>{ATTRIBUTE_POINTS_TOTAL}</b>. База 6 для всех. Мин 6, макс{" "}
+            {ATTRIBUTE_MAX_MORTAL}. Один атрибут может быть 6, один — 12.
           </Typography>
           {ATTRIBUTE_ORDER.map((key) => (
             <Box key={key} sx={{ mb: 1 }}>
@@ -248,23 +204,24 @@ export default function StepAttributes({
                 {currentValue?.attributeValues?.[key] ??
                   ATTRIBUTE_BASE_PURCHASE}
               </Typography>
-              <Slider
-                value={
-                  currentValue?.attributeValues?.[key] ??
-                  ATTRIBUTE_BASE_PURCHASE
-                }
-                min={ATTRIBUTE_BASE_PURCHASE}
-                max={ATTRIBUTE_MAX_MORTAL}
-                step={1}
-                marks
-                valueLabelDisplay="auto"
-                onChange={(_, value) =>
-                  handlePurchaseChange(
-                    key,
-                    Array.isArray(value) ? value[0] : value,
-                  )
-                }
-              />
+              <Box sx={{ paddingInline: "20px" }}>
+                <Slider
+                  value={
+                    currentValue?.attributeValues?.[key] ??
+                    ATTRIBUTE_BASE_PURCHASE
+                  }
+                  min={ATTRIBUTE_BASE_PURCHASE}
+                  max={ATTRIBUTE_MAX_MORTAL}
+                  step={1}
+                  marks
+                  valueLabelDisplay="auto"
+                  onChange={(_, value) =>
+                    handleSelect({
+                      [key]: Array.isArray(value) ? value[0] : value,
+                    })
+                  }
+                />
+              </Box>
             </Box>
           ))}
         </Box>

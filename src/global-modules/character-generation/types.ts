@@ -22,6 +22,8 @@ export interface GenerationStepComponentProps {
   isSubmitting?: boolean;
   currentValue: GenerationStepPayload | null;
   setCurrentSelectValue: Dispatch<SetStateAction<GenerationStepPayload | null>>;
+  context: unknown;
+  setContext: Dispatch<SetStateAction<unknown | null>>;
 }
 
 /** Описание шага визарда */
@@ -29,6 +31,11 @@ export interface GenerationStep {
   id: string;
   title: string;
   component: ComponentType<GenerationStepComponentProps>;
+  validate?: (
+    payload: GenerationStepPayload | null,
+    context: unknown,
+  ) => boolean;
+  getInitialContext: () => unknown;
 }
 
 /** Параметры запроса броска для блока кубиков */
