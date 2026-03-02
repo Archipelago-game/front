@@ -4,27 +4,32 @@ import "swiper/swiper.css";
 
 import type { ReactNode } from "react";
 
+import type { SwiperOptions } from "swiper/types";
+
 export interface CarouselItem<T extends string | number> {
   id: T;
   element: ReactNode;
 }
 
 interface Props<T extends string | number> {
+  swiperProps: SwiperOptions;
   items: CarouselItem<T>[];
-  slidesToShow?: number;
-  spaceBetween?: number;
   onClick?: (id: T) => void;
 }
 
 export default function Carousel<T extends string | number>({
+  swiperProps,
   items,
-  slidesToShow = 3,
-  spaceBetween = 16,
   onClick,
 }: Props<T>) {
+  const { spaceBetween = 16, slidesPerView = 3, ...rest } = swiperProps;
   return (
     <Box width="100%">
-      <Swiper slidesPerView={slidesToShow} spaceBetween={spaceBetween} loop>
+      <Swiper
+        {...rest}
+        spaceBetween={spaceBetween}
+        slidesPerView={slidesPerView}
+      >
         {items.map((item) => (
           <SwiperSlide key={item.id}>
             <Box sx={{ cursor: "pointer" }} onClick={() => onClick?.(item.id)}>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Button, Box } from "@mui/material";
-import { mapRace } from "../../../modules/game-form/consts/map-race.const.ts";
+import { Box } from "@mui/material";
+
 import type { Race } from "../../../modules/game-form/types/form/form.type.ts";
 import DiceRollBlock from "../DiceRollBlock.tsx";
 import type {
@@ -14,6 +14,7 @@ import Carousel, {
 import HumanSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/HumanSilhouette.tsx";
 import ImmortalSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/ImmortalSilhouette.tsx";
 import CatSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/CatSilhouette.tsx";
+import { EffectCoverflow } from "swiper/modules";
 
 function getRaceByD20(value: number): Race {
   if (value === 4) return "immortal";
@@ -21,9 +22,21 @@ function getRaceByD20(value: number): Race {
   return "human";
 }
 
-const RACES: Race[] = ["human", "immortal", "cat"];
+// const RACES: Race[] = ["human", "immortal", "cat"];
 
 const RACE_LIST: CarouselItem<Race>[] = [
+  {
+    id: "human",
+    element: <HumanSilhouette imgSx={{ height: "100%", width: "auto" }} />,
+  },
+  {
+    id: "immortal",
+    element: <ImmortalSilhouette />,
+  },
+  {
+    id: "cat",
+    element: <CatSilhouette />,
+  },
   {
     id: "human",
     element: <HumanSilhouette imgSx={{ height: "100%", width: "auto" }} />,
@@ -40,7 +53,7 @@ const RACE_LIST: CarouselItem<Race>[] = [
 
 export default function StepNature({
   characterData,
-  currentValue,
+  // currentValue,
   setCurrentSelectValue,
 }: GenerationStepComponentProps) {
   useEffect(() => {
@@ -55,21 +68,44 @@ export default function StepNature({
 
   return (
     <Box>
-      <Box sx={{ width: "200px", position: "relative", margin: "0 auto" }}>
-        <Carousel items={RACE_LIST} slidesToShow={1} />
+      <Box
+        sx={{
+          width: "500px",
+          margin: "0 auto",
+        }}
+      >
+        <Box
+          sx={{
+            position: "relative",
+            "&::before": {
+              left: 0,
+            },
+            "&::after": {
+              right: 0,
+            },
+          }}
+        >
+          <Carousel
+            items={RACE_LIST}
+            onClick={(id) => setCurrentSelectValue(id)}
+            swiperProps={{
+              modules: [EffectCoverflow],
+              effect: "coverflow",
+              centeredSlides: true,
+              loop: true,
+              grabCursor: true,
+              coverflowEffect: {
+                rotate: 40,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: false,
+              },
+            }}
+          />
+        </Box>
       </Box>
 
-      <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
-        {RACES.map((race) => (
-          <Button
-            key={race}
-            variant={currentValue?.race === race ? "contained" : "outlined"}
-            onClick={() => setCurrentSelectValue({ race })}
-          >
-            {mapRace[race]}
-          </Button>
-        ))}
-      </Box>
       <DiceRollBlock
         diceRequest={diceRequest}
         onDiceResult={handleDiceResult}
