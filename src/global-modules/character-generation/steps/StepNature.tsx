@@ -26,7 +26,7 @@ const RACES: Race[] = ["human", "immortal", "cat"];
 const RACE_LIST: CarouselItem<Race>[] = [
   {
     id: "human",
-    element: <HumanSilhouette />,
+    element: <HumanSilhouette imgSx={{ height: "100%", width: "auto" }} />,
   },
   {
     id: "immortal",
@@ -55,7 +55,7 @@ export default function StepNature({
 
   return (
     <Box>
-      <Box sx={{ height: "50%", position: "relative" }}>
+      <Box sx={{ width: "200px", position: "relative", margin: "0 auto" }}>
         <Carousel items={RACE_LIST} slidesToShow={1} />
       </Box>
 

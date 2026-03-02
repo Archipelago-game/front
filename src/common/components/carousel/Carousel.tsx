@@ -24,14 +24,14 @@ export default function Carousel<T extends string | number>({
 }: Props<T>) {
   return (
     <Box width="100%">
-      <Swiper slidesPerView={slidesToShow} spaceBetween={spaceBetween}>
+      <Swiper slidesPerView={slidesToShow} spaceBetween={spaceBetween} loop>
         {items.map((item) => (
           <SwiperSlide key={item.id}>
             <Box sx={{ cursor: "pointer" }} onClick={() => onClick?.(item.id)}>
               <Box
                 sx={{
                   width: "100%",
-                  height: "300px",
+                  height: "auto",
                   objectFit: "fill",
                 }}
               >
