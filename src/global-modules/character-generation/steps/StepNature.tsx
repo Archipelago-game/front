@@ -8,6 +8,12 @@ import type {
   DiceRollResultCallback,
   GenerationStepComponentProps,
 } from "../types.ts";
+import Carousel, {
+  type CarouselItem,
+} from "../../../common/components/carousel/Carousel.tsx";
+import HumanSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/HumanSilhouette.tsx";
+import ImmortalSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/ImmortalSilhouette.tsx";
+import CatSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/CatSilhouette.tsx";
 
 function getRaceByD20(value: number): Race {
   if (value === 4) return "immortal";
@@ -16,6 +22,21 @@ function getRaceByD20(value: number): Race {
 }
 
 const RACES: Race[] = ["human", "immortal", "cat"];
+
+const RACE_LIST: CarouselItem<Race>[] = [
+  {
+    id: "human",
+    element: <HumanSilhouette />,
+  },
+  {
+    id: "immortal",
+    element: <ImmortalSilhouette />,
+  },
+  {
+    id: "cat",
+    element: <CatSilhouette />,
+  },
+];
 
 export default function StepNature({
   characterData,
@@ -34,6 +55,10 @@ export default function StepNature({
 
   return (
     <Box>
+      <Box sx={{ height: "50%", position: "relative" }}>
+        <Carousel items={RACE_LIST} slidesToShow={1} />
+      </Box>
+
       <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
         {RACES.map((race) => (
           <Button
