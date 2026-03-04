@@ -1,15 +1,15 @@
 import { Box } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper";
 import { Navigation } from "swiper/modules";
 
-import type { Swiper as SwiperInstance } from "swiper";
 import "swiper/swiper.css";
-import "swiper/css";
-import "swiper/css/navigation";
 
 import { type ReactNode, useEffect, useRef } from "react";
 import type { SwiperOptions } from "swiper/types";
-import { useTheme } from "@mui/material/styles";
+
+import ArrowTriangleLeft from "../icons/ArrowTriangleLeft.tsx";
+import ArrowTriangleRight from "../icons/ArrowTriangleRight.tsx";
 
 export interface CarouselItem<T extends string | number> {
   id: T;
@@ -18,30 +18,53 @@ export interface CarouselItem<T extends string | number> {
 
 interface Props<T extends string | number> {
   items: CarouselItem<T>[];
-  onClick?: (id: T) => void;
+  onChange?: (id: T) => void;
   value?: number | string;
+  disabled?: boolean;
   swiperOptions?: SwiperOptions;
 }
 
 export default function Carousel<T extends string | number>({
   items,
   swiperOptions,
-  onClick,
+  onChange,
   value,
+  disabled = false,
 }: Props<T>) {
   const { slidesPerView = 3, spaceBetween = 16, ...rest } = swiperOptions ?? {};
-  const theme = useTheme();
+
   const swiperRef = useRef<SwiperInstance | null>(null);
 
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!swiperRef.current || value === undefined) {
+      return;
+    }
+
+    const index = items.findIndex((item) => item.id === value);
+    if (index >= 0) {
+      swiperRef.current.slideToLoop(index);
+    }
+  }, [value, items]);
+
+  useEffect(() => {
+    if (!swiperRef.current) return;
+
+    if (disabled) {
+      swiperRef.current.disable();
+    } else {
+      swiperRef.current.enable();
+    }
+  }, [disabled]);
 
   return (
     <Box
       width="100%"
       sx={{
         position: "relative",
-        paddingInline: 2,
+        paddingInline: 3,
       }}
     >
       <Box
@@ -53,9 +76,12 @@ export default function Carousel<T extends string | number>({
           transform: "translateY(-50%)",
           zIndex: 10,
           cursor: "pointer",
+
+          pointerEvents: disabled ? "none" : "auto",
+          opacity: disabled ? 0.5 : 1,
         }}
       >
-        ◀
+        <ArrowTriangleLeft />
       </Box>
       <Box
         ref={nextRef}
@@ -66,9 +92,12 @@ export default function Carousel<T extends string | number>({
           transform: "translateY(-50%)",
           zIndex: 10,
           cursor: "pointer",
+
+          pointerEvents: disabled ? "none" : "auto",
+          opacity: disabled ? 0.5 : 1,
         }}
       >
-        ▶
+        <ArrowTriangleRight />
       </Box>
       <Swiper
         modules={[Navigation]}
@@ -77,6 +106,13 @@ export default function Carousel<T extends string | number>({
         navigation={{
           prevEl: prevRef.current,
           nextEl: nextRef.current,
+        }}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        onSlideChange={(swiper) => {
+          const activeId = items[swiper.realIndex]?.id;
+          if (activeId && onChange) {
+            onChange(activeId);
+          }
         }}
         {...rest}
         style={{
@@ -104,7 +140,6 @@ export default function Carousel<T extends string | number>({
                     zIndex: 2,
                   },
                 }}
-                onClick={() => onClick?.(item.id)}
               >
                 {item.element}
               </Box>
