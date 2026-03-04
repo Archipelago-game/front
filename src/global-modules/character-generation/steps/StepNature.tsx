@@ -14,6 +14,7 @@ import Carousel, {
 import HumanSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/HumanSilhouette.tsx";
 import ImmortalSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/ImmortalSilhouette.tsx";
 import CatSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/CatSilhouette.tsx";
+import { Navigation } from "swiper/modules";
 
 function getRaceByD20(value: number): Race {
   if (value === 4) return "immortal";
@@ -56,7 +57,15 @@ export default function StepNature({
   return (
     <Box>
       <Box sx={{ width: "200px", position: "relative", margin: "0 auto" }}>
-        <Carousel items={RACE_LIST} slidesToShow={1} />
+        <Carousel
+          items={RACE_LIST}
+          swiperOptions={{
+            slidesPerView: 1,
+            centeredSlides: true,
+            loop: true,
+          }}
+          value={currentValue?.race}
+        />
       </Box>
 
       <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
