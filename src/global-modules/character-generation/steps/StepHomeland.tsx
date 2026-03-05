@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { Button, Box, Typography } from "@mui/material";
+import { useEffect, useRef } from "react";
+import { Box, Typography } from "@mui/material";
 import DiceRollBlock from "../DiceRollBlock.tsx";
 import type {
   DiceRollRequest,
@@ -10,10 +10,11 @@ import {
   HOMELAND_OPTIONS,
   CAT_HOMELAND_OPTION,
   getHomelandByD20,
-  type HomelandOption,
-} from "../consts/homeland-options.const.ts";
+  type HomelandCarouselItem,
+} from "../consts/homeland-options.const.tsx";
+import Carousel from "../../../common/components/carousel/Carousel.tsx";
 
-function getVisibleOptions(race?: string): HomelandOption[] {
+function getVisibleOptions(race?: string): HomelandCarouselItem[] {
   if (race === "cat") return [CAT_HOMELAND_OPTION, ...HOMELAND_OPTIONS];
   return HOMELAND_OPTIONS;
 }
@@ -21,7 +22,7 @@ function getVisibleOptions(race?: string): HomelandOption[] {
 function getInitialHomeland(characterData?: {
   race?: string;
   homeland?: string;
-}): HomelandOption | null {
+}): HomelandCarouselItem | null {
   if (characterData?.race === "cat" && !characterData?.homeland) {
     return CAT_HOMELAND_OPTION;
   }
@@ -39,6 +40,8 @@ export default function StepHomeland({
   currentValue,
   setCurrentSelectValue,
 }: GenerationStepComponentProps) {
+  const isDisabledRef = useRef<boolean>(false);
+
   const isCat = characterData?.race === "cat";
   const visibleOptions = getVisibleOptions(characterData?.race);
 
@@ -48,6 +51,7 @@ export default function StepHomeland({
     const option = visibleOptions.find((o) => o.id === id);
     if (option) {
       handleSelect(option);
+      isDisabledRef.current = true;
     }
   };
 
@@ -58,7 +62,7 @@ export default function StepHomeland({
     }
   }, []);
 
-  const handleSelect = (option: HomelandOption) => {
+  const handleSelect = (option: HomelandCarouselItem) => {
     setCurrentSelectValue({
       homeland: option.displayName,
       languages: option.language,
@@ -67,27 +71,46 @@ export default function StepHomeland({
 
   return (
     <Box>
+      <Box sx={{ maxWidth: "200px", position: "relative", margin: "0 auto" }}>
+        <Carousel
+          items={visibleOptions}
+          swiperOptions={{
+            slidesPerView: 1,
+            centeredSlides: true,
+            loop: true,
+          }}
+          value={currentValue?.homeland}
+          onChange={(homeland) => {
+            const option = visibleOptions.find(
+              (option) => option.id === homeland,
+            );
+            if (option) {
+              handleSelect(option);
+            }
+          }}
+          disabled={isDisabledRef.current}
+        />
+        <Box
+          sx={{
+            paddingBlock: 1,
+            textAlign: "center",
+            fontSize: "1.1rem",
+            fontWeight: "900",
+          }}
+        >
+          {currentValue?.homeland && (
+            <Box component="span">{currentValue?.homeland}</Box>
+          )}
+        </Box>
+      </Box>
+
       {isCat && (
         <Typography sx={{ mt: 1, mb: 1 }} color="text.secondary">
           Кошки родом с Островов Кошек. Вы можете выбрать родину для бэкстори;
           талант родины при этом не добавляется.
         </Typography>
       )}
-      <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", mt: 2, mb: 2 }}>
-        {visibleOptions.map((opt) => (
-          <Button
-            key={opt.id}
-            variant={
-              currentValue?.homeland === opt.displayName
-                ? "contained"
-                : "outlined"
-            }
-            onClick={() => handleSelect(opt)}
-          >
-            {opt.displayName}
-          </Button>
-        ))}
-      </Box>
+
       <DiceRollBlock
         diceRequest={diceRequest}
         onDiceResult={handleDiceResult}

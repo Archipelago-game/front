@@ -20,7 +20,7 @@ export interface CarouselItem<T extends string | number> {
 interface Props<T extends string | number> {
   items: CarouselItem<T>[];
   onChange?: (id: T) => void;
-  value?: number | string;
+  value?: T;
   disabled?: boolean;
   swiperOptions?: SwiperOptions;
 }
@@ -134,13 +134,6 @@ export default function Carousel<T extends string | number>({
                   width: "100%",
                   height: "auto",
                   objectFit: "fill",
-
-                  "& .swiper-slide-active": {
-                    transform: "scale(1)",
-                    opacity: 1,
-                    filter: "none",
-                    zIndex: 2,
-                  },
                 }}
               >
                 {item.element}

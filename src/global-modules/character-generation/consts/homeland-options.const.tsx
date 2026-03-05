@@ -1,11 +1,16 @@
-export type HomelandId =
-  | "cat_islands"
-  | "suo"
-  | "trieldom"
-  | "inis"
-  | "maori"
-  | "carthage"
-  | "shlyakhta";
+import type { CarouselItem } from "../../../common/components/carousel/Carousel.tsx";
+import DefaultCountryImg from "../../../common/components/img/race-silhouettes/DefaultCountryImg.tsx";
+
+export type HomelandId = string &
+  (
+    | "cat_islands"
+    | "suo"
+    | "trieldom"
+    | "inis"
+    | "maori"
+    | "carthage"
+    | "shlyakhta"
+  );
 
 export interface HomelandOption {
   id: HomelandId;
@@ -16,51 +21,60 @@ export interface HomelandOption {
   catOnly?: boolean;
 }
 
+export type HomelandCarouselItem = CarouselItem<HomelandId> & HomelandOption;
+
 /** Родина по умолчанию для котов, показывается только при race === "cat" */
-export const CAT_HOMELAND_OPTION: HomelandOption = {
+export const CAT_HOMELAND_OPTION: HomelandCarouselItem = {
   id: "cat_islands",
   displayName: "Острова Кошек",
   language: "—",
   talent: "—",
   catOnly: true,
+  element: <DefaultCountryImg />,
 };
 
-export const HOMELAND_OPTIONS: HomelandOption[] = [
+export const HOMELAND_OPTIONS: HomelandCarouselItem[] = [
   {
     id: "suo",
     displayName: "Суо (внешние острова)",
     language: "Язык Суо",
     talent: "Стойкость и Гармония",
+    element: <DefaultCountryImg />,
   },
   {
     id: "trieldom",
     displayName: "Царство Триединое",
     language: "Триединая Речь",
     talent: "За Песнь, Царя и Отечество",
+    element: <DefaultCountryImg />,
   },
   {
     id: "inis",
     displayName: "Империя Инис",
     language: "Гаэльге",
     talent: "Ружья, барабаны и сталь",
+    element: <DefaultCountryImg />,
   },
   {
     id: "maori",
     displayName: "Маори",
     language: "Маори",
     talent: "Урождённые Навигаторы",
+    element: <DefaultCountryImg />,
   },
   {
     id: "carthage",
     displayName: "Карфаж",
     language: "Глоса",
     talent: "Избранники Солнца",
+    element: <DefaultCountryImg />,
   },
   {
     id: "shlyakhta",
     displayName: "Шляхта (срединные острова)",
     language: "Шляхтсикй",
     talent: "Торговля и Ремесло",
+    element: <DefaultCountryImg />,
   },
 ];
 
