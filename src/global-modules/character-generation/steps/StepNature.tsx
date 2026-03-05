@@ -11,9 +11,9 @@ import type {
 import Carousel, {
   type CarouselItem,
 } from "../../../common/components/carousel/Carousel.tsx";
-import HumanSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/HumanSilhouette.tsx";
-import ImmortalSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/ImmortalSilhouette.tsx";
-import CatSilhouette from "../../../modules/game-form/ui/sections/defence/armor/siluets/CatSilhouette.tsx";
+import HumanSilhouette from "../../../common/components/img/race-silhouettes/HumanSilhouette.tsx";
+import ImmortalSilhouette from "../../../common/components/img/race-silhouettes/ImmortalSilhouette.tsx";
+import CatSilhouette from "../../../common/components/img/race-silhouettes/CatSilhouette.tsx";
 
 function getRaceByD20(value: number): Race {
   if (value === 4) return "immortal";

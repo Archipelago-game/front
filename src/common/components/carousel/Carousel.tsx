@@ -1,15 +1,16 @@
+import "swiper/swiper.css";
+
 import { Box } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperInstance } from "swiper";
-import { Navigation } from "swiper/modules";
 
-import "swiper/swiper.css";
+import { Navigation } from "swiper/modules";
 
 import { type ReactNode, useEffect, useRef } from "react";
 import type { SwiperOptions } from "swiper/types";
 
-import ArrowTriangleLeft from "../icons/ArrowTriangleLeft.tsx";
-import ArrowTriangleRight from "../icons/ArrowTriangleRight.tsx";
+import ArrowTriangleLeft from "../img/icons/ArrowTriangleLeft.tsx";
+import ArrowTriangleRight from "../img/icons/ArrowTriangleRight.tsx";
 
 export interface CarouselItem<T extends string | number> {
   id: T;
@@ -44,6 +45,7 @@ export default function Carousel<T extends string | number>({
     }
 
     const index = items.findIndex((item) => item.id === value);
+    console.log(index);
     if (index >= 0) {
       swiperRef.current.slideToLoop(index);
     }
