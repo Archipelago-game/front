@@ -17,17 +17,22 @@ import {
   ERROR_CODE,
   UnpackFileToCharacterForm,
 } from "./unpack-file-json.util.ts";
+import { useLoading } from "../../app/providers/loading-provider/loading-context.hook.ts";
 
 export default function CharactersPage() {
   const { open } = useConfirmDialogContext();
   const { showMessage } = useSnackbarContext();
   const navigate = useNavigate();
   const { userInfo } = useAuthContext();
+  const { show, hide } = useLoading();
+
   const [characterDocs, setCharacterDocs] = useState<CharacterDocument[]>([]);
 
   const fetchCharacters = async (userId: string) => {
+    show();
     const data = await api.getCharacters(userId);
     setCharacterDocs(data);
+    hide();
   };
 
   const addCharacter = async (userId: string) => {
