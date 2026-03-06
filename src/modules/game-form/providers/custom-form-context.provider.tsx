@@ -18,6 +18,7 @@ import type { CharacterDocument } from "../../../services/character/firebase-cha
 import debounce from "lodash.debounce";
 import type { OnChangeCallbackType } from "../types/on-change-callback.type.ts";
 import { migrationUtils } from "../../../services/migrations/migration-utils.class.ts";
+import { useLoading } from "../../../app/providers/loading-provider/loading-context.hook.ts";
 
 interface Props {
   children: ReactNode;
@@ -27,6 +28,8 @@ const saveCharacterForm = debounce(api.saveCharacterForm, 500);
 
 export function CustomFormContextProvider({ children }: Props) {
   const { userInfo } = useAuthContext();
+  const { show: showLoader, hide: hideLoader } = useLoading();
+
   const [characterDoc, setCharacterDoc] = useState<CharacterDocument | null>(
     null,
   );
@@ -59,12 +62,14 @@ export function CustomFormContextProvider({ children }: Props) {
   );
 
   const fetchData = useCallback(async (userId: string, characterId: string) => {
+    showLoader();
     let characterDoc = await api.getCharacterForm(userId, characterId);
     if (!characterDoc) {
       return;
     }
     characterDoc = migrationUtils.migrate(userId, characterDoc);
     setCharacterDoc(characterDoc);
+    hideLoader();
   }, []);
 
   const value = useMemo(

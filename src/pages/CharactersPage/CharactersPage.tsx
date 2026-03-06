@@ -24,15 +24,15 @@ export default function CharactersPage() {
   const { showMessage } = useSnackbarContext();
   const navigate = useNavigate();
   const { userInfo } = useAuthContext();
-  const { show, hide } = useLoading();
+  const { show: showLoader, hide: hideLoader } = useLoading();
 
   const [characterDocs, setCharacterDocs] = useState<CharacterDocument[]>([]);
 
   const fetchCharacters = async (userId: string) => {
-    show();
+    showLoader();
     const data = await api.getCharacters(userId);
     setCharacterDocs(data);
-    hide();
+    hideLoader();
   };
 
   const addCharacter = async (userId: string) => {
