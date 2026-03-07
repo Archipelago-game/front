@@ -1,46 +1,33 @@
-import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../../../common/layouts/MainLayout.tsx";
 
-const HomePage = lazy(() => import("../../../pages/home/HomePage.tsx"));
-
-const AuthDonePage = lazy(
-  () => import("../../../pages/AuthDonePage/AuthDonePage.tsx"),
-);
-
 import AuthProtectedRoute from "../../../modules/auth-protected-route/AuthProtectedRoute.tsx";
-
-const CharacterPage = lazy(
-  () => import("../../../pages/CharacterPage/CharacterPage.tsx"),
-);
-
-const CharactersPage = lazy(
-  () => import("../../../pages/CharactersPage/CharactersPage.tsx"),
-);
-
-const CharacterGenerationPage = lazy(
-  () =>
-    import(
-      "../../../pages/CharacterGenerationPage/CharacterGenerationPage.tsx"
-    ),
-);
-
-const CharacterRulesPage = lazy(
-  () => import("../../../pages/CharacterRulesPage/CharacterRulesPage.tsx"),
-);
+import NotFoundPage from "../../../pages/NotFoundPage/NotFoundPage.tsx";
+import {
+  AuthDonePage,
+  CharacterGenerationPage,
+  CharacterPage,
+  CharacterRulesPage,
+  CharactersPage,
+  HomePage,
+} from "./lazy-loads-pages.ts";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
         element: <HomePage />,
       },
+      {
+        path: "auth-done",
+        element: <AuthDonePage />,
+      },
 
       {
-        path: "/",
         element: <AuthProtectedRoute />,
         children: [
           {
@@ -65,9 +52,10 @@ export const router = createBrowserRouter([
           },
         ],
       },
+
       {
-        path: "auth-done",
-        element: <AuthDonePage />,
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },
