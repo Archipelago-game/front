@@ -7,6 +7,7 @@ import { useAuthContext } from "../../app/providers/auth-provider/use-auth-conte
 import ScreenSaver from "../../modules/screen-saver/ScreenSaver.tsx";
 import { useTheme } from "@mui/material/styles";
 import { overflowYBaseStyles } from "../styles/overflow-y-base.css.ts";
+import ScrollReset from "../components/scroll-reset/ScrollReset.tsx";
 const Header = lazy(() => import("../../modules/header/Header.tsx"));
 
 export default function MainLayout() {
@@ -25,6 +26,7 @@ export default function MainLayout() {
         backgroundColor: theme.palette.base.background,
       }}
     >
+      <ScrollReset />
       <ScreenSaver isLoading={isLoading} />
       <Box
         sx={{
