@@ -1,5 +1,7 @@
 import type { CarouselItem } from "../../../common/components/carousel/Carousel.tsx";
-import DefaultCountryImg from "../../../common/components/img/race-silhouettes/DefaultCountryImg.tsx";
+import CountryImg from "../../../common/components/img/race-silhouettes/CountryImg.tsx";
+
+const DEFAULT_HOMELAND_IMAGE = "/img/country/default_country.png";
 
 export type HomelandId = string &
   (
@@ -30,7 +32,7 @@ export const CAT_HOMELAND_OPTION: HomelandCarouselItem = {
   language: "—",
   talent: "—",
   catOnly: true,
-  element: <DefaultCountryImg />,
+  element: <CountryImg src={DEFAULT_HOMELAND_IMAGE} />,
 };
 
 export const HOMELAND_OPTIONS: HomelandCarouselItem[] = [
@@ -39,42 +41,42 @@ export const HOMELAND_OPTIONS: HomelandCarouselItem[] = [
     displayName: "Суо (внешние острова)",
     language: "Язык Суо",
     talent: "Стойкость и Гармония",
-    element: <DefaultCountryImg />,
+    element: <CountryImg src={DEFAULT_HOMELAND_IMAGE} />,
   },
   {
     id: "trieldom",
     displayName: "Царство Триединое",
     language: "Триединая Речь",
     talent: "За Песнь, Царя и Отечество",
-    element: <DefaultCountryImg />,
+    element: <CountryImg src={DEFAULT_HOMELAND_IMAGE} />,
   },
   {
     id: "inis",
     displayName: "Империя Инис",
     language: "Гаэльге",
     talent: "Ружья, барабаны и сталь",
-    element: <DefaultCountryImg />,
+    element: <CountryImg src="/img/country/inis.jpg" />,
   },
   {
     id: "maori",
     displayName: "Маори",
     language: "Маори",
     talent: "Урождённые Навигаторы",
-    element: <DefaultCountryImg />,
+    element: <CountryImg src={DEFAULT_HOMELAND_IMAGE} />,
   },
   {
     id: "carthage",
     displayName: "Карфаж",
     language: "Глоса",
     talent: "Избранники Солнца",
-    element: <DefaultCountryImg />,
+    element: <CountryImg src={DEFAULT_HOMELAND_IMAGE} />,
   },
   {
     id: "shlyakhta",
     displayName: "Шляхта (срединные острова)",
     language: "Шляхтсикй",
     talent: "Торговля и Ремесло",
-    element: <DefaultCountryImg />,
+    element: <CountryImg src={DEFAULT_HOMELAND_IMAGE} />,
   },
 ];
 
