@@ -31,10 +31,10 @@ interface CharacterGenerationWizardProps {
 
 const CustomConnector = styled(StepConnector)(() => ({
   [`&.${stepConnectorClasses.vertical}`]: {
-    height: "10px",
+    height: "5px",
   },
   [`.css-1deaddp-MuiStepConnector-line`]: {
-    minHeight: "10px",
+    minHeight: "5px",
   },
 }));
 
