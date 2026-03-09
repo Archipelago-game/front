@@ -1,16 +1,19 @@
 import { Box, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 
 import { useAuthContext } from "../../app/providers/auth-provider/use-auth-context.hook.ts";
 
 import ScreenSaver from "../../modules/screen-saver/ScreenSaver.tsx";
 import { useTheme } from "@mui/material/styles";
+import { overflowYBaseStyles } from "../styles/overflow-y-base.css.ts";
+import ScrollReset from "../components/scroll-reset/ScrollReset.tsx";
 const Header = lazy(() => import("../../modules/header/Header.tsx"));
 
 export default function MainLayout() {
   const { isLoading } = useAuthContext();
   const theme = useTheme();
+
   return (
     <Container
       className="container"
@@ -23,6 +26,7 @@ export default function MainLayout() {
         backgroundColor: theme.palette.base.background,
       }}
     >
+      <ScrollReset />
       <ScreenSaver isLoading={isLoading} />
       <Box
         sx={{
@@ -32,16 +36,18 @@ export default function MainLayout() {
           height: "100vh",
         }}
       >
-        <Header />
+        <Suspense fallback={<div />}>
+          <Header />
+        </Suspense>
         <Box
           sx={{
             position: "relative",
-            overflowY: "auto",
-            scrollBehavior: "smooth",
-            scrollbarWidth: "none",
+            ...overflowYBaseStyles,
           }}
         >
-          <Outlet />
+          <Suspense fallback={<div />}>
+            <Outlet />
+          </Suspense>
         </Box>
       </Box>
     </Container>

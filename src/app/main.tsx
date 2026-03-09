@@ -12,6 +12,7 @@ import { ConfirmDialogContextProvider } from "../modules/confirm-dialog/ConfirmD
 
 import { ModalProvider } from "./providers/global-modal/ModalProvider.tsx";
 import CustomThemeProvider from "./providers/theme-provider/custom-theme-provider.tsx";
+import { LoadingProvider } from "./providers/loading-provider/LoadingProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -20,7 +21,9 @@ createRoot(document.getElementById("root")!).render(
         <SnackbarProvider>
           <ModalProvider>
             <ConfirmDialogContextProvider>
-              <RouterProvider router={router} />
+              <LoadingProvider>
+                <RouterProvider router={router} />
+              </LoadingProvider>
             </ConfirmDialogContextProvider>
           </ModalProvider>
         </SnackbarProvider>
