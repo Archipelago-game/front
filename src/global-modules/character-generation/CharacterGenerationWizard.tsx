@@ -16,6 +16,11 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { overflowYBaseStyles } from "../../common/styles/overflow-y-base.css.ts";
 
+import StepConnector, {
+  stepConnectorClasses,
+} from "@mui/material/StepConnector";
+import { styled } from "@mui/material/styles";
+
 interface CharacterGenerationWizardProps {
   currentStepIndex: number;
   setCurrentStepIndex: Dispatch<SetStateAction<number>>;
@@ -23,6 +28,15 @@ interface CharacterGenerationWizardProps {
   onStepComplete: (payload?: GenerationStepPayload) => void;
   isSubmitting?: boolean;
 }
+
+const CustomConnector = styled(StepConnector)(() => ({
+  [`&.${stepConnectorClasses.vertical}`]: {
+    height: "10px",
+  },
+  [`.css-1deaddp-MuiStepConnector-line`]: {
+    minHeight: "10px",
+  },
+}));
 
 export default function CharacterGenerationWizard({
   currentStepIndex,
@@ -67,13 +81,16 @@ export default function CharacterGenerationWizard({
     >
       <Stepper
         orientation={isSmallScreen ? "vertical" : "horizontal"}
+        connector={<CustomConnector />}
         activeStep={currentStepIndex}
         sx={{ mb: 3 }}
       >
         {GENERATION_STEPS.map((s, i) => (
           <Step
             key={s.id}
-            sx={{ paddingLeft: isSmallScreen ? 0 : i == 0 ? "0" : "8px" }}
+            sx={{
+              paddingLeft: isSmallScreen ? 0 : i == 0 ? "0" : "8px",
+            }}
           >
             <StepLabel
               sx={{
