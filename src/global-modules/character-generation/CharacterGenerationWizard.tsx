@@ -56,7 +56,7 @@ export default function CharacterGenerationWizard({
   );
 
   useEffect(() => {
-    setContext(step.getInitialContext());
+    setContext(GENERATION_STEPS[currentStepIndex].getInitialContext());
   }, [currentStepIndex]);
 
   const StepComponent = step?.component;
