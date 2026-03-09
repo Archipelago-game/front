@@ -5,7 +5,7 @@ import Slot from "./Slot.tsx";
 import SubSection from "../../../components/section/SubSection.tsx";
 import SectionTitle from "../../../components/section/SectionTitle.tsx";
 
-import CurrentSilhouette from "./siluets/CurrentSilhouette.tsx";
+import CurrentSilhouette from "../../../../../../common/components/img/race-silhouettes/CurrentSilhouette.tsx";
 
 export default function Armor() {
   return (

@@ -5,7 +5,7 @@ import { useCustomFormContext } from "../../../../providers/use-custom-context-f
 import { useEffect } from "react";
 import { defenceGridStyle } from "./styles/side-defence.styles.ts";
 import ThreePositionBox from "../../../components/fields/three-position-box/ThreePositionBox.tsx";
-import LotusIcon from "../../../../../../common/components/icons/LotusIcon.tsx";
+import LotusIcon from "../../../../../../common/components/img/icons/LotusIcon.tsx";
 import CustomTextFieldLabel from "../../../components/fields/custom-text-field/CustomTextFieldLabel.tsx";
 import { useTheme } from "@mui/material/styles";
 
