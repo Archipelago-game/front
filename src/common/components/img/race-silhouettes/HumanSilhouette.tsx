@@ -1,12 +1,18 @@
-import { Box } from "@mui/material";
+import { Box, type SxProps } from "@mui/material";
 
-export default function HumanSilhouette() {
+interface Props {
+  wrapperSx?: SxProps;
+  imgSx?: SxProps;
+}
+
+export default function HumanSilhouette({ wrapperSx, imgSx }: Props) {
   return (
     <Box
       sx={{
         width: "100%",
         aspectRatio: "3 / 5",
         position: "relative",
+        ...wrapperSx,
       }}
     >
       <Box
@@ -20,6 +26,7 @@ export default function HumanSilhouette() {
           display: "block",
           userSelect: "none",
           pointerEvents: "none",
+          ...imgSx,
         }}
       />
     </Box>
