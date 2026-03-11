@@ -28,12 +28,24 @@ export function Dice3D() {
     // Текстуры или просто цифры на гранях
     const loader = new THREE.TextureLoader();
     const materials = [
-      new THREE.MeshBasicMaterial({ map: loader.load("dice1.png") }),
-      new THREE.MeshBasicMaterial({ map: loader.load("dice2.png") }),
-      new THREE.MeshBasicMaterial({ map: loader.load("dice3.png") }),
-      new THREE.MeshBasicMaterial({ map: loader.load("dice4.png") }),
-      new THREE.MeshBasicMaterial({ map: loader.load("dice5.png") }),
-      new THREE.MeshBasicMaterial({ map: loader.load("dice6.png") }),
+      new THREE.MeshBasicMaterial({
+        map: loader.load("/img/dice-v1/dice1.png"),
+      }),
+      new THREE.MeshBasicMaterial({
+        map: loader.load("/img/dice-v1/dice2.png"),
+      }),
+      new THREE.MeshBasicMaterial({
+        map: loader.load("/img/dice-v1/dice3.png"),
+      }),
+      new THREE.MeshBasicMaterial({
+        map: loader.load("/img/dice-v1/dice4.png"),
+      }),
+      new THREE.MeshBasicMaterial({
+        map: loader.load("/img/dice-v1/dice5.png"),
+      }),
+      new THREE.MeshBasicMaterial({
+        map: loader.load("/img/dice-v1/dice6.png"),
+      }),
     ];
 
     const cube = new THREE.Mesh(geometry, materials);
