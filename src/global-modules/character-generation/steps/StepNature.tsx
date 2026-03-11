@@ -14,7 +14,7 @@ import Carousel, {
 import HumanSilhouette from "../../../common/components/img/race-silhouettes/HumanSilhouette.tsx";
 import ImmortalSilhouette from "../../../common/components/img/race-silhouettes/ImmortalSilhouette.tsx";
 import CatSilhouette from "../../../common/components/img/race-silhouettes/CatSilhouette.tsx";
-import { DiceBase } from "../../../modules/dice/DiceBase.tsx";
+
 import { Dice3D } from "../../../modules/dice/Dice3D.tsx";
 
 function getRaceByD20(value: number): Race {
