@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 
 import { useCustomFormContext } from "../../../providers/use-custom-context-form.hook.ts";
 import { useFieldArray } from "react-hook-form";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 import { useConfirmDialogContext } from "../../../../confirm-dialog/use-confirm-dialog.hook.ts";
 import { useModal } from "../../../../../app/providers/global-modal/use-modal.hook.ts";
@@ -12,11 +12,11 @@ import { groupTalentsByBranch } from "./group-talents-by-branch.utils.ts";
 import TalentGroup from "./TalentGroup.tsx";
 
 export default function Talent() {
-  const { methods, values, onChange } = useCustomFormContext();
+  const { methods, onChange } = useCustomFormContext();
   const { open } = useConfirmDialogContext();
   const { openModal, closeModal } = useModal();
 
-  const { fields, replace, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     name: "talents.list",
     control: methods.control,
   });
@@ -55,12 +55,6 @@ export default function Talent() {
       },
     });
   };
-
-  useEffect(() => {
-    if (values) {
-      replace(values.talents.list);
-    }
-  }, [values?.talents.list]);
 
   return (
     <Box className="print-talents">

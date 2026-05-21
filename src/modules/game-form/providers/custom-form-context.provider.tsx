@@ -3,6 +3,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { CustomFormContext } from "./use-custom-context-form.hook.ts";
@@ -33,6 +34,7 @@ export function CustomFormContextProvider({ children }: Props) {
   const [characterDoc, setCharacterDoc] = useState<CharacterDocument | null>(
     null,
   );
+  const loadedCharacterIdRef = useRef<string | null>(null);
 
   const { characterId } = useParams();
 
@@ -88,7 +90,10 @@ export function CustomFormContextProvider({ children }: Props) {
   }, [characterId, userInfo]);
 
   useEffect(() => {
-    methods.reset(characterDoc?.data ?? FORM_DEFAULT_VALUES);
+    if (!characterDoc) return;
+    if (characterDoc.id === loadedCharacterIdRef.current) return;
+    loadedCharacterIdRef.current = characterDoc.id ?? null;
+    methods.reset(characterDoc.data);
   }, [characterDoc, methods]);
 
   return (
